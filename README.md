@@ -12,7 +12,8 @@ Plugin names are a work-in-progress and might change in the future.
 ### Achievements 
 Custom achievements such as server-first accomplishments.  
   
-### Baby Entities Prevents entities from becoming their adult variant.  
+### Baby Entities 
+Prevents entities from becoming their adult variant.  
   
 Features:  
  - [x] **Passive mob support;**  
@@ -23,7 +24,8 @@ Features:
  - [x] **Undo feature: convert back to their original state;**  
  - [x] **Prevent usage on natural babies: to prevent abuse.**  
   
-### Core Main library dependency needed for other plugins of this pack.  
+### Core 
+Main library dependency needed for other plugins of this pack.  
   
 Features:  
  - [x] **Console interface;**  
