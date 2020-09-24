@@ -19,6 +19,7 @@ Features:
  - [x] Prevent Scute drop on Turtle's growth: prevent abuse;
  - [ ] Aggressive mob support (for those that have an infant variant);
  - [x] Custom Name Tag support: tool to transform entities into baby/adult;
+ - [x] Infinite Name Tag: prevent name tag from being expended;
  - [x] Undo feature: convert back to their original state;
  - [x] Prevent usage on natural babies: to prevent abuse.
 
@@ -49,7 +50,7 @@ Features:
  - [ ] Tool durability support: displays main/off hand durability so that the player doesn't has to open inventory;
  - [ ] Player orientation (N/S/E/W/etc);
  - [ ] Server time;
- - [ ] Server time with work hours colorization;
+ - [ ] Server time with work hours' colorization;
  - [ ] World Time;
  - [ ] Spectator plugin range;
  - [ ] Commerce plugin integration.
