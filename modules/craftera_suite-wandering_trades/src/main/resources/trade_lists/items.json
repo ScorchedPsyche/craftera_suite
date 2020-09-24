@@ -1,0 +1,13 @@
+[
+  {
+    "minecraft_id": "elytra",
+    "price_item1": "diamond",
+    "price1": 30
+  },
+  {
+    "minecraft_id": "beacon",
+    "price_item1": "diamond",
+    "price1": 64
+  }
+]
+

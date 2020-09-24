@@ -1,0 +1,72 @@
+package com.github.scorchedpsyche.craftera_suite.modules;
+
+import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinListener;
+import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+
+public final class CraftEraSuiteHud extends JavaPlugin
+{
+    public CraftEraSuiteCore cesCore;
+    public HudManager hudManager;
+    
+    public File pluginRootFolder;
+    public File playerConfigsFolder;
+
+    @Override
+    public void onEnable()
+    {
+        cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
+        hudManager = new HudManager();
+
+        // Check if Core dependency was loaded
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
+        {
+            setup();
+
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+                for ( Player player : Bukkit.getOnlinePlayers() )
+                {
+                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                         (int) player.getLocation().getX() + "x " + 
+                         (int) player.getLocation().getY() + "y " + 
+                         (int) player.getLocation().getZ() + "z" 
+                         ));
+                }
+            }, 0L, 2);
+    
+            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+            
+            cesCore.enablePlugin(this.getName());
+        } else {
+            // Core dependency missing! Display error
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix() + "] ERROR: CraftEra Suite Core MISSING! Download the dependency and RELOAD/RESTART the server.");
+        }
+    }
+
+    @Override
+    public void onDisable()
+    {
+        // Plugin shutdown logic
+    }
+
+    private void setup()
+    {
+        pluginRootFolder = cesCore.folderUtils.getOrCreatePluginSubfolder(this);
+        playerConfigsFolder = new File( pluginRootFolder.toString() + File.separator + "players" );
+
+        if ( !playerConfigsFolder.exists() ) 
+        {
+            if ( !playerConfigsFolder.mkdirs() )
+            {
+               cesCore.consoleUtils.logError(this, "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
+            }
+        }
+    }
+}

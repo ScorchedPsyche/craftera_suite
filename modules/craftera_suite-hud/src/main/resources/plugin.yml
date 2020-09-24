@@ -1,0 +1,9 @@
+name: craftera_suite-hud
+version: ${project.version}
+depend: [ craftera_suite-core ]
+main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud
+api-version: 1.16
+prefix: CraftEra Suite - HUD
+authors: [ ScorchedPsyche ]
+description: Customizeable Heads-up Display with useful information and statistics.
+website: https://github.com/ScorchedPsyche

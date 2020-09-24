@@ -1,0 +1,18 @@
+remove_default_trades: true
+
+maximum_unique_trade_offers:
+  items: 5
+  decoration_heads: 20
+  player_heads: 5
+
+whitelist:
+  enable_synchronization: true
+  number_of_player_head_offers: 3
+  heads_rewarded_per_trade: 1
+  maximum_number_of_trades: 64
+  experience_rewarded_for_each_trade: true
+
+  price:
+    item1:
+      minecraft_id: "diamond"
+      quantity: 1
