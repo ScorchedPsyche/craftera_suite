@@ -1,10 +1,12 @@
-
 # CraftEra Suite
 Plugin suite which aims to enhance Minecraft's gameplay experience while maintaining Vanilla feeling. 
 
 All plugins are being developed to use as little resources from the server as possible and Asynchronous code will be used everywhere possible.
 
 ## Modules (current/planned)
+Modules with a check-list are the ones that are either being worked on or that have some ideas planned. The ones without a check-list haven't yet been planned.
+
+Plugin names are a work-in-progress and might change in the future.
 
 ### Achievements 
 Custom achievements such as server-first accomplishments.
@@ -15,7 +17,7 @@ Prevents entities from becoming their adult variant.
 Features:
  - [x] Passive mob support;
  - [x] Prevent Scute drop on Turtle's growth: prevent abuse;
- - [ ] Agressive mob support (for those that have an infant variant);
+ - [ ] Aggressive mob support (for those that have an infant variant);
 
 ### Core 
 Main library dependency needed for other plugins of this pack.
@@ -41,6 +43,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 Features:
  - [x] Coordinates;
  - [ ] Nether Portal coordinates;
+ - [ ] Tool durability support: displays main/off hand durability so that the player doesn't has to open inventory;
  - [ ] Player orientation (N/S/E/W/etc);
  - [ ] Server time;
  - [ ] Server time with work hours colorization;
@@ -79,8 +82,7 @@ Features:
 
 
 ### WorldGen
-100% new World Generation with a much more interesting landscape and structures.
+100% new World Generation with much more interesting landscape and structures.
 
 Features:
  - [ ] Litematica structure support: loads litematica files and uses them on WorldGen.
-
