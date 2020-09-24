@@ -18,6 +18,9 @@ Features:
  - [x] Passive mob support;
  - [x] Prevent Scute drop on Turtle's growth: prevent abuse;
  - [ ] Aggressive mob support (for those that have an infant variant);
+ - [x] Custom Name Tag support: tool to transform entities into baby/adult;
+ - [x] Undo feature: convert back to their original state;
+ - [x] Prevent usage on natural babies: to prevent abuse.
 
 ### Core 
 Main library dependency needed for other plugins of this pack.
@@ -62,6 +65,7 @@ Features:
  - [ ] Configurable range limit support;
  - [ ] Recent movement prevention check: to avoid abuse if falling from deadly height;
  - [ ] Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;
+ - [ ] Waypoint ability: visual marker the player can make while in spectator mode. Useful for the player to have a heading of where they were looking at.
 
 ### Streaming Support
 Enables interactivity between your member's audience and their streaming audience.
