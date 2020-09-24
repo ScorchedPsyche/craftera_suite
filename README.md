@@ -9,7 +9,8 @@ Modules with a check-list are the ones that are either being worked on or that h
   
 Plugin names are a work-in-progress and might change in the future.  
   
-### Achievements Custom achievements such as server-first accomplishments.  
+### Achievements 
+Custom achievements such as server-first accomplishments.  
   
 ### Baby Entities Prevents entities from becoming their adult variant.  
   
@@ -29,6 +30,9 @@ Features:
  - [x] **Player command interface;**  
  - [x] **Folder utility class;**  
  - [x] **String utility class.**  
+  
+### Commerce
+Plugin that's mainly a helper for Commercial Districts for your server. Also synchronizes with a database so that you can attach your own tools to a web server or similar.
   
 ### Database Synchronization  
 Plugin which acts as an interface to synchronize the suite data with a database. This data can be used for your website so that you can have website integration and synchronization with your server.  
