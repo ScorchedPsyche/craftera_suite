@@ -449,8 +449,8 @@ public class MerchantManager
 
             // Check if decoration head either texture or owner
             if( trade.getMinecraftId().equalsIgnoreCase("player_head") &&
-                    (   CraftEraSuiteWanderingTrades.craftEraSuiteCore.stringUtils.isEmpty(trade.getOwnerId()) &&
-                        CraftEraSuiteWanderingTrades.craftEraSuiteCore.stringUtils.isEmpty(trade.getTexture()) ) )
+                    (   CraftEraSuiteWanderingTrades.cesCore.stringUtils.isEmpty(trade.getOwnerId()) &&
+                        CraftEraSuiteWanderingTrades.cesCore.stringUtils.isEmpty(trade.getTexture()) ) )
             {
                 // Missing both
                 isValid = false;

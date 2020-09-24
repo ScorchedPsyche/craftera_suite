@@ -1,13 +1,12 @@
 package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
-
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
-
-import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class FolderUtils {
     public File cesRootFolder;
@@ -27,7 +26,12 @@ public class FolderUtils {
 
         if( !pluginSubfolder.exists() )
         {
-            pluginSubfolder.mkdirs();
+            if( !pluginSubfolder.mkdirs() )
+            {
+                this.plugin.consoleUtils.logError(plugin, "Plugin configuration folder failed to be created: check " +
+                        "folder " +
+                        "write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + pluginSubfolder.toString());
+            }
         }
 
         return pluginSubfolder;

@@ -11,6 +11,7 @@
 
     <artifactId>craftera_suite-wandering_trades</artifactId>
     <name>craftera_suite-wandering_trades</name>
+    <version>0.0.1</version>
     <description>Customizes trades for Wandering Trader.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 

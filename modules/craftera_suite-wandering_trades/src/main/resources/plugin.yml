@@ -1,4 +1,4 @@
-name: craftera_suite-modules
+name: craftera_suite-wandering_trades
 version: ${project.version}
 depend: [craftera_suite-core]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades

@@ -11,6 +11,8 @@
 
     <artifactId>craftera_suite-core</artifactId>
     <name>craftera_suite-core</name>
+    <version>0.0.1</version>
+    <description>Dependency library for CraftEra Suite plugins.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <properties>

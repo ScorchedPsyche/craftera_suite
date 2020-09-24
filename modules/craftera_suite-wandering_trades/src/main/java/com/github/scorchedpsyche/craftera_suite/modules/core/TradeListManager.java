@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.core;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.models.TradeEntryModel;
 import com.github.scorchedpsyche.craftera_suite.modules.models.TradeModel;
 import com.google.gson.Gson;
@@ -13,22 +12,16 @@ import java.util.Collections;
 
 public class TradeListManager
 {
-    public TradeListManager(CraftEraSuiteWanderingTrades plugin)
+    public TradeListManager(String tradeListsFolder)
     {
-        this.plugin = plugin;
-        setup();
-        loadFiles();
+        loadTradeLists(tradeListsFolder);
     }
 
     public TradeModel Trades = new TradeModel();
 
-    private File listsFolder;
-
-    private CraftEraSuiteWanderingTrades plugin;
-
-    public void loadFiles()
+    private void loadTradeLists(String tradeListsFolder)
     {
-        File[] files = listsFolder.listFiles();
+        File[] files = new File(tradeListsFolder).listFiles();
         if( files != null )
         {
             Arrays.stream(files).forEach(file -> {
@@ -47,20 +40,6 @@ public class TradeListManager
                     ex.printStackTrace();
                 }
             });
-        }
-    }
-
-    public void setup()
-    {
-        listsFolder = new File( plugin.getDataFolder(), "trade_lists" );
-
-        // Create folder to stores lists in
-        if( listsFolder.mkdirs() )
-        {
-            plugin.saveResource("trade_lists/heads_decoration.json", false);
-            plugin.saveResource("trade_lists/heads_players.json", false);
-            plugin.saveResource("trade_lists/items.json", false);
-            LoggerCore.Log( "DONE: Trade Lists folder created" );
         }
     }
 }

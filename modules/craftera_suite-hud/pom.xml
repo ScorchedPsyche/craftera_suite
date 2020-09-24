@@ -11,6 +11,8 @@
 
     <artifactId>craftera_suite-hud</artifactId>
     <name>craftera_suite-hud</name>
+    <version>0.0.1</version>
+    <description>Player customizable in-game HUD integrated with all other plugins from this suite</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <dependencies>
