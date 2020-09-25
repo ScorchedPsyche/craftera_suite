@@ -15,7 +15,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     public FolderUtils folderUtils;
     public ConsoleUtils consoleUtils;
     
-    public SuitePluginManager suitePlugins;
+    public SuitePluginManager suitePluginManager;
 
     // Plugin startup logic
     @Override
@@ -24,7 +24,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         stringUtils = new StringUtils();
         folderUtils = new FolderUtils(this);
         consoleUtils = new ConsoleUtils();
-        suitePlugins = new SuitePluginManager();
+        suitePluginManager = new SuitePluginManager();
 
         // Register "ces" command
         this.getCommand("ces").setExecutor(new CustomCommandExecutor(this));
@@ -35,19 +35,5 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     @Override
     public void onDisable()
     {
-    }
-
-    /**
-     * Saves plugin as loaded by the server.
-     * @param name Plugin to be saved
-     */
-    public void enablePlugin(String name)
-    {
-        switch(name)
-        {
-            case "craftera_suite-hud":
-                suitePlugins.isHudPluginEnabled = true;
-                break;
-        }
     }
 }

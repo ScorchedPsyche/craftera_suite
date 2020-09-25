@@ -25,7 +25,7 @@ public class CustomCommandExecutor implements CommandExecutor {
                 switch( args[0] )
                 {
                     case "hud":
-                        if( cesCore.suitePlugins.isHudPluginEnabled
+                        if( cesCore.suitePluginManager.isHudPluginEnabled()
                             && args.length > 1 
                             && !cesCore.stringUtils.isEmpty(args[1]) 
                             && args[1].equalsIgnoreCase("config") )
