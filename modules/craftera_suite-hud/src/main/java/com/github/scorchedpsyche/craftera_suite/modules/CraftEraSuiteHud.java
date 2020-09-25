@@ -1,12 +1,10 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
-import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listeners.commands.HudToggleCommandListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -30,20 +28,8 @@ public final class CraftEraSuiteHud extends JavaPlugin
         {
             setup();
 
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                for ( Player player : Bukkit.getOnlinePlayers() )
-                {
-                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                         (int) player.getLocation().getX() + "x " + 
-                         (int) player.getLocation().getY() + "y " + 
-                         (int) player.getLocation().getZ() + "z" 
-                         ));
-                }
-            }, 0L, 2);
-    
-            getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-            
-            cesCore.enablePlugin(this.getName());
+            getServer().getPluginManager().registerEvents(new HudToggleCommandListener(hudManager), this);
+            getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);
         } else {
             // Core dependency missing! Display error
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix() + "] ERROR: CraftEra Suite Core MISSING! Download the dependency and RELOAD/RESTART the server.");
@@ -68,5 +54,9 @@ public final class CraftEraSuiteHud extends JavaPlugin
                cesCore.consoleUtils.logError(this, "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
             }
         }
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            hudManager.showHudForPlayers();
+        }, 0L, 2);
     }
 }
