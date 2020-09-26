@@ -1,0 +1,6 @@
+storage_type: sqlite # "sqlite" or "mysql"
+
+# Uncomment the lines below if MySQL is chosen for "storage_type" (above)
+#mysql:
+  #address:
+  #port:

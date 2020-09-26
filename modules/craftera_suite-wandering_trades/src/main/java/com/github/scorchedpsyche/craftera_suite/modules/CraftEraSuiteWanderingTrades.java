@@ -50,7 +50,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
         try
         {
             config = new YamlConfiguration();
-            config.load( resourcesManager.pluginRootFolder + File.separator + "config.yml");
+            config.load(resourcesManager.pluginRootFolder + File.separator + "config.yml");
         } catch (IOException e)
         {
             e.printStackTrace();

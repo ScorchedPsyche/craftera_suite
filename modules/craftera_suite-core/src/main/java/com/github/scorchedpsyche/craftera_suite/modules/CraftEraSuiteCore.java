@@ -1,5 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.main.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
@@ -11,9 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CraftEraSuiteCore extends JavaPlugin {
     public String pluginNamePrefix = "CraftEra Suite";
+
+    public DatabaseManager db = new DatabaseManager();
     public StringUtils stringUtils;
     public FolderUtils folderUtils;
     public ConsoleUtils consoleUtils;
+    public ResourcesManager resourcesManager;
     
     public SuitePluginManager suitePluginManager;
 
@@ -25,6 +30,9 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         folderUtils = new FolderUtils(this);
         consoleUtils = new ConsoleUtils();
         suitePluginManager = new SuitePluginManager();
+        resourcesManager = new ResourcesManager();
+
+
 
         // Register "ces" command
         this.getCommand("ces").setExecutor(new CustomCommandExecutor(this));
