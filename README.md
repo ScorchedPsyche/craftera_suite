@@ -41,7 +41,7 @@ Plugin which acts as an interface to synchronize the suite data with a database.
   
 Features:  
  - [x] **Database Interface;**  
- - [x] SQLite integration;
+ - [x] **SQLite integration;**
  - [ ] MySQL integration;
  - [ ] Plugin API;
  - [ ] Plugin Integration: Baby Entities;
