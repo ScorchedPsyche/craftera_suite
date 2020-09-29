@@ -60,6 +60,8 @@ Add random organic or recurring events ("missions") to increase Vanilla gameplay
 Player customizable in-game HUD integrated with all other plugins from this suite.  
   
 Features:  
+ - [x] **Toggle on/off;**
+ - [ ] Per player configuration; 
  - [x] **Coordinates;**  
  - [ ] Nether Portal coordinates;  
  - [ ] Tool durability support: displays main/off hand durability so that the player doesn't has to open inventory;  
@@ -71,14 +73,15 @@ Features:
  - [ ] Commerce plugin integration.  
   
 ### Player Contribution  
-Account for player contribution for the server so that rewards can be awarded.  
+Account for player contribution to the server so that rewards can be given.  
   
 ### Spectator Mode  
-Spectator mode with range limit configurable by admin.  
+Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
   
 Features:  
- - [ ] Player Armor Stand: to leave a "marker" for other to see;  
+ - [ ] Automatic range limit support (range = server's view distance);  
  - [ ] Configurable range limit support;  
+ - [ ] Player Armor Stand: to leave a "marker" for other to see;  
  - [ ] Recent movement prevention check: to avoid abuse if falling from deadly height;  
  - [ ] Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;  
  - [ ] Waypoint ability: visual marker the player can make while in spectator mode. Useful for the player to have a heading of where they were looking at.  
