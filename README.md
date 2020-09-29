@@ -80,7 +80,7 @@ Spectator mode with range limit configurable by admin or with automatic view ran
   
 Features:  
  - [ ] Automatic range limit support (range = server's view distance);  
- - [ ] Configurable range limit support;  
+ - [ ] Manual range limit support;  
  - [ ] Player Armor Stand: to leave a "marker" for other to see;  
  - [ ] Recent movement prevention check: to avoid abuse if falling from deadly height;  
  - [ ] Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;  
