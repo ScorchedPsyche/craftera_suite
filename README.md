@@ -41,14 +41,14 @@ Plugin which acts as an interface to synchronize the suite data with a database.
   
 Features:  
  - [x] **Database Interface;**  
- - [] SQLite integration;
- - [] MySQL integration;
- - [] Plugin API;
- - [] Plugin Integration: Baby Entities;
- - [] Plugin Integration: Core;
- - [] Plugin Integration: HUD;
- - [] Plugin Integration: Spectator Mode;
- - [] Plugin Integration: Wandering Trades.
+ - [x] SQLite integration;
+ - [ ] MySQL integration;
+ - [ ] Plugin API;
+ - [ ] Plugin Integration: Baby Entities;
+ - [ ] Plugin Integration: Core;
+ - [ ] Plugin Integration: HUD;
+ - [ ] Plugin Integration: Spectator Mode;
+ - [ ] Plugin Integration: Wandering Trades.
  
 ### Discord Integration  
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
