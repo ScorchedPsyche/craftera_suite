@@ -39,6 +39,17 @@ Plugin that's mainly a helper for Commercial Districts for your server. Also syn
 ### Database Synchronization  
 Plugin which acts as an interface to synchronize the suite data with a database. This data can be used for your website so that you can have website integration and synchronization with your server.  
   
+Features:  
+ - [x] **Database Interface;**  
+ - [] SQLite integration;
+ - [] MySQL integration;
+ - [] Plugin API;
+ - [] Plugin Integration: Baby Entities;
+ - [] Plugin Integration: Core;
+ - [] Plugin Integration: HUD;
+ - [] Plugin Integration: Spectator Mode;
+ - [] Plugin Integration: Wandering Trades.
+ 
 ### Discord Integration  
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
   
