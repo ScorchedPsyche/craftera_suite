@@ -51,7 +51,8 @@ public final class CraftEraSuiteHud extends JavaPlugin
         {
             if ( !playerConfigsFolder.mkdirs() )
             {
-               cesCore.consoleUtils.logError(this, "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
+               cesCore.consoleUtils.logError(
+                       "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
             }
         }
 

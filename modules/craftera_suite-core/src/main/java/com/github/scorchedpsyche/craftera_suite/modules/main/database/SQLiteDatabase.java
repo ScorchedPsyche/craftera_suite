@@ -5,7 +5,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -18,23 +17,33 @@ public class SQLiteDatabase implements IDatabase
     {
         this.cesCore = cesCore;
         databasePath = pathWithFileName;
-        CreateOrRetrieveDatabase();
+        createOrRetrieveDatabase();
     }
 
+
     @Override
-    public void CreateOrRetrieveDatabase()
+    public Connection createOrRetrieveDatabase()
     {
         String url = "jdbc:sqlite:" + databasePath.toString();
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
                 cesCore.consoleUtils.logSuccess(
-                        "A new SQL has been created at: " + databasePath.toString() );
+                        "A new SQLite database has been created at: " + databasePath.toString() );
+                return conn;
             }
-
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            cesCore.consoleUtils.logError(
+                    "SQLite database creation failed. Check folder write permissions at: " + databasePath.toString() );
+            cesCore.consoleUtils.logError( "ERROR: " + e.getMessage() );
         }
+
+        return null;
+    }
+
+    @Override
+    public void createOrRetrieveTable(String name)
+    {
+        // TODO: Implement CreateOrRetrieveTable
     }
 }

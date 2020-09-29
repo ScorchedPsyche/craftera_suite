@@ -28,7 +28,7 @@ public class FolderUtils {
         {
             if( !pluginSubfolder.mkdirs() )
             {
-                this.plugin.consoleUtils.logError(plugin, "Plugin configuration folder failed to be created: check " +
+                this.plugin.consoleUtils.logError("Plugin configuration folder failed to be created: check " +
                         "folder " +
                         "write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + pluginSubfolder.toString());
             }
@@ -50,7 +50,7 @@ public class FolderUtils {
         if ( !cesFolder.exists() )
         {
             if (!cesFolder.mkdirs()) {
-                plugin.consoleUtils.logError(plugin, "Main CraftEra Suite configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + cesFolder.toString());
+                plugin.consoleUtils.logError("Main CraftEra Suite configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + cesFolder.toString());
             }
         }
 

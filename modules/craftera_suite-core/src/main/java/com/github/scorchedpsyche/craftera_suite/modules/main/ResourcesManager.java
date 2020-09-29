@@ -54,13 +54,11 @@ public class ResourcesManager
                 } catch (IOException e) {
                     // Failed to create file
                     consoleUtils.logError(
-                            plugin,
                             "Failed to create file. Check write permissions for folder: " + ChatColor.YELLOW + destinationFile);
                 }
             } else {
                 // Resource not found, must display error
                 consoleUtils.logError(
-                    plugin,
                     "Resource not found on .jar. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + file);
             }
 
@@ -70,7 +68,6 @@ public class ResourcesManager
             } catch (IOException e) {
                 // Failed to close file
                 consoleUtils.logError(
-                        plugin,
                         "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
             }
         }
