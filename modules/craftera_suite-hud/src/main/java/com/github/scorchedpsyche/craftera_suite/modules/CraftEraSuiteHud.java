@@ -29,7 +29,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
             setup();
-            hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager);
+            hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
 
             getServer().getPluginManager().registerEvents(new HudToggleCommandListener(hudManager), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);

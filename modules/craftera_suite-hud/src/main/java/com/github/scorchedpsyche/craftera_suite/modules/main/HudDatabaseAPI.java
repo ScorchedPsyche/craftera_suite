@@ -1,16 +1,17 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
+import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 
 public class HudDatabaseAPI
 {
     private final String tablePrefix = "hud_";
-    private DatabaseManager databaseManager;
+    private IDatabase database;
     private ConsoleUtils consoleUtils;
 
-    public HudDatabaseAPI(DatabaseManager databaseManager)
+    public HudDatabaseAPI(IDatabase database)
     {
-        this.databaseManager = databaseManager;
+        this.database = database;
         consoleUtils = new ConsoleUtils("CraftEra Suite - HUD");
         setup();
     }
@@ -32,7 +33,7 @@ public class HudDatabaseAPI
                 + "	commerce numeric NOT NULL\n"
                 + ");";
 
-        if (databaseManager.database.executeSql(playerCfgTableSql))
+        if (database.executeSql(playerCfgTableSql))
         {
             consoleUtils.logSuccess("Table successfully created: hud_player_preferences");
         } else {

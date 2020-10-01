@@ -1,7 +1,9 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -30,6 +32,12 @@ public class HudManager {
     {
         if( onlinePlayersWithHudEnabled.contains(player) )
         {
+            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+
+                });
+            });
+
             onlinePlayersWithHudEnabled.remove(player);
         } else {
             onlinePlayersWithHudEnabled.add(player);
