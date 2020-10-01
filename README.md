@@ -43,10 +43,9 @@ Features:
  - [x] **Database Interface;**  
  - [x] **SQLite integration;**
  - [ ] MySQL integration;
- - [ ] Plugin API;
  - [ ] Plugin Integration: Baby Entities;
  - [ ] Plugin Integration: Core;
- - [ ] Plugin Integration: HUD;
+ - [x] **Plugin Integration: HUD;**
  - [ ] Plugin Integration: Spectator Mode;
  - [ ] Plugin Integration: Wandering Trades.
  
@@ -61,7 +60,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
   
 Features:  
  - [x] **Toggle on/off;**
- - [ ] Per player configuration; 
+ - [x] **Per player configuration;**
  - [x] **Coordinates;**  
  - [ ] Nether Portal coordinates;  
  - [ ] Tool durability support: displays main/off hand durability so that the player doesn't has to open inventory;  
