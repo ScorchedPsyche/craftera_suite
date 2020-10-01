@@ -32,7 +32,7 @@ public class SQLiteDatabase implements IDatabase
             }
         } catch (SQLException e) {
             cesCore.consoleUtils.logError(
-                    "SQLite database creation failed. Check folder write permissions at: " + databaseUrl.toString());
+                    "SQLite database creation failed. Check folder write permissions at: " + databaseUrl);
             cesCore.consoleUtils.logError( e.getMessage() );
         }
 
@@ -47,7 +47,9 @@ public class SQLiteDatabase implements IDatabase
             stmt.execute(sqlStatement);
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            cesCore.consoleUtils.logError(
+                    "SQLite sql execution failed: " + sqlStatement);
+            cesCore.consoleUtils.logError( e.getMessage() );
         }
 
         return false;
