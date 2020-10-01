@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.commands.HudToggleCommandListener;
+import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,6 +14,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
 {
     public CraftEraSuiteCore cesCore;
     public HudManager hudManager;
+    public HudDatabaseAPI hudDatabaseAPI;
     
     public File pluginRootFolder;
     public File playerConfigsFolder;
@@ -27,6 +29,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
             setup();
+            hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager);
 
             getServer().getPluginManager().registerEvents(new HudToggleCommandListener(hudManager), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);

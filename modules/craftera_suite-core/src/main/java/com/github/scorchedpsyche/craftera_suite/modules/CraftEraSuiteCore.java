@@ -17,7 +17,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     public ConsoleUtils consoleUtils;
     public ResourcesManager resourcesManager;
 
-    public DatabaseManager db;
+    public DatabaseManager databaseManager;
     
     public SuitePluginManager suitePluginManager;
 
@@ -31,7 +31,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         suitePluginManager = new SuitePluginManager();
         resourcesManager = new ResourcesManager();
 
-        db = new DatabaseManager(this, DatabaseManager.DatabaseType.SQLite);
+        databaseManager = new DatabaseManager(this, DatabaseManager.DatabaseType.SQLite);
 
 
 

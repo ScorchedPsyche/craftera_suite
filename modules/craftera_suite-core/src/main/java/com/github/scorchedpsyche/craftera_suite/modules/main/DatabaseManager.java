@@ -22,10 +22,10 @@ public class DatabaseManager
 
             default: // SQLite
                 database = new SQLiteDatabase( cesCore,
-                        new File(cesCore.folderUtils.cesRootFolder + File.separator + "craftera_suite.db"));
+                   cesCore.folderUtils.cesRootFolder + File.separator + "craftera_suite.db" );
                 break;
         }
     }
 
-    private IDatabase database;
+    public IDatabase database;
 }

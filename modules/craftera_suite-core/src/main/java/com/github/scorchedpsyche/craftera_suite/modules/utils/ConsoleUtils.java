@@ -7,15 +7,17 @@ import org.bukkit.ChatColor;
 public class ConsoleUtils {
     public ConsoleUtils()
     {
+        stringUtils = new StringUtils();
     }
 
     public ConsoleUtils(String prefix)
     {
+        this();
         this.prefix = prefix;
     }
 
     private StringUtils stringUtils;
-    private String prefix;
+    private String prefix = "CraftEra Suite";
 
     /**
      * Logs an error (red colored) to the console with the source plugin's prefix.
@@ -30,12 +32,11 @@ public class ConsoleUtils {
 
     public void logSuccess(String message)
     {
-
         Bukkit.getConsoleSender().sendMessage(
                 ChatColor.GREEN + "[" + getPrefix() + "] SUCCESS: " + message);
     }
 
-    public String getPrefix()
+    private String getPrefix()
     {
         return ( prefix != null && !stringUtils.isEmpty(prefix) ) ? prefix : "CraftEra Suite";
     }

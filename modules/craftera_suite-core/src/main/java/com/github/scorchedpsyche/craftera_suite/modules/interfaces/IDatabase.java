@@ -4,6 +4,6 @@ import java.sql.Connection;
 
 public interface IDatabase
 {
-    public Connection createOrRetrieveDatabase();
-    public void createOrRetrieveTable(String name);
+    Connection createOrRetrieveDatabase();
+    boolean executeSql(String sqlStatement);
 }
