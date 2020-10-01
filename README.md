@@ -61,6 +61,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 Features:  
  - [x] **Toggle on/off;**
  - [x] **Per player configuration;**
+ - [x] **Player login auto-load of preferences;**
  - [x] **Coordinates;**  
  - [ ] Nether Portal coordinates;  
  - [ ] Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;  

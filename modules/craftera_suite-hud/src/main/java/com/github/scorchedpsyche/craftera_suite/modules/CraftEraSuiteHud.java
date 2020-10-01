@@ -1,5 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.commands.HudToggleCommandListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
@@ -17,7 +18,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
     public HudManager hudManager;
     
     public File pluginRootFolder;
-    public File playerConfigsFolder;
+//    public File playerConfigsFolder;
 
     @Override
     public void onEnable()
@@ -28,6 +29,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
             setup();
 
             getServer().getPluginManager().registerEvents(new HudToggleCommandListener(hudManager), this);
+            getServer().getPluginManager().registerEvents(new PlayerJoinListener(hudManager), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);
         } else {
             // Core dependency missing! Display error
@@ -44,20 +46,21 @@ public final class CraftEraSuiteHud extends JavaPlugin
     private void setup()
     {
         cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
-        hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
-        hudManager = new HudManager(hudDatabaseAPI);
 
         pluginRootFolder = cesCore.folderUtils.getOrCreatePluginSubfolder(this);
-        playerConfigsFolder = new File( pluginRootFolder.toString() + File.separator + "players" );
+//        playerConfigsFolder = new File( pluginRootFolder.toString() + File.separator + "players" );
+//
+//        if ( !playerConfigsFolder.exists() )
+//        {
+//            if ( !playerConfigsFolder.mkdirs() )
+//            {
+//               cesCore.consoleUtils.logError(
+//                       "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
+//            }
+//        }
 
-        if ( !playerConfigsFolder.exists() ) 
-        {
-            if ( !playerConfigsFolder.mkdirs() )
-            {
-               cesCore.consoleUtils.logError(
-                       "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
-            }
-        }
+        hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
+        hudManager = new HudManager(hudDatabaseAPI);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             hudManager.showHudForPlayers();

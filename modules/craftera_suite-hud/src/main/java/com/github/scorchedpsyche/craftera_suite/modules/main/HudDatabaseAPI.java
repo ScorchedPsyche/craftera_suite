@@ -1,7 +1,11 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
+import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
+
+import java.sql.*;
 
 public class HudDatabaseAPI
 {
@@ -9,17 +13,41 @@ public class HudDatabaseAPI
     {
         this.database = database;
         consoleUtils = new ConsoleUtils("CraftEra Suite - HUD");
+        databaseUtils = new DatabaseUtils();
         setup();
     }
 
     private final String tablePrefix = "hud_";
     private IDatabase database;
     private ConsoleUtils consoleUtils;
+    private DatabaseUtils databaseUtils;
+
+    public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
+    {
+        String sql = "SELECT * FROM " + tablePrefix + "player_preferences " +
+                "WHERE player_uuid='" + playerUUID + "' LIMIT 1";
+
+        try (Connection conn = DriverManager.getConnection(database.getDatabaseUrl());
+             Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if( !databaseUtils.isResultSetEmpty(rs) )
+            {
+                return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            consoleUtils.logError(
+                    "SQLite query failed: " + sql);
+            consoleUtils.logError( e.getMessage() );
+        }
+
+        return null;
+    }
 
     public void disableHudForPlayer(String playerUUID)
     {
         String sql = "INSERT INTO " + tablePrefix + "player_preferences (player_uuid, enabled)\n" +
-                "  VALUES('" + playerUUID + "', 1) \n" +
+                "  VALUES('" + playerUUID + "', 0) \n" +
                 "  ON CONFLICT(player_uuid) \n" +
                 "  DO UPDATE SET enabled=0;";
         database.executeSql(sql);

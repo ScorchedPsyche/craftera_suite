@@ -6,4 +6,5 @@ public interface IDatabase
 {
     Connection createOrRetrieveDatabase();
     boolean executeSql(String sqlStatement);
+    String getDatabaseUrl();
 }

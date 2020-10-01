@@ -17,6 +17,11 @@ public class SQLiteDatabase implements IDatabase
         createOrRetrieveDatabase();
     }
 
+    @Override
+    public String getDatabaseUrl()
+    {
+        return databaseUrl;
+    }
 
     @Override
     public Connection createOrRetrieveDatabase()
