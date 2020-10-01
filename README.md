@@ -63,7 +63,7 @@ Features:
  - [x] **Per player configuration;**
  - [x] **Coordinates;**  
  - [ ] Nether Portal coordinates;  
- - [ ] Tool durability support: displays main/off hand durability so that the player doesn't has to open inventory;  
+ - [ ] Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;  
  - [ ] Player orientation (N/S/E/W/etc);  
  - [ ] Server time;  
  - [ ] Server time with work hours' colorization;  
