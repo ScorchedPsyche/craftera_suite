@@ -3,10 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLiteDatabase implements IDatabase
 {

@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HudManager {
-    private final List<Player> onlinePlayersWithHudEnabled;
-
-    public HudManager()
+    public HudManager(HudDatabaseAPI hudDatabaseAPI)
     {
+        this.hudDatabaseAPI = hudDatabaseAPI;
         onlinePlayersWithHudEnabled = new ArrayList<>();
     }
+
+    private final List<Player> onlinePlayersWithHudEnabled;
+    private HudDatabaseAPI hudDatabaseAPI;
 
     public void showHudForPlayers()
     {
@@ -34,12 +36,16 @@ public class HudManager {
         {
             Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                 Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-
+                    hudDatabaseAPI.disableHudForPlayer( player.getUniqueId().toString() );
                 });
             });
-
             onlinePlayersWithHudEnabled.remove(player);
         } else {
+            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+                    hudDatabaseAPI.enableHudForPlayer( player.getUniqueId().toString() );
+                });
+            });
             onlinePlayersWithHudEnabled.add(player);
         }
     }

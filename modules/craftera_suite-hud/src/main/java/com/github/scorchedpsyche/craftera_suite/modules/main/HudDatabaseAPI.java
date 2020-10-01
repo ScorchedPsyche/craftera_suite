@@ -5,10 +5,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 
 public class HudDatabaseAPI
 {
-    private final String tablePrefix = "hud_";
-    private IDatabase database;
-    private ConsoleUtils consoleUtils;
-
     public HudDatabaseAPI(IDatabase database)
     {
         this.database = database;
@@ -16,11 +12,33 @@ public class HudDatabaseAPI
         setup();
     }
 
+    private final String tablePrefix = "hud_";
+    private IDatabase database;
+    private ConsoleUtils consoleUtils;
+
+    public void disableHudForPlayer(String playerUUID)
+    {
+        String sql = "INSERT INTO " + tablePrefix + "player_preferences (player_uuid, enabled)\n" +
+                "  VALUES('" + playerUUID + "', 1) \n" +
+                "  ON CONFLICT(player_uuid) \n" +
+                "  DO UPDATE SET enabled=0;";
+        database.executeSql(sql);
+    }
+
+    public void enableHudForPlayer(String playerUUID)
+    {
+        String sql = "INSERT INTO " + tablePrefix + "player_preferences (player_uuid, enabled)\n" +
+                "  VALUES('" + playerUUID + "', 1) \n" +
+                "  ON CONFLICT(player_uuid) \n" +
+                "  DO UPDATE SET enabled=1;";
+        database.executeSql(sql);
+    }
+
     private void setup()
     {
-        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS hud_player_preferences (\n"
+        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + tablePrefix + "player_preferences (\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + "	player_uuid TEXT NOT NULL,\n"
+                + "	player_uuid TEXT UNIQUE NOT NULL,\n"
                 + "	enabled NUMERIC DEFAULT 0,\n"
                 + "	coordinates NUMERIC DEFAULT 1,\n"
                 + "	coordinates_nether_portal NUMERIC DEFAULT 0,\n"

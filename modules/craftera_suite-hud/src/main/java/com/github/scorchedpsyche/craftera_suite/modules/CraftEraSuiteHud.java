@@ -13,8 +13,8 @@ import java.io.File;
 public final class CraftEraSuiteHud extends JavaPlugin
 {
     public CraftEraSuiteCore cesCore;
-    public HudManager hudManager;
     public HudDatabaseAPI hudDatabaseAPI;
+    public HudManager hudManager;
     
     public File pluginRootFolder;
     public File playerConfigsFolder;
@@ -22,14 +22,10 @@ public final class CraftEraSuiteHud extends JavaPlugin
     @Override
     public void onEnable()
     {
-        cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
-        hudManager = new HudManager();
-
         // Check if Core dependency was loaded
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
             setup();
-            hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
 
             getServer().getPluginManager().registerEvents(new HudToggleCommandListener(hudManager), this);
             getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);
@@ -47,6 +43,10 @@ public final class CraftEraSuiteHud extends JavaPlugin
 
     private void setup()
     {
+        cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
+        hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
+        hudManager = new HudManager(hudDatabaseAPI);
+
         pluginRootFolder = cesCore.folderUtils.getOrCreatePluginSubfolder(this);
         playerConfigsFolder = new File( pluginRootFolder.toString() + File.separator + "players" );
 
