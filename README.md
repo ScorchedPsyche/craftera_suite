@@ -69,6 +69,7 @@ Features:
  - [ ] Server time;  
  - [ ] Server time with work hours' colorization;  
  - [ ] World Time;  
+ - [ ] Server TPS (Tick Per Second);
  - [ ] Spectator plugin range;  
  - [ ] Commerce plugin integration.  
   
