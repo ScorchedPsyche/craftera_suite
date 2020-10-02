@@ -21,8 +21,7 @@ public class ConsoleUtils {
 
     /**
      * Logs an error (red colored) to the console with the source plugin's prefix.
-     * @param plugin The source plugin of the message. The prefix will be captured from plugin.yml and used as the prefix for the message
-     * @param message Message to the written to the console
+     * * @param message Message to the written to the console
      */
     public void logError(String message)
     {

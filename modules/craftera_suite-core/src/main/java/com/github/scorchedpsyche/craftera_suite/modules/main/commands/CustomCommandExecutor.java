@@ -9,12 +9,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CustomCommandExecutor implements CommandExecutor {
-    private CraftEraSuiteCore cesCore;
-
     public CustomCommandExecutor(CraftEraSuiteCore cesCore) {
         super();
         this.cesCore = cesCore;
     }
+
+    private CraftEraSuiteCore cesCore;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
