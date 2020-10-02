@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.main.database;
+package com.github.scorchedpsyche.craftera_suite.modules.main.database.types;
 
 //public class MySQLDatabase implements IDatabase
 //{

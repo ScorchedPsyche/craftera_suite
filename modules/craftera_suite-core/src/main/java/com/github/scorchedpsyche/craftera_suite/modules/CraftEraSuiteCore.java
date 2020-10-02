@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
-import com.github.scorchedpsyche.craftera_suite.modules.main.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomCommandExecutor;
