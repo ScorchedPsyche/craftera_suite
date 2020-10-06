@@ -1,18 +1,21 @@
-package com.github.scorchedpsyche.craftera_suite.modules.events.commands.hud;
+package com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud;
 
+import com.github.scorchedpsyche.craftera_suite.modules.interfaces.ICommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class HudToggleCommandEvent extends Event implements Cancellable
+public class HudCommandsEvent extends Event implements Cancellable, ICommand
 {
-    private final Player player;
+    private Player player;
+    private String[] args;
     private static final HandlerList handlers = new HandlerList();
 
-    public HudToggleCommandEvent(Player playerName)
+    public HudCommandsEvent(Player player, String[] args)
     {
-        this.player = playerName;
+        this.player = player;
+        this.args = args;
     }
 
     @Override
@@ -37,8 +40,15 @@ public class HudToggleCommandEvent extends Event implements Cancellable
         return handlers;
     }
 
+    @Override
     public Player getPlayer()
     {
         return player;
+    }
+
+    @Override
+    public String[] getArgs()
+    {
+        return args;
     }
 }

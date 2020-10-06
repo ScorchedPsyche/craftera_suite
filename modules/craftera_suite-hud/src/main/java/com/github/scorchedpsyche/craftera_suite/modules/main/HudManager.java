@@ -62,7 +62,7 @@ public class HudManager {
                 Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                     hudDatabaseAPI.disableHudForPlayer( player.getUniqueId().toString() );
                     onlinePlayersWithHudEnabled.remove(player);
-                    player.sendMessage("CES Hud OFF");
+                    player.sendMessage("CES HUD – OFF");
                 });
             });
         } else {
@@ -71,7 +71,7 @@ public class HudManager {
                 Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                     hudDatabaseAPI.enableHudForPlayer( player.getUniqueId().toString() );
                     setPlayerAsOnline(player);
-                    player.sendMessage("CES Hud ON");
+                    player.sendMessage("CES HUD – ON");
                 });
             });
         }
