@@ -1,0 +1,9 @@
+name: craftera_suite-entities-baby
+version: ${project.version}
+main: com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities
+api-version: 1.16
+prefix: CraftEra Suite - Baby Entities
+depend: [craftera_suite-core]
+authors: [ScorchedPsyche]
+description: Prevents entities' growth by locking their age after they're renamed a specific way.
+website: https://github.com/ScorchedPsyche/craftera_suite-entities-baby
