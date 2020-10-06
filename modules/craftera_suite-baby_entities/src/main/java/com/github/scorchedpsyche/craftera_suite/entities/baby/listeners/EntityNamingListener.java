@@ -32,10 +32,13 @@ public class EntityNamingListener implements Listener {
         Player sourcePlayer = event.getPlayer();
         ItemStack mainHandItem =    sourcePlayer.getEquipment() != null ?
                                     sourcePlayer.getEquipment().getItemInMainHand() : null;
+        ItemStack offHandItem =    sourcePlayer.getEquipment() != null ?
+                sourcePlayer.getEquipment().getItemInOffHand() : null;
 
         // Checks if player is holding a name tag named "ces_baby/adult"
-        if(     mainHandItem != null &&
-                entityUtil.playerHoldsValidNameTag(mainHandItem)
+        if( ( mainHandItem != null && entityUtil.playerHoldsValidNameTag(mainHandItem) ) ||
+            ( offHandItem != null && entityUtil.playerHoldsValidNameTag(offHandItem) )
+
         )
         {
             // Player holds a named name tag. Must cancel the default Right-Click event
@@ -164,7 +167,7 @@ public class EntityNamingListener implements Listener {
         if( onEntityDropItem.getEntity() instanceof Ageable )
         {
             // Check for plugin metadata
-            if( onEntityDropItem.getEntity().hasMetadata("ces_baby/adult") )
+            if( onEntityDropItem.getEntity().hasMetadata("ces_adult/baby") )
             {
                 // Check if it's a turtle
                 if(onEntityDropItem.getEntity().getType() == EntityType.TURTLE)

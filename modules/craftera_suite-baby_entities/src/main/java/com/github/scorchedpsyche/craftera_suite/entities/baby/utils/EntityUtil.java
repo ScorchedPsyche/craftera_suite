@@ -36,13 +36,13 @@ public class EntityUtil
 //    }
 
     /**
-     * Checks if the item is a valid plugin Name Tag.
+     * Checks if the item is a valid plugin Name Tag named "ces_adult/baby".
      * @param item Item to be checked
      * @return True if the item is a valid plugin Name Tag
      */
     public boolean playerHoldsValidNameTag(ItemStack item)
     {
-        // Checks if player is holding a name tag named "ces_baby"
+        // Checks if player is holding a name tag named "ces_adult/baby"
         if(     item != null &&
                 item.getType() == Material.NAME_TAG &&
                 item.getItemMeta().hasDisplayName() &&
