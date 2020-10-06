@@ -18,7 +18,7 @@ Prevents entities from becoming their adult variant.
 Features:  
  - [x] **Passive mob support;**  
  - [x] **Prevent Scute drop on Turtle's growth: prevent abuse;**
- - [ ] Aggressive mob support (for those that have an infant variant);
+ - [x] **Aggressive mob support (for those that have an infant variant);**
  - [x] **Custom Name Tag support: tool to transform entities into baby/adult;**  
  - [x] **Infinite Name Tag: prevent name tag from being expended;**  
  - [x] **Undo feature: convert back to their original state;**  
