@@ -9,7 +9,6 @@ public final class CraftEraSuiteBabyEntities extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new EntityNamingListener(), this);
-        //getServer().getPluginManager().registerEvents(new TestListener(), this);
     }
 
     // Plugin shutdown logic
