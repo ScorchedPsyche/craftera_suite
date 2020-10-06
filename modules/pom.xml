@@ -17,6 +17,7 @@
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <modules>
+        <module>craftera_suite-baby_entities</module>
         <module>craftera_suite-core</module>
         <module>craftera_suite-hud</module>
         <module>craftera_suite-wandering_trades</module>
