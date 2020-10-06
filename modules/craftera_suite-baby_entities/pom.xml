@@ -11,4 +11,23 @@
     </parent>
 
     <artifactId>craftera_suite-baby_entities</artifactId>
+    <name>craftera_suite-baby_entities</name>
+    <version>0.0.1</version>
+    <description>Prevents entities from becoming their adult variant.</description>
+    <url>https://github.com/ScorchedPsyche/craftera_suite</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory> <!-- (your resources folder location) -->
+                <filtering>true</filtering> <!-- this is the important part, it's what replaces, filters, all placeholders in the resources folder (such as ${project.version} in plugin.yml) -->
+            </resource>
+        </resources>
+    </build>
 </project>
