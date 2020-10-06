@@ -3,7 +3,6 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.HudCommandListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
-import com.github.scorchedpsyche.craftera_suite.modules.main.HudCommandManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import org.bukkit.Bukkit;
@@ -17,7 +16,6 @@ public final class CraftEraSuiteHud extends JavaPlugin
     public CraftEraSuiteCore cesCore;
     public HudDatabaseAPI hudDatabaseAPI;
     public HudManager hudManager;
-    public HudCommandManager hudCommandManager;
     
     public File pluginRootFolder;
 //    public File playerConfigsFolder;
@@ -64,7 +62,6 @@ public final class CraftEraSuiteHud extends JavaPlugin
 
         hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
         hudManager = new HudManager(hudDatabaseAPI);
-        hudCommandManager = new HudCommandManager(hudManager);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             hudManager.showHudForPlayers();
