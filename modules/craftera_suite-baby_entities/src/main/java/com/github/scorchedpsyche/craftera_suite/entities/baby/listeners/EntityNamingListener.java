@@ -4,12 +4,9 @@ import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyE
 import com.github.scorchedpsyche.craftera_suite.entities.baby.utils.EntityUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Ageable;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -157,25 +154,4 @@ public class EntityNamingListener implements Listener {
 //                    targetEntity, Particle.EXPLOSION_NORMAL,3, 0.01);
 //        }
 //    }
-
-    @EventHandler
-    public void onEntityDropItemEvent(EntityDropItemEvent onEntityDropItem)
-    {
-        EntityUtil entityUtil = new EntityUtil();
-
-        // Check is entity is ageable and breedable
-        if( onEntityDropItem.getEntity() instanceof Ageable )
-        {
-            // Check for plugin metadata
-            if( onEntityDropItem.getEntity().hasMetadata("ces_adult/baby") )
-            {
-                // Check if it's a turtle
-                if(onEntityDropItem.getEntity().getType() == EntityType.TURTLE)
-                {
-                    // Cancel Scute drop
-                    onEntityDropItem.setCancelled(true);
-                }
-            }
-        }
-    }
 }
