@@ -72,7 +72,7 @@ Features:
  - [x] **World time;**  
  - [x] **World time colorization: colors work hours, monster spawning and bed usage;** 
  - [x] **Server TPS (Tick Per Second);**
- - [ ] **Server TPS colorization: green when 20, yellow 19-15 and red below 15;**
+ - [x] **Server TPS colorization: green when 20, yellow 19-15 and red below 15;**
  - [ ] Spectator plugin range;  
  - [ ] Commerce plugin integration.  
   
