@@ -1,18 +1,22 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 
 import java.sql.*;
 
 public class HudDatabaseAPI
 {
+
     public HudDatabaseAPI(IDatabase database)
     {
         this.database = database;
         consoleUtils = new ConsoleUtils("CraftEra Suite - HUD");
+        stringUtils = new StringUtils();
         databaseUtils = new DatabaseUtils();
         setup();
     }
@@ -20,6 +24,7 @@ public class HudDatabaseAPI
     private final String tablePrefix = "hud_";
     private IDatabase database;
     private ConsoleUtils consoleUtils;
+    private StringUtils stringUtils;
     private DatabaseUtils databaseUtils;
 
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
@@ -62,6 +67,33 @@ public class HudDatabaseAPI
         database.executeSql(sql);
     }
 
+    public void toggleBoolean(String table, String[] columns)
+    {
+//        if( !stringUtils.isEmpty(table) && columns != null && !stringUtils.isEmpty(columns[0]) )
+//        {
+//            String sql =
+//        } else {
+//            consoleUtils.logError("Failed to update table: " + table);
+//        }
+    }
+
+    public void toggleBooleanForPlayer(String table, String playerUUID, String column)
+    {
+        if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
+        {
+            String sql = "INSERT INTO " + table +
+                    " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
+                        "VALUES('" + playerUUID + "', 1) \n" +
+                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
+                        "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
+
+            database.executeSql(sql);
+        } else {
+            consoleUtils.logError(
+                    "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
+        }
+    }
+
     private void setup()
     {
         String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + tablePrefix + "player_preferences (\n"
@@ -69,14 +101,15 @@ public class HudDatabaseAPI
                 + "	player_uuid TEXT UNIQUE NOT NULL,\n"
                 + "	enabled NUMERIC DEFAULT 0,\n"
                 + "	coordinates NUMERIC DEFAULT 1,\n"
-                + "	coordinates_nether_portal NUMERIC DEFAULT 0,\n"
-                + "	durability NUMERIC DEFAULT 1,\n"
-                + "	orientation NUMERIC DEFAULT 1,\n"
-                + "	time_server NUMERIC DEFAULT 0,\n"
-                + "	time_world NUMERIC DEFAULT 1,\n"
-                + "	time_world_work_hours NUMERIC DEFAULT 1,\n"
-                + "	plugin_spectator_range NUMERIC DEFAULT 1,\n"
-                + "	commerce NUMERIC DEFAULT 1\n"
+                + "	nether_portal_coordinates NUMERIC DEFAULT 1,\n"
+                + "	player_orientation NUMERIC DEFAULT 1,\n"
+                + "	plugin_commerce NUMERIC DEFAULT 0,\n"
+                + "	plugin_spectator NUMERIC DEFAULT 0,\n"
+                + "	server_time NUMERIC DEFAULT 1,\n"
+                + "	server_tps NUMERIC DEFAULT 1,\n"
+                + "	tool_durability NUMERIC DEFAULT 1,\n"
+                + "	world_time NUMERIC DEFAULT 1,\n"
+                + "	world_time_with_work_hours NUMERIC DEFAULT 1\n"
                 + ");";
 
         if (database.executeSql(playerPreferencesTableSql))

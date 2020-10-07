@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.listeners;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,6 +40,10 @@ public class HudCommandListener implements Listener
 
                             case "nether_portal_coordinates":
                                 // TODO: nether_portal_coordinates
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates);
+                                event.getPlayer().sendMessage("toggled nether_portal_coordinates");
                                 break;
 
                             case "player_orientation":
@@ -73,6 +78,10 @@ public class HudCommandListener implements Listener
                                 break;
                         }
                     } else {
+//                        hudManager.hudDatabaseAPI.toggleBooleanForPlayer(
+//                                DatabaseTables.Hud.player_preferences,
+//                                event.getPlayer().getUniqueId().toString(),
+//                                DatabaseTables.Hud.PlayerPreferences.enabled );
                         hudManager.toggleHudForPlayer( event.getPlayer() );
                     }
                     break;

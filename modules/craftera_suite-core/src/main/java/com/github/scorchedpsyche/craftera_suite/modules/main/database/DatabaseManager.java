@@ -21,8 +21,9 @@ public class DatabaseManager
                 break;
 
             default: // SQLite
-                database = new SQLiteDatabase(cesCore,
-                                              cesCore.folderUtils.cesRootFolder + File.separator + "craftera_suite.db" );
+                database = new SQLiteDatabase(
+                        cesCore,
+                        cesCore.folderUtils.cesRootFolder + File.separator + "craftera_suite.db" );
                 break;
         }
     }

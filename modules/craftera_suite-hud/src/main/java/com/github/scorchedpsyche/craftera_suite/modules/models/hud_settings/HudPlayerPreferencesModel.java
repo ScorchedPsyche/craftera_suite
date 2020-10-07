@@ -19,14 +19,15 @@ public class HudPlayerPreferencesModel
             player_uuid = rs.getString(2);
             enabled = rs.getBoolean(3);
             coordinates = rs.getBoolean(4);
-            coordinates_nether_portal = rs.getBoolean(5);
-            durability = rs.getBoolean(6);
-            orientation = rs.getBoolean(7);
-            time_server = rs.getBoolean(8);
-            time_world = rs.getBoolean(9);
-            time_world_work_hours = rs.getBoolean(10);
-            plugin_spectator_range = rs.getBoolean(11);
-            commerce = rs.getBoolean(12);
+            nether_portal_coordinates = rs.getBoolean(5);
+            player_orientation = rs.getBoolean(6);
+            plugin_commerce = rs.getBoolean(7);
+            plugin_spectator = rs.getBoolean(8);
+            server_time = rs.getBoolean(9);
+            server_tps = rs.getBoolean(10);
+            tool_durability = rs.getBoolean(11);
+            world_time = rs.getBoolean(12);
+            world_time_with_work_hours = rs.getBoolean(13);
 
             return this;
         } catch (SQLException e)
@@ -39,6 +40,8 @@ public class HudPlayerPreferencesModel
     }
 
     public boolean showCoordinates() { return coordinates; }
+    public boolean showNetherPortalCoordinates() { return nether_portal_coordinates; }
+    public boolean showOrientation() { return nether_portal_coordinates; }
 
     private ConsoleUtils consoleUtils;
 
@@ -46,12 +49,13 @@ public class HudPlayerPreferencesModel
     private String player_uuid;
     private Boolean enabled;
     private Boolean coordinates;
-    private Boolean coordinates_nether_portal;
-    private Boolean durability;
-    private Boolean orientation;
-    private Boolean time_server;
-    private Boolean time_world;
-    private Boolean time_world_work_hours;
-    private Boolean plugin_spectator_range;
-    private Boolean commerce;
+    private Boolean nether_portal_coordinates;
+    private Boolean player_orientation;
+    private Boolean plugin_commerce;
+    private Boolean plugin_spectator;
+    private Boolean server_time;
+    private Boolean server_tps;
+    private Boolean tool_durability;
+    private Boolean world_time;
+    private Boolean world_time_with_work_hours;
 }

@@ -33,8 +33,6 @@ public final class CraftEraSuiteCore extends JavaPlugin {
 
         databaseManager = new DatabaseManager(this, DatabaseManager.DatabaseType.SQLite);
 
-
-
         // Register "ces" command
         this.getCommand("ces").setExecutor(new CustomCommandExecutor(this));
         this.getCommand("ces").setTabCompleter(new CustomTabCompleter(this));
