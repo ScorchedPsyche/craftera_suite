@@ -127,33 +127,33 @@ public class HudManager {
 
             if( preferences.showNetherPortalCoordinates() )
             {
-                hudText += getNetherPortalCoordinates(player);
+                hudText += " " + getNetherPortalCoordinates(player);
             }
 
             if( preferences.showOrientation() )
             {
-                hudText += getPlayerOrientation(player.getLocation().getYaw());
+                hudText += " " + getPlayerOrientation(player.getLocation().getYaw());
             }
 
             if( preferences.showServerTime() )
             {
-                hudText += getServerTime();
+                hudText += " " + getServerTime();
             }
 
             if( preferences.showServerTPS() )
             {
-                hudText += getServerTps();
+                hudText += " " + getServerTps();
             }
 
             if( preferences.showToolDurability() )
             {
-                hudText += getToolDurability(player.getInventory().getItemInMainHand());
-                hudText += getToolDurability(player.getInventory().getItemInOffHand());
+                hudText += " " + getToolDurability(player.getInventory().getItemInMainHand());
+                hudText += " " + getToolDurability(player.getInventory().getItemInOffHand());
             }
 
             if( preferences.showWorldTime() )
             {
-                hudText += getWorldTime(preferences.showWorldTimeColorized());
+                hudText += " " + getWorldTime(preferences.showWorldTimeColorized());
             }
 
             player.spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText ) );
@@ -234,8 +234,19 @@ public class HudManager {
         String durability = "";
         if (item != null && item.getType().getMaxDurability() != 0)
         {
-            durability += " " + (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage()) +
-            "/" + item.getType().getMaxDurability();
+            int remainingDurability =
+                    item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage();
+
+            if( remainingDurability < 50 )
+            {
+                durability += ChatColor.RED + Integer.toString(remainingDurability) + ChatColor.RESET;
+            } else if ( remainingDurability < 100  ) {
+                durability += ChatColor.YELLOW + Integer.toString(remainingDurability) + ChatColor.RESET;
+            } else {
+                durability += Integer.toString(remainingDurability);
+            }
+
+            durability += "/" + item.getType().getMaxDurability();
         }
 
         return durability;
@@ -245,7 +256,7 @@ public class HudManager {
     {
         World overworld = Bukkit.getWorld("world");
 
-        String worldTime = " " + overworld.getTime();
+        String worldTime = Long.toString(overworld.getTime());
 
         if( colorized )
         {
