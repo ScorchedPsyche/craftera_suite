@@ -19,7 +19,7 @@ public class DatabaseTables
             public static String server_tps = "server_tps";
             public static String tool_durability = "tool_durability";
             public static String world_time = "world_time";
-            public static String world_time_with_work_hours = "world_time_with_work_hours";
+            public static String world_time_colorized = "world_time_colorized";
         }
     }
 }

@@ -41,7 +41,12 @@ public class HudPlayerPreferencesModel
 
     public boolean showCoordinates() { return coordinates; }
     public boolean showNetherPortalCoordinates() { return nether_portal_coordinates; }
-    public boolean showOrientation() { return nether_portal_coordinates; }
+    public boolean showOrientation() { return player_orientation; }
+    public boolean showServerTime() { return server_time; }
+    public boolean showServerTPS() { return server_tps; }
+    public boolean showToolDurability() { return tool_durability; }
+    public boolean showWorldTime() { return world_time; }
+    public boolean showWorldTimeColorized() { return world_time_with_work_hours; }
 
     private ConsoleUtils consoleUtils;
 

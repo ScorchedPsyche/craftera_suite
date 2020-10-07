@@ -5,9 +5,16 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTa
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_16_R2.MinecraftServer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,7 +132,28 @@ public class HudManager {
 
             if( preferences.showOrientation() )
             {
-                hudText += getOrientation(player.getLocation().getYaw());
+                hudText += getPlayerOrientation(player.getLocation().getYaw());
+            }
+
+            if( preferences.showServerTime() )
+            {
+                hudText += getServerTime();
+            }
+
+            if( preferences.showServerTPS() )
+            {
+                hudText += getServerTps();
+            }
+
+            if( preferences.showToolDurability() )
+            {
+                hudText += getToolDurability(player.getInventory().getItemInMainHand());
+                hudText += getToolDurability(player.getInventory().getItemInOffHand());
+            }
+
+            if( preferences.showWorldTime() )
+            {
+                hudText += getWorldTime(preferences.showWorldTimeColorized());
             }
 
             player.spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText ) );
@@ -141,11 +169,19 @@ public class HudManager {
 
     private String getNetherPortalCoordinates(Player player)
     {
-        return ((int) player.getLocation().getX()) / 8 + "x " +
-                ((int) player.getLocation().getZ()) / 8 + "z" ;
+        if( player.getWorld().getEnvironment().equals(World.Environment.NETHER) )
+        {
+            return ((int) player.getLocation().getX()) * 8 + "x " +
+                    ((int) player.getLocation().getZ()) * 8 + "z" ;
+        } else if ( player.getWorld().getEnvironment().equals(World.Environment.NORMAL) ) {
+            return ((int) player.getLocation().getX()) / 8 + "x " +
+                    ((int) player.getLocation().getZ()) / 8 + "z" ;
+        }
+
+        return "–";
     }
 
-    private String getOrientation(float yaw)
+    private String getPlayerOrientation(float yaw)
     {
         double rotation = (yaw - 180) % 360;
         if (rotation < 0) {
@@ -177,5 +213,73 @@ public class HudManager {
         }
 
         return "N";
+    }
+
+    public String getServerTime()
+    {
+        Date d1 = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        return df.format(d1);
+    }
+
+    public String getServerTps()
+    {
+        return  Math.round(MinecraftServer.getServer().recentTps[0]) + "/" +
+                Math.round(MinecraftServer.getServer().recentTps[1]) + "/" +
+                Math.round(MinecraftServer.getServer().recentTps[2]);
+    }
+
+    public String getToolDurability(ItemStack item)
+    {
+        String durability = "";
+        if (item != null && item.getType().getMaxDurability() != 0)
+        {
+            durability += " " + (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage()) +
+            "/" + item.getType().getMaxDurability();
+        }
+
+        return durability;
+    }
+
+    public String getWorldTime(boolean colorized)
+    {
+        World overworld = Bukkit.getWorld("world");
+
+        String worldTime = " " + overworld.getTime();
+
+        if( colorized )
+        {
+            if( overworld.hasStorm() )
+            {
+                // Weather not clear
+                if ( overworld.getTime() >= 12969 && overworld.getTime() <= 23031 )
+                {
+                    // Monsters are spawning
+                    worldTime = ChatColor.RED + worldTime + ChatColor.RESET;
+                } else if ( overworld.getTime() >= 12010 && overworld.getTime() < 12969 )
+                {
+                    // Beds can be used
+                    worldTime = ChatColor.YELLOW + worldTime + ChatColor.RESET;
+                }
+            } else if( !overworld.hasStorm() )
+            {
+                // Weather clear
+                if ( overworld.getTime() >= 13188 && overworld.getTime() <= 22812 )
+                {
+                    // Monsters are spawning
+                    worldTime = ChatColor.RED + worldTime + ChatColor.RESET;
+                } else if ( overworld.getTime() >= 12542 && overworld.getTime() < 13188 )
+                {
+                    // Beds can be used
+                    worldTime = ChatColor.YELLOW + worldTime + ChatColor.RESET;
+                }
+            } else if ( overworld.getTime() >= 2000 && overworld.getTime() <= 9000 )
+            {
+                // Villager work hours
+                worldTime = ChatColor.GREEN + worldTime + ChatColor.RESET;
+            }
+        }
+
+        return worldTime;
     }
 }
