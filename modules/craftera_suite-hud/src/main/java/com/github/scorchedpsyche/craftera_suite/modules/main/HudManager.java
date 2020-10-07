@@ -224,9 +224,21 @@ public class HudManager {
 
     public String getServerTps()
     {
-        return  Math.round(MinecraftServer.getServer().recentTps[0]) + "/" +
-                Math.round(MinecraftServer.getServer().recentTps[1]) + "/" +
-                Math.round(MinecraftServer.getServer().recentTps[2]);
+        return  colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
+                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
+                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
+    }
+
+    private String colorizeServerTps(short tps)
+    {
+        if( tps == 20 )
+        {
+            return ChatColor.GREEN + Short.toString(tps) + ChatColor.RESET;
+        } else if ( tps < 20 && tps >= 15 ){
+            return ChatColor.YELLOW + Short.toString(tps) + ChatColor.RESET;
+        }
+
+        return ChatColor.RED + Short.toString(tps) + ChatColor.RESET;
     }
 
     public String getToolDurability(ItemStack item)
