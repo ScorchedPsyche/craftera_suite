@@ -272,7 +272,11 @@ public class HudManager {
 
         if( colorized )
         {
-            if( overworld.hasStorm() )
+             if ( overworld.getTime() >= 2000 && overworld.getTime() <= 9000 )
+            {
+                // Villager work hours
+                worldTime = ChatColor.GREEN + worldTime + ChatColor.RESET;
+            } else if( overworld.hasStorm() )
             {
                 // Weather not clear
                 if ( overworld.getTime() >= 12969 && overworld.getTime() <= 23031 )
@@ -296,10 +300,6 @@ public class HudManager {
                     // Beds can be used
                     worldTime = ChatColor.YELLOW + worldTime + ChatColor.RESET;
                 }
-            } else if ( overworld.getTime() >= 2000 && overworld.getTime() <= 9000 )
-            {
-                // Villager work hours
-                worldTime = ChatColor.GREEN + worldTime + ChatColor.RESET;
             }
         }
 
