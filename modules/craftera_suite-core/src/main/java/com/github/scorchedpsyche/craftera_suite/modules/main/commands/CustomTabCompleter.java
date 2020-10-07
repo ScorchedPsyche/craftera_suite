@@ -1,6 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -41,7 +42,32 @@ public class CustomTabCompleter implements TabCompleter {
                     // Check if more than 2 args
                     if ( args.length > 2 )
                     {  
-                        // More than 2 args, suggest no options
+                        // More than 2 args
+
+                        if( args[1].equalsIgnoreCase("toggle") )
+                        {
+                            List<String> subCommands = new ArrayList<>();
+
+                            subCommands.add("coordinates");
+                            subCommands.add("nether_portal_coordinates");
+                            subCommands.add("player_orientation");
+                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+                            {
+                                subCommands.add( "plugin_commerce");
+                            }
+                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+                            {
+                                subCommands.add("plugin_spectator");
+                            }
+                            subCommands.add("server_time");
+                            subCommands.add("server_tps");
+                            subCommands.add("tool_durability");
+                            subCommands.add("world_time");
+                            subCommands.add("world_time_with_work_hours");
+
+                            return subCommands;
+                        }
+
                         return new ArrayList<String>();
                     } else {
                         // Only 2 args
