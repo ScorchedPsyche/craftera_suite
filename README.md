@@ -17,12 +17,13 @@ Prevents entities from becoming their adult variant.
   
 Features:  
  - [x] **Passive mob support;**  
- - [x] **Prevent Scute drop on Turtle's growth: prevent abuse;**
  - [x] **Aggressive mob support (for those that have an infant variant);**
  - [x] **Custom Name Tag support: tool to transform entities into baby/adult;**  
  - [x] **Infinite Name Tag: prevent name tag from being expended;**  
  - [x] **Undo feature: convert back to their original state;**  
- - [x] **Prevent usage on natural babies: to prevent abuse.**  
+ - [x] **Prevent exploit: usage on natural babies to accelerate growth;**  
+ - [x] **Prevent exploit: Scute drop on Turtle's growth;**
+ - [x] **Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.**
   
 ### Core 
 Main library dependency needed for other plugins of this pack.  
