@@ -64,13 +64,13 @@ Features:
  - [x] **Per player configuration;**
  - [x] **Player login auto-load of preferences;**
  - [x] **Coordinates;**  
- - [x] Nether Portal coordinates;  
- - [x] Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;  
- - [x] Player orientation (N/S/E/W/etc);  
- - [x] Server time;   
- - [x] World time;  
- - [x] World time colorization: colors work hours, monster spawning and bed usage; 
- - [x] Server TPS (Tick Per Second);
+ - [x] **Nether Portal coordinates;** 
+ - [x] **Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;**  
+ - [x] **Player orientation (N/S/E/W/etc);**  
+ - [x] **Server time;**   
+ - [x] **World time;**  
+ - [x] **World time colorization: colors work hours, monster spawning and bed usage;** 
+ - [x] **Server TPS (Tick Per Second);**
  - [ ] Spectator plugin range;  
  - [ ] Commerce plugin integration.  
   
