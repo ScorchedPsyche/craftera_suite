@@ -231,9 +231,9 @@ public class HudManager {
 
     private String colorizeServerTps(short tps)
     {
-        if( tps == 20 )
+        if( tps >= 20 )
         {
-            return ChatColor.GREEN + Short.toString(tps) + ChatColor.RESET;
+            return ChatColor.GREEN + "20" + ChatColor.RESET;
         } else if ( tps < 20 && tps >= 15 ){
             return ChatColor.YELLOW + Short.toString(tps) + ChatColor.RESET;
         }
