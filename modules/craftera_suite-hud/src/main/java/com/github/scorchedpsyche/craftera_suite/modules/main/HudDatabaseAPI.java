@@ -101,6 +101,11 @@ public class HudDatabaseAPI
                 + "	" + DatabaseTables.Hud.PlayerPreferences.player_uuid + " TEXT UNIQUE NOT NULL,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.enabled + " NUMERIC DEFAULT 0,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.display_mode + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_coordinates + " NUMERIC DEFAULT 1\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_nether_portal_coordinates + " NUMERIC DEFAULT 1\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_server_tps + " NUMERIC DEFAULT 1\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_tool_durability + " NUMERIC DEFAULT 1\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_world_time + " NUMERIC DEFAULT 1\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.coordinates + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.player_orientation + " NUMERIC DEFAULT 1,\n"
@@ -110,7 +115,6 @@ public class HudDatabaseAPI
                 + "	" + DatabaseTables.Hud.PlayerPreferences.server_tps + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.tool_durability + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.world_time + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.world_time_colorized + " NUMERIC DEFAULT 1\n"
                 + ");";
 
         if (database.executeSql(playerPreferencesTableSql))

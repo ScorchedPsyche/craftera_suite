@@ -28,7 +28,6 @@ public class HudPlayerPreferencesModel
             server_tps = rs.getBoolean(11);
             tool_durability = rs.getBoolean(12);
             world_time = rs.getBoolean(13);
-            world_time_with_work_hours = rs.getBoolean(14);
 
             return this;
         } catch (SQLException e)
@@ -41,6 +40,11 @@ public class HudPlayerPreferencesModel
     }
 
     public boolean isDisplayModeExpanded() { return display_mode; }
+    public boolean colorizeCoordinates() { return colorize_coordinates; }
+    public boolean colorizeNetherPortalCoordinates() { return colorize_nether_portal_coordinates; }
+    public boolean colorizeServerTps() { return colorize_server_tps; }
+    public boolean colorizeToolDurability() { return colorize_tool_durability; }
+    public boolean colorizeWorldTime() { return colorize_world_time; }
     public boolean showCoordinates() { return coordinates; }
     public boolean showNetherPortalCoordinates() { return nether_portal_coordinates; }
     public boolean showOrientation() { return player_orientation; }
@@ -48,7 +52,6 @@ public class HudPlayerPreferencesModel
     public boolean showServerTPS() { return server_tps; }
     public boolean showToolDurability() { return tool_durability; }
     public boolean showWorldTime() { return world_time; }
-    public boolean showWorldTimeColorized() { return world_time_with_work_hours; }
 
     private ConsoleUtils consoleUtils;
 
@@ -56,6 +59,11 @@ public class HudPlayerPreferencesModel
     private String player_uuid;
     private Boolean enabled;
     private Boolean display_mode;
+    private Boolean colorize_coordinates;
+    private Boolean colorize_nether_portal_coordinates;
+    private Boolean colorize_server_tps;
+    private Boolean colorize_tool_durability;
+    private Boolean colorize_world_time;
     private Boolean coordinates;
     private Boolean nether_portal_coordinates;
     private Boolean player_orientation;
@@ -65,5 +73,4 @@ public class HudPlayerPreferencesModel
     private Boolean server_tps;
     private Boolean tool_durability;
     private Boolean world_time;
-    private Boolean world_time_with_work_hours;
 }

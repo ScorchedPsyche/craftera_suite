@@ -203,7 +203,7 @@ public class HudManager {
 
             if( preferences.showWorldTime() )
             {
-                hudText += " " + getWorldTime(preferences.showWorldTimeColorized());
+                hudText += " " + getWorldTime(preferences.colorizeWorldTime());
             }
 
             player.spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText ) );
