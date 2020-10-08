@@ -63,7 +63,35 @@ public class CustomTabCompleter implements TabCompleter {
                             subCommands.add("server_tps");
                             subCommands.add("tool_durability");
                             subCommands.add("world_time");
-                            subCommands.add("world_time_with_work_hours");
+
+                            return subCommands;
+                        } else if( args[1].equalsIgnoreCase("config") )
+                        {
+                            // Check if more than 3 args
+                            if ( args.length > 3 )
+                            {
+                                List<String> subCommands = new ArrayList<>();
+
+                                if( args[2].equalsIgnoreCase("display_mode") )
+                                {
+                                    subCommands.add("compact");
+                                    subCommands.add("extended");
+                                } else if ( args[2].equalsIgnoreCase("colorize") )
+                                {
+                                    subCommands.add("coordinates");
+                                    subCommands.add("nether_portal_coordinates");
+                                    subCommands.add("server_tps");
+                                    subCommands.add("tool_durability");
+                                    subCommands.add("world_time");
+                                }
+
+                                return subCommands;
+                            }
+
+                            List<String> subCommands = new ArrayList<>();
+
+                            subCommands.add("display_mode");
+                            subCommands.add("colorize");
 
                             return subCommands;
                         }
