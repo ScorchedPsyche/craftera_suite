@@ -41,11 +41,12 @@ public class CustomTabCompleter implements TabCompleter {
 
                     // Check if more than 2 args
                     if ( args.length > 2 )
-                    {  
-                        // More than 2 args
+                    {
+                        // HUD ... subcommand. More than 2 args
 
                         if( args[1].equalsIgnoreCase("toggle") )
                         {
+                            // HUD TOGGLE subcommand
                             List<String> subCommands = new ArrayList<>();
 
                             subCommands.add("coordinates");
@@ -55,7 +56,7 @@ public class CustomTabCompleter implements TabCompleter {
                             {
                                 subCommands.add( "plugin_commerce");
                             }
-                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
                             {
                                 subCommands.add("plugin_spectator");
                             }
@@ -67,17 +68,22 @@ public class CustomTabCompleter implements TabCompleter {
                             return subCommands;
                         } else if( args[1].equalsIgnoreCase("config") )
                         {
+                            // HUD CONFIG subcommand
+
                             // Check if more than 3 args
                             if ( args.length > 3 )
                             {
+                                // HUD CONFIG ... subcommand. More than 3 args
                                 List<String> subCommands = new ArrayList<>();
 
                                 if( args[2].equalsIgnoreCase("display_mode") )
                                 {
+                                    //  HUD CONFIG DISPLAY_MODE subcommand
                                     subCommands.add("compact");
                                     subCommands.add("extended");
                                 } else if ( args[2].equalsIgnoreCase("colorize") )
                                 {
+                                    //  HUD CONFIG COLORIZE subcommand
                                     subCommands.add("coordinates");
                                     subCommands.add("nether_portal_coordinates");
                                     subCommands.add("player_orientation");
@@ -89,6 +95,7 @@ public class CustomTabCompleter implements TabCompleter {
                                 return subCommands;
                             }
 
+                            // HUD CONFIG subcommand. Return suggestions
                             List<String> subCommands = new ArrayList<>();
 
                             subCommands.add("display_mode");
@@ -104,6 +111,7 @@ public class CustomTabCompleter implements TabCompleter {
                         // Check if HUD plugin is enabled
                         if( cesCore.suitePluginManager.isHudPluginEnabled() && args[0].equalsIgnoreCase("hud") )
                         {
+                            //  HUD subcommand. Return suggestions
                             return new ArrayList<String>() {
                                 private static final long serialVersionUID = 1L;
             
