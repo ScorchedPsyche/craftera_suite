@@ -50,7 +50,15 @@ public class ResourcesManager
                 File destinationFile = new File(destinationPath);
 
                 try {
-                    FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
+                    if( !destinationFile.exists() )
+                    {
+                        FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
+                        consoleUtils.logMessage(
+                                "File copied: " + ChatColor.YELLOW + destinationFile);
+                    } else {
+                        consoleUtils.logMessage(
+                                "File exists and won't be copied: " + ChatColor.YELLOW + destinationFile);
+                    }
                 } catch (IOException e) {
                     // Failed to create file
                     consoleUtils.logError(

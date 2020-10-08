@@ -570,10 +570,10 @@ public class MerchantManager
         // Empties trade list to avoid duplicated
         trades = new ArrayList<>();
 
+        if ( !decorationHeads.isEmpty() ) { addDecorationHeadsToOffers(); }
+        if ( !items.isEmpty() ) { addItemsToOffers(); }
         if ( !playerHeadsWhitelisted.isEmpty() ) { addWhitelistedPlayersHeadsToOffers(); }
         if ( !playerHeads.isEmpty() ) { trades.addAll(playerHeads); }
-        if ( !items.isEmpty() ) { addItemsToOffers(); }
-        if ( !decorationHeads.isEmpty() ) { addDecorationHeadsToOffers(); }
 
         merchant.setRecipes(trades);
     }

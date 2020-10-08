@@ -35,6 +35,12 @@ public class ConsoleUtils {
                 ChatColor.GREEN + "[" + getPrefix() + "] SUCCESS: " + message);
     }
 
+    public void logMessage(String message)
+    {
+        Bukkit.getConsoleSender().sendMessage(
+                "[" + getPrefix() + "] " + message);
+    }
+
     private String getPrefix()
     {
         return ( prefix != null && !stringUtils.isEmpty(prefix) ) ? prefix : "CraftEra Suite";
