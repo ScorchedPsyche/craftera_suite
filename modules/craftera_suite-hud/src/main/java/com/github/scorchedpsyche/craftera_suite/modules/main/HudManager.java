@@ -399,10 +399,10 @@ public class HudManager {
 
             if(colorize)
             {
-                if( itemRemainingDurability < 50 )
+                if( itemRemainingDurability < 25 )
                 {
                     durability += ChatColor.RED + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
-                } else if ( itemRemainingDurability < 100  ) {
+                } else if ( itemRemainingDurability < 50  ) {
                     durability += ChatColor.YELLOW + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
                 } else {
                     durability += Integer.toString(itemRemainingDurability);
