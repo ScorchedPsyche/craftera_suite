@@ -49,24 +49,6 @@ public class HudDatabaseAPI
         return null;
     }
 
-    public void disableHudForPlayer(String playerUUID)
-    {
-        String sql = "INSERT INTO " + tablePrefix + "player_preferences (player_uuid, enabled)\n" +
-                "  VALUES('" + playerUUID + "', 0) \n" +
-                "  ON CONFLICT(player_uuid) \n" +
-                "  DO UPDATE SET enabled=0;";
-        database.executeSql(sql);
-    }
-
-    public void enableHudForPlayer(String playerUUID)
-    {
-        String sql = "INSERT INTO " + tablePrefix + "player_preferences (player_uuid, enabled)\n" +
-                "  VALUES('" + playerUUID + "', 1) \n" +
-                "  ON CONFLICT(player_uuid) \n" +
-                "  DO UPDATE SET enabled=1;";
-        database.executeSql(sql);
-    }
-
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
         if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
@@ -90,14 +72,14 @@ public class HudDatabaseAPI
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
-                    "VALUES('" + playerUUID + "', 1) \n" +
+                    "VALUES('" + playerUUID + "', " + value +") \n" +
                     "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
-                    "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
+                    "UPDATE SET " + column + " = " + value;
 
             database.executeSql(sql);
         } else {
             consoleUtils.logError(
-                    "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
+                    "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
         }
     }
 

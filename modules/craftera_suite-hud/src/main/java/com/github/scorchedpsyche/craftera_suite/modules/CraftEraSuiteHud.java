@@ -49,16 +49,6 @@ public final class CraftEraSuiteHud extends JavaPlugin
         cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
 
         pluginRootFolder = cesCore.folderUtils.getOrCreatePluginSubfolder(this);
-//        playerConfigsFolder = new File( pluginRootFolder.toString() + File.separator + "players" );
-//
-//        if ( !playerConfigsFolder.exists() )
-//        {
-//            if ( !playerConfigsFolder.mkdirs() )
-//            {
-//               cesCore.consoleUtils.logError(
-//                       "Player configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + playerConfigsFolder.toString());
-//            }
-//        }
 
         hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
         hudManager = new HudManager(hudDatabaseAPI);
