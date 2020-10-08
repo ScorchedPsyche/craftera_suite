@@ -80,6 +80,7 @@ public class CustomTabCompleter implements TabCompleter {
                                 {
                                     subCommands.add("coordinates");
                                     subCommands.add("nether_portal_coordinates");
+                                    subCommands.add("player_orientation");
                                     subCommands.add("server_tps");
                                     subCommands.add("tool_durability");
                                     subCommands.add("world_time");

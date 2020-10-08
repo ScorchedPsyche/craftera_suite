@@ -67,16 +67,6 @@ public class HudDatabaseAPI
         database.executeSql(sql);
     }
 
-    public void toggleBoolean(String table, String[] columns)
-    {
-//        if( !stringUtils.isEmpty(table) && columns != null && !stringUtils.isEmpty(columns[0]) )
-//        {
-//            String sql =
-//        } else {
-//            consoleUtils.logError("Failed to update table: " + table);
-//        }
-    }
-
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
         if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
@@ -86,6 +76,23 @@ public class HudDatabaseAPI
                         "VALUES('" + playerUUID + "', 1) \n" +
                         "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
                         "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
+
+            database.executeSql(sql);
+        } else {
+            consoleUtils.logError(
+                    "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
+        }
+    }
+
+    public void setBooleanForPlayer(String table, String playerUUID, String column, boolean value)
+    {
+        if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
+        {
+            String sql = "INSERT INTO " + table +
+                    " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
+                    "VALUES('" + playerUUID + "', 1) \n" +
+                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
+                    "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
 
             database.executeSql(sql);
         } else {
@@ -104,6 +111,7 @@ public class HudDatabaseAPI
                 + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_coordinates + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_nether_portal_coordinates + " NUMERIC DEFAULT " +
                 "1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_player_orientation + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_server_tps + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_tool_durability + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_world_time + " NUMERIC DEFAULT 1,\n"

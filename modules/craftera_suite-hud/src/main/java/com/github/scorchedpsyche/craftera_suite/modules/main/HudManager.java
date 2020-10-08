@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTa
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_16_R2.MinecraftServer;
@@ -26,6 +27,7 @@ public class HudManager {
         onlinePlayersWithHudEnabled = new HashMap<>();
         playerUtils = new PlayerUtils();
         itemStackUtils = new ItemStackUtils();
+        stringUtils = new StringUtils();
 
         setup();
     }
@@ -34,6 +36,7 @@ public class HudManager {
     public HudDatabaseAPI hudDatabaseAPI;
     public PlayerUtils playerUtils;
     public ItemStackUtils itemStackUtils;
+    private StringUtils stringUtils;
 
     public void setup()
     {
@@ -58,10 +61,31 @@ public class HudManager {
                 DatabaseTables.Hud.player_preferences,
                 player.getUniqueId().toString(),
                 preference );
+
         player.sendMessage("CES HUD – Toggled preference: " + preference);
 
-        if( !onlinePlayersWithHudEnabled.containsKey(player) )
+        if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
+            onlinePlayersWithHudEnabled.get(player).togglePreference(preference);
+        } else {
+            player.sendMessage("CES HUD – Your HUD is not enabled, use '/ces hud' to display it");
+        }
+    }
+
+    public void setPreferenceForPlayer(Player player, String preference, boolean value)
+    {
+        hudDatabaseAPI.setBooleanForPlayer(
+                DatabaseTables.Hud.player_preferences,
+                player.getUniqueId().toString(),
+                preference,
+                value);
+
+        player.sendMessage("CES HUD – set " + preference + " with " + value);
+
+        if( onlinePlayersWithHudEnabled.containsKey(player) )
+        {
+            onlinePlayersWithHudEnabled.get(player).setPreference(preference, value);
+        } else {
             player.sendMessage("CES HUD – Your HUD is not enabled, use '/ces hud' to display it");
         }
     }
@@ -129,7 +153,7 @@ public class HudManager {
                 if( preferences.showCoordinates() )
                 {
                     hudText += formatPlayerCoordinatesExpanded(
-                            preferences.colorizeToolDurability(),
+                            preferences.colorizeCoordinates(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedY(player),
                             playerUtils.getCoordinateRoundedZ(player) );
@@ -138,7 +162,7 @@ public class HudManager {
                 if( preferences.showNetherPortalCoordinates() )
                 {
                     hudText += " " + formatNetherPortalCoordinatesExpanded(
-                            preferences.colorizeToolDurability(),
+                            preferences.colorizeNetherPortalCoordinates(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedZ(player),
                             playerUtils.getEnvironment(player) );
@@ -147,7 +171,9 @@ public class HudManager {
                 // Player orientation
                 if( preferences.showOrientation() )
                 {
-                    hudText += " " + formatPlayerOrientation(player.getLocation().getYaw());
+                    hudText += " " + formatPlayerOrientation(
+                            preferences.colorizePlayerOrientation(),
+                            player.getLocation().getYaw());
                 }
 
                 if( preferences.showToolDurability() )
@@ -187,7 +213,9 @@ public class HudManager {
                 // Player orientation
                 if( preferences.showOrientation() )
                 {
-                    hudText += " " + formatPlayerOrientation(player.getLocation().getYaw());
+                    hudText += " " + formatPlayerOrientation(
+                            preferences.colorizePlayerOrientation(),
+                            player.getLocation().getYaw());
                 }
 
                 if( preferences.showToolDurability() )
@@ -212,6 +240,12 @@ public class HudManager {
             if( preferences.showWorldTime() )
             {
                 hudText += " " + getWorldTime(preferences.colorizeWorldTime());
+            }
+
+            if( stringUtils.isEmpty(hudText) )
+            {
+                hudText = "HUD empty! Use " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud" + ChatColor.RESET +
+                        " to hide the HUD or " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud help";
             }
 
             player.spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText ) );
@@ -239,9 +273,9 @@ public class HudManager {
         return "XYZ: " + x + " " + y + " " + z;
     }
 
-    private String formatPlayerOrientation(float yaw)
+    private String formatPlayerOrientation(boolean colorize, float yaw)
     {
-        String orientation = ChatColor.AQUA.toString();
+        String orientation = (colorize) ? ChatColor.AQUA.toString() : "";
 
         double rotation = (yaw - 180) % 360;
         if (rotation < 0) {
@@ -273,7 +307,7 @@ public class HudManager {
             orientation += "N";
         }
 
-        return orientation + ChatColor.RESET;
+        return (colorize) ? orientation + ChatColor.RESET : orientation;
     }
 
     private String formatNetherPortalCoordinatesCompact(boolean colorize, int x, int z, World.Environment environment)
@@ -338,7 +372,9 @@ public class HudManager {
 
     private String getServerTpsExpanded(boolean colorize)
     {
-        return  ChatColor.GOLD + "TPS: " + ChatColor.RESET + getServerTpsCompact(colorize) ;
+        String tps = (colorize) ? ChatColor.GOLD + "TPS: " + ChatColor.RESET : "TPS: "  ;
+
+        return tps + getServerTpsCompact(colorize);
     }
 
     private String colorizeServerTps(short tps)

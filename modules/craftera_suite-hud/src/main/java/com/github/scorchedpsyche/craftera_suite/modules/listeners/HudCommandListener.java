@@ -26,7 +26,103 @@ public class HudCommandListener implements Listener
             switch( args[0] )
             {
                 case "config":
-                    // TODO: config
+                    if( args.length > 1 )
+                    {
+                        switch( args[1] )
+                        {
+                            case "colorize":
+                                if( args.length > 2  )
+                                {
+                                    switch( args[2] )
+                                    {
+                                        case "coordinates":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_coordinates);
+                                            event.getPlayer().sendMessage("toggled colorize_coordinates");
+                                            break;
+
+                                        case "nether_portal_coordinates":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_nether_portal_coordinates);
+                                            event.getPlayer().sendMessage("toggled colorize_nether_portal_coordinates");
+                                            break;
+
+                                        case "player_orientation":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_player_orientation);
+                                            event.getPlayer().sendMessage("toggled colorize_player_orientation");
+                                            break;
+
+                                        case "server_tps":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_server_tps);
+                                            event.getPlayer().sendMessage("toggled colorize_server_tps");
+                                            break;
+
+                                        case "tool_durability":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_tool_durability);
+                                            event.getPlayer().sendMessage("toggled colorize_tool_durability");
+                                            break;
+
+                                        case "world_time":
+                                            hudManager.togglePreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.colorize_world_time);
+                                            event.getPlayer().sendMessage("toggled colorize_world_time");
+                                            break;
+
+                                        default:
+                                            // TODO: display help
+                                            break;
+                                    }
+                                } else {
+                                    // TODO: display help
+                                }
+                                break;
+
+                            case "display_mode":
+                                if( args.length > 2  )
+                                {
+                                    switch( args[2] )
+                                    {
+                                        case "compact":
+                                            hudManager.setPreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.display_mode,
+                                                    DatabaseTables.Hud.PlayerPreferences.DisplayMode.compact);
+                                            event.getPlayer().sendMessage("display_mode compact");
+                                            break;
+
+                                        case "extended":
+                                            hudManager.setPreferenceForPlayer(
+                                                    event.getPlayer(),
+                                                    DatabaseTables.Hud.PlayerPreferences.display_mode,
+                                                    DatabaseTables.Hud.PlayerPreferences.DisplayMode.extended);
+                                            event.getPlayer().sendMessage("display_mode extended");
+                                            break;
+
+                                        default:
+                                            // TODO: display help
+                                            break;
+                                    }
+                                } else {
+                                    // TODO: display help
+                                }
+                                break;
+
+                            default:
+                                // TODO: display help
+                                break;
+                        }
+                    } else {
+                        // TODO: display help
+                    }
                     break;
 
                 default: // toggle
@@ -35,11 +131,13 @@ public class HudCommandListener implements Listener
                         switch( args[1] )
                         {
                             case "coordinates":
-                                // TODO: coordinates
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.coordinates);
+                                event.getPlayer().sendMessage("toggled coordinates");
                                 break;
 
                             case "nether_portal_coordinates":
-                                // TODO: nether_portal_coordinates
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates);
@@ -47,34 +145,52 @@ public class HudCommandListener implements Listener
                                 break;
 
                             case "player_orientation":
-                                // TODO: player_orientation
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.player_orientation);
+                                event.getPlayer().sendMessage("toggled player_orientation");
                                 break;
 
                             case "plugin_commerce":
-                                // TODO: plugin_commerce
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.plugin_commerce);
+                                event.getPlayer().sendMessage("toggled plugin_commerce");
                                 break;
 
                             case "plugin_spectator":
-                                // TODO: plugin_spectator
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.plugin_spectator);
+                                event.getPlayer().sendMessage("toggled plugin_spectator");
                                 break;
 
                             case "server_time":
-                                // TODO: server_time
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.server_time);
+                                event.getPlayer().sendMessage("toggled server_time");
                                 break;
 
                             case "server_tps":
-                                // TODO: server_tps
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.server_tps);
+                                event.getPlayer().sendMessage("toggled server_tps");
                                 break;
 
                             case "tool_durability":
-                                // TODO: tool_durability
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.tool_durability);
+                                event.getPlayer().sendMessage("toggled tool_durability");
                                 break;
 
                             case "world_time":
-                                // TODO: world_time
-                                break;
-
-                            default: // world_time_with_work_hours
+                                hudManager.togglePreferenceForPlayer(
+                                        event.getPlayer(),
+                                        DatabaseTables.Hud.PlayerPreferences.world_time);
+                                event.getPlayer().sendMessage("toggled world_time");
                                 break;
                         }
                     } else {
