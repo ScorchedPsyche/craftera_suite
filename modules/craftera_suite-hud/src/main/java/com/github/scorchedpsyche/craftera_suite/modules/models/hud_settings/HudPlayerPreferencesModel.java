@@ -18,16 +18,17 @@ public class HudPlayerPreferencesModel
             id = rs.getInt(1);
             player_uuid = rs.getString(2);
             enabled = rs.getBoolean(3);
-            coordinates = rs.getBoolean(4);
-            nether_portal_coordinates = rs.getBoolean(5);
-            player_orientation = rs.getBoolean(6);
-            plugin_commerce = rs.getBoolean(7);
-            plugin_spectator = rs.getBoolean(8);
-            server_time = rs.getBoolean(9);
-            server_tps = rs.getBoolean(10);
-            tool_durability = rs.getBoolean(11);
-            world_time = rs.getBoolean(12);
-            world_time_with_work_hours = rs.getBoolean(13);
+            display_mode = rs.getBoolean(4);
+            coordinates = rs.getBoolean(5);
+            nether_portal_coordinates = rs.getBoolean(6);
+            player_orientation = rs.getBoolean(7);
+            plugin_commerce = rs.getBoolean(8);
+            plugin_spectator = rs.getBoolean(9);
+            server_time = rs.getBoolean(10);
+            server_tps = rs.getBoolean(11);
+            tool_durability = rs.getBoolean(12);
+            world_time = rs.getBoolean(13);
+            world_time_with_work_hours = rs.getBoolean(14);
 
             return this;
         } catch (SQLException e)
@@ -39,6 +40,7 @@ public class HudPlayerPreferencesModel
         return null;
     }
 
+    public boolean isDisplayModeExpanded() { return display_mode; }
     public boolean showCoordinates() { return coordinates; }
     public boolean showNetherPortalCoordinates() { return nether_portal_coordinates; }
     public boolean showOrientation() { return player_orientation; }
@@ -53,6 +55,7 @@ public class HudPlayerPreferencesModel
     private int id;
     private String player_uuid;
     private Boolean enabled;
+    private Boolean display_mode;
     private Boolean coordinates;
     private Boolean nether_portal_coordinates;
     private Boolean player_orientation;

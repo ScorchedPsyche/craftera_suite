@@ -3,6 +3,8 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_16_R2.MinecraftServer;
@@ -11,7 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,12 +24,16 @@ public class HudManager {
     {
         this.hudDatabaseAPI = hudDatabaseAPI;
         onlinePlayersWithHudEnabled = new HashMap<>();
+        playerUtils = new PlayerUtils();
+        itemStackUtils = new ItemStackUtils();
 
         setup();
     }
 
     private HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
     public HudDatabaseAPI hudDatabaseAPI;
+    public PlayerUtils playerUtils;
+    public ItemStackUtils itemStackUtils;
 
     public void setup()
     {
@@ -107,10 +112,6 @@ public class HudManager {
         }
     }
 
-    public void togglePreference(String table)
-    {
-//        hudDatabaseAPI.
-    }
 
     public void showHudForPlayers()
     {
@@ -120,35 +121,84 @@ public class HudManager {
 
             String hudText = "";
 
-            if( preferences.showCoordinates() )
+            if( preferences.isDisplayModeExpanded() )
             {
-                hudText += getPlayerCoordinates(player);
-            }
+                // DISPLAY MODE: EXPANDED
 
-            if( preferences.showNetherPortalCoordinates() )
-            {
-                hudText += " " + getNetherPortalCoordinates(player);
-            }
+                // Player XYZ coordinates
+                if( preferences.showCoordinates() )
+                {
+                    hudText += formatPlayerCoordinatesExpanded(
+                            playerUtils.getCoordinateRoundedX(player),
+                            playerUtils.getCoordinateRoundedY(player),
+                            playerUtils.getCoordinateRoundedZ(player) );
+                }
 
-            if( preferences.showOrientation() )
-            {
-                hudText += " " + getPlayerOrientation(player.getLocation().getYaw());
+                if( preferences.showNetherPortalCoordinates() )
+                {
+                    hudText += " " + formatNetherPortalCoordinatesExpanded(
+                            playerUtils.getCoordinateRoundedX(player),
+                            playerUtils.getCoordinateRoundedZ(player),
+                            playerUtils.getEnvironment(player) );
+                }
+
+                // Player orientation
+                if( preferences.showOrientation() )
+                {
+                    hudText += " " + formatPlayerOrientation(player.getLocation().getYaw());
+                }
+
+                if( preferences.showToolDurability() )
+                {
+                    hudText += " " + formatToolDurabilityExpanded("Main", player.getInventory().getItemInMainHand());
+                    hudText += " " + formatToolDurabilityExpanded("Off", player.getInventory().getItemInOffHand());
+                }
+
+                if( preferences.showServerTPS() )
+                {
+                    hudText += " " + getServerTpsExpanded();
+                }
+            } else {
+                // DISPLAY MODE: COMPACT
+
+                // Player XYZ coordinates
+                if( preferences.showCoordinates() )
+                {
+                    hudText += formatPlayerCoordinatesCompact(
+                            playerUtils.getCoordinateRoundedX(player),
+                            playerUtils.getCoordinateRoundedY(player),
+                            playerUtils.getCoordinateRoundedZ(player) );
+                }
+
+                if( preferences.showNetherPortalCoordinates() )
+                {
+                    hudText += " " + formatNetherPortalCoordinatesCompact(
+                            playerUtils.getCoordinateRoundedX(player),
+                            playerUtils.getCoordinateRoundedZ(player),
+                            playerUtils.getEnvironment(player) );
+                }
+
+                // Player orientation
+                if( preferences.showOrientation() )
+                {
+                    hudText += " " + formatPlayerOrientation(player.getLocation().getYaw());
+                }
+
+                if( preferences.showToolDurability() )
+                {
+                    hudText += " " + formatToolDurabilityCompact(player.getInventory().getItemInMainHand());
+                    hudText += " " + formatToolDurabilityCompact(player.getInventory().getItemInOffHand());
+                }
+
+                if( preferences.showServerTPS() )
+                {
+                    hudText += " " + getServerTpsCompact();
+                }
             }
 
             if( preferences.showServerTime() )
             {
                 hudText += " " + getServerTime();
-            }
-
-            if( preferences.showServerTPS() )
-            {
-                hudText += " " + getServerTps();
-            }
-
-            if( preferences.showToolDurability() )
-            {
-                hudText += " " + getToolDurability(player.getInventory().getItemInMainHand());
-                hudText += " " + getToolDurability(player.getInventory().getItemInOffHand());
             }
 
             if( preferences.showWorldTime() )
@@ -160,71 +210,102 @@ public class HudManager {
         }
     }
 
-    private String getPlayerCoordinates(Player player)
+    private String formatPlayerCoordinatesCompact(int x, int y, int z)
     {
-        return (int) player.getLocation().getX() + "x " +
-                (int) player.getLocation().getY() + "y " +
-                (int) player.getLocation().getZ() + "z" ;
+        return  x + "" + ChatColor.GOLD + "x " + ChatColor.RESET +
+                y + "" + ChatColor.GOLD + "y " + ChatColor.RESET +
+                z + "" + ChatColor.GOLD + "z " + ChatColor.RESET;
     }
 
-    private String getNetherPortalCoordinates(Player player)
+    private String formatPlayerCoordinatesExpanded(int x, int y, int z)
     {
-        if( player.getWorld().getEnvironment().equals(World.Environment.NETHER) )
-        {
-            return ((int) player.getLocation().getX()) * 8 + "x " +
-                    ((int) player.getLocation().getZ()) * 8 + "z" ;
-        } else if ( player.getWorld().getEnvironment().equals(World.Environment.NORMAL) ) {
-            return ((int) player.getLocation().getX()) / 8 + "x " +
-                    ((int) player.getLocation().getZ()) / 8 + "z" ;
-        }
-
-        return "–";
+        return ChatColor.GOLD +  "XYZ: " + ChatColor.RESET + x + " " + y + " " + z + ChatColor.RESET ;
     }
 
-    private String getPlayerOrientation(float yaw)
+    private String formatPlayerOrientation(float yaw)
     {
+        String orientation = ChatColor.AQUA.toString();
+
         double rotation = (yaw - 180) % 360;
         if (rotation < 0) {
             rotation += 360.0;
         }
 
-
         if( rotation > 22.5 && rotation <= 67.5 )
         {
-            return "NE";
+            orientation += "NE";
         } else if ( rotation > 67.5 && rotation <= 112.5 )
         {
-            return "E";
+            orientation += "E";
         } else if ( rotation > 112.5 && rotation <= 157.5 )
         {
-            return "SE";
+            orientation += "SE";
         } else if ( rotation > 157.5 && rotation <= 202.5 )
         {
-            return "S";
+            orientation += "S";
         } else if ( rotation > 202.5 && rotation <= 247.5 )
         {
-            return "SW";
+            orientation += "SW";
         } else if ( rotation > 247.5 && rotation <= 292.5 )
         {
-            return "W";
+            orientation += "W";
         } else if ( rotation > 292.5 && rotation <= 337.5 )
         {
-            return "NW";
+            orientation += "NW";
+        } else {
+            orientation += "N";
         }
 
-        return "N";
+        return orientation + ChatColor.RESET;
     }
 
-    public String getServerTime()
+    private String formatNetherPortalCoordinatesCompact(int x, int z, World.Environment environment)
+    {
+        if( environment.equals(World.Environment.NETHER) )
+        {
+            return  x * 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
+                    z * 8 + "" + ChatColor.RED + "z" + ChatColor.RESET  ;
+        } else if ( environment.equals(World.Environment.NORMAL) ) {
+            return  x / 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
+                    z / 8 + "" + ChatColor.RED + "z" + ChatColor.RESET  ;
+        }
+
+        return "–";
+    }
+
+    private String formatNetherPortalCoordinatesExpanded(int x, int z, World.Environment environment)
+    {
+        String portal =  ChatColor.GOLD + "Portal XZ: " + ChatColor.RESET;
+
+        if( environment.equals(World.Environment.NETHER) )
+        {
+            portal += x * 8 + " " + z * 8;
+        } else if ( environment.equals(World.Environment.NORMAL) ) {
+            portal += x / 8 + " " + z / 8;
+        } else {
+            portal += "-";
+        }
+
+        return portal;
+    }
+
+    private String getServerTime()
     {
         Date d1 = new Date();
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         return df.format(d1);
     }
 
-    public String getServerTps()
+    private String getServerTpsCompact()
     {
         return  colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
+                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
+                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
+    }
+
+    private String getServerTpsExpanded()
+    {
+        return  ChatColor.GOLD + "TPS: " + ChatColor.RESET + colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
                 colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
                 colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
     }
@@ -241,30 +322,38 @@ public class HudManager {
         return ChatColor.RED + Short.toString(tps) + ChatColor.RESET;
     }
 
-    public String getToolDurability(ItemStack item)
+    private String formatToolDurabilityCompact(ItemStack item)
     {
-        String durability = "";
-        if (item != null && item.getType().getMaxDurability() != 0)
-        {
-            int remainingDurability =
-                    item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage();
+        Integer itemRemainingDurability = itemStackUtils.getItemRemainingDurability(item);
 
-            if( remainingDurability < 50 )
+        if ( itemRemainingDurability != null )
+        {
+            String durability = "";
+
+            if( itemRemainingDurability < 50 )
             {
-                durability += ChatColor.RED + Integer.toString(remainingDurability) + ChatColor.RESET;
-            } else if ( remainingDurability < 100  ) {
-                durability += ChatColor.YELLOW + Integer.toString(remainingDurability) + ChatColor.RESET;
+                durability += ChatColor.RED + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
+            } else if ( itemRemainingDurability < 100  ) {
+                durability += ChatColor.YELLOW + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
             } else {
-                durability += Integer.toString(remainingDurability);
+                durability += Integer.toString(itemRemainingDurability);
             }
 
             durability += "/" + item.getType().getMaxDurability();
-        }
 
-        return durability;
+            return durability;
+        } else {
+            return "–";
+        }
     }
 
-    public String getWorldTime(boolean colorized)
+    private String formatToolDurabilityExpanded(String slot, ItemStack item)
+    {
+        return ChatColor.GOLD + slot + ": " + ChatColor.RESET
+                + formatToolDurabilityCompact(item);
+    }
+
+    private String getWorldTime(boolean colorized)
     {
         World overworld = Bukkit.getWorld("world");
 

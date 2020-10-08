@@ -62,6 +62,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 Features:  
  - [x] **Toggle on/off;**
  - [x] **Per player configuration;**
+ - [x] **Per player display mode: compact or expanded;**
  - [x] **Player login auto-load of preferences;**
  - [x] **Coordinates;**  
  - [x] **Nether Portal coordinates;** 

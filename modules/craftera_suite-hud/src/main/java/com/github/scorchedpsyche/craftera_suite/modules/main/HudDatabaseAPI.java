@@ -100,6 +100,7 @@ public class HudDatabaseAPI
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.player_uuid + " TEXT UNIQUE NOT NULL,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.enabled + " NUMERIC DEFAULT 0,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferences.display_mode + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.coordinates + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates + " NUMERIC DEFAULT 1,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.player_orientation + " NUMERIC DEFAULT 1,\n"

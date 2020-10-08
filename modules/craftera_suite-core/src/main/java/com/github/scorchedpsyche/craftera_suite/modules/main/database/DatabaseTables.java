@@ -10,6 +10,7 @@ public class DatabaseTables
         public static class PlayerPreferences {
             public static String player_uuid = "player_uuid";
             public static String enabled = "enabled";
+            public static String display_mode = "display_mode";
             public static String coordinates = "coordinates";
             public static String nether_portal_coordinates = "nether_portal_coordinates";
             public static String player_orientation = "player_orientation";
@@ -20,6 +21,11 @@ public class DatabaseTables
             public static String tool_durability = "tool_durability";
             public static String world_time = "world_time";
             public static String world_time_colorized = "world_time_colorized";
+
+            public static class DisplayMode {
+                public static short compact = 0;
+                public static short expanded = 1;
+            }
         }
     }
 }
