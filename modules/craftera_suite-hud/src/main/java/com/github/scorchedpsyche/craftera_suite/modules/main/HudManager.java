@@ -156,7 +156,7 @@ public class HudManager {
 
                 if( preferences.showServerTPS() )
                 {
-                    hudText += " " + getServerTpsExpanded();
+                    hudText += " " + getServerTpsExpanded(preferences.colorizeServerTps());
                 }
             } else {
                 // DISPLAY MODE: COMPACT
@@ -192,7 +192,7 @@ public class HudManager {
 
                 if( preferences.showServerTPS() )
                 {
-                    hudText += " " + getServerTpsCompact();
+                    hudText += " " + getServerTpsCompact(preferences.colorizeServerTps());
                 }
             }
 
@@ -296,18 +296,23 @@ public class HudManager {
         return df.format(d1);
     }
 
-    private String getServerTpsCompact()
+    private String getServerTpsCompact(boolean colorize)
     {
-        return  colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
-                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
-                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
+        if(colorize)
+        {
+            return  colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
+                    colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
+                    colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
+        }
+
+        return  (short) MinecraftServer.getServer().recentTps[0] + "/" +
+                (short) MinecraftServer.getServer().recentTps[1]  + "/" +
+                (short) MinecraftServer.getServer().recentTps[2] ;
     }
 
-    private String getServerTpsExpanded()
+    private String getServerTpsExpanded(boolean colorize)
     {
-        return  ChatColor.GOLD + "TPS: " + ChatColor.RESET + colorizeServerTps( (short) MinecraftServer.getServer().recentTps[0] ) + "/" +
-                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[1] )  + "/" +
-                colorizeServerTps( (short) MinecraftServer.getServer().recentTps[2] ) ;
+        return  ChatColor.GOLD + "TPS: " + ChatColor.RESET + getServerTpsCompact(colorize) ;
     }
 
     private String colorizeServerTps(short tps)

@@ -19,15 +19,20 @@ public class HudPlayerPreferencesModel
             player_uuid = rs.getString(2);
             enabled = rs.getBoolean(3);
             display_mode = rs.getBoolean(4);
-            coordinates = rs.getBoolean(5);
-            nether_portal_coordinates = rs.getBoolean(6);
-            player_orientation = rs.getBoolean(7);
-            plugin_commerce = rs.getBoolean(8);
-            plugin_spectator = rs.getBoolean(9);
-            server_time = rs.getBoolean(10);
-            server_tps = rs.getBoolean(11);
-            tool_durability = rs.getBoolean(12);
-            world_time = rs.getBoolean(13);
+            colorize_coordinates = rs.getBoolean(5);
+            colorize_nether_portal_coordinates = rs.getBoolean(6);
+            colorize_server_tps = rs.getBoolean(7);
+            colorize_tool_durability = rs.getBoolean(8);
+            colorize_world_time = rs.getBoolean(9);
+            coordinates = rs.getBoolean(10);
+            nether_portal_coordinates = rs.getBoolean(11);
+            player_orientation = rs.getBoolean(12);
+            plugin_commerce = rs.getBoolean(13);
+            plugin_spectator = rs.getBoolean(14);
+            server_time = rs.getBoolean(15);
+            server_tps = rs.getBoolean(16);
+            tool_durability = rs.getBoolean(17);
+            world_time = rs.getBoolean(18);
 
             return this;
         } catch (SQLException e)
