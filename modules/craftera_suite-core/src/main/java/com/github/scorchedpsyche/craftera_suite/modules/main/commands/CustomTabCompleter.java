@@ -118,6 +118,7 @@ public class CustomTabCompleter implements TabCompleter {
                                 {
                                 add("config");
                                 add("toggle");
+                                add("help");
                             }};
                         } else {
                             // No CES plugins are enabled. Return no options

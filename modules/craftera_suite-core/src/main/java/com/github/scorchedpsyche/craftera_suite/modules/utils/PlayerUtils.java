@@ -26,6 +26,12 @@ public class PlayerUtils
         return player.getWorld().getEnvironment();
     }
 
+    /**
+     * Sends a message to the player with the plugin prefix.
+     * @param player The player to send the message to
+     * @param pluginPrefix The plugin prefix to the message
+     * @param message Message to be sent
+     */
     public void sendMessageWithPluginPrefix(Player player, String pluginPrefix, String message)
     {
         player.sendMessage(ChatColor.GOLD + "[" + pluginPrefix + "] " + ChatColor.RESET + message);
