@@ -129,6 +129,7 @@ public class HudManager {
                 if( preferences.showCoordinates() )
                 {
                     hudText += formatPlayerCoordinatesExpanded(
+                            preferences.colorizeToolDurability(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedY(player),
                             playerUtils.getCoordinateRoundedZ(player) );
@@ -137,6 +138,7 @@ public class HudManager {
                 if( preferences.showNetherPortalCoordinates() )
                 {
                     hudText += " " + formatNetherPortalCoordinatesExpanded(
+                            preferences.colorizeToolDurability(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedZ(player),
                             playerUtils.getEnvironment(player) );
@@ -150,8 +152,10 @@ public class HudManager {
 
                 if( preferences.showToolDurability() )
                 {
-                    hudText += " " + formatToolDurabilityExpanded("Main", player.getInventory().getItemInMainHand());
-                    hudText += " " + formatToolDurabilityExpanded("Off", player.getInventory().getItemInOffHand());
+                    hudText += " " + formatToolDurabilityExpanded(
+                            preferences.colorizeToolDurability(),"Main", player.getInventory().getItemInMainHand());
+                    hudText += " " + formatToolDurabilityExpanded(
+                            preferences.colorizeToolDurability(),"Off", player.getInventory().getItemInOffHand());
                 }
 
                 if( preferences.showServerTPS() )
@@ -165,6 +169,7 @@ public class HudManager {
                 if( preferences.showCoordinates() )
                 {
                     hudText += formatPlayerCoordinatesCompact(
+                            preferences.colorizeToolDurability(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedY(player),
                             playerUtils.getCoordinateRoundedZ(player) );
@@ -173,6 +178,7 @@ public class HudManager {
                 if( preferences.showNetherPortalCoordinates() )
                 {
                     hudText += " " + formatNetherPortalCoordinatesCompact(
+                            preferences.colorizeToolDurability(),
                             playerUtils.getCoordinateRoundedX(player),
                             playerUtils.getCoordinateRoundedZ(player),
                             playerUtils.getEnvironment(player) );
@@ -186,8 +192,10 @@ public class HudManager {
 
                 if( preferences.showToolDurability() )
                 {
-                    hudText += " " + formatToolDurabilityCompact(player.getInventory().getItemInMainHand());
-                    hudText += " " + formatToolDurabilityCompact(player.getInventory().getItemInOffHand());
+                    hudText += " " + formatToolDurabilityCompact(
+                            preferences.colorizeToolDurability(), player.getInventory().getItemInMainHand());
+                    hudText += " " + formatToolDurabilityCompact(
+                            preferences.colorizeToolDurability(), player.getInventory().getItemInOffHand());
                 }
 
                 if( preferences.showServerTPS() )
@@ -210,16 +218,25 @@ public class HudManager {
         }
     }
 
-    private String formatPlayerCoordinatesCompact(int x, int y, int z)
+    private String formatPlayerCoordinatesCompact(boolean colorize, int x, int y, int z)
     {
-        return  x + "" + ChatColor.GOLD + "x " + ChatColor.RESET +
-                y + "" + ChatColor.GOLD + "y " + ChatColor.RESET +
-                z + "" + ChatColor.GOLD + "z " + ChatColor.RESET;
+        if(colorize)
+        {
+            return  x + "" + ChatColor.GOLD + "x " + ChatColor.RESET +
+                    y + "" + ChatColor.GOLD + "y " + ChatColor.RESET +
+                    z + "" + ChatColor.GOLD + "z " + ChatColor.RESET;
+        }
+
+        return  x + "x " + y + "y " + z + "z ";
     }
 
-    private String formatPlayerCoordinatesExpanded(int x, int y, int z)
+    private String formatPlayerCoordinatesExpanded(boolean colorize, int x, int y, int z)
     {
-        return ChatColor.GOLD +  "XYZ: " + ChatColor.RESET + x + " " + y + " " + z + ChatColor.RESET ;
+        if(colorize)
+        {
+            return ChatColor.GOLD + "XYZ: " + ChatColor.RESET + x + " " + y + " " + z + ChatColor.RESET;
+        }
+        return "XYZ: " + x + " " + y + " " + z;
     }
 
     private String formatPlayerOrientation(float yaw)
@@ -259,23 +276,32 @@ public class HudManager {
         return orientation + ChatColor.RESET;
     }
 
-    private String formatNetherPortalCoordinatesCompact(int x, int z, World.Environment environment)
+    private String formatNetherPortalCoordinatesCompact(boolean colorize, int x, int z, World.Environment environment)
     {
         if( environment.equals(World.Environment.NETHER) )
         {
-            return  x * 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
-                    z * 8 + "" + ChatColor.RED + "z" + ChatColor.RESET  ;
+            if(colorize)
+            {
+                return  x * 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
+                        z * 8 + "" + ChatColor.RED + "z" + ChatColor.RESET;
+            }
+            return  x * 8 + "x " + z * 8 + "z";
         } else if ( environment.equals(World.Environment.NORMAL) ) {
-            return  x / 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
-                    z / 8 + "" + ChatColor.RED + "z" + ChatColor.RESET  ;
+            if(colorize)
+            {
+                return  x / 8 + "" + ChatColor.RED + "x " + ChatColor.RESET +
+                        z / 8 + "" + ChatColor.RED + "z" + ChatColor.RESET;
+            }
+            return  x / 8 + "x " + z / 8 + "z";
         }
 
         return "–";
     }
 
-    private String formatNetherPortalCoordinatesExpanded(int x, int z, World.Environment environment)
+    private String formatNetherPortalCoordinatesExpanded(boolean colorize, int x, int z, World.Environment environment)
     {
-        String portal =  ChatColor.GOLD + "Portal XZ: " + ChatColor.RESET;
+        String portal = (colorize) ?
+                ChatColor.GOLD + "Portal XZ: " + ChatColor.RESET : "Portal XZ: ";
 
         if( environment.equals(World.Environment.NETHER) )
         {
@@ -327,7 +353,7 @@ public class HudManager {
         return ChatColor.RED + Short.toString(tps) + ChatColor.RESET;
     }
 
-    private String formatToolDurabilityCompact(ItemStack item)
+    private String formatToolDurabilityCompact(boolean colorize, ItemStack item)
     {
         Integer itemRemainingDurability = itemStackUtils.getItemRemainingDurability(item);
 
@@ -335,13 +361,18 @@ public class HudManager {
         {
             String durability = "";
 
-            if( itemRemainingDurability < 50 )
+            if(colorize)
             {
-                durability += ChatColor.RED + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
-            } else if ( itemRemainingDurability < 100  ) {
-                durability += ChatColor.YELLOW + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
+                if( itemRemainingDurability < 50 )
+                {
+                    durability += ChatColor.RED + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
+                } else if ( itemRemainingDurability < 100  ) {
+                    durability += ChatColor.YELLOW + Integer.toString(itemRemainingDurability) + ChatColor.RESET;
+                } else {
+                    durability += Integer.toString(itemRemainingDurability);
+                }
             } else {
-                durability += Integer.toString(itemRemainingDurability);
+                durability = Integer.toString(itemRemainingDurability);
             }
 
             durability += "/" + item.getType().getMaxDurability();
@@ -352,10 +383,18 @@ public class HudManager {
         }
     }
 
-    private String formatToolDurabilityExpanded(String slot, ItemStack item)
+    private String formatToolDurabilityExpanded(boolean colorize, String slot, ItemStack item)
     {
-        return ChatColor.GOLD + slot + ": " + ChatColor.RESET
-                + formatToolDurabilityCompact(item);
+        String durability = "";
+
+        if(colorize)
+        {
+            durability += ChatColor.GOLD + slot + ": " + ChatColor.RESET;
+        } else {
+            durability += slot + ": ";
+        }
+
+        return durability + formatToolDurabilityCompact(colorize, item);
     }
 
     private String getWorldTime(boolean colorized)
