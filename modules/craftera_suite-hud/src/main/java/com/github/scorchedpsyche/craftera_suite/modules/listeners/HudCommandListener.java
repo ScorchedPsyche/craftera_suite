@@ -140,7 +140,7 @@ public class HudCommandListener implements Listener
                     break;
 
                 case "toggle": // /ces hud toggle
-                    if( args.length > 1 && !stringUtils.isEmpty(args[1]) )
+                    if( args.length > 1 && !stringUtils.isNullOrEmpty(args[1]) )
                     {
                         switch( args[1] )
                         {

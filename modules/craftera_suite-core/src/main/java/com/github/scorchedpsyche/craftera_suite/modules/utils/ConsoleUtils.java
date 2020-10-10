@@ -43,6 +43,6 @@ public class ConsoleUtils {
 
     private String getPrefix()
     {
-        return ( prefix != null && !stringUtils.isEmpty(prefix) ) ? prefix : "CraftEra Suite";
+        return ( prefix != null && !stringUtils.isNullOrEmpty(prefix) ) ? prefix : "CraftEra Suite";
     }
 }

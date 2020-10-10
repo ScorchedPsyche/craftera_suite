@@ -25,7 +25,7 @@ public class CustomTabCompleter implements TabCompleter {
             // Check for CES command
             if ( command.getName().equalsIgnoreCase("ces") ) { 
                 // Root CES command. Return options
-                if( args.length == 0 || (args.length > 0 && cesCore.stringUtils.isEmpty(args[0])) )
+                if( args.length == 0 || (args.length > 0 && cesCore.stringUtils.isNullOrEmpty(args[0])) )
                 {
                     List<String> subCommands = new ArrayList<>();
 

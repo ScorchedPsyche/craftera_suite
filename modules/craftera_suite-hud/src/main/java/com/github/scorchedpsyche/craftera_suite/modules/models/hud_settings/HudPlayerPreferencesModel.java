@@ -46,7 +46,7 @@ public class HudPlayerPreferencesModel
         return null;
     }
 
-    public boolean isDisplayModeExpanded() { return display_mode; }
+    public boolean isDisplayModeExtended() { return display_mode; }
     public boolean colorizeCoordinates() { return colorize_coordinates; }
     public boolean colorizeNetherPortalCoordinates() { return colorize_nether_portal_coordinates; }
     public boolean colorizePlayerOrientation() { return colorize_player_orientation; }

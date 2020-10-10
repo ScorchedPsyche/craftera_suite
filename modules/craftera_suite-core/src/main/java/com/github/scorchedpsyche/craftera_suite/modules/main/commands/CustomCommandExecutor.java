@@ -69,7 +69,7 @@ public class CustomCommandExecutor implements CommandExecutor {
     {
         if( command.getName().equalsIgnoreCase("ces")
                 && args.length > 0
-                && !cesCore.stringUtils.isEmpty(args[0]) )
+                && !cesCore.stringUtils.isNullOrEmpty(args[0]) )
         {
             return true;
         }
@@ -80,7 +80,7 @@ public class CustomCommandExecutor implements CommandExecutor {
     @Nullable
     private String[] filterSubcommandArgs(String[] argsUnfiltered)
     {
-        if( argsUnfiltered.length > 1 && !cesCore.stringUtils.isEmpty(argsUnfiltered[1]) )
+        if( argsUnfiltered.length > 1 && !cesCore.stringUtils.isNullOrEmpty(argsUnfiltered[1]) )
         {
             String[] args = new String[argsUnfiltered.length - 1];
             System.arraycopy(argsUnfiltered, 1, args, 0, argsUnfiltered.length - 1);

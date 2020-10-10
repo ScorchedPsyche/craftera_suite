@@ -51,7 +51,7 @@ public class HudDatabaseAPI
 
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
-        if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
+        if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
@@ -68,7 +68,7 @@ public class HudDatabaseAPI
 
     public void setBooleanForPlayer(String table, String playerUUID, String column, boolean value)
     {
-        if( !stringUtils.isEmpty(table) && column != null && !stringUtils.isEmpty(column) )
+        if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
