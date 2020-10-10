@@ -36,8 +36,7 @@ public class PlayerHudManager
 
         if( preferences.showNetherPortalCoordinates() )
         {
-            hudText.append( " " );
-            hudText.append( formatNetherPortalCoordinates(player, preferences) );
+            hudText.append( formatNetherPortalCoordinates(player, playerUtils.getEnvironment(player), preferences) );
         }
 
         if( preferences.showToolDurability() )
@@ -150,38 +149,58 @@ public class PlayerHudManager
         return orientation;
     }
 
-    private StringBuilder formatNetherPortalCoordinates(Player player, HudPlayerPreferencesModel preferences)
+    private StringBuilder formatNetherPortalCoordinates(
+            Player player, World.Environment environment, HudPlayerPreferencesModel preferences)
     {
         StringBuilder strBuilder = new StringBuilder();
 
-        if( preferences.isDisplayModeExtended() )
+        if( !environment.equals(World.Environment.THE_END) )
         {
-            // Extended
-            if( preferences.colorizeNetherPortalCoordinates() )
+            int portalX = playerUtils.getCoordinateRoundedX(player);
+            int portalZ = playerUtils.getCoordinateRoundedZ(player);
+
+            if( environment.equals(World.Environment.NETHER) )
             {
-                // Colorized
-                strBuilder.append(StringUtilsHud.netherPortalCoordinatesExtendedColorized);
+                portalX *= 8;
+                portalZ *= 8;
             } else {
-                // Not colorized
-                strBuilder.append(StringUtilsHud.netherPortalCoordinatesExtended);
+                portalX /= 8;
+                portalZ /= 8;
             }
 
-            strBuilder.append( playerUtils.getCoordinateRoundedX(player) ); // x
-            strBuilder.append( " " );
-            strBuilder.append( playerUtils.getCoordinateRoundedZ(player) ); // z
-        } else {
-            // Compact
-            if( preferences.colorizeNetherPortalCoordinates() )
+            if( preferences.isDisplayModeExtended() )
             {
-                // Colorized
-                strBuilder.append(StringUtilsHud.netherPortalCoordinatesCompactColorized);
-            } else {
-                // Not colorized
-                strBuilder.append(StringUtilsHud.netherPortalCoordinatesCompact);
-            }
+                // Extended
+                if( preferences.colorizeNetherPortalCoordinates() )
+                {
+                    // Colorized
+                    strBuilder.append(StringUtilsHud.netherPortalCoordinatesExtendedColorized);
+                } else {
+                    // Not colorized
+                    strBuilder.append(StringUtilsHud.netherPortalCoordinatesExtended);
+                }
 
-            strBuilder.insert( 6, playerUtils.getCoordinateRoundedZ(player) ); // z
-            strBuilder.insert( 0, playerUtils.getCoordinateRoundedX(player) ); // x
+                strBuilder.append( portalX ); // x
+                strBuilder.append( " " );
+                strBuilder.append( portalZ ); // z
+            } else {
+                // Compact
+                if( preferences.colorizeNetherPortalCoordinates() )
+                {
+                    // Colorized
+                    strBuilder.append(StringUtilsHud.netherPortalCoordinatesCompactColorized);
+
+                    strBuilder.insert( 6, portalZ ); // z
+                } else {
+                    // Not colorized
+                    strBuilder.append(StringUtilsHud.netherPortalCoordinatesCompact);
+
+                    strBuilder.insert( 2, portalZ ); // z
+                }
+
+                strBuilder.insert( 0, portalX ); // x
+            }
+            strBuilder.insert( 0, " " );
         }
 
         return strBuilder;
@@ -198,35 +217,42 @@ public class PlayerHudManager
     {
         StringBuilder tpsStrBuilder = new StringBuilder();
 
-        if( preferences.isDisplayModeExtended() )
+        short tps = (short) MinecraftServer.getServer().recentTps[0] ;
+        if( tps > 20 )
         {
-            // Extended
-
-            tpsStrBuilder.append("TPS: ");
-            if( preferences.colorizeServerTps() )
-            {
-                tpsStrBuilder.append( ChatColor.RESET );
-                tpsStrBuilder.insert( 0, ChatColor.GOLD );
-            }
+            tps = 20;
         }
 
-        short tps = (short) MinecraftServer.getServer().recentTps[0] ;
+        tpsStrBuilder.append( tps );
 
         if(preferences.colorizeServerTps() )
         {
             if( tps >= 20 )
             {
                 tps = 20;
-                tpsStrBuilder.append( ChatColor.GREEN );
+                tpsStrBuilder.insert( 0,ChatColor.GREEN );
             } else if ( tps < 20 && tps >= 15 ){
-                tpsStrBuilder.append( ChatColor.YELLOW );
+                tpsStrBuilder.insert( 0,ChatColor.YELLOW );
             } else {
-                tpsStrBuilder.append( ChatColor.RED );
+                tpsStrBuilder.insert( 0,ChatColor.RED );
             }
 
-            tpsStrBuilder.append( tps );
             tpsStrBuilder.append( ChatColor.RESET );
         }
+
+        if( preferences.isDisplayModeExtended() )
+        {
+            // Extended
+            if( preferences.colorizeServerTps() )
+            {
+                tpsStrBuilder.insert( 0, ChatColor.RESET );
+                tpsStrBuilder.insert( 0, "TPS: ");
+                tpsStrBuilder.insert( 0, ChatColor.GOLD );
+            } else {
+                tpsStrBuilder.insert( 0, "TPS: ");
+            }
+        }
+
 
         return tpsStrBuilder;
     }
@@ -275,10 +301,10 @@ public class PlayerHudManager
             {
                 // Extended
                 durabilityStrBuilder.insert( 0, ": " );
+                durabilityStrBuilder.insert( 0, slotText );
 
                 if ( preferences.colorizeToolDurability() )
                 {
-                    durabilityStrBuilder.insert( 0, slotText );
                     durabilityStrBuilder.insert( 0, ChatColor.GOLD );
                 }
             }

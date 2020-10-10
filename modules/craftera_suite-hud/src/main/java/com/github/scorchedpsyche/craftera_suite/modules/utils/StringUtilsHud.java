@@ -17,6 +17,6 @@ public class StringUtilsHud
             ChatColor.DARK_RED + "Portal XZ: " + ChatColor.RESET;
     public static final String netherPortalCoordinatesCompact = "x z";
     public static final String netherPortalCoordinatesCompactColorized =
-            ChatColor.DARK_RED + "x " + ChatColor.RESET +        // insert at 0
-                    ChatColor.RED + "z " + ChatColor.RESET; // insert at 6
+            ChatColor.DARK_RED + "x " + ChatColor.RESET +   // insert at 0
+            ChatColor.DARK_RED + "z" + ChatColor.RESET;          // insert at 6
 }
