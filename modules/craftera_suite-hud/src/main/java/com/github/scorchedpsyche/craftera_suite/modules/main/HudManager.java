@@ -127,7 +127,7 @@ public class HudManager {
         HudPlayerPreferencesModel hudPlayerPreferences =
                 hudDatabaseAPI.getPlayerPreferences(player.getUniqueId().toString());
 
-        if( hudPlayerPreferences != null )
+        if( hudPlayerPreferences != null && hudPlayerPreferences.isHudEnabled() )
         {
             onlinePlayersWithHudEnabled.putIfAbsent(player, hudPlayerPreferences);
         }
