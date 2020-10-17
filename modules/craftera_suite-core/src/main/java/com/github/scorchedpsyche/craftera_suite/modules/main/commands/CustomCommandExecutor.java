@@ -28,19 +28,22 @@ public class CustomCommandExecutor implements CommandExecutor {
         if (sender instanceof Player) {
             // Check if /CES command
             if ( isCesCommandWithArgs(command, args) ) {
+                String[] argsFiltered = filterSubcommandArgs(args);
+
+
+
                 switch( args[0] )
                 {
                     case "hud":
-                        String[] argsFiltered = filterSubcommandArgs(args);
                         if ( argsFiltered == null )
                         {
                             argsFiltered = new String[1];
                             argsFiltered[0] = "toggle";
                         }
 
-                        HudCommandsEvent hudToggleCommandEvent =
-                                new HudCommandsEvent((Player) sender, argsFiltered);
-                        Bukkit.getPluginManager().callEvent(hudToggleCommandEvent);
+//                        HudCommandsEvent hudToggleCommandEvent =
+
+                        Bukkit.getPluginManager().callEvent(new HudCommandsEvent((Player) sender, argsFiltered));
 
 //                        if( cesCore.suitePluginManager.isHudPluginEnabled()
 //                            && args.length > 1
@@ -56,7 +59,8 @@ public class CustomCommandExecutor implements CommandExecutor {
 
                         return true;
 
-                    default:
+                    default: // core
+
                         return false;
                 }
             } 

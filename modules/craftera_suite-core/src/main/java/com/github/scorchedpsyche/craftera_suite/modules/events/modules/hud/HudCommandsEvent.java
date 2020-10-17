@@ -1,12 +1,12 @@
 package com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud;
 
-import com.github.scorchedpsyche.craftera_suite.modules.interfaces.ICommand;
+import com.github.scorchedpsyche.craftera_suite.modules.interfaces.ICommandEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class HudCommandsEvent extends Event implements Cancellable, ICommand
+public class HudCommandsEvent extends Event implements Cancellable, ICommandEvent
 {
     private Player player;
     private String[] args;

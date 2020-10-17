@@ -11,7 +11,7 @@ website: https://github.com/ScorchedPsyche
 
 commands:
    ces:
-      description: This is a demo command.
+      description: Main CraftEra Suite command.
       usage: Usage "/<command> [module] [option]"
-      permission: craftera_suite-core.basic
+      permission:
       permission-message: You don't have <permission> permission
