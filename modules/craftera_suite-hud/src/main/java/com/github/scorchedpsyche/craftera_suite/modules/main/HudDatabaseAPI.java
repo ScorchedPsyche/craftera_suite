@@ -21,7 +21,6 @@ public class HudDatabaseAPI
         setup();
     }
 
-    private final String tablePrefix = "hud_";
     private IDatabase database;
     private ConsoleUtils consoleUtils;
     private StringUtils stringUtils;
@@ -29,7 +28,7 @@ public class HudDatabaseAPI
 
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
-        String sql = "SELECT * FROM " + tablePrefix + "player_preferences " +
+        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences +
                 "WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(database.getDatabaseUrl());
@@ -85,7 +84,7 @@ public class HudDatabaseAPI
 
     private void setup()
     {
-        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + tablePrefix + "player_preferences (\n"
+        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Hud.player_preferences + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.player_uuid + " TEXT UNIQUE NOT NULL,\n"
                 + "	" + DatabaseTables.Hud.PlayerPreferences.enabled + " NUMERIC DEFAULT 0,\n"

@@ -2,7 +2,34 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
 public class DatabaseTables
 {
+    private static final String corePrefix = "core_";
     private static final String hudPrefix = "hud_";
+
+    public static class Core {
+        public static final String seasons = corePrefix + "seasons";
+        public static final String settings = corePrefix + "settings";
+
+        public static class Settings
+        {
+
+        }
+
+        public static class Seasons
+        {
+            public static final String number = "number";
+            public static final String title = "title";
+            public static final String subtitle = "subtitle";
+            public static final String status = "status";
+
+
+            public enum Status {
+                Open,
+                Active,
+                Finished,
+                Archived
+            }
+        }
+    }
 
     public static class Hud {
         public static final String player_preferences = hudPrefix + "player_preferences";
