@@ -29,6 +29,7 @@ Features:
 Main library dependency needed for other plugins of this pack.  
   
 Features:  
+ - [ ] Seasons support; 
  - [x] **Console interface;**  
  - [x] **Player command interface;**  
  - [x] **Folder utility class;**  
