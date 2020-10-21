@@ -12,7 +12,9 @@ Plugin names are a work-in-progress and might change in the future.
 ### Achievements 
 Custom achievements such as server-first accomplishments.  
 
- - [ ] Seasons module support.
+ - [ ] Vanilla player personal achievement accounting (0/80 done);
+ - [ ] Vanilla server-first achievement accounting;
+ - [ ] Seasons module support: achievements resets on new Season and old ones are archived.
   
 ### Baby Entities 
 Prevents entities from becoming their adult variant.  
