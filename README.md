@@ -11,6 +11,8 @@ Plugin names are a work-in-progress and might change in the future.
   
 ### Achievements 
 Custom achievements such as server-first accomplishments.  
+
+ - [ ] Seasons module support.
   
 ### Baby Entities 
 Prevents entities from becoming their adult variant.  
