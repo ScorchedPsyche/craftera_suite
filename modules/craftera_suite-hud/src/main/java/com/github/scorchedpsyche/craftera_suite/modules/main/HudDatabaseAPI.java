@@ -28,7 +28,7 @@ public class HudDatabaseAPI
 
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences +
+        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
                 "WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(database.getDatabaseUrl());
@@ -53,9 +53,9 @@ public class HudDatabaseAPI
         if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
-                    " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
+                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
                         "VALUES('" + playerUUID + "', 1) \n" +
-                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
+                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
                         "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
 
             database.executeSql(sql);
@@ -70,9 +70,9 @@ public class HudDatabaseAPI
         if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
-                    " (" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ", " + column + ") \n" +
+                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
                     "VALUES('" + playerUUID + "', " + value +") \n" +
-                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferences.player_uuid + ") DO \n" +
+                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
                     "UPDATE SET " + column + " = " + value;
 
             database.executeSql(sql);
@@ -84,27 +84,27 @@ public class HudDatabaseAPI
 
     private void setup()
     {
-        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Hud.player_preferences + "(\n"
+        String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Hud.player_preferences_TABLENAME + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.player_uuid + " TEXT UNIQUE NOT NULL,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.enabled + " NUMERIC DEFAULT 0,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.display_mode + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_coordinates + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_nether_portal_coordinates + " NUMERIC DEFAULT " +
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + " TEXT UNIQUE NOT NULL,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.enabled + " NUMERIC DEFAULT 0,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.display_mode + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates + " NUMERIC DEFAULT " +
                 "1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_player_orientation + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_server_tps + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_tool_durability + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.colorize_world_time + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.coordinates + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.player_orientation + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.plugin_commerce + " NUMERIC DEFAULT 0,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.plugin_spectator + " NUMERIC DEFAULT 0,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.server_time + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.server_tps + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.tool_durability + " NUMERIC DEFAULT 1,\n"
-                + "	" + DatabaseTables.Hud.PlayerPreferences.world_time + " NUMERIC DEFAULT 1\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.coordinates + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.player_orientation + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce + " NUMERIC DEFAULT 0,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator + " NUMERIC DEFAULT 0,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.server_time + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.server_tps + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.tool_durability + " NUMERIC DEFAULT 1,\n"
+                + "	" + DatabaseTables.Hud.PlayerPreferencesTable.world_time + " NUMERIC DEFAULT 1\n"
                 + ");";
 
         if (database.executeSql(playerPreferencesTableSql))

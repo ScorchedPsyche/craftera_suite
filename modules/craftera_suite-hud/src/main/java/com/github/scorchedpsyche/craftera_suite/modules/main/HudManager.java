@@ -55,7 +55,7 @@ public class HudManager {
     public void togglePreferenceForPlayer(Player player, String preference)
     {
         hudDatabaseAPI.toggleBooleanForPlayer(
-                DatabaseTables.Hud.player_preferences,
+                DatabaseTables.Hud.player_preferences_TABLENAME,
                 player.getUniqueId().toString(),
                 preference );
 
@@ -72,7 +72,7 @@ public class HudManager {
     public void setPreferenceForPlayer(Player player, String preference, boolean value)
     {
         hudDatabaseAPI.setBooleanForPlayer(
-                DatabaseTables.Hud.player_preferences,
+                DatabaseTables.Hud.player_preferences_TABLENAME,
                 player.getUniqueId().toString(),
                 preference,
                 value);
@@ -112,9 +112,9 @@ public class HudManager {
         }
 
         hudDatabaseAPI.toggleBooleanForPlayer(
-                DatabaseTables.Hud.player_preferences,
+                DatabaseTables.Hud.player_preferences_TABLENAME,
                 player.getUniqueId().toString(),
-                DatabaseTables.Hud.PlayerPreferences.enabled );
+                DatabaseTables.Hud.PlayerPreferencesTable.enabled);
     }
 
     public void setPlayerAsOffline(Player player)

@@ -65,7 +65,7 @@ public class HudPlayerPreferencesModel
     {
         switch(preference)
         {
-            case DatabaseTables.Hud.PlayerPreferences.display_mode:
+            case DatabaseTables.Hud.PlayerPreferencesTable.display_mode:
                 display_mode = value;
                 break;
         }
@@ -75,63 +75,63 @@ public class HudPlayerPreferencesModel
     {
         switch(preference)
         {
-            case DatabaseTables.Hud.PlayerPreferences.colorize_coordinates:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates:
                 colorize_coordinates = !colorize_coordinates;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.colorize_nether_portal_coordinates:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates:
                 colorize_nether_portal_coordinates = !colorize_nether_portal_coordinates;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.colorize_player_orientation:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation:
                 colorize_player_orientation = !colorize_player_orientation;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.colorize_server_tps:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps:
                 colorize_server_tps = !colorize_server_tps;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.colorize_tool_durability:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability:
                 colorize_tool_durability = !colorize_tool_durability;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.colorize_world_time:
+            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time:
                 colorize_world_time = !colorize_world_time;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.coordinates:
+            case DatabaseTables.Hud.PlayerPreferencesTable.coordinates:
                 coordinates = !coordinates;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.nether_portal_coordinates:
+            case DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates:
                 nether_portal_coordinates = !nether_portal_coordinates;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.player_orientation:
+            case DatabaseTables.Hud.PlayerPreferencesTable.player_orientation:
                 player_orientation = !player_orientation;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.plugin_commerce:
+            case DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce:
                 plugin_commerce = !plugin_commerce;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.plugin_spectator:
+            case DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator:
                 plugin_spectator = !plugin_spectator;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.server_time:
+            case DatabaseTables.Hud.PlayerPreferencesTable.server_time:
                 server_time = !server_time;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.server_tps:
+            case DatabaseTables.Hud.PlayerPreferencesTable.server_tps:
                 server_tps = !server_tps;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.tool_durability:
+            case DatabaseTables.Hud.PlayerPreferencesTable.tool_durability:
                 tool_durability = !tool_durability;
                 break;
 
-            case DatabaseTables.Hud.PlayerPreferences.world_time:
+            case DatabaseTables.Hud.PlayerPreferencesTable.world_time:
                 world_time = !world_time;
                 break;
         }

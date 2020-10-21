@@ -4,37 +4,22 @@ public class DatabaseTables
 {
     private static final String corePrefix = "core_";
     private static final String hudPrefix = "hud_";
+    private static final String seasonsPrefix = "seasons_";
 
     public static class Core {
-        public static final String seasons = corePrefix + "seasons";
-        public static final String settings = corePrefix + "settings";
+        public static final String settingsTableName = corePrefix + "settings";
 
-        public static class Settings
+        public static class SettingsTable
         {
 
-        }
-
-        public static class Seasons
-        {
-            public static final String number = "number";
-            public static final String title = "title";
-            public static final String subtitle = "subtitle";
-            public static final String status = "status";
-
-
-            public enum Status {
-                Open,
-                Active,
-                Finished,
-                Archived
-            }
         }
     }
 
     public static class Hud {
-        public static final String player_preferences = hudPrefix + "player_preferences";
+        public static final String player_preferences_TABLENAME = hudPrefix + "player_preferences";
 
-        public static class PlayerPreferences {
+        public static class PlayerPreferencesTable
+        {
             public static final String player_uuid = "player_uuid";
             public static final String enabled = "enabled";
             public static final String display_mode = "display_mode";
@@ -58,6 +43,31 @@ public class DatabaseTables
                 public static final boolean compact = false;
                 public static final boolean extended = true;
             }
+        }
+    }
+
+    public static class Seasons {
+        public static final String list_TABLENAME = seasonsPrefix + "list";
+        public static final String status_TABLENAME = seasonsPrefix + "status";
+
+        public static class ListTable
+        {
+            public static final String number = "number";
+            public static final String title = "title";
+            public static final String subtitle = "subtitle";
+            public static final String status = "status";
+        }
+
+        public static class StatusTable
+        {
+            public static final String description = "description";
+        }
+
+        public enum Status {
+            Open,
+            Active,
+            Finished,
+            Archived
         }
     }
 }
