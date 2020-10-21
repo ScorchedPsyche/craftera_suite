@@ -29,7 +29,6 @@ Features:
 Main library dependency needed for other plugins of this pack.  
   
 Features:  
- - [ ] Seasons support; 
  - [x] **Console interface;**  
  - [x] **Player command interface;**  
  - [x] **Folder utility class;**  
@@ -80,7 +79,13 @@ Features:
   
 ### Player Contribution  
 Account for player contribution to the server so that rewards can be given.  
+    
+### Seasons  
+Enables Season support for the CraftEra Suite: useful when you reset your server often and play season-styled. 
   
+Features:  
+ - [ ] Database integration: once enabled mold database tables to support seasons; 
+ 
 ### Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
   
