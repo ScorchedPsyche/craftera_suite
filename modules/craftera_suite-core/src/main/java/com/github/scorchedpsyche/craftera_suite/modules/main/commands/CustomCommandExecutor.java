@@ -7,8 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomCommandExecutor implements CommandExecutor {
     public CustomCommandExecutor(CraftEraSuiteCore cesCore) {

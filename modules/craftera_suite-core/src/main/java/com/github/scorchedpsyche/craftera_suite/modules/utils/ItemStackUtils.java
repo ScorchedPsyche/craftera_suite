@@ -2,8 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.utils;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemStackUtils
 {
