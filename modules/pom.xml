@@ -21,6 +21,7 @@
         <module>craftera_suite-core</module>
         <module>craftera_suite-hud</module>
         <module>craftera_suite-wandering_trades</module>
+        <module>craftera_suite-seasons</module>
     </modules>
 
 </project>

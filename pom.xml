@@ -12,6 +12,7 @@
 
     <modules>
         <module>modules</module>
+        <module>craftera_suite-seasons</module>
     </modules>
 
     <repositories>
