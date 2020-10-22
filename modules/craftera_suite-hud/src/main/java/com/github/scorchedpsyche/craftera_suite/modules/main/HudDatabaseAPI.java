@@ -29,7 +29,7 @@ public class HudDatabaseAPI
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
         String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
-                "WHERE player_uuid='" + playerUUID + "' LIMIT 1";
+                " WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(database.getDatabaseUrl());
              Statement stmt = conn.createStatement()) {

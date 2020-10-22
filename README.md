@@ -10,9 +10,9 @@ Modules with a check-list are the ones that are either being worked on or that h
 Plugin names are a work-in-progress and might change in the future.  
   
 ### Achievements 
-Custom achievements such as server-first accomplishments.  
+Achievements such as server-first and custom ones. 
 
- - [ ] Vanilla player personal achievement accounting (0/80 done);
+ - [ ] Vanilla player personal achievement accounting (0/80 advancements done);
  - [ ] Vanilla server-first achievement accounting;
  - [ ] Seasons module support: achievements resets on new Season and old ones are archived.
   
@@ -85,7 +85,7 @@ Features:
 Account for player contribution to the server so that rewards can be given.  
     
 ### Seasons  
-Enables Season support for the CraftEra Suite: useful when you reset your server often and play season-styled. 
+Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled. 
   
 Features:  
  - [ ] Database integration: once enabled mold database tables to support seasons; 

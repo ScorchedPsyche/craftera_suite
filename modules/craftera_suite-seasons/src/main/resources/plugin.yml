@@ -1,0 +1,9 @@
+name: craftera_suite-seasons
+version: ${project.version}
+depend: [craftera_suite-core]
+main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSeasons
+api-version: 1.16
+prefix: CraftEra Suite - Seasons
+authors: [ScorchedPsyche]
+description: Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled.
+website: https://github.com/ScorchedPsyche
