@@ -11,6 +11,7 @@ public class PlayerAdvancementDoneListener implements Listener
     {
         for ( String criteria : event.getAdvancement().getCriteria() )
         {
+            System.out.println(event.getAdvancement().getKey().toString());
             System.out.println(criteria);
         }
     }

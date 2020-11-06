@@ -8,6 +8,15 @@ public class CraftEraSuiteAchievements extends JavaPlugin
     @Override
     public void onEnable()
     {
+//        Advancement ironOre = new Advancement(
+//                new MinecraftKey("ces", "advancements.ores.iron"),
+//                null,
+//                new AdvancementDisplay(
+//                        CraftItemStack.asNMSCopy(new ItemStack(Material.IRON_ORE)),
+//
+//                ),
+//
+//        )
 
         getServer().getPluginManager().registerEvents(new PlayerAdvancementDoneListener(), this);
     }

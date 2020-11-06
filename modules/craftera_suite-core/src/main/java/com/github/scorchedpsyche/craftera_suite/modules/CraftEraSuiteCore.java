@@ -11,7 +11,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtil
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CraftEraSuiteCore extends JavaPlugin {
-    public String pluginNamePrefix = "CraftEra Suite";
     public StringUtils stringUtils;
     public FolderUtils folderUtils;
     public ConsoleUtils consoleUtils;
