@@ -11,19 +11,14 @@ import java.sql.*;
 
 public class HudDatabaseAPI
 {
-
     public HudDatabaseAPI(IDatabase database)
     {
         this.database = database;
-        consoleUtils = new ConsoleUtils("CraftEra Suite - HUD");
-        stringUtils = new StringUtils();
         databaseUtils = new DatabaseUtils();
         setup();
     }
 
     private IDatabase database;
-    private ConsoleUtils consoleUtils;
-    private StringUtils stringUtils;
     private DatabaseUtils databaseUtils;
 
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
@@ -40,9 +35,9 @@ public class HudDatabaseAPI
                 return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
             }
         } catch (SQLException e) {
-            consoleUtils.logError(
+            ConsoleUtils.logError(
                     "SQLite query failed: " + sql);
-            consoleUtils.logError( e.getMessage() );
+            ConsoleUtils.logError( e.getMessage() );
         }
 
         return null;
@@ -50,7 +45,7 @@ public class HudDatabaseAPI
 
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
-        if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
+        if( !StringUtils.isNullOrEmpty(table) && column != null && !StringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
@@ -60,14 +55,14 @@ public class HudDatabaseAPI
 
             database.executeSql(sql);
         } else {
-            consoleUtils.logError(
+            ConsoleUtils.logError( SuitePluginManager.Hud.name,
                     "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
         }
     }
 
     public void setBooleanForPlayer(String table, String playerUUID, String column, boolean value)
     {
-        if( !stringUtils.isNullOrEmpty(table) && column != null && !stringUtils.isNullOrEmpty(column) )
+        if( !StringUtils.isNullOrEmpty(table) && column != null && !StringUtils.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
@@ -77,7 +72,7 @@ public class HudDatabaseAPI
 
             database.executeSql(sql);
         } else {
-            consoleUtils.logError(
+            ConsoleUtils.logError( SuitePluginManager.Hud.name,
                     "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
         }
     }
@@ -109,9 +104,11 @@ public class HudDatabaseAPI
 
         if (database.executeSql(playerPreferencesTableSql))
         {
-            consoleUtils.logSuccess("Table successfully created: hud_player_preferences");
+            ConsoleUtils.logSuccess( SuitePluginManager.Hud.name,
+                                     "Table successfully created: hud_player_preferences");
         } else {
-            consoleUtils.logError("Failed to create table: hud_player_preferences");
+            ConsoleUtils.logError( SuitePluginManager.Hud.name,
+                                   "Failed to create table: hud_player_preferences");
         }
     }
 }

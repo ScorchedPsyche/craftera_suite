@@ -1,17 +1,13 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-
 public class SeasonsDatabaseApi
 {
     public SeasonsDatabaseApi()
     {
-        consoleUtils = new ConsoleUtils("CraftEra Suite - Core");
         setup();
     }
 
     private final String tablePrefix = "seasons_";
-    private ConsoleUtils consoleUtils;
 
     private void setup()
     {

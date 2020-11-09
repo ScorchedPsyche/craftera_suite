@@ -12,14 +12,7 @@ import java.util.ArrayList;
 
 public class ResourcesManager
 {
-    public ResourcesManager()
-    {
-        this.consoleUtils = new ConsoleUtils();
-    }
-
     public File pluginRootFolder;
-
-    private ConsoleUtils consoleUtils;
 
     public void copyResourcesToServer(JavaPlugin plugin, ArrayList<String> files)
     {
@@ -53,20 +46,20 @@ public class ResourcesManager
                     if( !destinationFile.exists() )
                     {
                         FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
-                        consoleUtils.logMessage(
+                        ConsoleUtils.logMessage(
                                 "File copied: " + ChatColor.YELLOW + destinationFile);
                     } else {
-                        consoleUtils.logMessage(
+                        ConsoleUtils.logMessage(
                                 "File exists and won't be copied: " + ChatColor.YELLOW + destinationFile);
                     }
                 } catch (IOException e) {
                     // Failed to create file
-                    consoleUtils.logError(
+                    ConsoleUtils.logError(
                             "Failed to create file. Check write permissions for folder: " + ChatColor.YELLOW + destinationFile);
                 }
             } else {
                 // Resource not found, must display error
-                consoleUtils.logError(
+                ConsoleUtils.logError(
                     "Resource not found on .jar. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + file);
             }
 
@@ -75,7 +68,7 @@ public class ResourcesManager
                 resourceToBeCopied.close();
             } catch (IOException e) {
                 // Failed to close file
-                consoleUtils.logError(
+                ConsoleUtils.logError(
                         "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
             }
         }

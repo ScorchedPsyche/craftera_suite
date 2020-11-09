@@ -3,6 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.types.SQLiteDatabase;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ public class DatabaseManager
             default: // SQLite
                 database = new SQLiteDatabase(
                         cesCore,
-                        cesCore.folderUtils.cesRootFolder + File.separator + "craftera_suite.db" );
+                        FolderUtils.getOrCreateCesRootFolder() + File.separator + "craftera_suite.db" );
                 break;
         }
     }

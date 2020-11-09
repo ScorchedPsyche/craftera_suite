@@ -4,6 +4,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.core.MerchantManager;
 import com.github.scorchedpsyche.craftera_suite.modules.core.TradeListManager;
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.WanderingTraderSpawnListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import com.mojang.authlib.GameProfile;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,7 +33,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     @Override
     public void onEnable()
     {
-        resourcesManager.pluginRootFolder =  cesCore.folderUtils.getOrCreatePluginSubfolder(this);
+        resourcesManager.pluginRootFolder =  FolderUtils.getOrCreatePluginSubfolder(this.getName());
         resourcesManager.copyResourcesToServer(this, new ArrayList<String>(){{
             add("trade_lists/heads_decoration.json");
             add("trade_lists/heads_players.json");

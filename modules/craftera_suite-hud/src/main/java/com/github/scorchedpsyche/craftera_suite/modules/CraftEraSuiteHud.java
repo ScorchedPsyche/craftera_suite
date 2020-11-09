@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinList
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,7 +49,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
     {
         cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
 
-        pluginRootFolder = cesCore.folderUtils.getOrCreatePluginSubfolder(this);
+        pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());
 
         hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
         hudManager = new HudManager(hudDatabaseAPI);

@@ -1,36 +1,42 @@
 package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class FolderUtils {
-    public File cesRootFolder;
+    private static File pluginsFolder;
+    private static File cesRootFolder;
 
-    private CraftEraSuiteCore plugin;
-    private File pluginsFolder;
+//    private CraftEraSuiteCore plugin;
 
-    public FolderUtils(CraftEraSuiteCore plugin) {
-        this.plugin = plugin;
-        pluginsFolder = getPluginsFolder();
+//    public FolderUtils(CraftEraSuiteCore plugin) {
+//        this.plugin = plugin;
+//        pluginsFolder = getPluginsFolder();
+//        cesRootFolder = getOrCreateCesRootFolder();
+//    }
+    public static synchronized void setup(File dataFolder)
+    {
+        pluginsFolder = getPluginsFolder(dataFolder);
         cesRootFolder = getOrCreateCesRootFolder();
     }
 
-    public File getOrCreatePluginSubfolder(JavaPlugin plugin)
+    public static File getOrCreatePluginSubfolder(String pluginName)
     {
-        File pluginSubfolder = new File(cesRootFolder.toString() + File.separator + plugin.getName().split("-")[1]);
+        File pluginSubfolder = new File(cesRootFolder.toString() + File.separator + pluginName.split("-")[1]);
 
         if( !pluginSubfolder.exists() )
         {
             if( !pluginSubfolder.mkdirs() )
             {
-                this.plugin.consoleUtils.logError("Plugin configuration folder failed to be created: check " +
-                        "folder " +
-                        "write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + pluginSubfolder.toString());
+                ConsoleUtils.logError(
+                        "Plugin configuration folder failed to be created: check folder write permissions or try to " +
+                                "create the folder manually. If everything looks OK and the issue still persists, " +
+                                "report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " +
+                                ChatColor.YELLOW + pluginSubfolder.toString());
             }
         }
 
@@ -41,8 +47,13 @@ public class FolderUtils {
      * Retrieves or creates the root CraftEra Suite folder which holds all of the suite plugin's configuration files.
      * @return The root folder inside Plugins folder for the CraftEra Suite configurations
      */
-    private File getOrCreateCesRootFolder()
+    public static synchronized File getOrCreateCesRootFolder()
     {
+        if( cesRootFolder != null )
+        {
+            return cesRootFolder;
+        }
+
         String cesRootPath = pluginsFolder.toString();
         cesRootPath += File.separator + "craftera_suite";
         File cesFolder = new File( cesRootPath );
@@ -50,7 +61,11 @@ public class FolderUtils {
         if ( !cesFolder.exists() )
         {
             if (!cesFolder.mkdirs()) {
-                plugin.consoleUtils.logError("Main CraftEra Suite configuration folder failed to be created: check folder write permissions or try to create the folder manually. If everything looks OK and the issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + cesFolder.toString());
+                ConsoleUtils.logError(
+                        "Main CraftEra Suite configuration folder failed to be created: check folder write " +
+                                "permissions or try to create the folder manually. If everything looks OK and the " +
+                                "issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT " +
+                                "SHOULD HAVE BEEN CREATED: " + ChatColor.YELLOW + cesFolder.toString());
             }
         }
 
@@ -60,13 +75,18 @@ public class FolderUtils {
     /** 
      * @return Returns root Plugins folder.
     */
-    private File getPluginsFolder()
+    private static synchronized File getPluginsFolder(File dataFolder)
     {
+        if( pluginsFolder != null )
+        {
+            return pluginsFolder;
+        }
+
         String path;
         try {
-            path = plugin.getDataFolder().getCanonicalPath();
+            path = dataFolder.getCanonicalPath();
         } catch( IOException ex ) {
-            path = plugin.getDataFolder().getAbsolutePath();
+            path = dataFolder.getAbsolutePath();
         }
 
         String pattern = Pattern.quote(File.separator);

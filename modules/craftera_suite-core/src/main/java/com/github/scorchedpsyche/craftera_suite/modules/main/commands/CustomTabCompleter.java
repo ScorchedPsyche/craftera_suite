@@ -2,13 +2,18 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.models.CommandModel;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class CustomTabCompleter implements TabCompleter {
     private CraftEraSuiteCore cesCore;
@@ -21,16 +26,10 @@ public class CustomTabCompleter implements TabCompleter {
 
         commands = new HashMap<>();
 
-        commands.putAll(setupHudCommands());
-
-
-//        System.out.println(hudConfig.subCommands.get("config"));
-//        System.out.println(hudConfig.subCommands.get("config").subCommands.get("display_mode"));
-//        System.out.println(hudConfig.subCommands.get("config").subCommands.get("display_mode").subCommands.get(
-//                "compact"));
+        commands.putAll(getHudCommands());
     }
 
-    private HashMap<String, CommandModel> setupHudCommands()
+    private HashMap<String, CommandModel> getHudCommands()
     {
         HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
 
@@ -74,28 +73,37 @@ public class CustomTabCompleter implements TabCompleter {
 
     private List<String> getSubcommands(HashMap<String, CommandModel> commands, List<String> args)
     {
-
-//        Iterator it = commands.entrySet().iterator();
-//        while (it.hasNext()) {
-//            Map.Entry pair = (Map.Entry)it.next();
-//            System.out.println(pair.getKey() + " = " + pair.getValue());
-//        }
-
-        // Check if there's a valid argument
-        if( args.size() > 0 && !cesCore.stringUtils.isNullOrEmpty(args.get(0)) )
+        // Check if there's at least a valid string for the arguments
+        if( args.size() > 0 && !StringUtils.isNullOrEmpty(args.get(0)) )
         {
-            if( commands.containsKey(args.get(0)) )
-            {
-                HashMap<String, CommandModel> subCommands = commands.get(args.get(0)).subCommands;
+            // At least one valid argument
 
-                if( args.size() > 1 )
+            // Check if there's exactly one argument
+            if( args.size() == 1 )
+            {
+                // 1 arg. Return partial filtered list by word
+                return filterListByPartialWord(new ArrayList<>(commands.keySet()), args.get(0));
+            } else {
+                // More than 1 arg. Check if current command tree contains the arg with subcommands
+                if(     commands.containsKey(args.get(0)) &&
+                        commands.get(args.get(0)) != null &&
+                        commands.get(args.get(0)).hasSubcommands() )
                 {
+                    // Valid arg. Return subcommands
+                    HashMap<String, CommandModel> subCommands = commands.get(args.get(0)).subCommands;
+
+                    // More arguments. Remove parent argument and check child subcommands
                     args.remove(0);
                     return getSubcommands(subCommands, args);
                 }
+
+                // No subcommands. Suggest nothing
+                return new ArrayList<>();
             }
         }
-        return new ArrayList<String>(commands.keySet());
+
+        // No valid string for argument. Return current tree position
+        return new ArrayList<>(commands.keySet());
     }
 
     @Override
@@ -113,138 +121,30 @@ public class CustomTabCompleter implements TabCompleter {
                 } else {
                     return new ArrayList<String>(commands.keySet());
                 }
-
-
-
-
-
-
-//                if( args.length == 0 || (args.length > 0 && cesCore.stringUtils.isNullOrEmpty(args[0])) )
-//                {
-//                    List<String> subCommands = new ArrayList<>();
-//
-//                    subCommands.add("core");
-//
-//                    // Check if HUD is enabled
-//                    if( cesCore.suitePluginManager.isHudPluginEnabled() )
-//                    {
-//                        subCommands.add("hud");
-//                    }
-//
-//                    return subCommands;
-//                } else {
-//                    // args.length > 0. CES subcommands
-//
-//                    if( !cesCore.stringUtils.isNullOrEmpty(args[1]) )
-//                    {
-//                        switch( args[1] )
-//                        {
-//                            case "hud":
-//                                // Check if HUD is enabled
-//                                if( cesCore.suitePluginManager.isHudPluginEnabled() )
-//                                {
-//                                    // HUD subcommands
-//
-//                                    //  HUD subcommand. Return suggestions
-//                                    return new ArrayList<String>() {
-//                                        private static final long serialVersionUID = 1L;
-//
-//                                        {
-//                                            add("config");
-//                                            add("toggle");
-//                                            add("help");
-//                                        }};
-//                                }
-//                                break;
-//
-//                            default: // core
-//                                break;
-//                        }
-//                    }
-//
-//
-//                    // Check if more than 2 args
-//                    if ( args.length > 2 )
-//                    {
-//                        // HUD ... subcommand. More than 2 args
-//
-//                        if( args[1].equalsIgnoreCase("toggle") )
-//                        {
-//                            // HUD TOGGLE subcommand
-//                            List<String> subCommands = new ArrayList<>();
-//
-//                            subCommands.add("coordinates");
-//                            subCommands.add("nether_portal_coordinates");
-//                            subCommands.add("player_orientation");
-//                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-//                            {
-//                                subCommands.add( "plugin_commerce");
-//                            }
-//                            if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-//                            {
-//                                subCommands.add("plugin_spectator");
-//                            }
-//                            subCommands.add("server_time");
-//                            subCommands.add("server_tps");
-//                            subCommands.add("tool_durability");
-//                            subCommands.add("world_time");
-//
-//                            return subCommands;
-//                        } else if( args[1].equalsIgnoreCase("config") )
-//                        {
-//                            // HUD CONFIG subcommand
-//
-//                            // Check if more than 3 args
-//                            if ( args.length > 3 )
-//                            {
-//                                // HUD CONFIG ... subcommand. More than 3 args
-//                                List<String> subCommands = new ArrayList<>();
-//
-//                                if( args[2].equalsIgnoreCase("display_mode") )
-//                                {
-//                                    //  HUD CONFIG DISPLAY_MODE subcommand
-//                                    subCommands.add("compact");
-//                                    subCommands.add("extended");
-//                                } else if ( args[2].equalsIgnoreCase("colorize") )
-//                                {
-//                                    //  HUD CONFIG COLORIZE subcommand
-//                                    subCommands.add("coordinates");
-//                                    subCommands.add("nether_portal_coordinates");
-//                                    subCommands.add("player_orientation");
-//                                    subCommands.add("server_tps");
-//                                    subCommands.add("tool_durability");
-//                                    subCommands.add("world_time");
-//                                }
-//
-//                                return subCommands;
-//                            }
-//
-//                            // HUD CONFIG subcommand. Return suggestions
-//                            List<String> subCommands = new ArrayList<>();
-//
-//                            subCommands.add("display_mode");
-//                            subCommands.add("colorize");
-//
-//                            return subCommands;
-//                        }
-//
-//                        return new ArrayList<String>();
-//                    } else {
-//                        // Only 2 args
-//
-//                        // Check if HUD plugin is enabled
-//                        if( cesCore.suitePluginManager.isHudPluginEnabled() && args[0].equalsIgnoreCase("hud") )
-//                        {
-//                        } else {
-//                            // No CES plugins are enabled. Return no options
-//                            return new ArrayList<String>();
-//                        }
-//                    }
-//                }
             } 
         }
         
         return null;
     }
-    
+
+    /**
+     * Returns a list filtered with words that start with the given string.
+     * @param listToBeFiltered The list to search the string in
+     * @param searchString The word to search for
+     * @return Returns an empty list if no items that start with the provided word were found.
+     */
+    private List<String> filterListByPartialWord(List<String> listToBeFiltered, String searchString)
+    {
+        List<String> filteredList = new ArrayList<>();
+
+        for(String str : listToBeFiltered)
+        {
+            if( str.startsWith(searchString) )
+            {
+                filteredList.add(str);
+            }
+        }
+
+        return filteredList;
+    }
 }

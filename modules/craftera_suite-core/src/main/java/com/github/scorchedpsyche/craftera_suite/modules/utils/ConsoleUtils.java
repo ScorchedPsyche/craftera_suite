@@ -5,44 +5,50 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class ConsoleUtils {
-    public ConsoleUtils()
+    private static final String defaultPrefix = "CraftEra Suite";
+    /**
+     * Logs an error (red colored) to the console with the source plugin's prefix.
+     * * @param message Message to the written to the console
+     */
+    public static void logError(String message)
     {
-        stringUtils = new StringUtils();
+        logError(defaultPrefix, message);
     }
-
-    public ConsoleUtils(String prefix)
-    {
-        this();
-        this.prefix = prefix;
-    }
-
-    private StringUtils stringUtils;
-    private String prefix = "CraftEra Suite";
 
     /**
      * Logs an error (red colored) to the console with the source plugin's prefix.
      * * @param message Message to the written to the console
      */
-    public void logError(String message)
+    public static void logError(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                ChatColor.RED + "[" + getPrefix() + "] ERROR: " + message);
+                ChatColor.RED + "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] ERROR: " + message);
     }
 
-    public void logSuccess(String message)
+    public static void logSuccess(String message)
+    {
+        logSuccess(defaultPrefix, message);
+    }
+
+    public static void logSuccess(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                ChatColor.GREEN + "[" + getPrefix() + "] SUCCESS: " + message);
+                ChatColor.GREEN + "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] SUCCESS: " + message);
     }
 
-    public void logMessage(String message)
+    public static void logMessage(String message)
+    {
+        logMessage(defaultPrefix, message);
+    }
+
+    public static void logMessage(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                "[" + getPrefix() + "] " + message);
+                "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] " + message);
     }
 
-    private String getPrefix()
+    private static String validCustomPrefixOrDefault(String pluginPrefixName)
     {
-        return ( prefix != null && !stringUtils.isNullOrEmpty(prefix) ) ? prefix : "CraftEra Suite";
+        return ( defaultPrefix != null && !StringUtils.isNullOrEmpty(defaultPrefix) ) ? defaultPrefix : "CraftEra Suite";
     }
 }

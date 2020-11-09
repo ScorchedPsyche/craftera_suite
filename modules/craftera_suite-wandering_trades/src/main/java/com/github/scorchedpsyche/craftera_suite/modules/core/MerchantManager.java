@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.models.TradeEntryModel;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
@@ -449,8 +450,8 @@ public class MerchantManager
 
             // Check if decoration head either texture or owner
             if( trade.getMinecraftId().equalsIgnoreCase("player_head") &&
-                    (   CraftEraSuiteWanderingTrades.cesCore.stringUtils.isNullOrEmpty(trade.getOwnerId()) &&
-                        CraftEraSuiteWanderingTrades.cesCore.stringUtils.isNullOrEmpty(trade.getTexture()) ) )
+                    (   StringUtils.isNullOrEmpty(trade.getOwnerId()) &&
+                        StringUtils.isNullOrEmpty(trade.getTexture()) ) )
             {
                 // Missing both
                 isValid = false;

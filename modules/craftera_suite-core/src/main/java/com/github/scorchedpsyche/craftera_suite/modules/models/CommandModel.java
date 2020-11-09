@@ -53,4 +53,14 @@ public class CommandModel
 
         return this;
     }
+
+    public boolean hasSubcommands()
+    {
+        if( subCommands == null )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
