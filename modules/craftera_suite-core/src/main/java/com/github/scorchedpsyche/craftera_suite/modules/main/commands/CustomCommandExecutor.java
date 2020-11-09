@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,20 +15,19 @@ public class CustomCommandExecutor implements CommandExecutor {
     public CustomCommandExecutor(CraftEraSuiteCore cesCore) {
         super();
         this.cesCore = cesCore;
-//        commandManager = new CommandManager();
     }
 
     private CraftEraSuiteCore cesCore;
-//    private CommandManager commandManager;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-//        commandManager.runCommandIfValid(sender, command, args);
+        ConsoleUtils.logMessage("1");
 
         // Check if sender is player
         if (sender instanceof Player) {
             // Check if /CES command
             if ( isCesCommandWithArgs(command, args) ) {
+                ConsoleUtils.logMessage("4");
                 String[] argsFiltered = filterSubcommandArgs(args);
 
                 switch( args[0] )
@@ -39,21 +39,7 @@ public class CustomCommandExecutor implements CommandExecutor {
                             argsFiltered[0] = "toggle";
                         }
 
-//                        HudCommandsEvent hudToggleCommandEvent =
-
                         Bukkit.getPluginManager().callEvent(new HudCommandsEvent((Player) sender, argsFiltered));
-
-//                        if( cesCore.suitePluginManager.isHudPluginEnabled()
-//                            && args.length > 1
-//                            && !cesCore.stringUtils.isEmpty(args[1])
-//                            && args[1].equalsIgnoreCase("config") )
-//                        {
-//                            sender.sendMessage("ces hud config");
-//                        } else {
-//                            HudCommandEvent hudToggleCommandEvent = new HudCommandEvent((Player) sender );
-//                            Bukkit.getPluginManager().callEvent(hudToggleCommandEvent);
-//                            sender.sendMessage("ces hud toggle");
-//                        }
 
                         return true;
 
@@ -71,7 +57,7 @@ public class CustomCommandExecutor implements CommandExecutor {
     {
         if( command.getName().equalsIgnoreCase("ces")
                 && args.length > 0
-                && StringUtils.isNullOrEmpty(args[0]) )
+                && !StringUtils.isNullOrEmpty(args[0]) )
         {
             return true;
         }
