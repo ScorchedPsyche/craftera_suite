@@ -2,7 +2,6 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.models.CommandModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -89,10 +88,10 @@ public class CustomTabCompleter implements TabCompleter {
                         commands.get(args.get(0)) != null &&
                         commands.get(args.get(0)).hasSubcommands() )
                 {
-                    // Valid arg. Return subcommands
+                    // Has subcommands
                     HashMap<String, CommandModel> subCommands = commands.get(args.get(0)).subCommands;
 
-                    // More arguments. Remove parent argument and check child subcommands
+                    // Remove parent argument and check child subcommands
                     args.remove(0);
                     return getSubcommands(subCommands, args);
                 }
