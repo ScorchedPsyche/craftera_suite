@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.types.SQLiteDatabase;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
@@ -14,7 +13,7 @@ public class DatabaseManager
         MySQL
     }
 
-    public DatabaseManager(CraftEraSuiteCore cesCore, DatabaseType databaseType)
+    public DatabaseManager(DatabaseType databaseType)
     {
         switch(databaseType)
         {
@@ -23,7 +22,6 @@ public class DatabaseManager
 
             default: // SQLite
                 database = new SQLiteDatabase(
-                        cesCore,
                         FolderUtils.getOrCreateCesRootFolder() + File.separator + "craftera_suite.db" );
                 break;
         }

@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinList
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +15,7 @@ import java.io.File;
 
 public final class CraftEraSuiteHud extends JavaPlugin
 {
-    public CraftEraSuiteCore cesCore;
+//    public CraftEraSuiteCore cesCore;
     public HudDatabaseAPI hudDatabaseAPI;
     public HudManager hudManager;
     
@@ -47,11 +48,11 @@ public final class CraftEraSuiteHud extends JavaPlugin
 
     private void setup()
     {
-        cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
+//        cesCore = (CraftEraSuiteCore) Bukkit.getPluginManager().getPlugin("craftera_suite-core");
 
         pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());
 
-        hudDatabaseAPI = new HudDatabaseAPI(cesCore.databaseManager.database);
+        hudDatabaseAPI = new HudDatabaseAPI(new DatabaseManager(DatabaseManager.DatabaseType.SQLite).database);
         hudManager = new HudManager(hudDatabaseAPI);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {

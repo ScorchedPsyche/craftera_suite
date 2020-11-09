@@ -1,18 +1,19 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database.types;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class SQLiteDatabase implements IDatabase
 {
-    CraftEraSuiteCore cesCore;
     String databaseUrl;
 
-    public SQLiteDatabase(CraftEraSuiteCore cesCore, String pathWithFileName)
+    public SQLiteDatabase(String pathWithFileName)
     {
-        this.cesCore = cesCore;
         databaseUrl = "jdbc:sqlite:" + pathWithFileName;
         createOrRetrieveDatabase();
     }
@@ -28,14 +29,14 @@ public class SQLiteDatabase implements IDatabase
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl)) {
             if (conn != null) {
-                cesCore.consoleUtils.logSuccess(
+                ConsoleUtils.logSuccess(
                         "A new SQLite database has been created at: " + databaseUrl);
                 return conn;
             }
         } catch (SQLException e) {
-            cesCore.consoleUtils.logError(
+            ConsoleUtils.logError(
                     "SQLite database creation failed. Check folder write permissions at: " + databaseUrl);
-            cesCore.consoleUtils.logError( e.getMessage() );
+            ConsoleUtils.logError( e.getMessage() );
         }
 
         return null;
@@ -49,9 +50,9 @@ public class SQLiteDatabase implements IDatabase
             stmt.execute(sqlStatement);
             return true;
         } catch (SQLException e) {
-            cesCore.consoleUtils.logError(
+            ConsoleUtils.logError(
                     "SQLite sql execution failed: " + sqlStatement);
-            cesCore.consoleUtils.logError( e.getMessage() );
+            ConsoleUtils.logError( e.getMessage() );
         }
 
         return false;

@@ -2,7 +2,6 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -21,13 +20,11 @@ public class CustomCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ConsoleUtils.logMessage("1");
 
         // Check if sender is player
         if (sender instanceof Player) {
             // Check if /CES command
             if ( isCesCommandWithArgs(command, args) ) {
-                ConsoleUtils.logMessage("4");
                 String[] argsFiltered = filterSubcommandArgs(args);
 
                 switch( args[0] )

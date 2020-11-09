@@ -29,7 +29,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         suitePluginManager = new SuitePluginManager();
         resourcesManager = new ResourcesManager();
 
-        databaseManager = new DatabaseManager(this, DatabaseManager.DatabaseType.SQLite);
+        databaseManager = new DatabaseManager(DatabaseManager.DatabaseType.SQLite);
 
         // Register "ces" command
         this.getCommand("ces").setExecutor(new CustomCommandExecutor(this));
