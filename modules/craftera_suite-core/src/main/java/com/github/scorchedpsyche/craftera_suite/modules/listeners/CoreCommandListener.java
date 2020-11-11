@@ -1,7 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.listeners;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
-import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.MessageUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
@@ -13,9 +12,9 @@ public class CoreCommandListener implements Listener
 {
 
     private final StringUtils stringUtils = new StringUtils();
-    private final ConsoleUtils consoleUtils = new ConsoleUtils();
-    private final PlayerUtils playerUtils = new PlayerUtils();
-    private final MessageUtils messageUtils = new MessageUtils();
+//    private final ConsoleUtils consoleUtils = new ConsoleUtils();
+//    private final PlayerUtils playerUtils = new PlayerUtils();
+//    private final MessageUtils messageUtils = new MessageUtils();
     private final String pluginPrefix = "CES - HUD";
 
     @EventHandler
@@ -58,7 +57,7 @@ public class CoreCommandListener implements Listener
                         }
                     } else {
                         // /ces hud config HELP
-                        playerUtils.sendMessageWithPluginPrefix(
+                        PlayerUtils.sendMessageWithPluginPrefix(
                                 event.getPlayer(),
                                 pluginPrefix,
                                 hudConfigCommandHelpMessage());
@@ -69,12 +68,12 @@ public class CoreCommandListener implements Listener
                     break;
 
                 default: // /ces hud HELP
-                    playerUtils.sendMessageWithPluginPrefix( event.getPlayer(), pluginPrefix, hudHelpMessage() );
+                    PlayerUtils.sendMessageWithPluginPrefix( event.getPlayer(), pluginPrefix, hudHelpMessage() );
                     break;
             }
         } else {
             // Code shouldn't have gotten here as the CustomCommandExecutor sends at least "toggle". Log the error
-            consoleUtils.logError("onHudCommandEvent received null or empty args. Report this to the developer");
+            ConsoleUtils.logError("onHudCommandEvent received null or empty args. Report this to the developer");
         }
     }
 
@@ -85,19 +84,19 @@ public class CoreCommandListener implements Listener
     private String hudHelpMessage()
     {
         return  "Commands usage and description:" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.formattedCommandWithDescription(
                     "/ces hud",
                     "enables/disables the HUD;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "/ces hud help",
                         "this help page.") +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
                 hudConfigCommandHelpMessage()+
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
                 hudToggleCommandHelpMessage();
     }
 
@@ -107,36 +106,36 @@ public class CoreCommandListener implements Listener
      */
     private String hudConfigCommandHelpMessage()
     {
-        return  "\nSubcommands for " + messageUtils.formattedCommand("/ces hud config ...") + ":" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+        return  "\nSubcommands for " + MessageUtils.formattedCommand("/ces hud config ...") + ":" +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize coordinates",
                         "enables color for coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize nether_portal_coordinates",
                         "enables color for Nether Portal coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize player_orientation",
                         "enables color for player orientation;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize server_tps",
                         "20 = green, 19-15 = yellow and below 15 = red;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize tool_durability",
                         "below 50 = yellow and below 25 = red;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize world_time",
                         "green = villager work hours, yellow = bed can be used and red = light level " +
                                 "allows monster spawning;") +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... display_mode compact",
                         "shows as little text as possible;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... display_mode extended",
                         "shows a lot of text.");
     }
@@ -148,32 +147,32 @@ public class CoreCommandListener implements Listener
      */
     private String hudToggleCommandHelpMessage()
     {
-        return  "\nSubcommands for " + messageUtils.formattedCommand("/ces hud toggle ...") + ":" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+        return  "\nSubcommands for " + MessageUtils.formattedCommand("/ces hud toggle ...") + ":" +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "...",
                         "enables/disables the HUD;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... coordinates",
                         "enables/disables player coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... nether_portal_coordinates",
                         "enables/disables Nether Portal coordinates on the opposing dimension;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... player_orientation",
                         "enables/disables player orientation (N/S/E/W,etc);\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... server_time",
                         "enables/disables server_time;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... server_tps",
                         "enables/disables server Ticks Per Second (performance);\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... tool_durability",
                         "enables/disables main/off hand tool durability;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... world_time",
                         "enables/disables world time in ticks.");
     }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 public class ItemStackUtils
 {
     @Nullable
-    public Integer getItemRemainingDurability(ItemStack item)
+    public static Integer getItemRemainingDurability(ItemStack item)
     {
         if (item != null && item.getType().getMaxDurability() != 0)
         {

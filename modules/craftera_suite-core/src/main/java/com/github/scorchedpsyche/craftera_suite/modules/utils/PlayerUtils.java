@@ -6,22 +6,22 @@ import org.bukkit.entity.Player;
 
 public class PlayerUtils
 {
-    public int getCoordinateRoundedX(Player player)
+    public static int getCoordinateRoundedX(Player player)
     {
         return (int) player.getLocation().getX();
     }
 
-    public int getCoordinateRoundedY(Player player)
+    public static int getCoordinateRoundedY(Player player)
     {
         return (int) player.getLocation().getY();
     }
 
-    public int getCoordinateRoundedZ(Player player)
+    public static int getCoordinateRoundedZ(Player player)
     {
         return (int) player.getLocation().getZ();
     }
 
-    public World.Environment getEnvironment(Player player)
+    public static World.Environment getEnvironment(Player player)
     {
         return player.getWorld().getEnvironment();
     }
@@ -32,7 +32,7 @@ public class PlayerUtils
      * @param pluginPrefix The plugin prefix to the message
      * @param message Message to be sent
      */
-    public void sendMessageWithPluginPrefix(Player player, String pluginPrefix, String message)
+    public static void sendMessageWithPluginPrefix(Player player, String pluginPrefix, String message)
     {
         player.sendMessage(ChatColor.GOLD + "[" + pluginPrefix + "] " + ChatColor.RESET + message);
     }

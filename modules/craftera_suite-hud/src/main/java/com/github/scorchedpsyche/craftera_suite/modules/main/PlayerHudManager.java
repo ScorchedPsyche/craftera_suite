@@ -16,8 +16,8 @@ import java.util.Date;
 
 public class PlayerHudManager
 {
-    private final PlayerUtils playerUtils = new PlayerUtils();
-    private final ItemStackUtils itemStackUtils = new ItemStackUtils();
+//    private final PlayerUtils playerUtils = new PlayerUtils();
+//    private final ItemStackUtils itemStackUtils = new ItemStackUtils();
 
     public StringBuilder getPlayerHudText(Player player, HudPlayerPreferencesModel preferences)
     {
@@ -36,7 +36,7 @@ public class PlayerHudManager
 
         if( preferences.showNetherPortalCoordinates() )
         {
-            hudText.append( formatNetherPortalCoordinates(player, playerUtils.getEnvironment(player), preferences) );
+            hudText.append( formatNetherPortalCoordinates(player, PlayerUtils.getEnvironment(player), preferences) );
         }
 
         if( preferences.showToolDurability() )
@@ -82,11 +82,11 @@ public class PlayerHudManager
                 strBuilder.append(StringUtilsHud.playerCoordinatesExtended);
             }
 
-            strBuilder.append( playerUtils.getCoordinateRoundedX(player) ); // x
+            strBuilder.append( PlayerUtils.getCoordinateRoundedX(player) ); // x
             strBuilder.append( " " );
-            strBuilder.append( playerUtils.getCoordinateRoundedY(player) ); // y
+            strBuilder.append( PlayerUtils.getCoordinateRoundedY(player) ); // y
             strBuilder.append( " " );
-            strBuilder.append( playerUtils.getCoordinateRoundedZ(player) ); // z
+            strBuilder.append( PlayerUtils.getCoordinateRoundedZ(player) ); // z
         } else {
             // Compact
             if( preferences.colorizeCoordinates() )
@@ -98,9 +98,9 @@ public class PlayerHudManager
                 strBuilder.append(StringUtilsHud.playerCoordinatesCompact);
             }
 
-            strBuilder.insert( 12, playerUtils.getCoordinateRoundedZ(player) ); // z
-            strBuilder.insert( 6, playerUtils.getCoordinateRoundedY(player) ); // y
-            strBuilder.insert( 0, playerUtils.getCoordinateRoundedX(player) ); // x
+            strBuilder.insert( 12, PlayerUtils.getCoordinateRoundedZ(player) ); // z
+            strBuilder.insert( 6, PlayerUtils.getCoordinateRoundedY(player) ); // y
+            strBuilder.insert( 0, PlayerUtils.getCoordinateRoundedX(player) ); // x
         }
 
         return strBuilder;
@@ -156,8 +156,8 @@ public class PlayerHudManager
 
         if( !environment.equals(World.Environment.THE_END) )
         {
-            int portalX = playerUtils.getCoordinateRoundedX(player);
-            int portalZ = playerUtils.getCoordinateRoundedZ(player);
+            int portalX = PlayerUtils.getCoordinateRoundedX(player);
+            int portalZ = PlayerUtils.getCoordinateRoundedZ(player);
 
             if( environment.equals(World.Environment.NETHER) )
             {
@@ -260,7 +260,7 @@ public class PlayerHudManager
     private StringBuilder formatToolDurability(HudPlayerPreferencesModel preferences, String slotText, ItemStack item)
     {
         StringBuilder durabilityStrBuilder = new StringBuilder();
-        Integer itemRemainingDurability = itemStackUtils.getItemRemainingDurability(item);
+        Integer itemRemainingDurability = ItemStackUtils.getItemRemainingDurability(item);
 
         if( itemRemainingDurability != null )
         {

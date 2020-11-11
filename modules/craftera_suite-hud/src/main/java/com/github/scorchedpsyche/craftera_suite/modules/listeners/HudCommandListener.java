@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.listeners;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.MessageUtils;
@@ -18,11 +19,6 @@ public class HudCommandListener implements Listener
     }
 
     private HudManager hudManager;
-    private final StringUtils stringUtils = new StringUtils();
-    private final ConsoleUtils consoleUtils = new ConsoleUtils();
-    private final PlayerUtils playerUtils = new PlayerUtils();
-    private final MessageUtils messageUtils = new MessageUtils();
-    private final String pluginPrefix = "CES - HUD";
 
     @EventHandler
     public void onHudCommandEvent(HudCommandsEvent event)
@@ -48,42 +44,36 @@ public class HudCommandListener implements Listener
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates);
-                                            event.getPlayer().sendMessage("toggled colorize_coordinates");
                                             break;
 
                                         case "nether_portal_coordinates":
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates);
-                                            event.getPlayer().sendMessage("toggled colorize_nether_portal_coordinates");
                                             break;
 
                                         case "player_orientation":
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation);
-                                            event.getPlayer().sendMessage("toggled colorize_player_orientation");
                                             break;
 
                                         case "server_tps":
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps);
-                                            event.getPlayer().sendMessage("toggled colorize_server_tps");
                                             break;
 
                                         case "tool_durability":
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability);
-                                            event.getPlayer().sendMessage("toggled colorize_tool_durability");
                                             break;
 
                                         case "world_time":
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time);
-                                            event.getPlayer().sendMessage("toggled colorize_world_time");
                                             break;
 
                                         default:
@@ -106,7 +96,6 @@ public class HudCommandListener implements Listener
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.display_mode,
                                                     DatabaseTables.Hud.PlayerPreferencesTable.DisplayMode.compact);
-                                            event.getPlayer().sendMessage("display_mode compact");
                                             break;
 
                                         case "extended":
@@ -114,7 +103,6 @@ public class HudCommandListener implements Listener
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.display_mode,
                                                     DatabaseTables.Hud.PlayerPreferencesTable.DisplayMode.extended);
-                                            event.getPlayer().sendMessage("display_mode extended");
                                             break;
 
                                         default:
@@ -132,15 +120,15 @@ public class HudCommandListener implements Listener
                         }
                     } else {
                         // /ces hud config HELP
-                        playerUtils.sendMessageWithPluginPrefix(
+                        PlayerUtils.sendMessageWithPluginPrefix(
                                 event.getPlayer(),
-                                pluginPrefix,
+                                SuitePluginManager.Hud.Name.compact,
                                 hudConfigCommandHelpMessage());
                     }
                     break;
 
                 case "toggle": // /ces hud toggle
-                    if( args.length > 1 && !stringUtils.isNullOrEmpty(args[1]) )
+                    if( args.length > 1 && !StringUtils.isNullOrEmpty(args[1]) )
                     {
                         switch( args[1] )
                         {
@@ -148,69 +136,60 @@ public class HudCommandListener implements Listener
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.coordinates);
-                                event.getPlayer().sendMessage("toggled coordinates");
                                 break;
 
                             case "nether_portal_coordinates":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates);
-                                event.getPlayer().sendMessage("toggled nether_portal_coordinates");
                                 break;
 
                             case "player_orientation":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.player_orientation);
-                                event.getPlayer().sendMessage("toggled player_orientation");
                                 break;
 
                             case "plugin_commerce":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce);
-                                event.getPlayer().sendMessage("toggled plugin_commerce");
                                 break;
 
                             case "plugin_spectator":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator);
-                                event.getPlayer().sendMessage("toggled plugin_spectator");
                                 break;
 
                             case "server_time":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.server_time);
-                                event.getPlayer().sendMessage("toggled server_time");
                                 break;
 
                             case "server_tps":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.server_tps);
-                                event.getPlayer().sendMessage("toggled server_tps");
                                 break;
 
                             case "tool_durability":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.tool_durability);
-                                event.getPlayer().sendMessage("toggled tool_durability");
                                 break;
 
                             case "world_time":
                                 hudManager.togglePreferenceForPlayer(
                                         event.getPlayer(),
                                         DatabaseTables.Hud.PlayerPreferencesTable.world_time);
-                                event.getPlayer().sendMessage("toggled world_time");
                                 break;
 
                             default: // /ces hud toggle HELP
-                                playerUtils.sendMessageWithPluginPrefix(
+                                PlayerUtils.sendMessageWithPluginPrefix(
                                         event.getPlayer(),
-                                        pluginPrefix,
+                                        SuitePluginManager.Hud.Name.compact,
                                         hudToggleCommandHelpMessage() );
                                 break;
                         }
@@ -220,12 +199,12 @@ public class HudCommandListener implements Listener
                     break;
 
                 default: // /ces hud HELP
-                    playerUtils.sendMessageWithPluginPrefix( event.getPlayer(), pluginPrefix, hudHelpMessage() );
+                    PlayerUtils.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Hud.Name.compact, hudHelpMessage());
                     break;
             }
         } else {
             // Code shouldn't have gotten here as the CustomCommandExecutor sends at least "toggle". Log the error
-            consoleUtils.logError("onHudCommandEvent received null or empty args. Report this to the developer");
+            ConsoleUtils.logError("onHudCommandEvent received null or empty args. Report this to the developer");
         }
     }
 
@@ -236,19 +215,19 @@ public class HudCommandListener implements Listener
     private String hudHelpMessage()
     {
         return  "Commands usage and description:" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.formattedCommandWithDescription(
                     "/ces hud",
                     "enables/disables the HUD;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "/ces hud help",
                         "this help page.") +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
                 hudConfigCommandHelpMessage()+
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
                 hudToggleCommandHelpMessage();
     }
 
@@ -258,36 +237,36 @@ public class HudCommandListener implements Listener
      */
     private String hudConfigCommandHelpMessage()
     {
-        return  "\nSubcommands for " + messageUtils.formattedCommand("/ces hud config ...") + ":" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+        return  "\nSubcommands for " + MessageUtils.formattedCommand("/ces hud config ...") + ":" +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize coordinates",
                         "enables color for coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize nether_portal_coordinates",
                         "enables color for Nether Portal coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize player_orientation",
                         "enables color for player orientation;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize server_tps",
                         "20 = green, 19-15 = yellow and below 15 = red;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize tool_durability",
                         "below 50 = yellow and below 25 = red;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... colorize world_time",
                         "green = villager work hours, yellow = bed can be used and red = light level " +
                                 "allows monster spawning;") +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... display_mode compact",
                         "shows as little text as possible;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... display_mode extended",
                         "shows a lot of text.");
     }
@@ -299,32 +278,32 @@ public class HudCommandListener implements Listener
      */
     private String hudToggleCommandHelpMessage()
     {
-        return  "\nSubcommands for " + messageUtils.formattedCommand("/ces hud toggle ...") + ":" +
-                messageUtils.newLine() +
-                messageUtils.newLine() +
+        return  "\nSubcommands for " + MessageUtils.formattedCommand("/ces hud toggle ...") + ":" +
+                MessageUtils.newLine() +
+                MessageUtils.newLine() +
 
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "...",
                         "enables/disables the HUD;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... coordinates",
                         "enables/disables player coordinates;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... nether_portal_coordinates",
                         "enables/disables Nether Portal coordinates on the opposing dimension;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... player_orientation",
                         "enables/disables player orientation (N/S/E/W,etc);\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... server_time",
                         "enables/disables server_time;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... server_tps",
                         "enables/disables server Ticks Per Second (performance);\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... tool_durability",
                         "enables/disables main/off hand tool durability;\n") +
-                messageUtils.formattedCommandWithDescription(
+                MessageUtils.formattedCommandWithDescription(
                         "... world_time",
                         "enables/disables world time in ticks.");
     }

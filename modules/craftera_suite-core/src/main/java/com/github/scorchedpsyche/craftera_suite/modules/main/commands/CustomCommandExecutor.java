@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
@@ -11,13 +10,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomCommandExecutor implements CommandExecutor {
-    public CustomCommandExecutor(CraftEraSuiteCore cesCore) {
-        super();
-        this.cesCore = cesCore;
-    }
-
-    private CraftEraSuiteCore cesCore;
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -65,13 +57,14 @@ public class CustomCommandExecutor implements CommandExecutor {
     @Nullable
     private String[] filterSubcommandArgs(String[] argsUnfiltered)
     {
-        if( argsUnfiltered.length > 1 && StringUtils.isNullOrEmpty(argsUnfiltered[1]) )
+        if( argsUnfiltered.length > 1 && !StringUtils.isNullOrEmpty(argsUnfiltered[1]) )
         {
             String[] args = new String[argsUnfiltered.length - 1];
             System.arraycopy(argsUnfiltered, 1, args, 0, argsUnfiltered.length - 1);
 
             return args;
         }
+
         return null;
     }
 }

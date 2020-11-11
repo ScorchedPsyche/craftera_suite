@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.models.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
@@ -15,13 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CustomTabCompleter implements TabCompleter {
-    private CraftEraSuiteCore cesCore;
-    private CommandsManager commandManager;
     private HashMap<String, CommandModel> commands;
 
-    public CustomTabCompleter(CraftEraSuiteCore cesCore) {
+    public CustomTabCompleter() {
         super();
-        this.cesCore = cesCore;
 
         commands = new HashMap<>();
 
@@ -66,6 +62,7 @@ public class CustomTabCompleter implements TabCompleter {
 
         HashMap<String, CommandModel> hud = new HashMap<>();
         hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
+        hudSubcommands = null;
 
         return hud;
     }

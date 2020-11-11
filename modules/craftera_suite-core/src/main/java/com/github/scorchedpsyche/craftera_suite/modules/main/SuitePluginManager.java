@@ -5,7 +5,11 @@ import org.bukkit.Bukkit;
 public class SuitePluginManager {
     public static class Hud
     {
-        public static final String name = "CraftEra Suite – HUD";
+        public static class Name
+        {
+            public static final String compact = "CES – HUD";
+            public static final String full = "CraftEra Suite – HUD";
+        }
         public static boolean isEnabled ()
         {
             return Bukkit.getPluginManager().isPluginEnabled("craftera_suite-hud");

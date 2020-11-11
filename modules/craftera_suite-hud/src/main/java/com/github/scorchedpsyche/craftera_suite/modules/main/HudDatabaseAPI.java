@@ -14,12 +14,10 @@ public class HudDatabaseAPI
     public HudDatabaseAPI(IDatabase database)
     {
         this.database = database;
-        databaseUtils = new DatabaseUtils();
         setup();
     }
 
     private IDatabase database;
-    private DatabaseUtils databaseUtils;
 
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
@@ -30,7 +28,7 @@ public class HudDatabaseAPI
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !databaseUtils.isResultSetEmpty(rs) )
+            if( !DatabaseUtils.isResultSetEmpty(rs) )
             {
                 return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
             }
@@ -55,7 +53,7 @@ public class HudDatabaseAPI
 
             database.executeSql(sql);
         } else {
-            ConsoleUtils.logError( SuitePluginManager.Hud.name,
+            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
         }
     }
@@ -72,7 +70,7 @@ public class HudDatabaseAPI
 
             database.executeSql(sql);
         } else {
-            ConsoleUtils.logError( SuitePluginManager.Hud.name,
+            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
         }
     }
@@ -104,10 +102,10 @@ public class HudDatabaseAPI
 
         if (database.executeSql(playerPreferencesTableSql))
         {
-            ConsoleUtils.logSuccess( SuitePluginManager.Hud.name,
+            ConsoleUtils.logSuccess( SuitePluginManager.Hud.Name.full,
                                      "Table successfully created: hud_player_preferences");
         } else {
-            ConsoleUtils.logError( SuitePluginManager.Hud.name,
+            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
                                    "Failed to create table: hud_player_preferences");
         }
     }

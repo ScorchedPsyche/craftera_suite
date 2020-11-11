@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class TradeListManager
@@ -24,7 +23,8 @@ public class TradeListManager
         File[] files = new File(tradeListsFolder).listFiles();
         if( files != null )
         {
-            Arrays.stream(files).forEach(file -> {
+            for(File file : files)
+            {
                 try
                 {
                     TradeEntryModel[] json = new Gson().fromJson(new FileReader(file), TradeEntryModel[].class);
@@ -39,7 +39,7 @@ public class TradeListManager
                 {
                     ex.printStackTrace();
                 }
-            });
+            }
         }
     }
 }

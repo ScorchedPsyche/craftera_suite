@@ -30,12 +30,12 @@ public class SQLiteDatabase implements IDatabase
         try (Connection conn = DriverManager.getConnection(databaseUrl)) {
             if (conn != null) {
                 ConsoleUtils.logSuccess(
-                        "A new SQLite database has been created at: " + databaseUrl);
+                        "Connection to SQLite has been established at: " + databaseUrl);
                 return conn;
             }
         } catch (SQLException e) {
             ConsoleUtils.logError(
-                    "SQLite database creation failed. Check folder write permissions at: " + databaseUrl);
+                    "SQLite database connection failed. Check folder write permissions at: " + databaseUrl);
             ConsoleUtils.logError( e.getMessage() );
         }
 

@@ -12,31 +12,33 @@ public class HudPlayerPreferencesModel
     public HudPlayerPreferencesModel loadPreferencesFromResultSet(ResultSet rs)
     {
         try {
-            id = rs.getInt(1);
-            player_uuid = rs.getString(2);
-            enabled = rs.getBoolean(3);
-            display_mode = rs.getBoolean(4);
-            colorize_coordinates = rs.getBoolean(5);
-            colorize_nether_portal_coordinates = rs.getBoolean(6);
-            colorize_player_orientation = rs.getBoolean(7);
-            colorize_server_tps = rs.getBoolean(8);
-            colorize_tool_durability = rs.getBoolean(9);
-            colorize_world_time = rs.getBoolean(10);
-            coordinates = rs.getBoolean(11);
-            nether_portal_coordinates = rs.getBoolean(12);
-            player_orientation = rs.getBoolean(13);
-            plugin_commerce = rs.getBoolean(14);
-            plugin_spectator = rs.getBoolean(15);
-            server_time = rs.getBoolean(16);
-            server_tps = rs.getBoolean(17);
-            tool_durability = rs.getBoolean(18);
-            world_time = rs.getBoolean(19);
+            if ( rs.isBeforeFirst() ) {
+                id = rs.getInt(1);
+                player_uuid = rs.getString(2);
+                enabled = rs.getBoolean(3);
+                display_mode = rs.getBoolean(4);
+                colorize_coordinates = rs.getBoolean(5);
+                colorize_nether_portal_coordinates = rs.getBoolean(6);
+                colorize_player_orientation = rs.getBoolean(7);
+                colorize_server_tps = rs.getBoolean(8);
+                colorize_tool_durability = rs.getBoolean(9);
+                colorize_world_time = rs.getBoolean(10);
+                coordinates = rs.getBoolean(11);
+                nether_portal_coordinates = rs.getBoolean(12);
+                player_orientation = rs.getBoolean(13);
+                plugin_commerce = rs.getBoolean(14);
+                plugin_spectator = rs.getBoolean(15);
+                server_time = rs.getBoolean(16);
+                server_tps = rs.getBoolean(17);
+                tool_durability = rs.getBoolean(18);
+                world_time = rs.getBoolean(19);
 
-            return this;
+                return this;
+            }
         } catch (SQLException e)
         {
-            consoleUtils.logError(
-                    SuitePluginManager.Hud.name,
+            ConsoleUtils.logError(
+                    SuitePluginManager.Hud.Name.full,
                     "Failed to load player preferences from ResultSet. TRACE:");
             e.printStackTrace();
         }
@@ -134,8 +136,6 @@ public class HudPlayerPreferencesModel
                 break;
         }
     }
-
-    private ConsoleUtils consoleUtils;
 
     private int id;
     private String player_uuid;

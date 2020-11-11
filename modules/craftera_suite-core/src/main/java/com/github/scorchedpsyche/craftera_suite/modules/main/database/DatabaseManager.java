@@ -27,5 +27,5 @@ public class DatabaseManager
         }
     }
 
-    public IDatabase database;
+    public static IDatabase database;
 }

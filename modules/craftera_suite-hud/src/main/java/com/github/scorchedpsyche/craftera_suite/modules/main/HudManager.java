@@ -3,7 +3,6 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -20,20 +19,14 @@ public class HudManager {
     {
         this.hudDatabaseAPI = hudDatabaseAPI;
         onlinePlayersWithHudEnabled = new HashMap<>();
-        playerUtils = new PlayerUtils();
         playerHudManager = new PlayerHudManager();
-        itemStackUtils = new ItemStackUtils();
-        stringUtils = new StringUtils();
 
         setup();
     }
 
     private HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
     public HudDatabaseAPI hudDatabaseAPI;
-    public PlayerUtils playerUtils;
     private PlayerHudManager playerHudManager;
-    public ItemStackUtils itemStackUtils;
-    private StringUtils stringUtils;
 
     public void setup()
     {
@@ -59,13 +52,15 @@ public class HudManager {
                 player.getUniqueId().toString(),
                 preference );
 
-        player.sendMessage("CES HUD – Toggled preference: " + preference);
+        PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                "Toggled " + ChatColor.AQUA + preference);
 
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
             onlinePlayersWithHudEnabled.get(player).togglePreference(preference);
         } else {
-            player.sendMessage("CES HUD – Your HUD is not enabled, use '/ces hud' to display it");
+            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                    "Your HUD is not enabled, use '/ces hud' to display it");
         }
     }
 
@@ -77,13 +72,17 @@ public class HudManager {
                 preference,
                 value);
 
-        player.sendMessage("CES HUD – set " + preference + " with " + value);
+        PlayerUtils.sendMessageWithPluginPrefix(
+                player, SuitePluginManager.Hud.Name.compact,
+                "Set preference " + ChatColor.AQUA + preference + ChatColor.RESET + " with " +
+                        ChatColor.AQUA + value);
 
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
             onlinePlayersWithHudEnabled.get(player).setPreference(preference, value);
         } else {
-            player.sendMessage("CES HUD – Your HUD is not enabled, use '/ces hud' to display it");
+            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                    "Your HUD is not enabled, use '/ces hud' to display it");
         }
     }
 
@@ -97,7 +96,8 @@ public class HudManager {
                 Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                     //                    hudDatabaseAPI.disableHudForPlayer( player.getUniqueId().toString() );
                     onlinePlayersWithHudEnabled.remove(player);
-                    player.sendMessage("CES HUD – OFF");
+                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                            "is now " + ChatColor.RED + "OFF");
                 });
             });
         } else {
@@ -106,7 +106,8 @@ public class HudManager {
                 Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                     //                    hudDatabaseAPI.enableHudForPlayer( player.getUniqueId().toString() );
                     setPlayerAsOnline(player);
-                    player.sendMessage("CES HUD – ON");
+                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                            "is now " + ChatColor.GREEN + "ON");
                 });
             });
         }
@@ -138,7 +139,7 @@ public class HudManager {
         for (Map.Entry<Player, HudPlayerPreferencesModel> entry : onlinePlayersWithHudEnabled.entrySet()) {
             StringBuilder hudText = playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue());
 
-            if( stringUtils.isStringBuilderNullOrEmpty(hudText) )
+            if( StringUtils.isStringBuilderNullOrEmpty(hudText) )
             {
                 hudText.append("HUD empty! Use " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud" + ChatColor.RESET +
                                        " to hide the HUD or " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud help");

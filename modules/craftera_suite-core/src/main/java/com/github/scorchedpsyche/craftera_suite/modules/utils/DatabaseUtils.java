@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class DatabaseUtils
 {
-    public boolean isResultSetEmpty(ResultSet rs) throws SQLException
+    public static boolean isResultSetEmpty(ResultSet rs) throws SQLException
     {
         return (!rs.isBeforeFirst() && rs.getRow() == 0);
     }
