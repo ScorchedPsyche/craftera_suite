@@ -1,7 +1,9 @@
 package com.github.scorchedpsyche.craftera_suite.modules.core;
 
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.models.TradeEntryModel;
 import com.github.scorchedpsyche.craftera_suite.modules.models.TradeModel;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -33,7 +35,8 @@ public class TradeListManager
                     {
                         Collections.addAll(Trades.offers, json);
 
-                        LoggerCore.Log( "LOADED FILE: " + file.getName() );
+                        ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
+                                              "LOADED FILE: " + file.getName());
                     }
                 } catch (FileNotFoundException ex)
                 {

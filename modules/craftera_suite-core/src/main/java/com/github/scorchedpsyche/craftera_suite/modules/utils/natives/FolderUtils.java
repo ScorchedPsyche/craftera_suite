@@ -3,6 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.ChatColor;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -11,19 +12,13 @@ public class FolderUtils {
     private static File pluginsFolder;
     private static File cesRootFolder;
 
-//    private CraftEraSuiteCore plugin;
-
-//    public FolderUtils(CraftEraSuiteCore plugin) {
-//        this.plugin = plugin;
-//        pluginsFolder = getPluginsFolder();
-//        cesRootFolder = getOrCreateCesRootFolder();
-//    }
     public static synchronized void setup(File dataFolder)
     {
         pluginsFolder = getPluginsFolder(dataFolder);
         cesRootFolder = getOrCreateCesRootFolder();
     }
 
+    @Nullable
     public static File getOrCreatePluginSubfolder(String pluginName)
     {
         File pluginSubfolder = new File(cesRootFolder.toString() + File.separator + pluginName.split("-")[1]);
@@ -37,6 +32,7 @@ public class FolderUtils {
                                 "create the folder manually. If everything looks OK and the issue still persists, " +
                                 "report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " +
                                 ChatColor.YELLOW + pluginSubfolder.toString());
+                return null;
             }
         }
 
@@ -82,22 +78,22 @@ public class FolderUtils {
             return pluginsFolder;
         }
 
-        String path;
+        StringBuilder path;
         try {
-            path = dataFolder.getCanonicalPath();
+            path = new StringBuilder(dataFolder.getCanonicalPath());
         } catch( IOException ex ) {
-            path = dataFolder.getAbsolutePath();
+            path = new StringBuilder(dataFolder.getAbsolutePath());
         }
 
         String pattern = Pattern.quote(File.separator);
-        String[] pathSplit = path.split(pattern);
-        path = "";
+        String[] pathSplit = path.toString().split(pattern);
+        path = new StringBuilder();
 
         for ( int i = 0; i < pathSplit.length - 1; i++ )
         {
-            path += pathSplit[i] + File.separator;
+            path.append(pathSplit[i]).append(File.separator);
         }
 
-        return new File( path );
+        return new File(path.toString());
     }
 }

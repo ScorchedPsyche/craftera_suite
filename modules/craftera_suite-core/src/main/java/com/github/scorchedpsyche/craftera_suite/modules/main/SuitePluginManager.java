@@ -15,4 +15,13 @@ public class SuitePluginManager {
             return Bukkit.getPluginManager().isPluginEnabled("craftera_suite-hud");
         }
     }
+
+    public static class WanderingTrades
+    {
+        public static class Name
+        {
+            public static final String compact = "CES – Wandering Trades";
+            public static final String full = "CraftEra Suite – Wandering Trades";
+        }
+    }
 }

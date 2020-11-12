@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 public class ResourcesManager
 {
-    public File pluginRootFolder;
-
-    public void copyResourcesToServer(JavaPlugin plugin, ArrayList<String> files)
+    public void copyResourcesToServer(JavaPlugin plugin, File pluginRootFolder, ArrayList<String> files)
     {
         // Loops through resources list
         for (String file : files)
