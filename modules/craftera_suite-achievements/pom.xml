@@ -22,13 +22,22 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>project_lib</id>
+            <name>Repository in project's lib dir</name>
+            <layout>default</layout>
+            <url>file:///${project.basedir}/libs</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.16.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/spigot-1.16.3.jar</systemPath>
+            <scope>compile</scope>
+<!--            <systemPath>${project.basedir}/libs/spigot-1.16.3.jar</systemPath>-->
         </dependency>
     </dependencies>
 

@@ -16,19 +16,17 @@ public class WanderingTraderSpawnListener implements Listener
     {
         if ( event.getEntity().getType() == EntityType.WANDERING_TRADER )
         {
-            WanderingTrader wanderingTrader = (WanderingTrader) event.getEntity();
-
             // Should remove default trades?
-            if(
-//                    CraftEraSuiteWanderingTrades.config.contains("remove_default_trades") &&
-                CraftEraSuiteWanderingTrades.config.getBoolean("remove_default_trades") )
+            if( CraftEraSuiteWanderingTrades.config.getBoolean("remove_default_trades") )
             {
-                MerchantManager.removeDefaultTrades(wanderingTrader);
+                MerchantManager.removeDefaultTrades((WanderingTrader) event.getEntity());
             }
 
+            // Set trade asynchronously
             Bukkit.getScheduler().runTaskAsynchronously(
                     CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () ->
-                            CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(wanderingTrader));
+                            CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
+                                    (WanderingTrader) event.getEntity() ));
         }
     }
 }

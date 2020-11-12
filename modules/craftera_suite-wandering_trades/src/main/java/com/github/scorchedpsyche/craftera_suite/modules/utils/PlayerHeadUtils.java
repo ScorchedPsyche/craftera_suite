@@ -25,7 +25,7 @@ public class PlayerHeadUtils
         }
 
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-                                "Player Head preload ENDED with " + Math.abs(nbrOfHeadsLoaded) + " heads loaded");
+                                "Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
         inv = null;
     }
 

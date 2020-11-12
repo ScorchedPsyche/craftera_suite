@@ -39,7 +39,7 @@ public class MerchantManager
     private void setup()
     {
         // Loops through trade files
-        for (TradeEntryModel trade : CraftEraSuiteWanderingTrades.tradeList.Trades.offers)
+        for (TradeEntryModel trade : CraftEraSuiteWanderingTrades.tradeListManager.Trades.offers)
         {
             // Check if recipe is valid
             if (isRecipeValid(trade))

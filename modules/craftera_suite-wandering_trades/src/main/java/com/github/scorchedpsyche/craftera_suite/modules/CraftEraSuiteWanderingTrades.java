@@ -8,7 +8,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerHeadUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
-import com.mojang.authlib.GameProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,11 +25,10 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     public static ResourcesManager resourcesManager = new ResourcesManager();
 
     public static FileConfiguration config;
-    public static List<GameProfile> playerProfiles;
     public static List<ItemStack> whitelistedPlayerHeads;
 
     public static MerchantManager merchantManager;
-    public static TradeListManager tradeList;
+    public static TradeListManager tradeListManager;
 
     // Plugin startup logic
     @Override
@@ -63,9 +61,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                 config = new YamlConfiguration();
                 config.load(pluginRootFolder + File.separator + "config.yml");
 
-                playerProfiles = new ArrayList<>();
                 whitelistedPlayerHeads = new ArrayList<>();
-                tradeList = new TradeListManager( pluginRootFolder + File.separator + "trade_lists");
+                tradeListManager = new TradeListManager(pluginRootFolder + File.separator + "trade_lists");
 
                 merchantManager = new MerchantManager();
 
@@ -75,8 +72,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                 Bukkit.getScheduler().runTaskAsynchronously(this, PlayerHeadUtils::preloadPlayerHeads);
             } catch (IOException | InvalidConfigurationException e)
             {
-                e.printStackTrace();
                 pluginRootFolder = null;
+                e.printStackTrace();
                 this.onDisable();
             }
         } else {
@@ -91,10 +88,9 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     {
         resourcesManager = null;
         config = null;
-        playerProfiles = null;
         whitelistedPlayerHeads = null;
         merchantManager = null;
-        tradeList = null;
+        tradeListManager = null;
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Plugin disabled");
     }

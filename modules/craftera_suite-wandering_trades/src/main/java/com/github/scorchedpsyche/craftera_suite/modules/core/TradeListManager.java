@@ -43,6 +43,8 @@ public class TradeListManager
                     ex.printStackTrace();
                 }
             }
+
+            files = null;
         }
     }
 }
