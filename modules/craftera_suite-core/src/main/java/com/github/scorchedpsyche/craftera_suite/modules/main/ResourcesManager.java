@@ -44,20 +44,20 @@ public class ResourcesManager
                     if( !destinationFile.exists() )
                     {
                         FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
-                        ConsoleUtils.logMessage(
+                        ConsoleUtils.logMessage( plugin.getName(),
                                 "File copied: " + ChatColor.YELLOW + destinationFile);
                     } else {
-                        ConsoleUtils.logMessage(
+                        ConsoleUtils.logMessage( plugin.getName(),
                                 "File exists and won't be copied: " + ChatColor.YELLOW + destinationFile);
                     }
                 } catch (IOException e) {
                     // Failed to create file
-                    ConsoleUtils.logError(
+                    ConsoleUtils.logError( plugin.getName(),
                             "Failed to create file. Check write permissions for folder: " + ChatColor.YELLOW + destinationFile);
                 }
             } else {
                 // Resource not found, must display error
-                ConsoleUtils.logError(
+                ConsoleUtils.logError( plugin.getName(),
                     "Resource not found on .jar. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + file);
             }
 
@@ -66,7 +66,7 @@ public class ResourcesManager
                 resourceToBeCopied.close();
             } catch (IOException e) {
                 // Failed to close file
-                ConsoleUtils.logError(
+                ConsoleUtils.logError( plugin.getName(),
                         "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
             }
         }

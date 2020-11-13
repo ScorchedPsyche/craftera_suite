@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
-import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
@@ -11,20 +11,13 @@ import java.sql.*;
 
 public class HudDatabaseAPI
 {
-    public HudDatabaseAPI(IDatabase database)
-    {
-        this.database = database;
-        setup();
-    }
-
-    private IDatabase database;
-
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
         String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
                 " WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
-        try (Connection conn = DriverManager.getConnection(database.getDatabaseUrl());
+        try (Connection conn = DriverManager.getConnection(
+                DatabaseManager.database.getDatabaseUrl());
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -51,7 +44,7 @@ public class HudDatabaseAPI
                         "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
                         "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
 
-            database.executeSql(sql);
+            DatabaseManager.database.executeSql(sql);
         } else {
             ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
@@ -68,14 +61,14 @@ public class HudDatabaseAPI
                     "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
                     "UPDATE SET " + column + " = " + value;
 
-            database.executeSql(sql);
+            DatabaseManager.database.executeSql(sql);
         } else {
             ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
         }
     }
 
-    private void setup()
+    public void setup()
     {
         String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Hud.player_preferences_TABLENAME + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
@@ -100,7 +93,9 @@ public class HudDatabaseAPI
                 + "	" + DatabaseTables.Hud.PlayerPreferencesTable.world_time + " NUMERIC DEFAULT 1\n"
                 + ");";
 
-        if (database.executeSql(playerPreferencesTableSql))
+
+
+        if (DatabaseManager.database.executeSql(playerPreferencesTableSql))
         {
             ConsoleUtils.logSuccess( SuitePluginManager.Hud.Name.full,
                                      "Table successfully created: hud_player_preferences");

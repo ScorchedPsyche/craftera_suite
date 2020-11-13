@@ -44,14 +44,9 @@ public class CustomCommandExecutor implements CommandExecutor {
 
     private boolean isCesCommandWithArgs(Command command, String[] args)
     {
-        if( command.getName().equalsIgnoreCase("ces")
+        return command.getName().equalsIgnoreCase("ces")
                 && args.length > 0
-                && !StringUtils.isNullOrEmpty(args[0]) )
-        {
-            return true;
-        }
-
-        return false;
+                && !StringUtils.isNullOrEmpty(args[0]);
     }
 
     @Nullable

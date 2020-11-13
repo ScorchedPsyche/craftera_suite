@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public final class PlayerQuitListener implements Listener {
-    private HudManager hudManager;
+    private final HudManager hudManager;
 
     public PlayerQuitListener(HudManager hudManager)
     {

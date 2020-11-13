@@ -8,8 +8,8 @@ import org.bukkit.event.HandlerList;
 
 public class HudCommandsEvent extends Event implements Cancellable, ICommandEvent
 {
-    private Player player;
-    private String[] args;
+    private final Player player;
+    private final String[] args;
     private static final HandlerList handlers = new HandlerList();
 
     public HudCommandsEvent(Player player, String[] args)

@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CraftEraSuiteCore extends JavaPlugin {
     public ResourcesManager resourcesManager;
-
     public DatabaseManager databaseManager;
 
     // Plugin startup logic

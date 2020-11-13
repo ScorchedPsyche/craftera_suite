@@ -5,7 +5,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinList
 import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
-import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,7 +40,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
 
     private void setup()
     {
-        hudManager = new HudManager( new HudDatabaseAPI( DatabaseManager.database ) );
+        hudManager = new HudManager( new HudDatabaseAPI( ) );
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             hudManager.showHudForPlayers();

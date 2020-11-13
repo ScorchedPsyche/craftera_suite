@@ -1,21 +1,18 @@
 package com.github.scorchedpsyche.craftera_suite.modules.listeners;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.MessageUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class CoreCommandListener implements Listener
 {
-
-    private final StringUtils stringUtils = new StringUtils();
 //    private final ConsoleUtils consoleUtils = new ConsoleUtils();
 //    private final PlayerUtils playerUtils = new PlayerUtils();
 //    private final MessageUtils messageUtils = new MessageUtils();
-    private final String pluginPrefix = "CES - HUD";
 
     @EventHandler
     public void onCoreCommandEvent(HudCommandsEvent event)
@@ -58,9 +55,7 @@ public class CoreCommandListener implements Listener
                     } else {
                         // /ces hud config HELP
                         PlayerUtils.sendMessageWithPluginPrefix(
-                                event.getPlayer(),
-                                pluginPrefix,
-                                hudConfigCommandHelpMessage());
+                                event.getPlayer(), SuitePluginManager.Hud.Name.full, hudConfigCommandHelpMessage());
                     }
                     break;
 
@@ -68,7 +63,8 @@ public class CoreCommandListener implements Listener
                     break;
 
                 default: // /ces hud HELP
-                    PlayerUtils.sendMessageWithPluginPrefix( event.getPlayer(), pluginPrefix, hudHelpMessage() );
+                    PlayerUtils.sendMessageWithPluginPrefix(
+                            event.getPlayer(), SuitePluginManager.Hud.Name.full, hudHelpMessage() );
                     break;
             }
         } else {

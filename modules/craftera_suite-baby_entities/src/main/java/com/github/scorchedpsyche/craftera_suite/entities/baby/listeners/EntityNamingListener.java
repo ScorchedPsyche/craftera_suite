@@ -12,10 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class EntityNamingListener implements Listener {
-    private final String Text_CraftEra_Suite = ChatColor.AQUA + "" + ChatColor.BOLD + "[CraftEra Suite] " +
-                    ChatColor.RESET;
-    private Plugin plugin = CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class);
-
     EntityUtil entityUtil = new EntityUtil();
 
     /**

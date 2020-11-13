@@ -21,10 +21,10 @@ import java.util.*;
 
 public class MerchantManager
 {
-    private List<MerchantRecipe> decorationHeads = new ArrayList<>();
-    private List<MerchantRecipe> items = new ArrayList<>();
-    private List<MerchantRecipe> playerHeads = new ArrayList<>();
-    private List<MerchantRecipe> playerHeadsWhitelisted = new ArrayList<>();
+    private final List<MerchantRecipe> decorationHeads = new ArrayList<>();
+    private final List<MerchantRecipe> items = new ArrayList<>();
+    private final List<MerchantRecipe> playerHeads = new ArrayList<>();
+    private final List<MerchantRecipe> playerHeadsWhitelisted = new ArrayList<>();
 
     private List<MerchantRecipe> trades = new ArrayList<>();
 

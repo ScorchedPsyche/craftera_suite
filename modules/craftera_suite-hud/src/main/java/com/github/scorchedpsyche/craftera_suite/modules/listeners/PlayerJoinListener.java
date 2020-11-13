@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public final class PlayerJoinListener implements Listener {
-    private HudManager hudManager;
+    private final HudManager hudManager;
 
     public PlayerJoinListener(HudManager hudManager)
     {

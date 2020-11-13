@@ -18,7 +18,7 @@ public class HudCommandListener implements Listener
         this.hudManager = hudManager;
     }
 
-    private HudManager hudManager;
+    private final HudManager hudManager;
 
     @EventHandler
     public void onHudCommandEvent(HudCommandsEvent event)

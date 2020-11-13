@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,12 +24,12 @@ import java.util.List;
 public final class CraftEraSuiteWanderingTrades extends JavaPlugin
 {
     public static ResourcesManager resourcesManager = new ResourcesManager();
-
     public static FileConfiguration config;
     public static List<ItemStack> whitelistedPlayerHeads;
-
     public static MerchantManager merchantManager;
     public static TradeListManager tradeListManager;
+
+    private BukkitTask precachePlayerHeadsTask;
 
     // Plugin startup logic
     @Override
@@ -37,7 +38,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
         // Attempts to create plugin root folder
         File pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());
 
-        // Check if plugin root folder was created
+        // Check if plugin root folder exists
         if( pluginRootFolder != null )
         {
             // Plugin root folder created!
@@ -69,7 +70,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                 getServer().getPluginManager().registerEvents(new WanderingTraderSpawnListener(), this);
 
                 // Cache heads so that trades aren't locked until head is loaded
-                Bukkit.getScheduler().runTaskAsynchronously(this, PlayerHeadUtils::preloadPlayerHeads);
+                precachePlayerHeadsTask = Bukkit.getScheduler().runTaskAsynchronously(
+                        this, PlayerHeadUtils::preloadPlayerHeads);
             } catch (IOException | InvalidConfigurationException e)
             {
                 pluginRootFolder = null;
@@ -86,12 +88,13 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     @Override
     public void onDisable()
     {
+        WanderingTraderSpawnListener.onDisable();
+        if( precachePlayerHeadsTask != null ){ precachePlayerHeadsTask.cancel(); }
         resourcesManager = null;
         config = null;
         whitelistedPlayerHeads = null;
         merchantManager = null;
         tradeListManager = null;
-        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-                                "Plugin disabled");
+        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full, "Plugin disabled");
     }
 }

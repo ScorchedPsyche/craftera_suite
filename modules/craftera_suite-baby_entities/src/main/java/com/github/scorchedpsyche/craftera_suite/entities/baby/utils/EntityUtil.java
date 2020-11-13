@@ -29,17 +29,10 @@ public class EntityUtil
     public boolean playerHoldsValidNameTag(ItemStack item)
     {
         // Checks if player is holding a name tag named "ces_adult/baby"
-        if (item != null &&
+        return item != null &&
                 item.getType() == Material.NAME_TAG &&
                 item.getItemMeta().hasDisplayName() &&
-                item.getItemMeta().getDisplayName().equals("ces_adult/baby")
-        )
-        {
-            return true;
-        }
-
-        // Not a valid item
-        return false;
+                item.getItemMeta().getDisplayName().equals("ces_adult/baby");
     }
 
     /**
@@ -122,15 +115,8 @@ public class EntityUtil
      */
     private void toggleAgeLock(Breedable breedableEntity)
     {
-        // Check if entity is Age Locked
-        if( breedableEntity.getAgeLock() )
-        {
-            // Is Age Locked. Must remove lock
-            breedableEntity.setAgeLock(false);
-        } else {
-            // Not Age Locked. Must add lock
-            breedableEntity.setAgeLock(true);
-        }
+        // Check if entity is Age Locked and removes/adds lock accordingly
+        breedableEntity.setAgeLock(!breedableEntity.getAgeLock());
     }
 
     public void spawnParticleAtEntity(Entity entity, Particle particle, int totalParticles)
@@ -248,17 +234,11 @@ public class EntityUtil
         double distance = Math.hypot(entityChunkX - playerChunkX,
                                      entityChunkZ - playerChunkZ);
 
-        if(distance <= Bukkit.getViewDistance())
-        {
-            return true;
-        }
-
-        return false;
+        return distance <= Bukkit.getViewDistance();
     }
 
     public Vector randomBoundedXYZ()
     {
-
         return new Vector(
                 // TODO: Refactor code
         );

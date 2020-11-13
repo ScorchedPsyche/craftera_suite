@@ -49,6 +49,6 @@ public class ConsoleUtils {
 
     private static String validCustomPrefixOrDefault(String pluginPrefixName)
     {
-        return ( defaultPrefix != null && !StringUtils.isNullOrEmpty(defaultPrefix) ) ? defaultPrefix : "CraftEra Suite";
+        return ( StringUtils.isNullOrEmpty(pluginPrefixName) ) ? defaultPrefix : pluginPrefixName;
     }
 }

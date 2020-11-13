@@ -24,12 +24,14 @@ public class HudManager {
         setup();
     }
 
-    private HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
+    private final HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
     public HudDatabaseAPI hudDatabaseAPI;
-    private PlayerHudManager playerHudManager;
+    private final PlayerHudManager playerHudManager;
 
     public void setup()
     {
+        hudDatabaseAPI.setup();
+
         Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
             Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
                 for ( Player player : Bukkit.getOnlinePlayers() )
@@ -141,8 +143,9 @@ public class HudManager {
 
             if( StringUtils.isStringBuilderNullOrEmpty(hudText) )
             {
-                hudText.append("HUD empty! Use " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud" + ChatColor.RESET +
-                                       " to hide the HUD or " + ChatColor.YELLOW + ChatColor.BOLD + "/ces hud help");
+                hudText.append("HUD empty! Use ").append(ChatColor.YELLOW).append(ChatColor.BOLD).append("/ces hud")
+                       .append(ChatColor.RESET).append(" to hide the HUD or ").append(ChatColor.YELLOW)
+                       .append(ChatColor.BOLD).append("/ces hud help");
             }
 
             entry.getKey().spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText.toString() ) );

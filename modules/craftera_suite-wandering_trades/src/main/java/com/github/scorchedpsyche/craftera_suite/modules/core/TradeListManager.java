@@ -6,9 +6,8 @@ import com.github.scorchedpsyche.craftera_suite.modules.models.TradeModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.Collections;
 
 public class TradeListManager
@@ -29,7 +28,9 @@ public class TradeListManager
             {
                 try
                 {
-                    TradeEntryModel[] json = new Gson().fromJson(new FileReader(file), TradeEntryModel[].class);
+                    Reader reader = Files.newBufferedReader(file.toPath());
+
+                    TradeEntryModel[] json = new Gson().fromJson(reader, TradeEntryModel[].class);
 
                     if (json != null)
                     {
@@ -38,7 +39,9 @@ public class TradeListManager
                         ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
                                               "LOADED FILE: " + file.getName());
                     }
-                } catch (FileNotFoundException ex)
+
+                    reader.close();
+                } catch (IOException ex)
                 {
                     ex.printStackTrace();
                 }

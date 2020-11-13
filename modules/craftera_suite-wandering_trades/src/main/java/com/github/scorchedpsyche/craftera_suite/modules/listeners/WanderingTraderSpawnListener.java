@@ -8,9 +8,12 @@ import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 public class WanderingTraderSpawnListener implements Listener
 {
+    private static BukkitTask setMerchantTrades;
+
     @EventHandler
     public void onWanderingTraderSpawned(EntitySpawnEvent event)
     {
@@ -25,19 +28,20 @@ public class WanderingTraderSpawnListener implements Listener
             // Set trade asynchronously
             Bukkit.getScheduler().scheduleSyncDelayedTask(
                     CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
-                        Bukkit.getScheduler().runTaskAsynchronously(
+                        setMerchantTrades = Bukkit.getScheduler().runTaskAsynchronously(
                                 CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
                                     CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
                                             (WanderingTrader) event.getEntity() );
-
-//                                    for(MerchantRecipe recipe : ((WanderingTrader) event.getEntity()).getRecipes())
-//                                    {
-//                                        ItemMeta itemMeta = recipe.getResult().getItemMeta().clone();
-//                                        itemMeta.serialize();
-//                                        ConsoleUtils.logMessage("Item serialized: " + recipe.getResult().getType() );
-//                                    }
                         });
             }, 1L);
+        }
+    }
+
+    public static void onDisable()
+    {
+        if( setMerchantTrades != null )
+        {
+            setMerchantTrades.cancel();
         }
     }
 }

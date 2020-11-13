@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CustomTabCompleter implements TabCompleter {
-    private HashMap<String, CommandModel> commands;
+    private final HashMap<String, CommandModel> commands;
 
     public CustomTabCompleter() {
         super();
