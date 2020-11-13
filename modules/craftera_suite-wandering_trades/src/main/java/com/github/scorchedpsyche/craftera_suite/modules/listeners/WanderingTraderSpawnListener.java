@@ -23,10 +23,21 @@ public class WanderingTraderSpawnListener implements Listener
             }
 
             // Set trade asynchronously
-            Bukkit.getScheduler().runTaskAsynchronously(
-                    CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () ->
-                            CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
-                                    (WanderingTrader) event.getEntity() ));
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
+                    CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+                        Bukkit.getScheduler().runTaskAsynchronously(
+                                CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+                                    CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
+                                            (WanderingTrader) event.getEntity() );
+
+//                                    for(MerchantRecipe recipe : ((WanderingTrader) event.getEntity()).getRecipes())
+//                                    {
+//                                        ItemMeta itemMeta = recipe.getResult().getItemMeta().clone();
+//                                        itemMeta.serialize();
+//                                        ConsoleUtils.logMessage("Item serialized: " + recipe.getResult().getType() );
+//                                    }
+                        });
+            }, 1L);
         }
     }
 }

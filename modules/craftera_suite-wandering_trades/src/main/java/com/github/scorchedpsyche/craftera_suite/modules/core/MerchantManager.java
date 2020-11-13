@@ -169,7 +169,9 @@ public class MerchantManager
 
         SkullMeta decorationHeadMeta = (SkullMeta) decorationHead.getItemMeta();
 
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        UUID randomUUID = UUID.randomUUID();
+
+        GameProfile profile = new GameProfile(randomUUID, null);
         profile.getProperties().put("textures", new Property("textures", trade.getTexture()));
 
         Field profileField;
@@ -177,6 +179,7 @@ public class MerchantManager
         try
         {
             assert decorationHeadMeta != null;
+            decorationHeadMeta.setOwningPlayer( Bukkit.getOfflinePlayer( randomUUID ) ); // ScorchedPsyche UUID
             profileField = decorationHeadMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(decorationHeadMeta, profile);
@@ -196,7 +199,7 @@ public class MerchantManager
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta meta = (SkullMeta) playerHead.getItemMeta();
         assert meta != null;
-        meta.setOwningPlayer(Bukkit.getPlayerExact(trade.getOwnerId()));
+        meta.setOwningPlayer( Bukkit.getPlayerExact(trade.getOwnerId()) );
         playerHead.setItemMeta(meta);
 
         MerchantRecipe recipe = new MerchantRecipe(
