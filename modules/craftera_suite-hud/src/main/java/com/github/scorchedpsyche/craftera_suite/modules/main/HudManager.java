@@ -21,26 +21,28 @@ public class HudManager {
         onlinePlayersWithHudEnabled = new HashMap<>();
         playerHudManager = new PlayerHudManager();
 
-        setup();
+        hudDatabaseAPI.setupSqlTable();
+
+        // Enables HUD for online players
+        Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+            for ( Player player : Bukkit.getOnlinePlayers() )
+            {
+                enableHudForPlayer(player);
+            }
+        });
+
+//        Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class),
+//            () -> Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+//                for ( Player player : Bukkit.getOnlinePlayers() )
+//                {
+//                    enableHudForPlayer(player);
+//                }
+//        }));
     }
 
     private final HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
-    public HudDatabaseAPI hudDatabaseAPI;
+    private HudDatabaseAPI hudDatabaseAPI;
     private final PlayerHudManager playerHudManager;
-
-    public void setup()
-    {
-        hudDatabaseAPI.setup();
-
-        Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-            Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                for ( Player player : Bukkit.getOnlinePlayers() )
-                {
-                    setPlayerAsOnline(player);
-                }
-            });
-        });
-    }
 
     /**
      * Toggles a specific HUD preference for the player.
@@ -74,8 +76,7 @@ public class HudManager {
                 preference,
                 value);
 
-        PlayerUtils.sendMessageWithPluginPrefix(
-                player, SuitePluginManager.Hud.Name.compact,
+        PlayerUtils.sendMessageWithPluginPrefix( player, SuitePluginManager.Hud.Name.compact,
                 "Set preference " + ChatColor.AQUA + preference + ChatColor.RESET + " with " +
                         ChatColor.AQUA + value);
 
@@ -93,25 +94,32 @@ public class HudManager {
         // Check if the executing player has the HUD enabled
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
-            // Has the HUD enabled, then
+            // Has the HUD enabled. Disable it!
+            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                    "is now " + ChatColor.RED + "OFF");
+
             Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                    //                    hudDatabaseAPI.disableHudForPlayer( player.getUniqueId().toString() );
-                    onlinePlayersWithHudEnabled.remove(player);
-                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
-                                                            "is now " + ChatColor.RED + "OFF");
-                });
+                onlinePlayersWithHudEnabled.remove(player);
             });
+
+//            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+//                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+//                    onlinePlayersWithHudEnabled.remove(player);
+//                });
+//            });
         } else {
-            // Add
+            // Has the HUD disabled. Enable it!
+            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
+                                                    "is now " + ChatColor.GREEN + "ON");
+
             Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                    //                    hudDatabaseAPI.enableHudForPlayer( player.getUniqueId().toString() );
-                    setPlayerAsOnline(player);
-                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
-                                                            "is now " + ChatColor.GREEN + "ON");
-                });
+                enableHudForPlayer(player);
             });
+//            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+//                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
+//                    enableHudForPlayer(player);
+//                });
+//            });
         }
 
         hudDatabaseAPI.toggleBooleanForPlayer(
@@ -120,12 +128,12 @@ public class HudManager {
                 DatabaseTables.Hud.PlayerPreferencesTable.enabled);
     }
 
-    public void setPlayerAsOffline(Player player)
+    public void disableHudForPlayer(Player player)
     {
         onlinePlayersWithHudEnabled.remove(player);
     }
 
-    public void setPlayerAsOnline(Player player)
+    public void enableHudForPlayer(Player player)
     {
         HudPlayerPreferencesModel hudPlayerPreferences =
                 hudDatabaseAPI.getPlayerPreferences(player.getUniqueId().toString());

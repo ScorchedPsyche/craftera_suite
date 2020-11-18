@@ -68,7 +68,7 @@ public class HudDatabaseAPI
         }
     }
 
-    public void setup()
+    public void setupSqlTable()
     {
         String playerPreferencesTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Hud.player_preferences_TABLENAME + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"

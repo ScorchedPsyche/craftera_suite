@@ -1,11 +1,11 @@
 package com.github.scorchedpsyche.craftera_suite.entities.baby.utils;
 
 import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
-import net.minecraft.server.v1_16_R2.DataWatcher;
-import net.minecraft.server.v1_16_R2.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_16_R3.DataWatcher;
+import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;

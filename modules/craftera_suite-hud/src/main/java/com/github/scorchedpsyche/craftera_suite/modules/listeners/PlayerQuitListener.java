@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public final class PlayerQuitListener implements Listener {
-    private final HudManager hudManager;
+    private HudManager hudManager;
 
     public PlayerQuitListener(HudManager hudManager)
     {
@@ -16,6 +16,6 @@ public final class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e)
     {
-        hudManager.setPlayerAsOffline( e.getPlayer() );
+        hudManager.disableHudForPlayer(e.getPlayer());
     }
 }

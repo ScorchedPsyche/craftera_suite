@@ -12,7 +12,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class WanderingTraderSpawnListener implements Listener
 {
-    private static BukkitTask setMerchantTrades;
+    private static BukkitTask setMerchantTradesAsyncTask;
+    private static Integer setMerchantTradesSyncTask;
 
     @EventHandler
     public void onWanderingTraderSpawned(EntitySpawnEvent event)
@@ -26,9 +27,9 @@ public class WanderingTraderSpawnListener implements Listener
             }
 
             // Set trade asynchronously
-            Bukkit.getScheduler().scheduleSyncDelayedTask(
+            setMerchantTradesSyncTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
                     CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
-                        setMerchantTrades = Bukkit.getScheduler().runTaskAsynchronously(
+                        setMerchantTradesAsyncTask = Bukkit.getScheduler().runTaskAsynchronously(
                                 CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
                                     CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
                                             (WanderingTrader) event.getEntity() );
@@ -39,9 +40,16 @@ public class WanderingTraderSpawnListener implements Listener
 
     public static void onDisable()
     {
-        if( setMerchantTrades != null )
+        if( setMerchantTradesAsyncTask != null )
         {
-            setMerchantTrades.cancel();
+            setMerchantTradesAsyncTask.cancel();
+            setMerchantTradesAsyncTask = null;
+        }
+
+        if( setMerchantTradesSyncTask != null )
+        {
+            Bukkit.getScheduler().cancelTask(setMerchantTradesSyncTask);
+            setMerchantTradesSyncTask = null;
         }
     }
 }

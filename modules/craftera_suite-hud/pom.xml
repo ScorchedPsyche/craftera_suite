@@ -15,6 +15,12 @@
     <description>Player customizable in-game HUD integrated with all other plugins from this suite</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.github.scorchedpsyche.craftera_suite.modules</groupId>
@@ -22,13 +28,13 @@
             <version>0.0.1</version>
             <scope>compile</scope>
         </dependency>
-    </dependencies>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+        <dependency>
+            <groupId>com.github.scorchedpsyche</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.4</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
@@ -37,5 +43,32 @@
                 <filtering>true</filtering> <!-- this is the important part, it's what replaces, filters, all placeholders in the resources folder (such as ${project.version} in plugin.yml) -->
             </resource>
         </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <executions>
+                        <execution>
+                            <id>install-external</id>
+                            <phase>clean</phase>
+                            <configuration>
+                                <file>${project.basedir}/libs/spigot-1.16.4.jar</file>
+                                <repositoryLayout>default</repositoryLayout>
+                                <groupId>com.github.scorchedpsyche</groupId>
+                                <artifactId>spigot</artifactId>
+                                <version>1.16.4</version>
+                                <packaging>jar</packaging>
+                                <generatePom>true</generatePom>
+                            </configuration>
+                            <goals>
+                                <goal>install-file</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

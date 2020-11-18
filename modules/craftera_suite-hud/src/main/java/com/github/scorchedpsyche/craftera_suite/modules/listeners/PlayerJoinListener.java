@@ -16,6 +16,6 @@ public final class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
-        hudManager.setPlayerAsOnline( e.getPlayer() );
+        hudManager.enableHudForPlayer(e.getPlayer());
     }
 }

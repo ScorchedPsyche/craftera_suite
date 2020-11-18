@@ -2,8 +2,8 @@ package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
 
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;

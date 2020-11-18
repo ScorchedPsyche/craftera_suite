@@ -89,7 +89,10 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     public void onDisable()
     {
         WanderingTraderSpawnListener.onDisable();
-        if( precachePlayerHeadsTask != null ){ precachePlayerHeadsTask.cancel(); }
+        if( precachePlayerHeadsTask != null )
+        {
+            precachePlayerHeadsTask.cancel();
+        }
         resourcesManager = null;
         config = null;
         whitelistedPlayerHeads = null;

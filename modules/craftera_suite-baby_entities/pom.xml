@@ -26,7 +26,7 @@
         <dependency>
             <groupId>com.github.scorchedpsyche</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.16.3</version>
+            <version>1.16.4</version>
         </dependency>
     </dependencies>
 
@@ -48,11 +48,11 @@
                             <id>install-external</id>
                             <phase>clean</phase>
                             <configuration>
-                                <file>${project.basedir}/libs/spigot-1.16.3.jar</file>
+                                <file>${project.basedir}/libs/spigot-1.16.4.jar</file>
                                 <repositoryLayout>default</repositoryLayout>
                                 <groupId>com.github.scorchedpsyche</groupId>
                                 <artifactId>spigot</artifactId>
-                                <version>1.16.3</version>
+                                <version>1.16.4</version>
                                 <packaging>jar</packaging>
                                 <generatePom>true</generatePom>
                             </configuration>
