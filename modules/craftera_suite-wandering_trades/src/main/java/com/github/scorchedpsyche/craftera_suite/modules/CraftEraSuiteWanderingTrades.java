@@ -69,7 +69,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
 
                 getServer().getPluginManager().registerEvents(new WanderingTraderSpawnListener(), this);
 
-                // Cache heads so that trades aren't locked until head is loaded
+                // Cache heads so that trades aren't locked until head is loaded when trader is spawned
                 precachePlayerHeadsTask = Bukkit.getScheduler().runTaskAsynchronously(
                         this, PlayerHeadUtils::preloadPlayerHeads);
             } catch (IOException | InvalidConfigurationException e)
@@ -79,7 +79,6 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                 this.onDisable();
             }
         } else {
-            pluginRootFolder = null;
             this.onDisable();
         }
     }

@@ -1,6 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.entities.baby.utils;
 
 import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import net.minecraft.server.v1_16_R3.DataWatcher;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
 import org.bukkit.*;
@@ -17,8 +19,6 @@ import java.util.Random;
 public class EntityUtil
 {
     private final Plugin plugin = CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class);
-    private final String Text_CraftEra_Suite = ChatColor.AQUA + "" + ChatColor.BOLD + "[CraftEra Suite] " +
-            ChatColor.RESET;
 
     /**
      * Checks if the item is a valid plugin Name Tag named "ces_adult/baby".
@@ -57,8 +57,9 @@ public class EntityUtil
         } else
         {
             // Entity is invalid for conversion
-            sourcePlayer.sendRawMessage(
-                    Text_CraftEra_Suite + ChatColor.RED + entity.getName() + ChatColor.RESET + " can't be a baby.");
+            PlayerUtils.sendMessageWithPluginPrefix(
+                    sourcePlayer, SuitePluginManager.BabyEntities.Name.compact,
+                    ChatColor.RED + entity.getName() + ChatColor.RESET + " can't be a baby.");
 
             spawnParticleAtEntity(entity, Particle.EXPLOSION_NORMAL, 3, 0.01);
         }
@@ -91,9 +92,10 @@ public class EntityUtil
             if (ageableEntity instanceof Breedable && !ageableEntity.hasMetadata("ces_adult/baby"))
             {
                 // Natural baby, warn player
-                sourcePlayer.sendRawMessage(
-                        Text_CraftEra_Suite + ChatColor.RED + "This is a natural baby!" + ChatColor.RESET +
-                                " You can't convert Vanilla entities to Adult.");
+                PlayerUtils.sendMessageWithPluginPrefix(
+                        sourcePlayer, SuitePluginManager.BabyEntities.Name.compact,
+                        ChatColor.RED + ageableEntity.getName() + ChatColor.RESET + " is a natural baby!"
+                                + ChatColor.RESET + " You can't convert Vanilla entities to Adult.");
             } else
             {
                 // Everything OK. Convert to adult
@@ -125,7 +127,6 @@ public class EntityUtil
         World world = entity.getWorld();
 
         double xzOffset = 0.1;
-        double yRange = 1;
 
         double xRangeLower = entity.getLocation().getX() - entity.getWidth() - xzOffset;
         double xRangeUpper = entity.getLocation().getX() + entity.getWidth() + xzOffset;

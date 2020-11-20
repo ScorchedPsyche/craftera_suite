@@ -10,22 +10,33 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class PlayerHeadUtils
 {
+    /**
+     * Creates a temporary inventory to place the Player Heads in so that the textures are preloaded by the server.
+     */
     public static void preloadPlayerHeads()
     {
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Asynchronous Player Head preload STARTED");
 
         int nbrOfHeadsLoaded = 0;
+        int currentSlot = 0;
         Inventory inv = Bukkit.createInventory(null, 54, "Player Head Cache");
 
         for(OfflinePlayer player : Bukkit.getWhitelistedPlayers())
         {
-            inv.addItem(playerHeadItemStackFromOfflinePlayer(1, player));
+            // Loops through inventory slot if there's more than 54 heads
+            if( currentSlot == 54)
+            {
+                currentSlot = 0;
+            }
+
+            inv.setItem(currentSlot, playerHeadItemStackFromOfflinePlayer(1, player));
             nbrOfHeadsLoaded++;
+            currentSlot++;
         }
 
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-                                "Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
+                                "Asynchronous Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
         inv = null;
     }
 

@@ -1,5 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.entities.baby.listeners;
 
+import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -34,6 +35,10 @@ public class EntityDeathListener implements Listener
                 // Not adult. Then set the experience to be dropped as if it was an adult
                 entityDeathEvent.setDroppedExp( entityDeathEvent.getDroppedExp() - 7  );
             }
+
+            // Clears metadata from storage. Why this is stored this way by Bukkit? No idea.
+            entity.removeMetadata("ces_adult/baby",
+                                  CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class));
         }
     }
 }

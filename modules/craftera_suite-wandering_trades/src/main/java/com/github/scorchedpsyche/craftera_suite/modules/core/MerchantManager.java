@@ -65,9 +65,9 @@ public class MerchantManager
                 }
             }
         }
-        ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Loaded item trades");
-        ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Loaded decoration heads trades");
 
         // WHITELISTED Player's Heads synchronization
@@ -84,7 +84,7 @@ public class MerchantManager
                     {
                         loadWhitelistedPlayerHeadRecipe(offlinePlayer);
                     }
-                    ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
+                    ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                             "Loaded whitelisted player heads trades");
                 }
             } else

@@ -36,7 +36,7 @@ public class TradeListManager
                     {
                         Collections.addAll(Trades.offers, json);
 
-                        ConsoleUtils.logSuccess(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                               "LOADED FILE: " + file.getName());
                     }
 

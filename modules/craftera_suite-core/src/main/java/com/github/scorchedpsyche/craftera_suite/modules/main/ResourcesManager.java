@@ -1,8 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -26,19 +26,20 @@ public class ResourcesManager
 
                 // Rebuilds file path with OS file separator
                 String[] pathSplit = file.split("/");
-                String destinationPath = pluginRootFolder + File.separator;
+                StringBuilder destinationPath = new StringBuilder(pluginRootFolder + File.separator);
 
-                for(int i = 0; i < pathSplit.length; i++)
+                for (String partialPath : pathSplit)
                 {
-                    destinationPath += pathSplit[i];
+                    destinationPath.append(partialPath);
+                    destinationPath.append(File.separator);
 
-                    if(i != pathSplit.length)
-                    {
-                        destinationPath += File.separator;
-                    }
+//                    if(i < pathSplit.length)
+//                    {
+//                        destinationPath.append(File.separator);
+//                    }
                 }
 
-                File destinationFile = new File(destinationPath);
+                File destinationFile = new File(destinationPath.toString());
 
                 try {
                     if( !destinationFile.exists() )
@@ -46,28 +47,29 @@ public class ResourcesManager
                         FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
                         ConsoleUtils.logMessage( plugin.getName(),
                                 "File copied: " + ChatColor.YELLOW + destinationFile);
-                    } else {
-                        ConsoleUtils.logMessage( plugin.getName(),
-                                "File exists and won't be copied: " + ChatColor.YELLOW + destinationFile);
                     }
+//                    else {
+//                        ConsoleUtils.logMessage( plugin.getName(),
+//                                "File exists and won't be copied: " + ChatColor.YELLOW + destinationFile);
+//                    }
                 } catch (IOException e) {
                     // Failed to create file
                     ConsoleUtils.logError( plugin.getName(),
                             "Failed to create file. Check write permissions for folder: " + ChatColor.YELLOW + destinationFile);
                 }
+
+                // Closes the resource's InputStream
+                try {
+                    resourceToBeCopied.close();
+                } catch (IOException e) {
+                    // Failed to close file
+                    ConsoleUtils.logError( plugin.getName(),
+                                           "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
+                }
             } else {
                 // Resource not found, must display error
                 ConsoleUtils.logError( plugin.getName(),
                     "Resource not found on .jar. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + file);
-            }
-
-            // Closes the resource's InputStream
-            try {
-                resourceToBeCopied.close();
-            } catch (IOException e) {
-                // Failed to close file
-                ConsoleUtils.logError( plugin.getName(),
-                        "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
             }
         }
     }
