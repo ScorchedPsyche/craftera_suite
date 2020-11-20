@@ -2,24 +2,23 @@ package com.github.scorchedpsyche.craftera_suite.entities.baby.utils;
 
 import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ParticleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import net.minecraft.server.v1_16_R3.DataWatcher;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
-import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
-
-import java.util.Random;
 
 public class EntityUtil
 {
-    private final Plugin plugin = CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class);
-
     /**
      * Checks if the item is a valid plugin Name Tag named "ces_adult/baby".
      *
@@ -28,11 +27,14 @@ public class EntityUtil
      */
     public boolean playerHoldsValidNameTag(ItemStack item)
     {
-        // Checks if player is holding a name tag named "ces_adult/baby"
-        return item != null &&
-                item.getType() == Material.NAME_TAG &&
-                item.getItemMeta().hasDisplayName() &&
-                item.getItemMeta().getDisplayName().equals("ces_adult/baby");
+        if( item != null && item.getType() == Material.NAME_TAG )
+        {
+            // Checks if player is holding a name tag named "ces_adult/baby"
+            return item.getItemMeta() != null && item.getItemMeta().hasDisplayName() &&
+                    item.getItemMeta().getDisplayName().equals("ces_adult/baby");
+        }
+
+        return false;
     }
 
     /**
@@ -61,7 +63,7 @@ public class EntityUtil
                     sourcePlayer, SuitePluginManager.BabyEntities.Name.compact,
                     ChatColor.RED + entity.getName() + ChatColor.RESET + " can't be a baby.");
 
-            spawnParticleAtEntity(entity, Particle.EXPLOSION_NORMAL, 3, 0.01);
+            ParticleUtils.spawnParticleAtEntity(entity, Particle.EXPLOSION_NORMAL, 3, 0.01);
         }
     }
 
@@ -79,13 +81,15 @@ public class EntityUtil
             // Is adult. Convert to baby
             ageableEntity.setBaby();
             ageableEntity.setMetadata("ces_adult/baby",
-                                      new FixedMetadataValue(plugin, "ces_adult/baby"));
+                                      new FixedMetadataValue(
+                                              CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class),
+                                              "ces_adult/baby"));
 
             // Notify nearby players' clients of conversion so that they visually update the entity
             notifyNearbyPlayersOfEntityConversion(ageableEntity);
 
             // Particles
-            spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
+            ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
         } else
         {
             // Is baby. Must check if this is a natural baby to prevent growth abuse
@@ -100,13 +104,14 @@ public class EntityUtil
             {
                 // Everything OK. Convert to adult
                 ageableEntity.setAdult();
-                ageableEntity.removeMetadata("ces_adult/baby", plugin);
+                ageableEntity.removeMetadata("ces_adult/baby",
+                                             CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class));
 
                 // Notify nearby players' clients of conversion so that they visually update the entity
                 notifyNearbyPlayersOfEntityConversion(ageableEntity);
 
                 // Particles
-                spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
+                ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
             }
         }
     }
@@ -119,75 +124,6 @@ public class EntityUtil
     {
         // Check if entity is Age Locked and removes/adds lock accordingly
         breedableEntity.setAgeLock(!breedableEntity.getAgeLock());
-    }
-
-    public void spawnParticleAtEntity(Entity entity, Particle particle, int totalParticles)
-    {
-        Random r = new Random();
-        World world = entity.getWorld();
-
-        double xzOffset = 0.1;
-
-        double xRangeLower = entity.getLocation().getX() - entity.getWidth() - xzOffset;
-        double xRangeUpper = entity.getLocation().getX() + entity.getWidth() + xzOffset;
-
-        double yRangeLower = entity.getLocation().getY();
-        double yRangeUpper = entity.getLocation().getY() + entity.getHeight();
-
-        double zRangeLower = entity.getLocation().getZ() - entity.getWidth() - xzOffset;
-        double zRangeUpper = entity.getLocation().getZ() + entity.getWidth() + xzOffset;
-
-        for (int i = 1; i <= totalParticles; i++)
-        {
-            double x = xRangeLower + (xRangeUpper - xRangeLower) * r.nextDouble();
-            double y = yRangeLower + (yRangeUpper - yRangeLower) * r.nextDouble();
-            double z = zRangeLower + (zRangeUpper - zRangeLower) * r.nextDouble();
-
-            world.spawnParticle(
-                    particle,
-                    x, // x
-                    y, // y
-                    z, // z
-                    1 // count
-               );
-        }
-    }
-
-    public void spawnParticleAtEntity(Entity entity, Particle particle, int totalParticles, double extra)
-    {
-        Random r = new Random();
-        World world = entity.getWorld();
-
-        double xzOffset = 0.1;
-        double yRange = 1;
-
-        double xRangeLower = entity.getLocation().getX() - entity.getWidth() - xzOffset;
-        double xRangeUpper = entity.getLocation().getX() + entity.getWidth() + xzOffset;
-
-        double yRangeLower = entity.getLocation().getY();
-        double yRangeUpper = entity.getLocation().getY() + entity.getHeight();
-
-        double zRangeLower = entity.getLocation().getZ() - entity.getWidth() - xzOffset;
-        double zRangeUpper = entity.getLocation().getZ() + entity.getWidth() + xzOffset;
-
-        for (int i = 1; i <= totalParticles; i++)
-        {
-            double x = xRangeLower + (xRangeUpper - xRangeLower) * r.nextDouble();
-            double y = yRangeLower + (yRangeUpper - yRangeLower) * r.nextDouble();
-            double z = zRangeLower + (zRangeUpper - zRangeLower) * r.nextDouble();
-
-            world.spawnParticle(
-                    particle,
-                    x, // x
-                    y, // y
-                    z, // z
-                    totalParticles, // count
-                    0, // offsetX
-                    0, // offsetY
-                    0, // offsetZ
-                    extra // Usually speed
-                );
-        }
     }
 
     /**
