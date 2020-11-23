@@ -578,7 +578,7 @@ public class MerchantManager
      * Sets the trades for the Wandering Trader.
      * @param merchant Target Wandering Trader to have his offers configured
      */
-    public void setMerchantTrades(WanderingTrader merchant)
+    public synchronized void setMerchantTrades(WanderingTrader merchant)
     {
         // Empties trade list to avoid duplicated
         trades = new ArrayList<>();

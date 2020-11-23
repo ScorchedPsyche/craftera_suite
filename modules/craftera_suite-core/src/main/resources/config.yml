@@ -1,3 +1,5 @@
+auto_restart_on_low_memory: false # 5 min restart countdown when server hits 95% of memory usage
+
 storage_type: sqlite # "sqlite" or "mysql"
 
 # Uncomment the lines below if MySQL is chosen for "storage_type" (above)

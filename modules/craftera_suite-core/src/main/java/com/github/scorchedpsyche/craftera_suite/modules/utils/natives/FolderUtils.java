@@ -1,6 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
 
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +13,9 @@ public class FolderUtils {
     private static File pluginsFolder;
     private static File cesRootFolder;
 
-    public static synchronized void setup(File dataFolder)
+    public static synchronized void setup()
     {
-        pluginsFolder = getPluginsFolder(dataFolder);
+        pluginsFolder = getPluginsFolder();
         cesRootFolder = getOrCreateCesRootFolder();
     }
 
@@ -50,7 +51,7 @@ public class FolderUtils {
             return cesRootFolder;
         }
 
-        String cesRootPath = pluginsFolder.toString();
+        String cesRootPath = getPluginsFolder().toString();
         cesRootPath += File.separator + "craftera_suite";
         File cesFolder = new File( cesRootPath );
 
@@ -71,29 +72,37 @@ public class FolderUtils {
     /** 
      * @return Returns root Plugins folder.
     */
-    private static synchronized File getPluginsFolder(File dataFolder)
+    @Nullable
+    private static synchronized File getPluginsFolder()
     {
         if( pluginsFolder != null )
         {
             return pluginsFolder;
         }
 
-        StringBuilder path;
-        try {
-            path = new StringBuilder(dataFolder.getCanonicalPath());
-        } catch( IOException ex ) {
-            path = new StringBuilder(dataFolder.getAbsolutePath());
-        }
-
-        String pattern = Pattern.quote(File.separator);
-        String[] pathSplit = path.toString().split(pattern);
-        path = new StringBuilder();
-
-        for ( int i = 0; i < pathSplit.length - 1; i++ )
+        if(Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
-            path.append(pathSplit[i]).append(File.separator);
+            File dataFolder = Bukkit.getPluginManager().getPlugin("craftera_suite-core").getDataFolder();
+
+            StringBuilder path;
+            try {
+                path = new StringBuilder(dataFolder.getCanonicalPath());
+            } catch( IOException ex ) {
+                path = new StringBuilder(dataFolder.getAbsolutePath());
+            }
+
+            String pattern = Pattern.quote(File.separator);
+            String[] pathSplit = path.toString().split(pattern);
+            path = new StringBuilder();
+
+            for ( int i = 0; i < pathSplit.length - 1; i++ )
+            {
+                path.append(pathSplit[i]).append(File.separator);
+            }
+
+            return new File(path.toString());
         }
 
-        return new File(path.toString());
+        return null;
     }
 }
