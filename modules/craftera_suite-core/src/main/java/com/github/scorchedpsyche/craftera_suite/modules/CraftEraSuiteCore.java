@@ -187,9 +187,9 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                                  0, 40, 0);
                 if( restartSeconds <= 10 )
                 {
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-                } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_FRAME_FILL, 1, 1);
+                } else {
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
                 }
             }
 
