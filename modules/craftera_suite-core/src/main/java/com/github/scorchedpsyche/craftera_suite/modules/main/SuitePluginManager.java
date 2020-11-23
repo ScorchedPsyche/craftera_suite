@@ -7,8 +7,8 @@ public class SuitePluginManager {
     {
         public static class Name
         {
-            public static final String compact = "CES – Baby Entities";
-            public static final String full = "CraftEra Suite – Baby Entities";
+            public static final String compact = "CES - Baby Entities";
+            public static final String full = "CraftEra Suite - Baby Entities";
         }
         public static boolean isEnabled ()
         {
@@ -20,8 +20,8 @@ public class SuitePluginManager {
     {
         public static class Name
         {
-            public static final String compact = "CES – HUD";
-            public static final String full = "CraftEra Suite – HUD";
+            public static final String compact = "CES - HUD";
+            public static final String full = "CraftEra Suite - HUD";
         }
         public static boolean isEnabled ()
         {
@@ -33,8 +33,8 @@ public class SuitePluginManager {
     {
         public static class Name
         {
-            public static final String compact = "CES – Wandering Trades";
-            public static final String full = "CraftEra Suite – Wandering Trades";
+            public static final String compact = "CES - Wandering Trades";
+            public static final String full = "CraftEra Suite - Wandering Trades";
         }
         public static boolean isEnabled ()
         {
