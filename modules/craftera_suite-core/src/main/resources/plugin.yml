@@ -9,9 +9,12 @@ authors: [ScorchedPsyche]
 description: Manager and dependency for all other CraftEra suite plugin modules.
 website: https://github.com/ScorchedPsyche
 
+permissions:
+   ces.seasons:
+      description: Allows to manage seasons (create, delete, start, etc) from CraftEra Suite
+
+
 commands:
    ces:
       description: Main CraftEra Suite command.
       usage: Usage "/<command> [module] [option]"
-      permission:
-      permission-message: You don't have <permission> permission

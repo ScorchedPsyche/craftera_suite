@@ -1,6 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -29,6 +30,17 @@ public class CustomCommandExecutor implements CommandExecutor {
                         }
 
                         Bukkit.getPluginManager().callEvent(new HudCommandsEvent((Player) sender, argsFiltered));
+
+                        return true;
+
+                    case "seasons":
+                        if ( argsFiltered == null )
+                        {
+                            argsFiltered = new String[1];
+                            argsFiltered[0] = "current";
+                        }
+
+                        Bukkit.getPluginManager().callEvent(new SeasonsCommandEvent((Player) sender, argsFiltered));
 
                         return true;
 

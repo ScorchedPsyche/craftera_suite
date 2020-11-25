@@ -22,49 +22,7 @@ public class CustomTabCompleter implements TabCompleter {
         commands = new HashMap<>();
 
         commands.putAll(getHudCommands());
-    }
-
-    private HashMap<String, CommandModel> getHudCommands()
-    {
-        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
-
-        hudSubcommands.put("config", new CommandModel()
-                .addCommand("display_mode")
-                    .addSubcommand("compact")
-                    .addSubcommand("extended")
-                .addCommand("colorize")
-                    .addSubcommand("coordinates")
-                    .addSubcommand("nether_portal_coordinates")
-                    .addSubcommand("player_orientation")
-                    .addSubcommand("server_tps")
-                    .addSubcommand("tool_durability")
-                    .addSubcommand("world_time"));
-
-        hudSubcommands.put("toggle", new CommandModel()
-                .addCommand("coordinates")
-                .addCommand("nether_portal_coordinates")
-                .addCommand("player_orientation"));
-
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
-        }
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
-        }
-
-        hudSubcommands.get("toggle")
-            .addCommand("server_time")
-            .addCommand("server_tps")
-            .addCommand("tool_durability")
-            .addCommand("world_time");
-
-        HashMap<String, CommandModel> hud = new HashMap<>();
-        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
-        hudSubcommands = null;
-
-        return hud;
+        commands.putAll(getSeasonsCommands());
     }
 
     private List<String> getSubcommands(HashMap<String, CommandModel> commands, List<String> args)
@@ -142,5 +100,64 @@ public class CustomTabCompleter implements TabCompleter {
         }
 
         return filteredList;
+    }
+
+    private HashMap<String, CommandModel> getHudCommands()
+    {
+        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
+
+        hudSubcommands.put("config", new CommandModel()
+                .addCommand("display_mode")
+                .addSubcommand("compact")
+                .addSubcommand("extended")
+                .addCommand("colorize")
+                .addSubcommand("coordinates")
+                .addSubcommand("nether_portal_coordinates")
+                .addSubcommand("player_orientation")
+                .addSubcommand("server_tps")
+                .addSubcommand("tool_durability")
+                .addSubcommand("world_time"));
+
+        hudSubcommands.put("toggle", new CommandModel()
+                .addCommand("coordinates")
+                .addCommand("nether_portal_coordinates")
+                .addCommand("player_orientation"));
+
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+        {
+            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
+        }
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
+        {
+            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
+        }
+
+        hudSubcommands.get("toggle")
+                      .addCommand("server_time")
+                      .addCommand("server_tps")
+                      .addCommand("tool_durability")
+                      .addCommand("world_time");
+
+        HashMap<String, CommandModel> hud = new HashMap<>();
+        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
+        hudSubcommands = null;
+
+        return hud;
+    }
+
+    private HashMap<String, CommandModel> getSeasonsCommands()
+    {
+        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
+
+        seasonsSubcommands.put("create", new CommandModel());
+        seasonsSubcommands.put("current", new CommandModel());
+        seasonsSubcommands.put("end", new CommandModel());
+        seasonsSubcommands.put("manage", new CommandModel());
+        seasonsSubcommands.put("start", new CommandModel());
+        HashMap<String, CommandModel> seasons = new HashMap<>();
+        seasons.put("seasons", new CommandModel().addSubcommands(seasonsSubcommands));
+        seasonsSubcommands = null;
+
+        return seasons;
     }
 }
