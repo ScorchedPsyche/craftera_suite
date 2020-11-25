@@ -18,10 +18,9 @@ public class HudManager {
     public HudManager(HudDatabaseAPI hudDatabaseAPI)
     {
         this.hudDatabaseAPI = hudDatabaseAPI;
+
         onlinePlayersWithHudEnabled = new HashMap<>();
         playerHudManager = new PlayerHudManager();
-
-        hudDatabaseAPI.setupSqlTableIfNeeded();
 
         // Enables HUD for online players
         Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {

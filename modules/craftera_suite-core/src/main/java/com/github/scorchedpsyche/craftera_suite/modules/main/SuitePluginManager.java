@@ -29,6 +29,19 @@ public class SuitePluginManager {
         }
     }
 
+    public static class Seasons
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Seasons";
+            public static final String full = "CraftEra Suite - Seasons";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled("craftera_suite-seasons");
+        }
+    }
+
     public static class WanderingTrades
     {
         public static class Name
