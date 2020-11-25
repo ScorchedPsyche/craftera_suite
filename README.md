@@ -33,6 +33,7 @@ Features:
 Main library dependency needed for other plugins of this pack.  
   
 Features:  
+ - [x] **Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;**  
  - [x] **Console interface;**  
  - [x] **Player command interface;**  
  - [x] **Folder utility class;**  
