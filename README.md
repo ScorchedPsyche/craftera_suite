@@ -30,20 +30,20 @@ Achievements such as server-first and custom ones.
 ### Baby Entities 
 Prevents entities from becoming their adult variant.  
   
-Features:  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Passive mob support;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Aggressive mob support (for those that have an infant variant);`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Custom Name Tag support: tool to transform entities into baby/adult;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Infinite Name Tag: prevent name tag from being expended;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Undo feature: convert back to their original state;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: usage on natural babies to accelerate growth;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: Scute drop on Turtle's growth;`  
- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.`
+**Features:**  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Passive mob support;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Aggressive mob support (for those that have an infant variant);`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Custom Name Tag support: tool to transform entities into baby/adult;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Infinite Name Tag: prevent name tag from being expended;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Undo feature: convert back to their original state;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: usage on natural babies to accelerate growth;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: Scute drop on Turtle's growth;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.`
   
 ### Core 
 Main library dependency needed for other plugins of this pack.  
   
-Features:  
+**Features:**   
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Console interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`  
@@ -55,8 +55,8 @@ Plugin that's mainly a helper for Commercial Districts for your server. Also syn
   
 ### Database Synchronization  
 Plugin which acts as an interface to synchronize the suite data with a database. This data can be used for your website so that you can have website integration and synchronization with your server.  
-  
-Features:  
+
+**Features:**  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Database Interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `SQLite integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `MySQL integration;`  
@@ -75,7 +75,7 @@ Add random organic or recurring events ("missions") to increase Vanilla gameplay
 ### HUD  
 Player customizable in-game HUD integrated with all other plugins from this suite.  
   
-Features:  
+**Features:**  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Toggle on/off;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Per player configuration;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Per player display mode: compact or expanded;`  
@@ -99,13 +99,13 @@ Account for player contribution to the server so that rewards can be given.
 ### Seasons  
 Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled. 
   
-Features:  
+**Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`
  
 ### Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
   
-Features:  
+**Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Automatic range limit support (range = server's view distance);`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Manual range limit support;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Player Armor Stand: to leave a "marker" for other to see;`  
@@ -119,7 +119,7 @@ Enables interactivity between your member's audience and their streaming audienc
 ### Wandering Trades  
 Customizable Wandering Trader trades with both decoration and player heads support.  
   
-Features:  
+**Features:**  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Main config file;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Whitelist support for member's player heads;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player Head trade support;`  
@@ -134,5 +134,5 @@ Features:
 ### WorldGen  
 100% new World Generation with much more interesting landscape and structures.  
   
-Features:  
+**Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Litematica structure support: loads litematica files and uses them on WorldGen.`
