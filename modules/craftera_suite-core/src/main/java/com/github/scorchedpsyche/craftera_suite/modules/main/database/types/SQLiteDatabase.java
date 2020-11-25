@@ -3,10 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.database.types;
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLiteDatabase implements IDatabase
 {
@@ -29,7 +26,7 @@ public class SQLiteDatabase implements IDatabase
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl)) {
             if (conn != null) {
-                ConsoleUtils.logSuccess(
+                ConsoleUtils.logMessage(
                         "Connection to SQLite has been established at: " + databaseUrl);
                 return conn;
             }
@@ -45,13 +42,29 @@ public class SQLiteDatabase implements IDatabase
     @Override
     public boolean executeSql(String sqlStatement)
     {
-        try (Connection conn = DriverManager.getConnection(databaseUrl);
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = DriverManager.getConnection(databaseUrl); Statement stmt = conn.createStatement()) {
             stmt.execute(sqlStatement);
             return true;
         } catch (SQLException e) {
             ConsoleUtils.logError(
                     "SQLite sql execution failed: " + sqlStatement);
+            ConsoleUtils.logError( e.getMessage() );
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean tableExists(String tableName)
+    {
+        try (Connection conn = DriverManager.getConnection(databaseUrl); Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(
+                            "SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "';");
+
+            return rs.next();
+        } catch (SQLException e) {
+            ConsoleUtils.logError(
+                    "SQLite tableExists check failed for table: " + tableName);
             ConsoleUtils.logError( e.getMessage() );
         }
 

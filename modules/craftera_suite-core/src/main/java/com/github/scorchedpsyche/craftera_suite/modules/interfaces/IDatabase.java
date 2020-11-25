@@ -6,5 +6,6 @@ public interface IDatabase
 {
     Connection createOrRetrieveDatabase();
     boolean executeSql(String sqlStatement);
+    boolean tableExists(String tableName);
     String getDatabaseUrl();
 }

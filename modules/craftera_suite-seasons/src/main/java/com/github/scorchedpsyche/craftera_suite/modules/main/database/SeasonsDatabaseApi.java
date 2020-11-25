@@ -2,14 +2,9 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
 public class SeasonsDatabaseApi
 {
-    public SeasonsDatabaseApi()
-    {
-        setup();
-    }
-
     private final String tablePrefix = "seasons_";
 
-    private void setup()
+    private void setupSqlTable()
     {
         String seasonsListTableSql = "CREATE TABLE IF NOT EXISTS " + DatabaseTables.Seasons.list_TABLENAME + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
