@@ -1,0 +1,17 @@
+package modules.com.github.scorchedpsyche.craftera_suite.modules;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
+}

@@ -22,15 +22,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>project_lib</id>
-            <name>Repository in project's lib dir</name>
-            <layout>default</layout>
-            <url>file:///${project.basedir}/libs</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.jetbrains</groupId>
@@ -38,15 +29,10 @@
             <version>20.1.0</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.github.scorchedpsyche</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.4</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+            <groupId>commons-io</groupId>
+            <scope>compile</scope>
             <version>2.5</version>
         </dependency>
     </dependencies>
@@ -58,32 +44,5 @@
                 <filtering>true</filtering> <!-- this is the important part, it's what replaces, filters, all placeholders in the resources folder (such as ${project.version} in plugin.yml) -->
             </resource>
         </resources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
-                    <executions>
-                        <execution>
-                            <id>install-external</id>
-                            <phase>clean</phase>
-                            <configuration>
-                                <file>${project.basedir}/libs/spigot-1.16.4.jar</file>
-                                <repositoryLayout>default</repositoryLayout>
-                                <groupId>com.github.scorchedpsyche</groupId>
-                                <artifactId>spigot</artifactId>
-                                <version>1.16.4</version>
-                                <packaging>jar</packaging>
-                                <generatePom>true</generatePom>
-                            </configuration>
-                            <goals>
-                                <goal>install-file</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 </project>
