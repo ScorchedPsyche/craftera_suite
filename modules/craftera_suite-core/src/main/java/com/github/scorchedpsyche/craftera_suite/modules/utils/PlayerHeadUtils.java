@@ -16,7 +16,7 @@ public class PlayerHeadUtils
     public static void preloadPlayerHeads()
     {
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-                                "Asynchronous Player Head preload STARTED");
+                "Asynchronous Player Head preload STARTED");
 
         int nbrOfHeadsLoaded = 0;
         int currentSlot = 0;
@@ -36,7 +36,7 @@ public class PlayerHeadUtils
         }
 
         ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-                                "Asynchronous Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
+                "Asynchronous Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
         inv = null;
     }
 

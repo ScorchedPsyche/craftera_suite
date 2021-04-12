@@ -35,7 +35,7 @@ public class SpectatorDatabaseAPI
         return null;
     }
 
-    public void enableSpectatorModeForPlayer(Player player)
+    public boolean enableSpectatorModeForPlayer(Player player)
     {
         String sql = "INSERT INTO " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
                 " ("
@@ -59,7 +59,7 @@ public class SpectatorDatabaseAPI
                 + DatabaseTables.SpectatorMode.PlayerDataTable.y + " = " + player.getLocation().getY() +", "
                 + DatabaseTables.SpectatorMode.PlayerDataTable.z + " = " + player.getLocation().getZ();
 
-        DatabaseManager.database.executeSql(sql);
+        return DatabaseManager.database.executeSql(sql);
     }
 
     public SpectatorPlayerDataModel disableSpectatorModeForPlayer(Player player)
