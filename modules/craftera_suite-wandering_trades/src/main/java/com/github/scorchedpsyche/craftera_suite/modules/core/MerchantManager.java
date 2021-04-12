@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.models.TradeEntryModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerHeadUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;

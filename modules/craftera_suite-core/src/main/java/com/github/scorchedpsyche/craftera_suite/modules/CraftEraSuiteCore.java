@@ -4,6 +4,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomCommandExecutor;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +33,13 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     @Override
     public void onEnable()
     {
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "    __  " + ChatColor.YELLOW + " __  " + ChatColor.BLUE + " __");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "   |    " + ChatColor.YELLOW + "|__  " + ChatColor.BLUE + "|__    "
+                + ChatColor.GREEN + "Craft" + ChatColor.YELLOW + "Era ");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "   |__  " + ChatColor.YELLOW + "|__  " + ChatColor.BLUE + " __|   "
+                + ChatColor.BLUE + "  Suite");
+        Bukkit.getConsoleSender().sendMessage("");
+
         try
         {
             File cesRootFolder = FolderUtils.getOrCreateCesRootFolder();
@@ -65,7 +73,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 if( config.getBoolean("auto_restart_on_low_memory") )
                 {
                     checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                            this, () -> checkMemoryUsage(), 0L, 20);
+                            this, () -> checkMemoryUsage(), 0L, 100);
 
                 }
             }

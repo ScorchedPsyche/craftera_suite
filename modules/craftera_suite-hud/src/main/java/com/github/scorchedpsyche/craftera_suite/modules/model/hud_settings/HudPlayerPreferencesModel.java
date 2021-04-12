@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings;
+package com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;

@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings;
+package com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

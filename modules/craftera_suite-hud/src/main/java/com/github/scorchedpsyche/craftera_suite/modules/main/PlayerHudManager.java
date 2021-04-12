@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
-import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.StringUtilsHud;

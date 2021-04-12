@@ -1,10 +1,13 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
+import org.bukkit.GameMode;
+
 public class DatabaseTables
 {
     private static final String corePrefix = "core_";
     private static final String hudPrefix = "hud_";
     private static final String seasonsPrefix = "seasons_";
+    private static final String spectatorModePrefix = "spectator_mode_";
 
     public static class Core {
         public static final String settingsTableName = corePrefix + "settings";
@@ -68,6 +71,20 @@ public class DatabaseTables
             Active,
             Finished,
             Archived
+        }
+    }
+
+    public static class SpectatorMode {
+        public static final String player_data_TABLENAME = spectatorModePrefix + "player_data";
+
+        public static class PlayerDataTable
+        {
+            public static final String player_uuid = "player_uuid";
+            public static final String enabled = "enabled";
+            public static final String game_mode = "game_mode";
+            public static final String x = "x";
+            public static final String y = "y";
+            public static final String z = "z";
         }
     }
 }

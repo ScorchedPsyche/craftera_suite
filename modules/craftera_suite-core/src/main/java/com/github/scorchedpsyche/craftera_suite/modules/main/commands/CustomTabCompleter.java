@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
-import com.github.scorchedpsyche.craftera_suite.modules.models.CommandModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -23,6 +23,7 @@ public class CustomTabCompleter implements TabCompleter {
 
         commands.putAll(getHudCommands());
         commands.putAll(getSeasonsCommands());
+        commands.putAll(getSpectatorModeCommands());
     }
 
     private List<String> getSubcommands(HashMap<String, CommandModel> commands, List<String> args)
@@ -159,5 +160,22 @@ public class CustomTabCompleter implements TabCompleter {
         seasonsSubcommands = null;
 
         return seasons;
+    }
+
+    private HashMap<String, CommandModel> getSpectatorModeCommands()
+    {
+        HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
+//
+//        spectatorSubcommands.put("create", new CommandModel());
+//        spectatorSubcommands.put("current", new CommandModel());
+//        spectatorSubcommands.put("end", new CommandModel());
+//        spectatorSubcommands.put("manage", new CommandModel());
+//        spectatorSubcommands.put("start", new CommandModel());
+        HashMap<String, CommandModel> spectator = new HashMap<>();
+        spectator.put("spectator", null);
+        spectator.put("spec", null);
+        spectatorSubcommands = null;
+
+        return spectator;
     }
 }

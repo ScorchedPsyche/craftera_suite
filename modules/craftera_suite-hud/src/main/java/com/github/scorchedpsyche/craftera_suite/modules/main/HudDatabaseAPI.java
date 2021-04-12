@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.models.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;

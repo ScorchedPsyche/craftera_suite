@@ -1,7 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
-import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -29,7 +30,7 @@ public class CustomCommandExecutor implements CommandExecutor {
                             argsFiltered[0] = "toggle";
                         }
 
-                        Bukkit.getPluginManager().callEvent(new HudCommandsEvent((Player) sender, argsFiltered));
+                        Bukkit.getPluginManager().callEvent(new HudCommandEvent((Player) sender, argsFiltered));
 
                         return true;
 
@@ -41,6 +42,18 @@ public class CustomCommandExecutor implements CommandExecutor {
                         }
 
                         Bukkit.getPluginManager().callEvent(new SeasonsCommandEvent((Player) sender, argsFiltered));
+
+                        return true;
+
+                    case "spectator":
+                    case "spec":
+                        if ( argsFiltered == null )
+                        {
+                            argsFiltered = new String[1];
+                            argsFiltered[0] = "toggle";
+                        }
+
+                        Bukkit.getPluginManager().callEvent(new SpectatorModeCommandEvent((Player) sender, argsFiltered));
 
                         return true;
 

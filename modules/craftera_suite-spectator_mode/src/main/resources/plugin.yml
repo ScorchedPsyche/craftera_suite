@@ -1,8 +1,9 @@
 name: craftera_suite-spectator_mode
 version: ${project.version}
+depend: [ craftera_suite-core ]
 main: modules.com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSpectatorMode
 api-version: 1.16
 prefix: CraftEra Suite - Spectator Mode
-authors: [ ScorchedPsyche ]
+authors: [ScorchedPsyche]
 description: Enables limited Spectator mode for Survival and Adventure.
 website: https://github.com/ScorchedPsyche

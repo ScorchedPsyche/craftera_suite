@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.listeners;
 
-import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandsEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
@@ -21,7 +21,7 @@ public class HudCommandListener implements Listener
     private final HudManager hudManager;
 
     @EventHandler
-    public void onHudCommandEvent(HudCommandsEvent event)
+    public void onHudCommandEvent(HudCommandEvent event)
     {
         String[] args = event.getArgs();
 

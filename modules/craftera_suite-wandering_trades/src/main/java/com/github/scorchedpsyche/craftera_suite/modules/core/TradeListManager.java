@@ -1,8 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules.core;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.models.TradeEntryModel;
-import com.github.scorchedpsyche.craftera_suite.modules.models.TradeModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.TradeModel;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.google.gson.Gson;
 

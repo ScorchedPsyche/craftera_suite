@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.models;
+package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import java.util.HashMap;
 

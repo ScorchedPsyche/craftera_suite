@@ -6,13 +6,13 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class HudCommandsEvent extends Event implements Cancellable, ICommandEvent
+public class HudCommandEvent extends Event implements Cancellable, ICommandEvent
 {
     private final Player player;
     private final String[] args;
     private static final HandlerList handlers = new HandlerList();
 
-    public HudCommandsEvent(Player player, String[] args)
+    public HudCommandEvent(Player player, String[] args)
     {
         this.player = player;
         this.args = args;

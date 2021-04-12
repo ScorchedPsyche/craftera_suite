@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.models;
+package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,5 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.utils;
 
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,8 +44,7 @@ public class ConsoleUtils {
 
     public static void logMessage(String pluginPrefixName, String message)
     {
-        Bukkit.getConsoleSender().sendMessage(
-                "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] " + message);
+        Bukkit.getConsoleSender().sendMessage("[" + validCustomPrefixOrDefault(pluginPrefixName) + "] " + message);
     }
 
     private static String validCustomPrefixOrDefault(String pluginPrefixName)
