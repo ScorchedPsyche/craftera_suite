@@ -22,7 +22,13 @@ public class SpectatorModeCommandListener implements Listener
     {
         if( event.getPlayer() != null )
         {
-            spectatorManager.toggleSpectatorModeForPlayer(event.getPlayer());
+            spectatorManager.toggleSpectatorModeForPlayer(
+                    event.getPlayer(),
+                    event.getPlayer().getLocation().getX(),
+                    event.getPlayer().getLocation().getY(),
+                    event.getPlayer().getLocation().getZ(),
+                    event.getPlayer().getHealth()
+            );
         }
         /*String[] args = event.getArgs();
 
