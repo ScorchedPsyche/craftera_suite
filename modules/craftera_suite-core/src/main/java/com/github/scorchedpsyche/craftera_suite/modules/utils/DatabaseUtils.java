@@ -5,8 +5,11 @@ import java.sql.SQLException;
 
 public class DatabaseUtils
 {
-    public static boolean isResultSetEmpty(ResultSet rs) throws SQLException
+    public static boolean isResultSetNullOrEmpty(ResultSet rs) throws SQLException
     {
-        return (!rs.isBeforeFirst() && rs.getRow() == 0);
+        // isBeforeFirst() returns
+        //   - true if the cursor is before the first row;
+        //   - false if the cursor is at any other  position or the result set contains no rows
+        return !rs.isBeforeFirst();
     }
 }

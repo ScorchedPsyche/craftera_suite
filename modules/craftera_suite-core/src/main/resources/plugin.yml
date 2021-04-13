@@ -1,7 +1,6 @@
 name: craftera_suite-core
 version: ${project.version}
 loadbefore: [craftera_suite-baby_entities, craftera_suite-wandering_trades, craftera_suite-hud]
-softdepend: [craftera_suite-hud]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore
 api-version: 1.16
 prefix: CraftEra Suite - Core

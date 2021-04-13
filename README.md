@@ -136,3 +136,17 @@ Customizable Wandering Trader trades with both decoration and player heads suppo
   
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Litematica structure support: loads litematica files and uses them on WorldGen.`
+
+### To compile the project
+You must run BuildTools on your local machine to get the Spigot server *.jar* which has to be installed to your local Maven repository with the following command (change "**-Dfile**" and *version* accordingly):
+
+    mvn -e install:install-file -Dfile='lib\spigot-1.16.5.jar' -DgroupId='org.spigotmc' -DartifactId=spigot -Dversion='1.16.5' -Dpackaging=jar -DgeneratePom=true
+
+Then, if missing from the POM's, add (change *version* accordingly):
+
+    <dependency>  
+    	<groupId>org.spigotmc</groupId>  
+    	<artifactId>spigot</artifactId>  
+    	<version>1.16.5</version>  
+    	<scope>provided</scope>  
+    </dependency>

@@ -4,6 +4,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPl
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.StringUtilsHud;
+import modules.com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSpectatorMode;
 import net.minecraft.server.v1_16_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,9 +17,6 @@ import java.util.Date;
 
 public class PlayerHudManager
 {
-//    private final PlayerUtils playerUtils = new PlayerUtils();
-//    private final ItemStackUtils itemStackUtils = new ItemStackUtils();
-
     public StringBuilder getPlayerHudText(Player player, HudPlayerPreferencesModel preferences)
     {
         StringBuilder hudText = new StringBuilder();
@@ -61,6 +59,16 @@ public class PlayerHudManager
         {
             hudText.append( " " );
             hudText.append( formatServerTime() );
+        }
+
+        if( Bukkit.getServer().getPluginManager().isPluginEnabled(SuitePluginManager.SpectatorMode.Name.pomXml) &&
+                CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.containsKey(player.getUniqueId().toString()))
+        {
+            hudText.append( " " );
+            hudText.append( formatSpectatorRange(
+                    CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
+                    CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit(),
+                    preferences));
         }
 
         return hudText;
@@ -356,5 +364,41 @@ public class PlayerHudManager
         }
 
         return worldTimeStrBuilder;
+    }
+
+    private StringBuilder formatSpectatorRange(Double distance, int range, HudPlayerPreferencesModel preferences)
+    {
+        StringBuilder specRangeBuilder = new StringBuilder();
+
+        if( distance != null )
+        {
+            if( distance < range * 0.2 )
+            {
+                specRangeBuilder.append( ChatColor.GREEN );
+            } else if ( distance >= range * (0.2) && distance < range * (0.4) ) {
+                specRangeBuilder.append( ChatColor.DARK_GREEN );
+            } else if ( distance >= range * (0.4) && distance < range * (0.6) ) {
+                specRangeBuilder.append( ChatColor.YELLOW );
+            } else if ( distance >= range * (0.6) && distance < range * (0.8) ) {
+                specRangeBuilder.append( ChatColor.GOLD );
+            } else { // 0.8
+                specRangeBuilder.append( ChatColor.RED );
+            }
+
+            specRangeBuilder.append( String.format("%.1f",distance) );
+            specRangeBuilder.append( ChatColor.RESET );
+
+            specRangeBuilder.append( "/" );
+            specRangeBuilder.append( range );
+
+            if( preferences.isDisplayModeExtended() )
+            {
+                // EXTENDED
+
+                specRangeBuilder.insert( 0, "Spec: " );
+                specRangeBuilder.insert( 0, ChatColor.GOLD );
+            }
+        }
+        return specRangeBuilder;
     }
 }

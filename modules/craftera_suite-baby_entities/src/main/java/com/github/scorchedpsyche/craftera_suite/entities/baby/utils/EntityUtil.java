@@ -2,6 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.entities.baby.utils;
 
 import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.EntityUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ParticleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import net.minecraft.server.v1_16_R3.DataWatcher;
@@ -86,7 +87,7 @@ public class EntityUtil
                                               "ces_adult/baby"));
 
             // Notify nearby players' clients of conversion so that they visually update the entity
-            notifyNearbyPlayersOfEntityConversion(ageableEntity);
+            EntityUtils.notifyNearbyPlayersOfEntityUpdate(ageableEntity);
 
             // Particles
             ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
@@ -108,7 +109,7 @@ public class EntityUtil
                                              CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class));
 
                 // Notify nearby players' clients of conversion so that they visually update the entity
-                notifyNearbyPlayersOfEntityConversion(ageableEntity);
+                EntityUtils.notifyNearbyPlayersOfEntityUpdate(ageableEntity);
 
                 // Particles
                 ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
@@ -124,54 +125,6 @@ public class EntityUtil
     {
         // Check if entity is Age Locked and removes/adds lock accordingly
         breedableEntity.setAgeLock(!breedableEntity.getAgeLock());
-    }
-
-    /**
-     * Notify nearby players' client of the entity conversion so that their client updates
-     * the entity visually – entity size won't be changed for nearby players otherwise.
-     * @param targetEntity Entity that was converted
-     */
-    private void notifyNearbyPlayersOfEntityConversion(Entity targetEntity)
-    {
-        // Create packet to notify players of the conversion
-        DataWatcher watcher = ((CraftEntity) targetEntity).getHandle().getDataWatcher();
-        PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(
-                targetEntity.getEntityId(), // Entity ID
-                watcher, // Data watcher which you can get by accessing a method in a NMS Entity class
-                false // Send All
-        );
-
-        // Notify nearby players
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            // Check if in the same dimension
-            if( targetEntity.getWorld().getUID() == player.getWorld().getUID() )
-            {
-                if( isPlayerBetweenViewDistanceOfEntity(targetEntity, player) )
-                {
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-                }
-            }
-        }
-    }
-
-    /**
-     * Check if the player is between view distance of the entity.
-     * @param entity The entity to be checked against
-     * @param player The player to be check against
-     * @return True if the player is inside entity's view distance
-     */
-    public boolean isPlayerBetweenViewDistanceOfEntity(Entity entity, Player player)
-    {
-        int entityChunkX = (int)(entity.getLocation().getX() / 16);
-        int entityChunkZ = (int)(entity.getLocation().getZ() / 16);
-
-        int playerChunkX = (int)(player.getLocation().getX() / 16);
-        int playerChunkZ = (int)(player.getLocation().getZ() / 16);
-
-        double distance = Math.hypot(entityChunkX - playerChunkX,
-                                     entityChunkZ - playerChunkZ);
-
-        return distance <= Bukkit.getViewDistance();
     }
 
     public Vector randomBoundedXYZ()

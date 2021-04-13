@@ -21,7 +21,7 @@ public class HudDatabaseAPI
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !DatabaseUtils.isResultSetEmpty(rs) )
+            if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
             {
                 return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
             }

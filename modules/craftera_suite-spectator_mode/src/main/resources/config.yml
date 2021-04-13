@@ -1,0 +1,2 @@
+use_server_view_distance_instead_of_custom_range_limit: true # Uses server's view distance as the range limit for the player to go away from the original casting position (in radius)
+custom_range_limit: 100 # If above config is FALSE, then this is the range limit used for the player's spectator mode

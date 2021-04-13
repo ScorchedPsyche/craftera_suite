@@ -1,6 +1,7 @@
 name: craftera_suite-hud
 version: ${project.version}
 depend: [ craftera_suite-core ]
+softdepend: [ craftera_suite-spectator_mode ]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud
 api-version: 1.16
 prefix: CraftEra Suite - HUD

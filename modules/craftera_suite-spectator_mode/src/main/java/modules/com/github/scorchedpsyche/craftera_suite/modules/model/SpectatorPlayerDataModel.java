@@ -3,6 +3,9 @@ package modules.com.github.scorchedpsyche.craftera_suite.modules.model;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,20 +20,19 @@ public class SpectatorPlayerDataModel
     private Double y;
     private Double z;
 
-    public SpectatorPlayerDataModel loadDataFromResultSet(ResultSet rs)
+    @Nullable
+    public SpectatorPlayerDataModel loadDataFromResultSet(@NotNull ResultSet rs)
     {
         try {
-            if ( rs.isBeforeFirst() ) {
-                id = rs.getInt(1);
-                player_uuid = rs.getString(2);
-                enabled = rs.getBoolean(3);
-                game_mode = rs.getString(4);
-                x = rs.getDouble(5);
-                y = rs.getDouble(6);
-                z = rs.getDouble(7);
+            id = rs.getInt(1);
+            player_uuid = rs.getString(2);
+            enabled = rs.getBoolean(3);
+            game_mode = rs.getString(4);
+            x = rs.getDouble(5);
+            y = rs.getDouble(6);
+            z = rs.getDouble(7);
 
-                return this;
-            }
+            return this;
         } catch (SQLException e)
         {
             ConsoleUtils.logError(

@@ -1,6 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -35,5 +36,13 @@ public class PlayerUtils
     public static void sendMessageWithPluginPrefix(Player player, String pluginPrefix, String message)
     {
         player.sendMessage(ChatColor.GOLD + "[" + pluginPrefix + "] " + ChatColor.RESET + message);
+    }
+
+    public static double getDistanceToLocation(Player player, Location location )
+    {
+        return Math.sqrt(
+                Math.pow(location.getX() - player.getLocation().getX(), 2) +
+                Math.pow(location.getY() - player.getLocation().getY(), 2) +
+                Math.pow(location.getZ() - player.getLocation().getZ(), 2));
     }
 }
