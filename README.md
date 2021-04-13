@@ -150,3 +150,5 @@ Then, if missing from the POM's, add (change *version* accordingly):
     	<version>1.16.5</version>  
     	<scope>provided</scope>  
     </dependency>
+
+mvn -e install:install-file -Dfile='D:\work\repositories\craftera_suite\lib\commons-io-2.8.0\commons-io-2.8.0.jar' -DgroupId='commons-io' -DartifactId='commons-io' -Dversion='2.8.0' -Dpackaging=jar -DgeneratePom=true

@@ -15,13 +15,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     public static ResourcesManager resourcesManager = new ResourcesManager();
@@ -33,7 +31,7 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     private static Runnable processPlayersInSpectatorTask = new Runnable() {
         @Override
         public void run() {
-            spectatorModeManager.calculatePlayersDistanceToOriginalExecutingLocationAndGenerateHudText();
+            spectatorModeManager.calculatePlayerDistanceToExecutingLocationAndTeleportBackIfNeeded();
         }
     };
 

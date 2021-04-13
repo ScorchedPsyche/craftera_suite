@@ -15,7 +15,7 @@ public class EntityUtils {
      * visually – entity size, for example, won't be changed for nearby players otherwise.
      * @param targetEntity Entity that was modified
      */
-    public static void notifyNearbyPlayersOfEntityUpdate(Entity targetEntity)
+    public static void notifyPlayersInRangeOfEntityUpdate(Entity targetEntity)
     {
         // Create packet to notify players of the conversion
         DataWatcher watcher = ((CraftEntity) targetEntity).getHandle().getDataWatcher();
@@ -26,14 +26,12 @@ public class EntityUtils {
         );
 
         // Notify nearby players
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             // Check if in the same dimension
-            if( targetEntity.getWorld().getUID() == player.getWorld().getUID() )
+            if( targetEntity.getWorld().getUID() == onlinePlayer.getWorld().getUID() &&
+                    isPlayerBetweenViewDistanceOfEntity(targetEntity, onlinePlayer) )
             {
-                if( isPlayerBetweenViewDistanceOfEntity(targetEntity, player) )
-                {
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-                }
+                ((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(packet);
             }
         }
     }

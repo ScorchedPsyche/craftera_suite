@@ -85,6 +85,8 @@ public class DatabaseTables
             public static final String x = "x";
             public static final String y = "y";
             public static final String z = "z";
+            public static final String world = "world";
+            public static final String environment = "environment";
         }
     }
 }

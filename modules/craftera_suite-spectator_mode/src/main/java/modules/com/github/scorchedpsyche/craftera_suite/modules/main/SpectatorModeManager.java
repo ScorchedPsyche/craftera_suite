@@ -15,10 +15,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.Console;
 import java.util.*;
 
 public class SpectatorModeManager {
@@ -61,10 +59,10 @@ public class SpectatorModeManager {
      */
     public void toggleSpectatorModeForPlayer(Player player, double x, double y, double z, double health)
     {
-        // Check if the player is in Spectator Mode
-        if( player.getGameMode().equals(GameMode.SPECTATOR) )
+        // Check if the player is in the Spectator Mode List
+        if( playersInSpectator.containsKey(player.getUniqueId().toString()) )
         {
-            // Is in Spectator. Disable it and go back to previous mode
+            // Is in Spectator list. Disable it and go back to previous mode
             disableSpectatorModeForPlayer(player);
         } else {
             // Is not in Spectator. Enable it
@@ -113,8 +111,8 @@ public class SpectatorModeManager {
                     // Player state saved. Summon Armor Stand, set player to Spectator Mode
                     playersInSpectator.put(player.getUniqueId().toString(), playerData);
                     player.setGameMode(GameMode.SPECTATOR);
+                    EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
                     spawnArmorStand(player);
-                    EntityUtils.notifyNearbyPlayersOfEntityUpdate(player);
                     PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                             "Enabled");
                     CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunningAndPlayersOnlineAndInSpectator();
@@ -168,8 +166,12 @@ public class SpectatorModeManager {
                     player.setGameMode(GameMode.ADVENTURE);
                     break;
 
-                default: // CREATIVE
+                case "CREATIVE":
                     player.setGameMode(GameMode.CREATIVE);
+                    break;
+
+                default: // SPECTATOR
+                    player.setGameMode(GameMode.SPECTATOR);
                     break;
             }
             removeArmorStand(player);
@@ -181,7 +183,7 @@ public class SpectatorModeManager {
 
 //            JavaPlugin plugin = CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class);
 
-            EntityUtils.notifyNearbyPlayersOfEntityUpdate(player);
+            EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
         } else {
             // Failed to update player state. Display error to player
             PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
@@ -246,15 +248,18 @@ public class SpectatorModeManager {
         }
     }
 
-    public void calculatePlayersDistanceToOriginalExecutingLocationAndGenerateHudText()
+    public void calculatePlayerDistanceToExecutingLocationAndTeleportBackIfNeeded()
     {
-        if(!CollectionUtils.isNullOrEmpty(playersInSpectator))
+        if( !CollectionUtils.isNullOrEmpty(playersInSpectator) )
         {
             playersInSpectator.forEach((uuid, playerDataFromDb) ->
                     {
                         Player player = Bukkit.getServer().getPlayer(UUID.fromString(uuid));
-                        if( player != null )
+
+                        // Check if the player is dead
+                        if( player != null && !player.isDead() )
                         {
+                            // Not dead, continue
                             Location playerLocation = new Location(
                                     player.getWorld(),
                                     playerDataFromDb.getX(),
@@ -272,10 +277,12 @@ public class SpectatorModeManager {
                                 distanceFromSource.replace(uuid, distanceFromCastingLocation);
                             }
 
-                            if (distanceFromCastingLocation > rangeLimit)
+                            // Checks if the player is in the same world as he died on or distance from executing point
+                            // is greater than range limit
+                            if ( !player.getWorld().getUID().toString().equals(playerDataFromDb.getWorld()) || distanceFromCastingLocation > rangeLimit)
                             {
                                 player.teleport(new Location(
-                                        player.getWorld(),
+                                        Bukkit.getWorld(UUID.fromString(playerDataFromDb.getWorld())),
                                         playerDataFromDb.getX(),
                                         playerDataFromDb.getY(),
                                         playerDataFromDb.getZ(),

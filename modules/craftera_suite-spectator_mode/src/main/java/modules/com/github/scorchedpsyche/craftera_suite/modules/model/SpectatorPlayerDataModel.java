@@ -19,6 +19,8 @@ public class SpectatorPlayerDataModel
     private Double x;
     private Double y;
     private Double z;
+    private String world;
+    private String environment;
 
     @Nullable
     public SpectatorPlayerDataModel loadDataFromResultSet(@NotNull ResultSet rs)
@@ -31,6 +33,8 @@ public class SpectatorPlayerDataModel
             x = rs.getDouble(5);
             y = rs.getDouble(6);
             z = rs.getDouble(7);
+            world = rs.getString(8);
+            environment = rs.getString(9);
 
             return this;
         } catch (SQLException e)
@@ -50,6 +54,8 @@ public class SpectatorPlayerDataModel
     public Double getX() { return x; }
     public Double getY() { return y; }
     public Double getZ() { return z; }
+    public String getWorld() { return world; }
+    public String getEnvironment() { return environment; }
 //    public void setPreference(String preference, boolean
 //    public String getPlayerUUID() { return player_uuid; }value)
 //    {

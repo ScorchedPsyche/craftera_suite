@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.ChatColor;
-import org.apache.commons.io.FileUtils;
+import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;

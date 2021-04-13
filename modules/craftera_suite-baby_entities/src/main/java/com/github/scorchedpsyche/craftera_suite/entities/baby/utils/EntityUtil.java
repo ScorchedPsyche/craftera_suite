@@ -5,14 +5,9 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.EntityUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ParticleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
-import net.minecraft.server.v1_16_R3.DataWatcher;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -87,7 +82,7 @@ public class EntityUtil
                                               "ces_adult/baby"));
 
             // Notify nearby players' clients of conversion so that they visually update the entity
-            EntityUtils.notifyNearbyPlayersOfEntityUpdate(ageableEntity);
+            EntityUtils.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
 
             // Particles
             ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
@@ -109,7 +104,7 @@ public class EntityUtil
                                              CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class));
 
                 // Notify nearby players' clients of conversion so that they visually update the entity
-                EntityUtils.notifyNearbyPlayersOfEntityUpdate(ageableEntity);
+                EntityUtils.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
 
                 // Particles
                 ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
