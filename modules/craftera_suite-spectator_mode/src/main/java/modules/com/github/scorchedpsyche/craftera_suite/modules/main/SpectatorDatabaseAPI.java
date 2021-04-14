@@ -143,7 +143,7 @@ public class SpectatorDatabaseAPI
     public SpectatorPlayerDataModel disableSpectatorModeForPlayer(Player player)
     {
         String sql = "UPDATE " + DatabaseTables.SpectatorMode.player_data_TABLENAME + " SET "
-                + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " = 0";
+                + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " = 0 WHERE player_uuid='" + player.getUniqueId().toString() + "'";
 
         DatabaseManager.database.executeSql(sql);
 

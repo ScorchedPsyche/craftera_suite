@@ -172,4 +172,17 @@ public class HudManager {
             }
         }
     }
+
+    public boolean isHudEnabledAndDisplayModeCompact(Player player)
+    {
+        HudPlayerPreferencesModel hudPlayerPreferences =
+                hudDatabaseAPI.getPlayerPreferences(player.getUniqueId().toString());
+
+        if( hudPlayerPreferences != null && hudPlayerPreferences.isHudEnabled() && !hudPlayerPreferences.isDisplayModeExtended() )
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package modules.com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.*;
@@ -281,7 +282,7 @@ public class SpectatorModeManager {
                             }
 
                             playerManager.subtitle.addToEnd(
-                                    formatSpectatorRange (
+                                    formatSpectatorRange (player,
                                             CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
                                             CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit()
                                     )
@@ -311,7 +312,7 @@ public class SpectatorModeManager {
         }
     }
 
-    private StringBuilder formatSpectatorRange(Double distance, int range)
+    private StringBuilder formatSpectatorRange(Player player, Double distance, int range)
     {
         StringBuilder specRangeBuilder = new StringBuilder();
 
@@ -332,17 +333,18 @@ public class SpectatorModeManager {
 
             specRangeBuilder.append( String.format("%.1f",distance) );
             specRangeBuilder.append( ChatColor.RESET );
-
             specRangeBuilder.append( "/" );
             specRangeBuilder.append( range );
 
-//            if( preferences.isDisplayModeExtended() )
-//            {
-//                // EXTENDED
-//
-//                specRangeBuilder.insert( 0, "Spec: " );
-//                specRangeBuilder.insert( 0, ChatColor.GOLD );
-//            }
+            // Check if user is on display mode compact
+            if( !CraftEraSuiteHud.hudManager.isHudEnabledAndDisplayModeCompact(player) )
+            {
+                // HUD ENABLED
+                // Not on compact, then add extra text
+
+                specRangeBuilder.insert( 0, "Spec: " );
+                specRangeBuilder.insert( 0, ChatColor.GOLD );
+            }
         }
         return specRangeBuilder;
     }
@@ -380,11 +382,9 @@ public class SpectatorModeManager {
 
     public void playerLogout(Player player)
     {
-        if( playersInSpectator.remove(player.getUniqueId().toString()) != null )
+        if( playersInSpectator.remove(player.getUniqueId().toString()) != null && playersInSpectator.isEmpty() )
         {
-            ConsoleUtils.logSuccess("REMOVED");
             CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfRunning();
         }
-        ConsoleUtils.logSuccess("REMOVED NOT");
     }
 }

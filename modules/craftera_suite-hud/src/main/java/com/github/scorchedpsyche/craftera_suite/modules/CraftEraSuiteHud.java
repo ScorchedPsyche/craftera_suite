@@ -8,11 +8,12 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CraftEraSuiteHud extends JavaPlugin
 {
-    public HudManager hudManager;
+    public static HudManager hudManager;
     private HudDatabaseAPI hudDatabaseAPI;
     private Integer showHudForPlayersTask;
 

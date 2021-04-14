@@ -35,6 +35,12 @@
             <version>0.0.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.scorchedpsyche.craftera_suite.modules</groupId>
+            <artifactId>craftera_suite-hud</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
