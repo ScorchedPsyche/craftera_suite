@@ -1,14 +1,13 @@
 package modules.com.github.scorchedpsyche.craftera_suite.modules.main;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.*;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.CollectionUtils;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSpectatorMode;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.model.SpectatorPlayerDataModel;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -16,7 +15,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.io.Console;
 import java.util.*;
 
 public class SpectatorModeManager {
@@ -114,8 +112,8 @@ public class SpectatorModeManager {
                     EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
                     spawnArmorStand(player);
                     PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
-                            "Enabled");
-                    CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunningAndPlayersOnlineAndInSpectator();
+                            "is now " + ChatColor.GREEN + "ON");
+                    CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunning();
                 } else {
                     // Failed to save player state. Display error to player
                     PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
@@ -176,14 +174,17 @@ public class SpectatorModeManager {
             }
             removeArmorStand(player);
             PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
-                    "Disabled");
+                    "is now " + ChatColor.RED + "OFF");
             playersInSpectator.remove(player.getUniqueId().toString());
             distanceFromSource.remove(player.getUniqueId().toString());
-            CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfNoPlayersOnlineOrNoneInSpectator();
 
 //            JavaPlugin plugin = CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class);
 
             EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
+            if( playersInSpectator.isEmpty() )
+            {
+                CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfRunning();
+            }
         } else {
             // Failed to update player state. Display error to player
             PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
@@ -248,7 +249,7 @@ public class SpectatorModeManager {
         }
     }
 
-    public void calculatePlayerDistanceToExecutingLocationAndTeleportBackIfNeeded()
+    public void calculateSpectatorsDistanceToExecutingLocationAndTeleportBackIfNeeded()
     {
         if( !CollectionUtils.isNullOrEmpty(playersInSpectator) )
         {
@@ -270,6 +271,20 @@ public class SpectatorModeManager {
                             double distanceFromCastingLocation = PlayerUtils.getDistanceToLocation(
                                     player,
                                     playerLocation
+                            );
+
+
+                            PlayerManager playerManager = CraftEraSuiteCore.playerManagerList.get(player.getUniqueId().toString());
+                            if( !playerManager.subtitle.isEmpty() )
+                            {
+                                playerManager.subtitle.addToEnd(" ");
+                            }
+
+                            playerManager.subtitle.addToEnd(
+                                    formatSpectatorRange (
+                                            CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
+                                            CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit()
+                                    )
                             );
 
                             if(distanceFromSource.putIfAbsent(uuid, distanceFromCastingLocation) != null )
@@ -296,6 +311,42 @@ public class SpectatorModeManager {
         }
     }
 
+    private StringBuilder formatSpectatorRange(Double distance, int range)
+    {
+        StringBuilder specRangeBuilder = new StringBuilder();
+
+        if( distance != null )
+        {
+            if( distance < range * 0.2 )
+            {
+                specRangeBuilder.append( ChatColor.GREEN );
+            } else if ( distance >= range * (0.2) && distance < range * (0.4) ) {
+                specRangeBuilder.append( ChatColor.DARK_GREEN );
+            } else if ( distance >= range * (0.4) && distance < range * (0.6) ) {
+                specRangeBuilder.append( ChatColor.YELLOW );
+            } else if ( distance >= range * (0.6) && distance < range * (0.8) ) {
+                specRangeBuilder.append( ChatColor.GOLD );
+            } else { // 0.8
+                specRangeBuilder.append( ChatColor.RED );
+            }
+
+            specRangeBuilder.append( String.format("%.1f",distance) );
+            specRangeBuilder.append( ChatColor.RESET );
+
+            specRangeBuilder.append( "/" );
+            specRangeBuilder.append( range );
+
+//            if( preferences.isDisplayModeExtended() )
+//            {
+//                // EXTENDED
+//
+//                specRangeBuilder.insert( 0, "Spec: " );
+//                specRangeBuilder.insert( 0, ChatColor.GOLD );
+//            }
+        }
+        return specRangeBuilder;
+    }
+
     public void addOnlinePlayersToSpectator()
     {
         List<SpectatorPlayerDataModel> playersOnSpectatorOnDb = spectatorDatabaseAPI.fetchAllPlayersWithSpectatorModeEnabled();
@@ -320,18 +371,20 @@ public class SpectatorModeManager {
     {
         SpectatorPlayerDataModel playerData = spectatorDatabaseAPI.fetchPlayer(player.getUniqueId().toString());
 
-        if( playerData != null )
+        if( playerData != null && playerData.isSpectatorEnabled() )
         {
             playersInSpectator.put(player.getUniqueId().toString(), playerData);
+            CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunning();
         }
-
-        CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunningAndPlayersOnlineAndInSpectator();
     }
 
     public void playerLogout(Player player)
     {
-        playersInSpectator.remove(player.getUniqueId().toString());
-
-        CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfNoPlayersOnlineOrNoneInSpectator();
+        if( playersInSpectator.remove(player.getUniqueId().toString()) != null )
+        {
+            ConsoleUtils.logSuccess("REMOVED");
+            CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfRunning();
+        }
+        ConsoleUtils.logSuccess("REMOVED NOT");
     }
 }

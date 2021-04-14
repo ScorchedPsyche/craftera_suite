@@ -61,15 +61,15 @@ public class PlayerHudManager
             hudText.append( formatServerTime() );
         }
 
-        if( Bukkit.getServer().getPluginManager().isPluginEnabled(SuitePluginManager.SpectatorMode.Name.pomXml) &&
-                CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.containsKey(player.getUniqueId().toString()))
-        {
-            hudText.append( " " );
-            hudText.append( formatSpectatorRange(
-                    CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
-                    CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit(),
-                    preferences));
-        }
+//        if( Bukkit.getServer().getPluginManager().isPluginEnabled(SuitePluginManager.SpectatorMode.Name.pomXml) &&
+//                CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.containsKey(player.getUniqueId().toString()))
+//        {
+//            hudText.append( " " );
+//            hudText.append( formatSpectatorRange(
+//                    CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
+//                    CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit(),
+//                    preferences));
+//        }
 
         return hudText;
     }

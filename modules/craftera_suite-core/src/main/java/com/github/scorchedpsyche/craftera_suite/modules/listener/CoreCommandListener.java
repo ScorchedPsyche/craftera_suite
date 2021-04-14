@@ -1,122 +1,73 @@
-package modules.com.github.scorchedpsyche.craftera_suite.modules.listeners;
+package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
-import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.MessageUtils;
-import modules.com.github.scorchedpsyche.craftera_suite.modules.main.SpectatorModeManager;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class SpectatorModeCommandListener implements Listener
+public class CoreCommandListener implements Listener
 {
-    public SpectatorModeCommandListener(SpectatorModeManager spectatorManager)
-    {
-        this.spectatorManager = spectatorManager;
-    }
-
-    private final SpectatorModeManager spectatorManager;
 
     @EventHandler
-    public void onSpectatorCommandEvent(SpectatorModeCommandEvent event)
+    public void onCoreCommandEvent(HudCommandEvent event)
     {
-        if( event.getPlayer() != null )
-        {
-            spectatorManager.toggleSpectatorModeForPlayer(
-                    event.getPlayer(),
-                    event.getPlayer().getLocation().getX(),
-                    event.getPlayer().getLocation().getY(),
-                    event.getPlayer().getLocation().getZ(),
-                    event.getPlayer().getHealth()
-            );
-        }
-        /*String[] args = event.getArgs();
+        String[] args = event.getArgs();
 
         // Check if any arguments exists. If this check fails something went very wrong
         if( args != null && args.length > 0 )
         {
             switch( args[0].toLowerCase() )
             {
-
-                case "toggle": // /ces hud toggle
-                    if( args.length > 1 && !StringUtils.isNullOrEmpty(args[1]) )
+                case "item": // /ces hud config
+                    if( args.length > 1 )
                     {
                         switch( args[1] )
                         {
-                            case "coordinates":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.coordinates);
+                            case "remove":
+                                if( args.length > 2  )
+                                {
+                                    switch( args[2] )
+                                    {
+                                    }
+                                } else {
+                                    // TODO: display help
+                                }
                                 break;
 
-                            case "nether_portal_coordinates":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates);
+                            case "display_mode":
+                                if( args.length > 2  )
+                                {
+                                } else {
+                                    // TODO: display help
+                                }
                                 break;
 
-                            case "player_orientation":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.player_orientation);
-                                break;
-
-                            case "plugin_commerce":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce);
-                                break;
-
-                            case "plugin_spectator":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator);
-                                break;
-
-                            case "server_time":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.server_time);
-                                break;
-
-                            case "server_tps":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.server_tps);
-                                break;
-
-                            case "tool_durability":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.tool_durability);
-                                break;
-
-                            case "world_time":
-                                spectatorManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.world_time);
-                                break;
-
-                            default: // /ces hud toggle HELP
-                                PlayerUtils.sendMessageWithPluginPrefix(
-                                        event.getPlayer(),
-                                        SuitePluginManager.Hud.Name.compact,
-                                        hudToggleCommandHelpMessage() );
+                            default:
+                                // TODO: display help
                                 break;
                         }
                     } else {
-                        spectatorManager.toggleHudForPlayer( event.getPlayer() );
+                        // /ces hud config HELP
+                        PlayerUtils.sendMessageWithPluginPrefix(
+                                event.getPlayer(), SuitePluginManager.Hud.Name.full, hudConfigCommandHelpMessage());
                     }
                     break;
 
+                case "toggle": // /ces hud toggle
+                    break;
+
                 default: // /ces hud HELP
-                    PlayerUtils.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Hud.Name.compact, hudHelpMessage());
+                    PlayerUtils.sendMessageWithPluginPrefix(
+                            event.getPlayer(), SuitePluginManager.Hud.Name.full, hudHelpMessage() );
                     break;
             }
         } else {
             // Code shouldn't have gotten here as the CustomCommandExecutor sends at least "toggle". Log the error
             ConsoleUtils.logError("onHudCommandEvent received null or empty args. Report this to the developer");
-        }*/
+        }
     }
 
     /**

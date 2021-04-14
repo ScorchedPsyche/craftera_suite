@@ -2,11 +2,10 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 
 import com.github.scorchedpsyche.craftera_suite.modules.core.MerchantManager;
 import com.github.scorchedpsyche.craftera_suite.modules.core.TradeListManager;
-import com.github.scorchedpsyche.craftera_suite.modules.listeners.WanderingTraderSpawnListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.WanderingTraderSpawnListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerHeadUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.task.PreloadPlayerHeadsTask;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,7 +14,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +28,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     public static MerchantManager merchantManager;
     public static TradeListManager tradeListManager;
 
-    private BukkitTask precachePlayerHeadsTask;
+    public static PreloadPlayerHeadsTask preloadPlayerHeadsTask = new PreloadPlayerHeadsTask(
+            SuitePluginManager.WanderingTrades.Name.full, "preloadPlayerHeadsTask");
 
     // Plugin startup logic
     @Override
@@ -74,8 +73,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                     getServer().getPluginManager().registerEvents(new WanderingTraderSpawnListener(), this);
 
                     // Cache heads so that trades aren't locked until head is loaded when trader is spawned
-                    precachePlayerHeadsTask = Bukkit.getScheduler().runTaskAsynchronously(
-                            this, PlayerHeadUtils::preloadPlayerHeads);
+                    preloadPlayerHeadsTask.runTaskAsynchronously(this);
                 } catch (IOException | InvalidConfigurationException e)
                 {
                     pluginRootFolder = null;
@@ -97,10 +95,10 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     public void onDisable()
     {
         WanderingTraderSpawnListener.onDisable();
-        if( precachePlayerHeadsTask != null )
-        {
-            precachePlayerHeadsTask.cancel();
-        }
+//        if( precachePlayerHeadsTask.isCancelled() )
+//        {
+//            precachePlayerHeadsTask.cancel();
+//        }
         resourcesManager = null;
         config = null;
         whitelistedPlayerHeads = null;

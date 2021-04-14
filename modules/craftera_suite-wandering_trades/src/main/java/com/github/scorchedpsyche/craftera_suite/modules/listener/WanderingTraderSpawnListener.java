@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.listeners;
+package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.core.MerchantManager;

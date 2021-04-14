@@ -1,6 +1,12 @@
-auto_restart_on_low_memory: false # 5 min restart countdown when server hits 95% of memory usage
+# 1 min restart countdown when server hits 95% of memory usage
+auto_restart_on_low_memory: false
 
-storage_type: sqlite # "sqlite" or "mysql"
+# Logs all task's debugging messages for all of CraftEra Suite's modules.
+# IF YOU NEED SUPPORT FROM DEVELOPER, ENABLE THIS SO THAT THE LOG CAN BE POPULATED WITH DEBUGGING MESSAGES!
+log_task_debug_messages_to_console: true
+
+# "sqlite" or "mysql"
+storage_type: sqlite
 
 # Uncomment the lines below if MySQL is chosen for "storage_type" (above)
 #mysql:

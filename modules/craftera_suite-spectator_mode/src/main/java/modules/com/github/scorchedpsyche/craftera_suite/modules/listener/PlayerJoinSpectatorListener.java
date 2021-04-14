@@ -1,4 +1,4 @@
-package modules.com.github.scorchedpsyche.craftera_suite.modules.listeners;
+package modules.com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import modules.com.github.scorchedpsyche.craftera_suite.modules.main.SpectatorModeManager;
 import org.bukkit.event.EventHandler;

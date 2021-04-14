@@ -4,51 +4,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.Bukkit;
 
 public class SuitePluginManager {
-    /*public static String getPluginNameFromPomXmlName(String pomXmlName, Boolean fullNameInsteadOfCompact)
-    {
-        ConsoleUtils.logError(pomXmlName);
-        switch( pomXmlName )
-        {
-            case BabyEntities.Name.pomXml:
-                ConsoleUtils.logError("1");
-                if( fullNameInsteadOfCompact )
-                {
-                    return BabyEntities.Name.full;
-                }
-                return BabyEntities.Name.compact;
-
-            case Hud.Name.pomXml:
-                ConsoleUtils.logError("2");
-                if( fullNameInsteadOfCompact )
-                {
-                    return Hud.Name.full;
-                }
-                return Hud.Name.compact;
-
-            case Seasons.Name.pomXml:
-                ConsoleUtils.logError("3");
-                if( fullNameInsteadOfCompact )
-                {
-                    return Seasons.Name.full;
-                }
-                return Seasons.Name.compact;
-
-            case WanderingTrades.Name.pomXml:
-                ConsoleUtils.logError("4");
-                if( fullNameInsteadOfCompact )
-                {
-                    return WanderingTrades.Name.full;
-                }
-                return WanderingTrades.Name.compact;
-        }
-
-        return "CraftEra Suite";
-    }
-    public static String getPluginNameFromPomXmlName(String pomXmlName)
-    {
-        return getPluginNameFromPomXmlName(pomXmlName, true);
-    }*/
-
     public static class BabyEntities
     {
         public static class Name
@@ -61,6 +16,26 @@ public class SuitePluginManager {
         public static boolean isEnabled ()
         {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+    }
+
+    public static class Core
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Core";
+            public static final String full = "CraftEra Suite - Core";
+            public static final String pomXml = "craftera_suite-core";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+
+        public static class Task {
+            public static class TitleAndSubtitleSendToPlayer {
+                public static final long period = 5L;
+            }
         }
     }
 
@@ -103,6 +78,14 @@ public class SuitePluginManager {
         public static boolean isEnabled ()
         {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+
+        public static class Task
+        {
+            public static class ProcessPlayersInSpectator
+            {
+                public static final long period = 5L;
+            }
         }
     }
 

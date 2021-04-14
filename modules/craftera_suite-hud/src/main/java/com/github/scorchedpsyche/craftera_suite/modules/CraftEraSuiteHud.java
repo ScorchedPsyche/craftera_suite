@@ -1,8 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
-import com.github.scorchedpsyche.craftera_suite.modules.listeners.HudCommandListener;
-import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerJoinListener;
-import com.github.scorchedpsyche.craftera_suite.modules.listeners.PlayerQuitListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.HudCommandListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinHudListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitHudListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
@@ -31,11 +31,12 @@ public final class CraftEraSuiteHud extends JavaPlugin
 
                 // Set up repeating task to update HUD for players
                 showHudForPlayersTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                        this, () -> hudManager.showHudForPlayers(), 0L, 2);
+                        this, () -> hudManager.showHudForPlayers(), 0L, 5);
 
+                // Listeners
                 getServer().getPluginManager().registerEvents(new HudCommandListener(hudManager), this);
-                getServer().getPluginManager().registerEvents(new PlayerJoinListener(hudManager), this);
-                getServer().getPluginManager().registerEvents(new PlayerQuitListener(hudManager), this);
+                getServer().getPluginManager().registerEvents(new PlayerJoinHudListener(hudManager), this);
+                getServer().getPluginManager().registerEvents(new PlayerQuitHudListener(hudManager), this);
             } else {
                 // Failed to create database tables! Display error and disable plugin
                 ConsoleUtils.logError(this.getName(), "Failed to create database tables. Disabling!");

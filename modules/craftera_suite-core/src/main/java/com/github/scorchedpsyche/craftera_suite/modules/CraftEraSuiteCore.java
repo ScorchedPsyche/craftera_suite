@@ -1,11 +1,19 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitListener;
+import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomCommandExecutor;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.CollectionUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,22 +25,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class CraftEraSuiteCore extends JavaPlugin {
     public ResourcesManager resourcesManager;
     public DatabaseManager databaseManager;
     public static FileConfiguration config;
+    public static HashMap<String, PlayerManager> playerManagerList = new HashMap<String, PlayerManager>();
 
-    private Integer checkMemoryUsageTask;
     private Integer warnPlayersOfServerRestartTask;
     private Integer restartServerTask;
     private Integer restartMinutes = 1;
     private Integer restartSeconds = 0;
 
+    private Integer checkMemoryUsageTaskId;
+    public static TitleAndSubtitleSendToPlayerTask titleAndSubtitleSendToPlayerTask;
+
     // Plugin startup logic
     @Override
     public void onEnable()
     {
+        // Display console CES logo
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "    __  " + ChatColor.YELLOW + " __  " + ChatColor.BLUE + " __");
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "   |    " + ChatColor.YELLOW + "|__  " + ChatColor.BLUE + "|__    "
                 + ChatColor.GREEN + "Craft" + ChatColor.YELLOW + "Era ");
@@ -65,17 +78,33 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                     databaseManager = new DatabaseManager(DatabaseManager.DatabaseType.SQLite);
                 }
 
+                // Add online players to Player Manager List
+                for( Player player : Bukkit.getOnlinePlayers() )
+                {
+                    playerManagerList.put(player.getUniqueId().toString(), new PlayerManager());
+                }
+
                 // Register "ces" command
                 this.getCommand("ces").setExecutor(new CustomCommandExecutor());
                 this.getCommand("ces").setTabCompleter(new CustomTabCompleter());
 
-                // Set up repeating task to check server memory usage
+                // REPEATING TASK: check server memory usage
                 if( config.getBoolean("auto_restart_on_low_memory") )
                 {
-                    checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                    checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                             this, () -> checkMemoryUsage(), 0L, 100);
 
                 }
+
+                // REPEATING TASK: display subtitle
+                if( !CollectionUtils.isNullOrEmpty(Bukkit.getOnlinePlayers()) )
+                {
+                    startTitleAndSubtitleSendToPlayersTaskIfNotRunning();
+                }
+
+                // Listeners
+                getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+                getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
             }
         } catch (Exception e)
         {
@@ -88,14 +117,62 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     @Override
     public void onDisable()
     {
-        if( checkMemoryUsageTask != null ){ Bukkit.getScheduler().cancelTask(checkMemoryUsageTask); }
+        if( checkMemoryUsageTaskId != null ){ Bukkit.getScheduler().cancelTask(checkMemoryUsageTaskId); }
         if( warnPlayersOfServerRestartTask != null ){ Bukkit.getScheduler().cancelTask(warnPlayersOfServerRestartTask); }
         if( restartServerTask != null ){ Bukkit.getScheduler().cancelTask(restartServerTask); }
+        cancelTitleAndSubtitleSendToPlayersTaskIfRunning();
         databaseManager = null;
         resourcesManager = null;
     }
     private String mb (long s) {
         return String.format("%d (%.2f M)", s, (double)s / (1024 * 1024));
+    }
+
+    public static void sendTitleAndSubtitleToPlayers()
+    {
+        for( Player player : Bukkit.getOnlinePlayers() )
+        {
+            PlayerManager playerManager = playerManagerList.get(player.getUniqueId().toString());
+
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                    TextComponent.fromLegacyText( playerManager.subtitle.getText() ) );
+            playerManager.subtitle.reset();
+        }
+    }
+
+    public static void startTitleAndSubtitleSendToPlayersTaskIfNotRunning()
+    {
+        if( titleAndSubtitleSendToPlayerTask == null || !titleAndSubtitleSendToPlayerTask.isRunning() )
+        {
+            titleAndSubtitleSendToPlayerTask = new TitleAndSubtitleSendToPlayerTask(
+                    SuitePluginManager.Core.Name.full,
+                    "titleAndSubtitleSendToPlayerTask"
+            );
+            titleAndSubtitleSendToPlayerTask.runTaskTimer(CraftEraSuiteCore.getPlugin(CraftEraSuiteCore.class),
+                    0L, SuitePluginManager.Core.Task.TitleAndSubtitleSendToPlayer.period);
+        }
+//        if( titleAndSubtitleSendToPlayerTaskId == null || !Bukkit.getScheduler().isCurrentlyRunning(titleAndSubtitleSendToPlayerTaskId) )
+//        {
+//            titleAndSubtitleSendToPlayerTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+//                    CraftEraSuiteCore.getPlugin(CraftEraSuiteCore.class), titleAndSubtitleSendToPlayerTask, 0L,
+//                    SuitePluginManager.Core.Task.TitleAndSubtitleSendToPlayer.period);
+//            ConsoleUtils.logMessage(SuitePluginManager.Core.Name.full,
+//                    "Task STARTED: processing player's titles and subtitles");
+//        }
+    }
+
+    public static void cancelTitleAndSubtitleSendToPlayersTaskIfRunning()
+    {
+        if( titleAndSubtitleSendToPlayerTask != null && titleAndSubtitleSendToPlayerTask.isRunning() )
+        {
+            titleAndSubtitleSendToPlayerTask.cancel();
+        }
+//        if( titleAndSubtitleSendToPlayerTaskId != null && Bukkit.getScheduler().isCurrentlyRunning(titleAndSubtitleSendToPlayerTaskId) )
+//        {
+//            Bukkit.getScheduler().cancelTask(titleAndSubtitleSendToPlayerTaskId);
+//            ConsoleUtils.logMessage(SuitePluginManager.Core.Name.full,
+//                    "Task CANCELLED: processing player's titles and subtitles");
+//        }
     }
 
     private void checkMemoryUsage()
@@ -148,15 +225,15 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         if( percentage >= 90 )
         {
             System.out.println( percentage + "% - " + mb(used) + "/" + mb(max) );
-            Bukkit.getScheduler().cancelTask(checkMemoryUsageTask);
+            Bukkit.getScheduler().cancelTask(checkMemoryUsageTaskId);
 
             for( Player player : Bukkit.getOnlinePlayers() )
             {
                 player.playSound(player.getLocation(), Sound.EVENT_RAID_HORN, 1, 1);
             }
-            checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+            checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                     this, () -> warnPlayersOfServerRestart(), 0L, 20);
-            checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
+            checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
                     this, () -> restartServer(), 1200);
         }
 

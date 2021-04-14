@@ -1,14 +1,14 @@
-package com.github.scorchedpsyche.craftera_suite.modules.listeners;
+package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public final class PlayerJoinListener implements Listener {
+public final class PlayerJoinHudListener implements Listener {
     private final HudManager hudManager;
 
-    public PlayerJoinListener(HudManager hudManager)
+    public PlayerJoinHudListener(HudManager hudManager)
     {
         this.hudManager = hudManager;
     }

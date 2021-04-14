@@ -1,8 +1,10 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.CollectionUtils;
 import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
@@ -146,7 +148,7 @@ public class HudManager {
 
     public void showHudForPlayers()
     {
-        if(CollectionUtils.isNullOrEmpty(onlinePlayersWithHudEnabled))
+        if( !CollectionUtils.isNullOrEmpty(onlinePlayersWithHudEnabled) )
         {
             for (Map.Entry<Player, HudPlayerPreferencesModel> entry : onlinePlayersWithHudEnabled.entrySet()) {
                 StringBuilder hudText = playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue());
@@ -158,7 +160,15 @@ public class HudManager {
                             .append(ChatColor.BOLD).append("/ces hud help");
                 }
 
-                entry.getKey().spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText.toString() ) );
+                PlayerManager playerManager = CraftEraSuiteCore.playerManagerList.get(entry.getKey().getUniqueId().toString());
+
+                if( !playerManager.subtitle.isEmpty() )
+                {
+                    playerManager.subtitle.addToStart(" ");
+                }
+
+                playerManager.subtitle.addToStart( hudText );
+//                entry.getKey().spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText.toString() ) );
             }
         }
     }
