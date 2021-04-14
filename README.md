@@ -46,7 +46,7 @@ Main library dependency needed for other plugins of this pack.
 **Features:**   
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Console interface;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`<br />
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player's title and subtitle manager.`
   
 ### Commerce
@@ -147,5 +147,3 @@ Then, if missing from the POM's, add (change *version* accordingly):
     	<version>1.16.5</version>  
     	<scope>provided</scope>  
     </dependency>
-
-mvn -e install:install-file -Dfile='D:\work\repositories\craftera_suite\lib\commons-io-2.8.0\commons-io-2.8.0.jar' -DgroupId='commons-io' -DartifactId='commons-io' -Dversion='2.8.0' -Dpackaging=jar -DgeneratePom=true
