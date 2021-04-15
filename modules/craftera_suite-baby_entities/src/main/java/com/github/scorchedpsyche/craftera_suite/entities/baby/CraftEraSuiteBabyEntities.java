@@ -18,5 +18,7 @@ public final class CraftEraSuiteBabyEntities extends JavaPlugin {
     // Plugin shutdown logic
     @Override
     public void onDisable() {
+
+        super.onDisable();
     }
 }

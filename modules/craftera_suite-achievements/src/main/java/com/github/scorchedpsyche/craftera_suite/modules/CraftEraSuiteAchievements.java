@@ -50,6 +50,8 @@ public class CraftEraSuiteAchievements extends JavaPlugin
     @Override
     public void onDisable()
     {
+        achievementsDatabaseApi = null;
 
+        super.onDisable();
     }
 }

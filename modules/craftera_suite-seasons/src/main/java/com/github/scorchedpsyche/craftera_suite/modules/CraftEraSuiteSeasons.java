@@ -55,6 +55,9 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
     @Override
     public void onDisable()
     {
+        seasonManager = null;
+        seasonsDatabaseApi = null;
+
         super.onDisable();
     }
 }

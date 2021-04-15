@@ -58,8 +58,14 @@ public final class CraftEraSuiteHud extends JavaPlugin
             Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
         }
 
-        // Plugin shutdown logic
         hudDatabaseAPI = null;
         hudManager = null;
+        if ( showHudForPlayersTask != null )
+        {
+            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
+            showHudForPlayersTask = null;
+        }
+
+        super.onDisable();
     }
 }

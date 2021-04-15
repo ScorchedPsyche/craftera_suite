@@ -111,30 +111,26 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     public void onDisable() {
         // Cancel repeating task
         cancelRepeatingTaskIfRunning();
+        resourcesManager = null;
+        spectatorModeManager = null;
+        config = null;
+        spectatorDatabaseAPI = null;
+        processPlayersInSpectatorTask = null;
+
+        super.onDisable();
     }
 
     public static void startRepeatingTaskIfNotRunning()
     {
 //        ConsoleUtils.logSuccess("start");
-        if( processPlayersInSpectatorTask == null || !processPlayersInSpectatorTask.isRunning() )
-        {
+        if( processPlayersInSpectatorTask == null || !processPlayersInSpectatorTask.isRunning() ) {
             processPlayersInSpectatorTask = new ProcessPlayersInSpectatorTask(
-                SuitePluginManager.SpectatorMode.Name.full,
-                "processPlayersInSpectator",
-                spectatorModeManager);
+                    SuitePluginManager.SpectatorMode.Name.full,
+                    "processPlayersInSpectator",
+                    spectatorModeManager);
             processPlayersInSpectatorTask.runTaskTimer(CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class),
                     0L, SuitePluginManager.SpectatorMode.Task.ProcessPlayersInSpectator.period);
-//            ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                    "Task STARTED: processing players in spectator mode");
         }
-//        if( processPlayersInSpectatorTaskId == null || !Bukkit.getScheduler().isCurrentlyRunning(processPlayersInSpectatorTaskId) )
-//        {
-//            processPlayersInSpectatorTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-//                    CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class),
-//                    processPlayersInSpectatorTask, 0L, 5);
-//            ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                    "Task STARTED: processing players in spectator mode");
-//        }
     }
 
     public static void cancelRepeatingTaskIfRunning()
@@ -142,41 +138,6 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
         if( processPlayersInSpectatorTask != null && processPlayersInSpectatorTask.isRunning() )
         {
             processPlayersInSpectatorTask.cancel();
-//            ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                    "Task CANCELLED: processing players in spectator mode");
         }
-//        if( processPlayersInSpectatorTaskId != null && Bukkit.getScheduler().isCurrentlyRunning(processPlayersInSpectatorTaskId) )
-//        {
-//            Bukkit.getScheduler().cancelTask(processPlayersInSpectatorTaskId);
-//            ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                    "Task CANCELLED: processing players in spectator mode");
-//        }
     }
-
-//    public static void startRepeatingTaskIfNotRunningAndPlayersOnlineAndInSpectator()
-//    {
-//        if( processPlayersInSpectatorTaskId == null || !Bukkit.getScheduler().isCurrentlyRunning(processPlayersInSpectatorTaskId) )
-//        {
-//            if( !CollectionUtils.isNullOrEmpty(Bukkit.getOnlinePlayers()) &&
-//                    !CollectionUtils.isNullOrEmpty(spectatorModeManager.playersInSpectator) )
-//            {
-//                processPlayersInSpectatorTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-//                        CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class),
-//                        processPlayersInSpectatorTask, 0L, 5);
-//                ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                        "Task STARTED: processing players in spectator mode");
-//            }
-//
-//        }
-//    }
-//
-//    public static void cancelRepeatingTaskIfRunningAndNoPlayersInSpectator()
-//    {
-//        if( processPlayersInSpectatorTaskId != null && spectatorModeManager.playersInSpectator.isEmpty() )
-//        {
-//            Bukkit.getScheduler().cancelTask(processPlayersInSpectatorTaskId);
-//            ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-//                    "Task CANCELLED: processing players in spectator mode");
-//        }
-//    }
 }

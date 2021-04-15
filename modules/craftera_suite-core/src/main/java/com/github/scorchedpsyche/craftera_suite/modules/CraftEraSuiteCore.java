@@ -120,8 +120,17 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         if( warnPlayersOfServerRestartTask != null ){ Bukkit.getScheduler().cancelTask(warnPlayersOfServerRestartTask); }
         if( restartServerTask != null ){ Bukkit.getScheduler().cancelTask(restartServerTask); }
         cancelTitleAndSubtitleSendToPlayersTaskIfRunning();
-        databaseManager = null;
         resourcesManager = null;
+        databaseManager = null;
+        playerManagerList = null;
+        warnPlayersOfServerRestartTask = null;
+        restartServerTask = null;
+        restartMinutes = null;
+        restartSeconds = null;
+        checkMemoryUsageTaskId = null;
+        titleAndSubtitleSendToPlayerTask = null;
+
+        super.onDisable();
     }
     private String mb (long s) {
         return String.format("%d (%.2f M)", s, (double)s / (1024 * 1024));
@@ -150,14 +159,6 @@ public final class CraftEraSuiteCore extends JavaPlugin {
             titleAndSubtitleSendToPlayerTask.runTaskTimer(CraftEraSuiteCore.getPlugin(CraftEraSuiteCore.class),
                     0L, SuitePluginManager.Core.Task.TitleAndSubtitleSendToPlayer.period);
         }
-//        if( titleAndSubtitleSendToPlayerTaskId == null || !Bukkit.getScheduler().isCurrentlyRunning(titleAndSubtitleSendToPlayerTaskId) )
-//        {
-//            titleAndSubtitleSendToPlayerTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-//                    CraftEraSuiteCore.getPlugin(CraftEraSuiteCore.class), titleAndSubtitleSendToPlayerTask, 0L,
-//                    SuitePluginManager.Core.Task.TitleAndSubtitleSendToPlayer.period);
-//            ConsoleUtils.logMessage(SuitePluginManager.Core.Name.full,
-//                    "Task STARTED: processing player's titles and subtitles");
-//        }
     }
 
     public static void cancelTitleAndSubtitleSendToPlayersTaskIfRunning()
@@ -166,53 +167,10 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         {
             titleAndSubtitleSendToPlayerTask.cancel();
         }
-//        if( titleAndSubtitleSendToPlayerTaskId != null && Bukkit.getScheduler().isCurrentlyRunning(titleAndSubtitleSendToPlayerTaskId) )
-//        {
-//            Bukkit.getScheduler().cancelTask(titleAndSubtitleSendToPlayerTaskId);
-//            ConsoleUtils.logMessage(SuitePluginManager.Core.Name.full,
-//                    "Task CANCELLED: processing player's titles and subtitles");
-//        }
     }
 
     private void checkMemoryUsage()
     {
-//        long heapSize = Runtime.getRuntime().totalMemory();
-//        long max = Runtime.getRuntime().maxMemory();
-//
-//        StringBuilder message = new StringBuilder();
-//
-//        message.append("Heap Size = ").append(mb(heapSize)).append("\n");
-//        message.append("Heap Size = ").append(mb(heapSize)).append("\n");
-//        message.append("Max Heap Size = ").append(mb(max)).append("\n");
-//
-//        for (MemoryPoolMXBean pool : ManagementFactory.getMemoryPoolMXBeans()) {
-//            String name = pool.getName();
-//            MemoryType type = pool.getType();
-//            MemoryUsage usage = pool.getUsage();
-//            MemoryUsage peak = pool.getPeakUsage();
-//            message.append("Heap named '").append(name);
-//            message.append("' (").append(type.toString()).append(") ");
-//            message.append("uses ").append(mb(usage.getUsed()));
-//            message.append(" of ").append(mb(usage.getMax()));
-//            message.append(". The max memory used so far is ");
-//            message.append(mb(peak.getUsed())).append(".\n");
-//        }
-//        System.out.println(message.toString());
-
-
-
-//        System.out.println("==============================================================");
-//        System.out.println("Runtime max: " + mb(Runtime.getRuntime().maxMemory()));
-//        MemoryMXBean m = ManagementFactory.getMemoryMXBean();
-//
-//        System.out.println("Non-heap: " + mb(m.getNonHeapMemoryUsage().getMax()));
-//        System.out.println("Heap: " + mb(m.getHeapMemoryUsage().getMax()));
-//
-//        for (MemoryPoolMXBean mp : ManagementFactory.getMemoryPoolMXBeans()) {
-//            System.out.println("Pool: " + mp.getName() +
-//                                       " (type " + mp.getType() + ")" +
-//                                       " = " + mb(mp.getUsage().getMax()));
-//        }
         long max = ManagementFactory.getMemoryPoolMXBeans().get(3).getUsage().getMax() +
                 ManagementFactory.getMemoryPoolMXBeans().get(4).getUsage().getMax()*2 +
                 ManagementFactory.getMemoryPoolMXBeans().get(5).getUsage().getMax();
@@ -235,27 +193,6 @@ public final class CraftEraSuiteCore extends JavaPlugin {
             checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
                     this, () -> restartServer(), 1200);
         }
-
-
-//        long RAM_TOTAL = Runtime.getRuntime().maxMemory();
-//        long RAM_USED = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-//        long RAM_FREE = Runtime.getRuntime().maxMemory() - RAM_USED;
-//        long RAM_TOTAL_MB = RAM_TOTAL / 1024 / 1024;
-//        long RAM_FREE_MB = RAM_FREE  / 1024 / 1024;
-//        long RAM_USED_MB = RAM_USED / 1024 / 1024;
-//        double RAM_USED_PERCENTAGE = ((RAM_USED * 1.0) / RAM_TOTAL) * 100;
-//        ConsoleUtils.logMessage(RAM_TOTAL_MB + "MB TOTAL / " + RAM_FREE_MB + "MB FREE / " + RAM_USED_MB + "MB USED (" + RAM_USED_PERCENTAGE + "%)");
-//        if( RAM_USED_PERCENTAGE >= 95  )
-//        {
-//            for( Player player : Bukkit.getOnlinePlayers() )
-//            {
-//                player.playSound(player.getLocation(), Sound.EVENT_RAID_HORN, 1, 1);
-//            }
-//            checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-//                    this, () -> warnPlayersOfServerRestart(), 0L, 20);
-//            checkMemoryUsageTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-//                    this, () -> restartServer(), 0L, 200);
-//        }
     }
 
     private void warnPlayersOfServerRestart()
