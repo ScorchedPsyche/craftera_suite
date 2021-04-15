@@ -4,6 +4,21 @@ import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.Bukkit;
 
 public class SuitePluginManager {
+    public static class Achievements
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Achievements";
+            public static final String full = "CraftEra Suite - Achievements";
+            public static final String pomXml = "craftera_suite-achievements";
+        }
+
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+    }
+
     public static class BabyEntities
     {
         public static class Name

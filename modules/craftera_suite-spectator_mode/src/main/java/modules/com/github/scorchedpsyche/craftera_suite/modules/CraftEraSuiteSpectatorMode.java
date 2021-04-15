@@ -40,7 +40,7 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     @Override
     public void onEnable() {
         // Check if Core dependency was loaded
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
+        if( SuitePluginManager.Core.isEnabled() )
         {
             // Attempts to create plugin root folder
             File pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());

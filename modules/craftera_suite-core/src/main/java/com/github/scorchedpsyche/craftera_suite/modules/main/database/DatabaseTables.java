@@ -4,10 +4,23 @@ import org.bukkit.GameMode;
 
 public class DatabaseTables
 {
+//    private static final String achievementsPrefix = "achievements_";
     private static final String corePrefix = "core_";
     private static final String hudPrefix = "hud_";
     private static final String seasonsPrefix = "seasons_";
     private static final String spectatorModePrefix = "spectator_mode_";
+
+    public static class Achievements {
+        public static final String achievements_TABLENAME = "achievements";
+
+        public static class Table
+        {
+            public static final String player_uuid = "player_uuid";
+            public static final String achievement = "achievement";
+            public static final String date = "date";
+            public static final String season = "season";
+        }
+    }
 
     public static class Core {
         public static final String settingsTableName = corePrefix + "settings";
@@ -50,20 +63,29 @@ public class DatabaseTables
     }
 
     public static class Seasons {
+        public static final String seasons_TABLENAME = "seasons";
         public static final String list_TABLENAME = seasonsPrefix + "list";
         public static final String status_TABLENAME = seasonsPrefix + "status";
 
-        public static class ListTable
+        public static class Table
         {
             public static final String number = "number";
             public static final String title = "title";
             public static final String subtitle = "subtitle";
             public static final String status = "status";
-        }
+            public static final String date_start = "date_start";
+            public static final String date_end = "date_end";
+            public static final String minecraft_version_start = "minecraft_version_start";
+            public static final String minecraft_version_end = "minecraft_version_end";
 
-        public static class StatusTable
-        {
-            public static final String description = "description";
+//            public static class List
+//            {
+//            }
+//
+//            public static class Status
+//            {
+//                public static final String description = "description";
+//            }
         }
 
         public enum Status {

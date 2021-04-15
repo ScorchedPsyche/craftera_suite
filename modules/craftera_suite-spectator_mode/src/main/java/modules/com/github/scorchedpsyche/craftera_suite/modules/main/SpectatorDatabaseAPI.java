@@ -125,14 +125,14 @@ public class SpectatorDatabaseAPI
                     return new SpectatorPlayerDataModel().loadDataFromResultSet(rs);
                 }
             } catch (SQLException e) {
-                ConsoleUtils.logError(
+                ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.full,
                         "SQLite query failed for 'enableSpectatorModeForPlayer': " + sql);
                 ConsoleUtils.logError( e.getMessage() );
             }
         } else {
             PlayerUtils.sendMessageWithPluginPrefix( player, SuitePluginManager.SpectatorMode.Name.compact,
                     "Failed to go into Spectator Mode! Contact server's admin.");
-            ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.compact,
+            ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.full,
                     "Failed to add player to the database with the following SQL Statement: " +
                             ChatColor.RED + sql);
         }
