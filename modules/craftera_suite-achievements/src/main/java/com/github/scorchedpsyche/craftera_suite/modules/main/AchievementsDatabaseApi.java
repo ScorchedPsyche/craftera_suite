@@ -17,7 +17,15 @@ public class AchievementsDatabaseApi
                     + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                     + "	" + DatabaseTables.Achievements.Table.player_uuid + " TEXT NOT NULL,\n"
                     + "	" + DatabaseTables.Achievements.Table.achievement + " TEXT NOT NULL,\n"
-                    + "	" + DatabaseTables.Achievements.Table.date + " INTEGER\n);";
+                    + "	" + DatabaseTables.Achievements.Table.date + " INTEGER";
+
+            if( SuitePluginManager.Seasons.isEnabled() )
+            {
+                sql += ",\n"
+                    + "	" + DatabaseTables.Achievements.Table.season + " INTEGER DEFAULT 0";
+            }
+
+            sql += "\n);";
 
             // Doesn't exists. Create it
             if ( DatabaseManager.database.executeSql(sql) )

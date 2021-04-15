@@ -31,8 +31,8 @@ public class SeasonsDatabaseApi
                 ConsoleUtil.logMessage(SuitePluginManager.Seasons.Name.full,
                                         "Table successfully created: " + DatabaseTables.Seasons.seasons_TABLENAME);
 
-                // If achievements is enabled, verify
-                verifyAchievementsTableIfPluginIsEnabled();
+//                // If achievements is enabled, verify
+//                verifyAchievementsTableIfPluginIsEnabled();
 
                 return true;
             }
@@ -44,66 +44,66 @@ public class SeasonsDatabaseApi
             return false;
         }
 
-        // If achievements is enabled, verify
-        verifyAchievementsTableIfPluginIsEnabled();
+//        // If achievements is enabled, verify
+//        verifyAchievementsTableIfPluginIsEnabled();
 
         // If we got here table exists
         return true;
     }
 
-    private void verifyAchievementsTableIfPluginIsEnabled()
-    {
-        // If achievements is enabled, verify
-        if( SuitePluginManager.Achievements.isEnabled() )
-        {
-            // Check if Achievements table exists
-            if( DatabaseManager.database.tableExists( DatabaseTables.Achievements.achievements_TABLENAME ) )
-            {
-                String sql = "PRAGMA table_info (" + DatabaseTables.Achievements.achievements_TABLENAME + ")";
-
-                try (Connection conn = DriverManager.getConnection(
-                        DatabaseManager.database.getDatabaseUrl());
-                     Statement stmt = conn.createStatement())
-                {
-                    ResultSet rs = stmt.executeQuery(sql);
-
-                    if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
-                    {
-                        boolean seasonColumnFound = false;
-
-                        while(rs.next())
-                        {
-                            if( rs.getString(2).equals("season") )
-                            {
-                                seasonColumnFound = true;
-                            }
-                        }
-
-                        if( !seasonColumnFound )
-                        {
-                            // Season column not found. Attempt to create it
-                            if( DatabaseManager.database.executeSql("ALTER TABLE " + DatabaseTables.Achievements.achievements_TABLENAME + " ADD COLUMN "
-                                    + DatabaseTables.Achievements.Table.season + " INTEGER DEFAULT 0;") )
-                            {
-                                // Successfully created column
-                                ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
-                                        "Column successfully created: "
-                                                + DatabaseTables.Achievements.achievements_TABLENAME + "."
-                                                + DatabaseTables.Achievements.Table.season);
-                            } else {
-                                ConsoleUtil.logError(SuitePluginManager.Achievements.Name.full,
-                                        "Failed to create column: "
-                                                + DatabaseTables.Achievements.achievements_TABLENAME + "."
-                                                + DatabaseTables.Achievements.Table.season);
-                            }
-                        }
-                    }
-                } catch (SQLException e) {
-                    ConsoleUtil.logError( SuitePluginManager.Seasons.Name.full,
-                            "Failed to fetch 'PRAGMA table_info': " + DatabaseTables.Seasons.seasons_TABLENAME);
-                    ConsoleUtil.logError( e.getMessage() );
-                }
-            }
-        }
-    }
+//    private void verifyAchievementsTableIfPluginIsEnabled()
+//    {
+//        // If achievements is enabled, verify
+//        if( SuitePluginManager.Achievements.isEnabled() )
+//        {
+//            // Check if Achievements table exists
+//            if( DatabaseManager.database.tableExists( DatabaseTables.Achievements.achievements_TABLENAME ) )
+//            {
+//                String sql = "PRAGMA table_info (" + DatabaseTables.Achievements.achievements_TABLENAME + ")";
+//
+//                try (Connection conn = DriverManager.getConnection(
+//                        DatabaseManager.database.getDatabaseUrl());
+//                     Statement stmt = conn.createStatement())
+//                {
+//                    ResultSet rs = stmt.executeQuery(sql);
+//
+//                    if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
+//                    {
+//                        boolean seasonColumnFound = false;
+//
+//                        while(rs.next())
+//                        {
+//                            if( rs.getString(2).equals("season") )
+//                            {
+//                                seasonColumnFound = true;
+//                            }
+//                        }
+//
+//                        if( !seasonColumnFound )
+//                        {
+//                            // Season column not found. Attempt to create it
+//                            if( DatabaseManager.database.executeSql("ALTER TABLE " + DatabaseTables.Achievements.achievements_TABLENAME + " ADD COLUMN "
+//                                    + DatabaseTables.Achievements.Table.season + " INTEGER DEFAULT 0;") )
+//                            {
+//                                // Successfully created column
+//                                ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
+//                                        "Column successfully created: "
+//                                                + DatabaseTables.Achievements.achievements_TABLENAME + "."
+//                                                + DatabaseTables.Achievements.Table.season);
+//                            } else {
+//                                ConsoleUtil.logError(SuitePluginManager.Achievements.Name.full,
+//                                        "Failed to create column: "
+//                                                + DatabaseTables.Achievements.achievements_TABLENAME + "."
+//                                                + DatabaseTables.Achievements.Table.season);
+//                            }
+//                        }
+//                    }
+//                } catch (SQLException e) {
+//                    ConsoleUtil.logError( SuitePluginManager.Seasons.Name.full,
+//                            "Failed to fetch 'PRAGMA table_info': " + DatabaseTables.Seasons.seasons_TABLENAME);
+//                    ConsoleUtil.logError( e.getMessage() );
+//                }
+//            }
+//        }
+//    }
 }
