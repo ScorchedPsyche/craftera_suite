@@ -46,7 +46,7 @@ Main library dependency needed for other plugins of this pack.
 **Features:**   
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Console interface;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`<br />
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player's title and subtitle manager.`
   
 ### Commerce
@@ -59,9 +59,11 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Database Interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `SQLite integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `MySQL integration;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Core;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Achievements;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Core;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: HUD;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Spectator Mode;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Seasons;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Spectator Mode;`  
  
 ### Discord Integration  
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
@@ -87,7 +89,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `World time colorization: colors work hours, monster spawning and bed usage;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Server TPS (Tick Per Second);`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Server TPS colorization: green when 20, yellow 19-15 and red below 15;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Spectator plugin integration;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Spectator plugin integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Commerce plugin integration.`
   
 ### Player Contribution  
@@ -97,17 +99,19 @@ Account for player contribution to the server so that rewards can be given.
 Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled. 
   
 **Features:**  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Starter season on DB creation;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Season commands.`
  
 ### Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
   
 **Features:**  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Automatic range limit support (range = server's view distance);`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Manual range limit support;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Player Armor Stand: to leave a "marker" for other to see;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Recent movement prevention check: to avoid abuse if falling from deadly height;`  
-![#1589F0](https://via.placeholder.com/15/f03c15/000000?text=+) `Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Automatic range limit support (range = server's view distance);`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Manual range limit support;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player Armor Stand: to leave a "marker" for other to see;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Recent movement prevention check: to avoid abuse if falling from deadly height;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Waypoint ability: visual marker the player can make while in spectator mode. Useful for the player to have a heading of where they were looking at.`
   
 ### Streaming Support  
