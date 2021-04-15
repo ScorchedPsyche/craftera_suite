@@ -1,7 +1,6 @@
-package com.github.scorchedpsyche.craftera_suite.modules.main.model;
+package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.jetbrains.annotations.Nullable;
 

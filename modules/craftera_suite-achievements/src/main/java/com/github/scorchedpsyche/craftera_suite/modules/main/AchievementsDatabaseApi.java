@@ -3,7 +3,6 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSeasons;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.main.model.SeasonModel;
 import com.github.scorchedpsyche.craftera_suite.modules.model.AchievementModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
@@ -59,10 +58,10 @@ public class AchievementsDatabaseApi
                 + DatabaseTables.Achievements.Table.achievement + " = '" + achievement.achievement + "' AND \n"
                 + DatabaseTables.Achievements.Table.date + " = " + achievement.date + "\n";
 
-        if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.getCurrentSeason() != null )
+        if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
         {
             sql += " AND \n"
-                    + DatabaseTables.Achievements.Table.season + " = " + CraftEraSuiteSeasons.getCurrentSeason().getId() + "\n";
+                    + DatabaseTables.Achievements.Table.season + " = " + CraftEraSuiteSeasons.seasonManager.current.getId() + "\n";
         }
 
         try (Connection conn = DriverManager.getConnection(
@@ -80,7 +79,7 @@ public class AchievementsDatabaseApi
                         + DatabaseTables.Achievements.Table.achievement + ",\n"
                         + DatabaseTables.Achievements.Table.date;
 
-                if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.getCurrentSeason() != null )
+                if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
                 {
                     sql += ",\n"
                             + DatabaseTables.Achievements.Table.season + "\n";
@@ -91,10 +90,10 @@ public class AchievementsDatabaseApi
                         + "'" + achievement.achievement + "',\n"
                         + achievement.date;
 
-                if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.getCurrentSeason() != null )
+                if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
                 {
                     sql += ",\n"
-                            + CraftEraSuiteSeasons.getCurrentSeason().getId() + "\n";
+                            + CraftEraSuiteSeasons.seasonManager.current.getId() + "\n";
                 }
 
                 sql += ");";

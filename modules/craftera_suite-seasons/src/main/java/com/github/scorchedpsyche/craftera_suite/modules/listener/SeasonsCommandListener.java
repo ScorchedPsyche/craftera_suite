@@ -1,6 +1,7 @@
-package com.github.scorchedpsyche.craftera_suite.modules.main.listeners;
+package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

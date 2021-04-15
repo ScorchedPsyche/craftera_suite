@@ -1,9 +1,10 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.main.database.SeasonsDatabaseApi;
-import com.github.scorchedpsyche.craftera_suite.modules.main.listeners.SeasonsCommandListener;
-import com.github.scorchedpsyche.craftera_suite.modules.main.model.SeasonModel;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonsDatabaseApi;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.SeasonsCommandListener;
+import com.github.scorchedpsyche.craftera_suite.modules.model.SeasonModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 public final class CraftEraSuiteSeasons extends JavaPlugin
 {
-    private static SeasonModel season;
+    public static SeasonManager seasonManager;
+
     private SeasonsDatabaseApi seasonsDatabaseApi;
 
     @Override
@@ -27,17 +29,17 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
             // Setup and verify DB tables
             if( seasonsDatabaseApi.setupAndVerifySqlTable() )
             {
-                season = seasonsDatabaseApi.fetchCurrentSeason();
+                seasonManager = new SeasonManager(seasonsDatabaseApi).setCurrentSeason(seasonsDatabaseApi.fetchCurrentSeason());
 
                 // Check if there's no active season
-                if( season == null )
+                if( seasonManager.current == null )
                 {
                     // No active season. Display warning
                     ConsoleUtil.logWarning( SuitePluginManager.Seasons.Name.full,
                             "Module is enabled but there is no active season? Ignore if this is intended.");
                 }
 
-                getServer().getPluginManager().registerEvents(new SeasonsCommandListener(), this);
+                getServer().getPluginManager().registerEvents(new SeasonsCommandListener(seasonManager), this);
             } else {
                 // Failed to create database tables! Display error and disable plugin
                 ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
@@ -54,11 +56,5 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
     public void onDisable()
     {
         super.onDisable();
-    }
-
-    @Nullable
-    public static SeasonModel getCurrentSeason()
-    {
-        return season;
     }
 }

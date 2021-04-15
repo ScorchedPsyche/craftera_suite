@@ -1,7 +1,9 @@
-package com.github.scorchedpsyche.craftera_suite.modules.main.database;
+package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.main.model.SeasonModel;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
+import com.github.scorchedpsyche.craftera_suite.modules.model.SeasonModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DateUtil;
