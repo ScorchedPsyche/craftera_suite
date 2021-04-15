@@ -73,6 +73,7 @@ public class DatabaseTables
             public static final String title = "title";
             public static final String subtitle = "subtitle";
             public static final String status = "status";
+            public static final String account = "account";
             public static final String date_start = "date_start";
             public static final String date_end = "date_end";
             public static final String minecraft_version_start = "minecraft_version_start";
@@ -88,12 +89,12 @@ public class DatabaseTables
 //            }
         }
 
-        public enum Status {
-            Open,
-            Active,
-            Finished,
-            Archived
-        }
+//        public enum Status {
+//            Open,
+//            Active,
+//            Finished,
+//            Archived
+//        }
     }
 
     public static class SpectatorMode {

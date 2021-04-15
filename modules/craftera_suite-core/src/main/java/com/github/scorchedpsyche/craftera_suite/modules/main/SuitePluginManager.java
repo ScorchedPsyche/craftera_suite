@@ -79,6 +79,18 @@ public class SuitePluginManager {
         {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
+
+        public static enum Status
+        {
+            Unused,
+            Active,
+            Finished,
+            Archived
+//            public static final String open = "open";
+//            public static final String active = "active";
+//            public static final String finished = "finished";
+//            public static final String archived = "archived";
+        }
     }
 
     public static class SpectatorMode

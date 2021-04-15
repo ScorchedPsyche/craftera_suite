@@ -49,6 +49,7 @@ public class AchievementsDatabaseApi
 
     public void addAchievementForPlayerIfNotExists(AchievementModel achievement)
     {
+
 //        String sql = "SELECT * FROM " + DatabaseTables.Achievements.achievements_TABLENAME + " WHERE "
 //                + ;
     }
