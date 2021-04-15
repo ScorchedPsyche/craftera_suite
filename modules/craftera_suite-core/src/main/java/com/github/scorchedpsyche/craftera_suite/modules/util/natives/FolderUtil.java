@@ -1,6 +1,6 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
+package com.github.scorchedpsyche.craftera_suite.modules.util.natives;
 
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Nullable;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class FolderUtils {
+public class FolderUtil {
     private static File pluginsFolder;
     private static File cesRootFolder;
 
@@ -28,7 +28,7 @@ public class FolderUtils {
         {
             if( !pluginSubfolder.mkdirs() )
             {
-                ConsoleUtils.logError(
+                ConsoleUtil.logError(
                         "Plugin configuration folder failed to be created: check folder write permissions or try to " +
                                 "create the folder manually. If everything looks OK and the issue still persists, " +
                                 "report this to the developer. FOLDER PATH STRUCTURE THAT SHOULD HAVE BEEN CREATED: " +
@@ -58,7 +58,7 @@ public class FolderUtils {
         if ( !cesFolder.exists() )
         {
             if (!cesFolder.mkdirs()) {
-                ConsoleUtils.logError(
+                ConsoleUtil.logError(
                         "Main CraftEra Suite configuration folder failed to be created: check folder write " +
                                 "permissions or try to create the folder manually. If everything looks OK and the " +
                                 "issue still persists, report this to the developer. FOLDER PATH STRUCTURE THAT " +

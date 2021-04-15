@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +37,7 @@ public class HudPlayerPreferencesModel
             }
         } catch (SQLException e)
         {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     SuitePluginManager.Hud.Name.full,
                     "Failed to load player preferences from ResultSet. TRACE:");
             e.printStackTrace();

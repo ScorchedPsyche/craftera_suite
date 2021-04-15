@@ -3,9 +3,9 @@ package modules.com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.model.SpectatorPlayerDataModel;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -38,13 +38,13 @@ public class SpectatorDatabaseAPI
                             + ");") )
             {
                 // Successfully created table
-                ConsoleUtils.logMessage(SuitePluginManager.SpectatorMode.Name.full,
+                ConsoleUtil.logMessage(SuitePluginManager.SpectatorMode.Name.full,
                         "Table successfully created: " + DatabaseTables.SpectatorMode.player_data_TABLENAME);
                 return true;
             }
 
             // If we got here table creation failed
-            ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
                     "Failed to create table: " + DatabaseTables.SpectatorMode.player_data_TABLENAME);
 
             return false;
@@ -120,19 +120,19 @@ public class SpectatorDatabaseAPI
             {
                 ResultSet rs = stmt.executeQuery(sql);
 
-                if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
+                if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
                 {
                     return new SpectatorPlayerDataModel().loadDataFromResultSet(rs);
                 }
             } catch (SQLException e) {
-                ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.full,
+                ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
                         "SQLite query failed for 'enableSpectatorModeForPlayer': " + sql);
-                ConsoleUtils.logError( e.getMessage() );
+                ConsoleUtil.logError( e.getMessage() );
             }
         } else {
-            PlayerUtils.sendMessageWithPluginPrefix( player, SuitePluginManager.SpectatorMode.Name.compact,
+            PlayerUtil.sendMessageWithPluginPrefix( player, SuitePluginManager.SpectatorMode.Name.compact,
                     "Failed to go into Spectator Mode! Contact server's admin.");
-            ConsoleUtils.logError( SuitePluginManager.SpectatorMode.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
                     "Failed to add player to the database with the following SQL Statement: " +
                             ChatColor.RED + sql);
         }
@@ -156,14 +156,14 @@ public class SpectatorDatabaseAPI
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
+            if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 return new SpectatorPlayerDataModel().loadDataFromResultSet(rs);
             }
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite query failed for 'disableSpectatorModeForPlayer': " + sql);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return null;
@@ -181,7 +181,7 @@ public class SpectatorDatabaseAPI
         {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
+            if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 List<SpectatorPlayerDataModel> playersOnSpectator = new ArrayList<>();
 
@@ -193,9 +193,9 @@ public class SpectatorDatabaseAPI
                 return playersOnSpectator;
             }
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite query failed for 'fetchAllPlayersWithSpectatorModeEnabled': " + sql);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return null;
@@ -212,14 +212,14 @@ public class SpectatorDatabaseAPI
         {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !DatabaseUtils.isResultSetNullOrEmpty(rs) && rs.next() )
+            if( !DatabaseUtil.isResultSetNullOrEmpty(rs) && rs.next() )
             {
                 return new SpectatorPlayerDataModel().loadDataFromResultSet(rs);
             }
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite query failed for 'fetchPlayer': " + sql);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return null;

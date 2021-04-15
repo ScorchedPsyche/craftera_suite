@@ -1,9 +1,7 @@
 package modules.com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +37,7 @@ public class SpectatorPlayerDataModel
             return this;
         } catch (SQLException e)
         {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     SuitePluginManager.SpectatorMode.Name.full,
                     "Failed to load player data from ResultSet. TRACE:");
             e.printStackTrace();

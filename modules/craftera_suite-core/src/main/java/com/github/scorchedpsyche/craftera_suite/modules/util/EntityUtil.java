@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import net.minecraft.server.v1_16_R3.DataWatcher;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
@@ -8,7 +8,7 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class EntityUtils {
+public class EntityUtil {
 
     /**
      * Notify nearby players' of entity's update so that their client updates the entity

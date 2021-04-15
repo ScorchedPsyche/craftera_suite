@@ -1,8 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
 
 import java.sql.*;
 
@@ -28,7 +28,7 @@ public class SeasonsDatabaseApi
                             + ");") )
             {
                 // Successfully created table
-                ConsoleUtils.logMessage(SuitePluginManager.Seasons.Name.full,
+                ConsoleUtil.logMessage(SuitePluginManager.Seasons.Name.full,
                                         "Table successfully created: " + DatabaseTables.Seasons.seasons_TABLENAME);
 
                 // If achievements is enabled, verify
@@ -38,7 +38,7 @@ public class SeasonsDatabaseApi
             }
 
             // If we got here table creation failed
-            ConsoleUtils.logError( SuitePluginManager.Seasons.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.Seasons.Name.full,
                                    "Failed to create table: " + DatabaseTables.Seasons.seasons_TABLENAME);
 
             return false;
@@ -67,7 +67,7 @@ public class SeasonsDatabaseApi
                 {
                     ResultSet rs = stmt.executeQuery(sql);
 
-                    if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
+                    if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
                     {
                         boolean seasonColumnFound = false;
 
@@ -86,12 +86,12 @@ public class SeasonsDatabaseApi
                                     + DatabaseTables.Achievements.Table.season + " INTEGER DEFAULT 0;") )
                             {
                                 // Successfully created column
-                                ConsoleUtils.logMessage(SuitePluginManager.Achievements.Name.full,
+                                ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
                                         "Column successfully created: "
                                                 + DatabaseTables.Achievements.achievements_TABLENAME + "."
                                                 + DatabaseTables.Achievements.Table.season);
                             } else {
-                                ConsoleUtils.logError(SuitePluginManager.Achievements.Name.full,
+                                ConsoleUtil.logError(SuitePluginManager.Achievements.Name.full,
                                         "Failed to create column: "
                                                 + DatabaseTables.Achievements.achievements_TABLENAME + "."
                                                 + DatabaseTables.Achievements.Table.season);
@@ -99,9 +99,9 @@ public class SeasonsDatabaseApi
                         }
                     }
                 } catch (SQLException e) {
-                    ConsoleUtils.logError( SuitePluginManager.Seasons.Name.full,
+                    ConsoleUtil.logError( SuitePluginManager.Seasons.Name.full,
                             "Failed to fetch 'PRAGMA table_info': " + DatabaseTables.Seasons.seasons_TABLENAME);
-                    ConsoleUtils.logError( e.getMessage() );
+                    ConsoleUtil.logError( e.getMessage() );
                 }
             }
         }

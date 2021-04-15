@@ -1,9 +1,9 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DatabaseUtils
+public class DatabaseUtil
 {
     public static boolean isResultSetNullOrEmpty(ResultSet rs) throws SQLException
     {

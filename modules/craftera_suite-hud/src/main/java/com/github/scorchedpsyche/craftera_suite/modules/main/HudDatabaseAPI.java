@@ -3,9 +3,9 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.DatabaseUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 
 import java.sql.*;
 
@@ -21,14 +21,14 @@ public class HudDatabaseAPI
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if( !DatabaseUtils.isResultSetNullOrEmpty(rs) )
+            if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
             }
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite query failed: " + sql);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return null;
@@ -36,7 +36,7 @@ public class HudDatabaseAPI
 
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
-        if( !StringUtils.isNullOrEmpty(table) && column != null && !StringUtils.isNullOrEmpty(column) )
+        if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
@@ -46,14 +46,14 @@ public class HudDatabaseAPI
 
             DatabaseManager.database.executeSql(sql);
         } else {
-            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
         }
     }
 
     public void setBooleanForPlayer(String table, String playerUUID, String column, boolean value)
     {
-        if( !StringUtils.isNullOrEmpty(table) && column != null && !StringUtils.isNullOrEmpty(column) )
+        if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
         {
             String sql = "INSERT INTO " + table +
                     " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
@@ -63,7 +63,7 @@ public class HudDatabaseAPI
 
             DatabaseManager.database.executeSql(sql);
         } else {
-            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
                     "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
         }
     }
@@ -99,13 +99,13 @@ public class HudDatabaseAPI
                             + ");") )
             {
                 // Successfully created table
-                ConsoleUtils.logMessage(SuitePluginManager.Hud.Name.full,
+                ConsoleUtil.logMessage(SuitePluginManager.Hud.Name.full,
                                         "Table successfully created: " + DatabaseTables.Hud.player_preferences_TABLENAME);
                 return true;
             }
 
             // If we got here table creation failed
-            ConsoleUtils.logError( SuitePluginManager.Hud.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
                                    "Failed to create table: " + DatabaseTables.Hud.player_preferences_TABLENAME);
 
             return false;

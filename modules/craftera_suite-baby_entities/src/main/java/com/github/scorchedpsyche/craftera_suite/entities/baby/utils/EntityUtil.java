@@ -2,9 +2,8 @@ package com.github.scorchedpsyche.craftera_suite.entities.baby.utils;
 
 import com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.EntityUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ParticleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ParticleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -55,11 +54,11 @@ public class EntityUtil
         } else
         {
             // Entity is invalid for conversion
-            PlayerUtils.sendMessageWithPluginPrefix(
+            PlayerUtil.sendMessageWithPluginPrefix(
                     sourcePlayer, SuitePluginManager.BabyEntities.Name.compact,
                     ChatColor.RED + entity.getName() + ChatColor.RESET + " can't be a baby.");
 
-            ParticleUtils.spawnParticleAtEntity(entity, Particle.EXPLOSION_NORMAL, 3, 0.01);
+            ParticleUtil.spawnParticleAtEntity(entity, Particle.EXPLOSION_NORMAL, 3, 0.01);
         }
     }
 
@@ -82,17 +81,17 @@ public class EntityUtil
                                               "ces_adult/baby"));
 
             // Notify nearby players' clients of conversion so that they visually update the entity
-            EntityUtils.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
+            com.github.scorchedpsyche.craftera_suite.modules.util.EntityUtil.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
 
             // Particles
-            ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
+            ParticleUtil.spawnParticleAtEntity(ageableEntity, Particle.HEART, 10, 0.0001);
         } else
         {
             // Is baby. Must check if this is a natural baby to prevent growth abuse
             if (ageableEntity instanceof Breedable && !ageableEntity.hasMetadata("ces_adult/baby"))
             {
                 // Natural baby, warn player
-                PlayerUtils.sendMessageWithPluginPrefix(
+                PlayerUtil.sendMessageWithPluginPrefix(
                         sourcePlayer, SuitePluginManager.BabyEntities.Name.compact,
                         ChatColor.RED + ageableEntity.getName() + ChatColor.RESET + " is a natural baby!"
                                 + ChatColor.RESET + " You can't convert Vanilla entities to Adult.");
@@ -104,10 +103,10 @@ public class EntityUtil
                                              CraftEraSuiteBabyEntities.getPlugin(CraftEraSuiteBabyEntities.class));
 
                 // Notify nearby players' clients of conversion so that they visually update the entity
-                EntityUtils.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
+                com.github.scorchedpsyche.craftera_suite.modules.util.EntityUtil.notifyPlayersInRangeOfEntityUpdate(ageableEntity);
 
                 // Particles
-                ParticleUtils.spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
+                ParticleUtil.spawnParticleAtEntity(ageableEntity, Particle.DAMAGE_INDICATOR, 15);
             }
         }
     }

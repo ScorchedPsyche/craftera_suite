@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
 import org.bukkit.Bukkit;
 
 public class SuitePluginManager {

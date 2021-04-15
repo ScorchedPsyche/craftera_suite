@@ -1,7 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,7 +29,7 @@ public class CustomTabCompleter implements TabCompleter {
     private List<String> getSubcommands(HashMap<String, CommandModel> commands, List<String> args)
     {
         // Check if there's at least a valid string for the arguments
-        if( args.size() > 0 && !StringUtils.isNullOrEmpty(args.get(0)) )
+        if( args.size() > 0 && !StringUtil.isNullOrEmpty(args.get(0)) )
         {
             // At least one valid argument
 

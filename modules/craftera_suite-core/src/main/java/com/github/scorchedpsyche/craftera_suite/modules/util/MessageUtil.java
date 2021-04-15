@@ -1,8 +1,8 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import org.bukkit.ChatColor;
 
-public class MessageUtils
+public class MessageUtil
 {
     public static String formattedCommand(String command)
     {

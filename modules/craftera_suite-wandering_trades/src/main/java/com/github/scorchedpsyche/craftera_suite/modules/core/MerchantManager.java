@@ -3,9 +3,9 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerHeadUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerHeadUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
@@ -65,9 +65,9 @@ public class MerchantManager
                 }
             }
         }
-        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Loaded item trades");
-        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Loaded decoration heads trades");
 
         // WHITELISTED Player's Heads synchronization
@@ -84,13 +84,13 @@ public class MerchantManager
                     {
                         loadWhitelistedPlayerHeadRecipe(offlinePlayer);
                     }
-                    ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+                    ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                             "Loaded whitelisted player heads trades");
                 }
             } else
             {
                 // Empty whitelist
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                         "Whitelist synchronization is ON (check config.yml) but the whitelist is " +
                                        "empty or doesn't exists");
             }
@@ -225,7 +225,7 @@ public class MerchantManager
         // Check if there's a whitelist section
         if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist" ) )
         {
-            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Missing `whitelist` section from `config.yml`");
             isValid = false;
         } else {
@@ -235,7 +235,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.enable_synchronization" ) &&
                     !CraftEraSuiteWanderingTrades.config.isBoolean( "whitelist.enable_synchronization" ) )
             {
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Whitelist 'enable_synchronization' config either doesn't exists or it's not a boolean " +
                                        "(true/false). Check `config.yml`");
                 isValid = false;
@@ -245,7 +245,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.number_of_player_head_offers" ) &&
                     !CraftEraSuiteWanderingTrades.config.isInt( "whitelist.number_of_player_head_offers" ) )
             {
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Whitelist 'number_of_player_head_offers' config either doesn't exists or it's " +
                                        "not an integer. Check `config.yml`");
                 isValid = false;
@@ -255,7 +255,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.heads_rewarded_per_trade" ) &&
                     !CraftEraSuiteWanderingTrades.config.isInt( "whitelist.heads_rewarded_per_trade" ) )
             {
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Whitelist 'heads_rewarded_per_trade' config either doesn't exists or it's " +
                                        "not an integer. Check `config.yml`");
                 isValid = false;
@@ -265,7 +265,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.maximum_number_of_trades" ) &&
                     !CraftEraSuiteWanderingTrades.config.isInt( "whitelist.maximum_number_of_trades" ) )
             {
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Whitelist 'maximum_number_of_trades' config either doesn't exists or it's " +
                                        "not an integer. Check `config.yml`");
                 isValid = false;
@@ -275,7 +275,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.experience_rewarded_for_each_trade" ) &&
                     !CraftEraSuiteWanderingTrades.config.isBoolean( "whitelist.experience_rewarded_for_each_trade" ) )
             {
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Whitelist 'experience_rewarded_for_each_trade' config either doesn't exists or it's not a boolean " +
                                        "(true/false). Check `config.yml`");
                 isValid = false;
@@ -285,7 +285,7 @@ public class MerchantManager
             if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.price" ) )
             {
                 // whitelist.price config doesn't exists
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                       "Missing `whitelist.price` section from `config.yml`");
                 isValid = false;
             } else
@@ -296,7 +296,7 @@ public class MerchantManager
                 if (!CraftEraSuiteWanderingTrades.config.contains("whitelist.price.item1"))
                 {
                     // whitelist.price.item1 config doesn't exists
-                    ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                    ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                           "Missing `whitelist.price.item1` section from `config.yml`");
                     isValid = false;
                 } else
@@ -307,7 +307,7 @@ public class MerchantManager
                     if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.price.item1.minecraft_id" ) &&
                             !CraftEraSuiteWanderingTrades.config.isString( "whitelist.price.item1.minecraft_id" ) )
                     {
-                        ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                               "Whitelist 'price.item1.minecraft_id' config either doesn't exists or it's " +
                                                "not a string. Check `config.yml`");
                         isValid = false;
@@ -318,7 +318,7 @@ public class MerchantManager
                         if( Material.matchMaterial(
                                 CraftEraSuiteWanderingTrades.config.getString( "whitelist.price.item1.minecraft_id" ) ) == null )
                         {
-                            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                                   "Whitelist 'price.item1.minecraft_id' (" +
                                             CraftEraSuiteWanderingTrades.config.getString( "whitelist.price.item1.minecraft_id" ) +
                                            ") is not a valid Minecraft ID. Check `config.yml`");
@@ -330,7 +330,7 @@ public class MerchantManager
                     if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.price.item1.quantity" ) &&
                             !CraftEraSuiteWanderingTrades.config.isInt( "whitelist.price.item1.quantity" ) )
                     {
-                        ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                               "Whitelist 'whitelist.price.item1.quantity' config either doesn't exists or it's " +
                                                "not an integer. Check `config.yml`");
                         isValid = false;
@@ -346,7 +346,7 @@ public class MerchantManager
                     if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.price.item2.minecraft_id" ) &&
                             !CraftEraSuiteWanderingTrades.config.isString( "whitelist.price.item2.minecraft_id" ) )
                     {
-                        ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                               "Whitelist 'price.item2.minecraft_id' (" +
                                        CraftEraSuiteWanderingTrades.config.getString( "whitelist.price.item2.minecraft_id" ) +
                                        ") is not a valid Minecraft ID. Check `config.yml`");
@@ -358,7 +358,7 @@ public class MerchantManager
                         if( Material.matchMaterial(
                                 CraftEraSuiteWanderingTrades.config.getString( "whitelist.price.item2.minecraft_id" ) ) == null )
                         {
-                            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Whitelist 'price.item2.minecraft_id' is not a valid Minecraft ID. " +
                                                    "Check `config.yml`");
                             isValid = false;
@@ -369,7 +369,7 @@ public class MerchantManager
                     if( !CraftEraSuiteWanderingTrades.config.contains( "whitelist.whitelist.price.item2.quantity" ) &&
                             !CraftEraSuiteWanderingTrades.config.isInt( "whitelist.whitelist.price.item2.quantity" ) )
                     {
-                        ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Whitelist 'whitelist.price.item2.quantity' config either doesn't " +
                                                "exists or it's not an integer. Check `config.yml`");
                         isValid = false;
@@ -387,7 +387,7 @@ public class MerchantManager
      */
     private void loadWhitelistedPlayerHeadRecipe(OfflinePlayer offlinePlayer)
     {
-        ItemStack playerHead = PlayerHeadUtils.playerHeadItemStackFromOfflinePlayer(
+        ItemStack playerHead = PlayerHeadUtil.playerHeadItemStackFromOfflinePlayer(
                 CraftEraSuiteWanderingTrades.config.getInt( "whitelist.price.item1.quantity" ), offlinePlayer);
 
         Material ingredient1 = Material.matchMaterial( Objects.requireNonNull(
@@ -441,7 +441,7 @@ public class MerchantManager
         {
             // Material wasn't provided
             isValid = false;
-            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Missing 'minecraft_id' for a trade offer" );
         } else {
             material = Material.matchMaterial( trade.getMinecraftId() );
@@ -451,18 +451,18 @@ public class MerchantManager
             {
                 // Material invalid
                 isValid = false;
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Invalid 'minecraft_id': " + trade.getMinecraftId() + ". Item was not added" );
             }
 
             // Check if decoration head either texture or owner
             if( trade.getMinecraftId().equalsIgnoreCase("player_head") &&
-                    (   StringUtils.isNullOrEmpty(trade.getOwnerId()) &&
-                        StringUtils.isNullOrEmpty(trade.getTexture()) ) )
+                    (   StringUtil.isNullOrEmpty(trade.getOwnerId()) &&
+                        StringUtil.isNullOrEmpty(trade.getTexture()) ) )
             {
                 // Missing both
                 isValid = false;
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "On: " + trade.getMinecraftId() + ". You are 'getOwnerId' and 'getTexture'. " +
                                         "Item was not added" );
             }
@@ -473,7 +473,7 @@ public class MerchantManager
         {
             // Ingredient 1 wasn't provided
             isValid = false;
-            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Missing 'price_item1' for: " + trade.getMinecraftId() );
         } else {
             material = Material.matchMaterial( trade.getPriceItem1() );
@@ -483,7 +483,7 @@ public class MerchantManager
             {
                 // Ingredient 1 invalid
                 isValid = false;
-                ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                     "Invalid 'price_item1' for: " + trade.getPriceItem1() + ". Item was not added" );
             }
         }
@@ -493,7 +493,7 @@ public class MerchantManager
         {
             // One is missing
             isValid = false;
-            ConsoleUtils.logError(SuitePluginManager.WanderingTrades.Name.full,
+            ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
                                   "On: " + trade.getMinecraftId() + ". You are missing either 'price_item2' or " +
                                           "'price2'. " +
                                     "Item was not added" );

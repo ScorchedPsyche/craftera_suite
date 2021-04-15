@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 
 import java.util.Random;
 
-public class ParticleUtils
+public class ParticleUtil
 {
     public static void spawnParticleAtEntity(Entity entity, Particle particle, int totalParticles)
     {

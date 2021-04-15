@@ -1,9 +1,9 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ItemStackUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.StringUtilsHud;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ItemStackUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.StringUtilsHud;
 import net.minecraft.server.v1_16_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ public class PlayerHudManager
 
         if( preferences.showNetherPortalCoordinates() )
         {
-            hudText.append( formatNetherPortalCoordinates(player, PlayerUtils.getEnvironment(player), preferences) );
+            hudText.append( formatNetherPortalCoordinates(player, PlayerUtil.getEnvironment(player), preferences) );
         }
 
         if( preferences.showToolDurability() )
@@ -89,11 +89,11 @@ public class PlayerHudManager
                 strBuilder.append(StringUtilsHud.playerCoordinatesExtended);
             }
 
-            strBuilder.append( PlayerUtils.getCoordinateRoundedX(player) ); // x
+            strBuilder.append( PlayerUtil.getCoordinateRoundedX(player) ); // x
             strBuilder.append( " " );
-            strBuilder.append( PlayerUtils.getCoordinateRoundedY(player) ); // y
+            strBuilder.append( PlayerUtil.getCoordinateRoundedY(player) ); // y
             strBuilder.append( " " );
-            strBuilder.append( PlayerUtils.getCoordinateRoundedZ(player) ); // z
+            strBuilder.append( PlayerUtil.getCoordinateRoundedZ(player) ); // z
         } else {
             // Compact
             if( preferences.colorizeCoordinates() )
@@ -105,9 +105,9 @@ public class PlayerHudManager
                 strBuilder.append(StringUtilsHud.playerCoordinatesCompact);
             }
 
-            strBuilder.insert( 12, PlayerUtils.getCoordinateRoundedZ(player) ); // z
-            strBuilder.insert( 6, PlayerUtils.getCoordinateRoundedY(player) ); // y
-            strBuilder.insert( 0, PlayerUtils.getCoordinateRoundedX(player) ); // x
+            strBuilder.insert( 12, PlayerUtil.getCoordinateRoundedZ(player) ); // z
+            strBuilder.insert( 6, PlayerUtil.getCoordinateRoundedY(player) ); // y
+            strBuilder.insert( 0, PlayerUtil.getCoordinateRoundedX(player) ); // x
         }
 
         return strBuilder;
@@ -163,8 +163,8 @@ public class PlayerHudManager
 
         if( !environment.equals(World.Environment.THE_END) )
         {
-            int portalX = PlayerUtils.getCoordinateRoundedX(player);
-            int portalZ = PlayerUtils.getCoordinateRoundedZ(player);
+            int portalX = PlayerUtil.getCoordinateRoundedX(player);
+            int portalZ = PlayerUtil.getCoordinateRoundedZ(player);
 
             if( environment.equals(World.Environment.NETHER) )
             {
@@ -267,7 +267,7 @@ public class PlayerHudManager
     private StringBuilder formatToolDurability(HudPlayerPreferencesModel preferences, String slotText, ItemStack item)
     {
         StringBuilder durabilityStrBuilder = new StringBuilder();
-        Integer itemRemainingDurability = ItemStackUtils.getItemRemainingDurability(item);
+        Integer itemRemainingDurability = ItemStackUtil.getItemRemainingDurability(item);
 
         if( itemRemainingDurability != null )
         {

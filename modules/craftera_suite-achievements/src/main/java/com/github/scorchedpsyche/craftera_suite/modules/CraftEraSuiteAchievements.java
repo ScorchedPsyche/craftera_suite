@@ -3,7 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerAdvancementDoneListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.AchievementsDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,10 +24,10 @@ public class CraftEraSuiteAchievements extends JavaPlugin
             // Setup and verify DB tables
             if( achievementsDatabaseApi.setupAndVerifySqlTable() )
             {
-                getServer().getPluginManager().registerEvents(new PlayerAdvancementDoneListener(), this);
+                getServer().getPluginManager().registerEvents(new PlayerAdvancementDoneListener(achievementsDatabaseApi), this);
             } else {
                 // Failed to create database tables! Display error and disable plugin
-                ConsoleUtils.logError(this.getName(), "Failed to create database tables. Disabling!");
+                ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         } else {

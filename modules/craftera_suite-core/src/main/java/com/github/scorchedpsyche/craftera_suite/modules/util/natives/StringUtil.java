@@ -1,6 +1,6 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils.natives;
+package com.github.scorchedpsyche.craftera_suite.modules.util.natives;
 
-public class StringUtils
+public class StringUtil
 {
     public static boolean isNullOrEmpty(String string)
     {

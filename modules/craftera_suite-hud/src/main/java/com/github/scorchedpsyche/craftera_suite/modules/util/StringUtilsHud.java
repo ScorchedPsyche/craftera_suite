@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import org.bukkit.ChatColor;
 

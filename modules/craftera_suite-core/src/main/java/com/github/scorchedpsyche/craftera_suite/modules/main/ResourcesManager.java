@@ -1,6 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,7 +45,7 @@ public class ResourcesManager
                     if( !destinationFile.exists() )
                     {
                         FileUtils.copyInputStreamToFile(resourceToBeCopied, destinationFile);
-                        ConsoleUtils.logMessage( plugin.getName(),
+                        ConsoleUtil.logMessage( plugin.getName(),
                                 "File copied: " + ChatColor.YELLOW + destinationFile);
                     }
 //                    else {
@@ -54,7 +54,7 @@ public class ResourcesManager
 //                    }
                 } catch (IOException e) {
                     // Failed to create file
-                    ConsoleUtils.logError( plugin.getName(),
+                    ConsoleUtil.logError( plugin.getName(),
                             "Failed to create file. Check write permissions for folder: " + ChatColor.YELLOW + destinationFile);
                 }
 
@@ -63,12 +63,12 @@ public class ResourcesManager
                     resourceToBeCopied.close();
                 } catch (IOException e) {
                     // Failed to close file
-                    ConsoleUtils.logError( plugin.getName(),
+                    ConsoleUtil.logError( plugin.getName(),
                                            "Failed to close file. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + resourceToBeCopied);
                 }
             } else {
                 // Resource not found, must display error
-                ConsoleUtils.logError( plugin.getName(),
+                ConsoleUtil.logError( plugin.getName(),
                     "Resource not found on .jar. Report this to the developer! RESOURCE: " + ChatColor.YELLOW + file);
             }
         }

@@ -2,8 +2,8 @@ package modules.com.github.scorchedpsyche.craftera_suite.modules;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinSpectatorListener;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitSpectatorListener;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.listener.SpectatorModeCommandListener;
@@ -43,7 +43,7 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
         if( SuitePluginManager.Core.isEnabled() )
         {
             // Attempts to create plugin root folder
-            File pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());
+            File pluginRootFolder = FolderUtil.getOrCreatePluginSubfolder(this.getName());
 
             // Check if plugin root folder exists
             if( pluginRootFolder != null )
@@ -86,7 +86,7 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
 
                     } else {
                         // Failed to create database tables! Display error and disable plugin
-                        ConsoleUtils.logError(this.getName(), "Failed to create database tables. Disabling!");
+                        ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
                         Bukkit.getPluginManager().disablePlugin(this);
                     }
                 } catch (IOException | InvalidConfigurationException e)

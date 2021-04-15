@@ -1,7 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.database.types;
 
 import com.github.scorchedpsyche.craftera_suite.modules.interfaces.IDatabase;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 
 import java.sql.*;
 
@@ -26,14 +26,14 @@ public class SQLiteDatabase implements IDatabase
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl)) {
             if (conn != null) {
-                ConsoleUtils.logMessage(
+                ConsoleUtil.logMessage(
                         "Connection to SQLite has been established at: " + databaseUrl);
                 return conn;
             }
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite database connection failed. Check folder write permissions at: " + databaseUrl);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return null;
@@ -46,9 +46,9 @@ public class SQLiteDatabase implements IDatabase
             stmt.execute(sqlStatement);
             return true;
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite sql execution failed: " + sqlStatement);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return false;
@@ -63,9 +63,9 @@ public class SQLiteDatabase implements IDatabase
 
             return rs.next();
         } catch (SQLException e) {
-            ConsoleUtils.logError(
+            ConsoleUtil.logError(
                     "SQLite tableExists check failed for table: " + tableName);
-            ConsoleUtils.logError( e.getMessage() );
+            ConsoleUtil.logError( e.getMessage() );
         }
 
         return false;

@@ -3,7 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -71,13 +71,13 @@ public class CustomCommandExecutor implements CommandExecutor {
     {
         return command.getName().equalsIgnoreCase("ces")
                 && args.length > 0
-                && !StringUtils.isNullOrEmpty(args[0]);
+                && !StringUtil.isNullOrEmpty(args[0]);
     }
 
     @Nullable
     private String[] filterSubcommandArgs(String[] argsUnfiltered)
     {
-        if( argsUnfiltered.length > 1 && !StringUtils.isNullOrEmpty(argsUnfiltered[1]) )
+        if( argsUnfiltered.length > 1 && !StringUtil.isNullOrEmpty(argsUnfiltered[1]) )
         {
             String[] args = new String[argsUnfiltered.length - 1];
             System.arraycopy(argsUnfiltered, 1, args, 0, argsUnfiltered.length - 1);

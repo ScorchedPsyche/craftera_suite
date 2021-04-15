@@ -5,10 +5,9 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinHudLi
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitHudListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CraftEraSuiteHud extends JavaPlugin
@@ -40,7 +39,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
                 getServer().getPluginManager().registerEvents(new PlayerQuitHudListener(hudManager), this);
             } else {
                 // Failed to create database tables! Display error and disable plugin
-                ConsoleUtils.logError(this.getName(), "Failed to create database tables. Disabling!");
+                ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         } else {

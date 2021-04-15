@@ -3,13 +3,10 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.SeasonsDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.listeners.SeasonsCommandListener;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.IOException;
 
 public final class CraftEraSuiteSeasons extends JavaPlugin
 {
@@ -31,7 +28,7 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
 
             } else {
                 // Failed to create database tables! Display error and disable plugin
-                ConsoleUtils.logError(this.getName(), "Failed to create database tables. Disabling!");
+                ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         } else {

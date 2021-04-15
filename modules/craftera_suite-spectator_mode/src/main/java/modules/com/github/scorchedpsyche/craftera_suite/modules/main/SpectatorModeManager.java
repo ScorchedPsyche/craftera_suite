@@ -4,8 +4,8 @@ import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.*;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.CollectionUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.*;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSpectatorMode;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.model.SpectatorPlayerDataModel;
 import org.bukkit.*;
@@ -110,24 +110,24 @@ public class SpectatorModeManager {
                     // Player state saved. Summon Armor Stand, set player to Spectator Mode
                     playersInSpectator.put(player.getUniqueId().toString(), playerData);
                     player.setGameMode(GameMode.SPECTATOR);
-                    EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
+                    EntityUtil.notifyPlayersInRangeOfEntityUpdate(player);
                     spawnArmorStand(player);
-                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+                    PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                             "is now " + ChatColor.GREEN + "ON");
                     CraftEraSuiteSpectatorMode.startRepeatingTaskIfNotRunning();
                 } else {
                     // Failed to save player state. Display error to player
-                    PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+                    PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                             "Unable to go into Spectator mode! Contact server's admin if this should've worked.");
                 }
             } else {
                 // They were damaged. Warn player
-                PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+                PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                         "To prevent abuse you cannot go into Spectator mode if you're taking damage.");
             }
         } else {
             // They moved. Warn player
-            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+            PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                     "To prevent abuse you cannot go into Spectator mode if you're moving.");
         }
     }
@@ -174,21 +174,21 @@ public class SpectatorModeManager {
                     break;
             }
             removeArmorStand(player);
-            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+            PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                     "is now " + ChatColor.RED + "OFF");
             playersInSpectator.remove(player.getUniqueId().toString());
             distanceFromSource.remove(player.getUniqueId().toString());
 
 //            JavaPlugin plugin = CraftEraSuiteSpectatorMode.getPlugin(CraftEraSuiteSpectatorMode.class);
 
-            EntityUtils.notifyPlayersInRangeOfEntityUpdate(player);
+            EntityUtil.notifyPlayersInRangeOfEntityUpdate(player);
             if( playersInSpectator.isEmpty() )
             {
                 CraftEraSuiteSpectatorMode.cancelRepeatingTaskIfRunning();
             }
         } else {
             // Failed to update player state. Display error to player
-            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+            PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                     "Unable to get out of Spectator mode! Contact server's admin if this should've worked.");
         }
     }
@@ -202,7 +202,7 @@ public class SpectatorModeManager {
         ArmorStand as = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
         as.getLocation().setYaw(player.getLocation().getYaw());
         as.setGravity(false);
-        as.getEquipment().setHelmet(PlayerHeadUtils.playerHeadItemStackFromOfflinePlayer(1, player), true);
+        as.getEquipment().setHelmet(PlayerHeadUtil.playerHeadItemStackFromOfflinePlayer(1, player), true);
         as.setInvulnerable(true);
         as.setInvisible(true);
 
@@ -245,14 +245,14 @@ public class SpectatorModeManager {
             );
         } else {
             // No Armor Stands. Warn player
-            PlayerUtils.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
+            PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
                     "Unable to find your Armor Stand! If this isn't right, contact admin.");
         }
     }
 
     public void calculateSpectatorsDistanceToExecutingLocationAndTeleportBackIfNeeded()
     {
-        if( !CollectionUtils.isNullOrEmpty(playersInSpectator) )
+        if( !CollectionUtil.isNullOrEmpty(playersInSpectator) )
         {
             playersInSpectator.forEach((uuid, playerDataFromDb) ->
                     {
@@ -269,7 +269,7 @@ public class SpectatorModeManager {
                                     playerDataFromDb.getZ()
                             );
 
-                            double distanceFromCastingLocation = PlayerUtils.getDistanceToLocation(
+                            double distanceFromCastingLocation = PlayerUtil.getDistanceToLocation(
                                     player,
                                     playerLocation
                             );
@@ -353,7 +353,7 @@ public class SpectatorModeManager {
     {
         List<SpectatorPlayerDataModel> playersOnSpectatorOnDb = spectatorDatabaseAPI.fetchAllPlayersWithSpectatorModeEnabled();
 
-        if ( !CollectionUtils.isNullOrEmpty(playersOnSpectatorOnDb) )
+        if ( !CollectionUtil.isNullOrEmpty(playersOnSpectatorOnDb) )
         {
             playersOnSpectatorOnDb.stream().forEach( playerOnDb ->
                     {

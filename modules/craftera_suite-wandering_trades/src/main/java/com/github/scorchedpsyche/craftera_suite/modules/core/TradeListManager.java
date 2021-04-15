@@ -3,7 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
 import com.github.scorchedpsyche.craftera_suite.modules.model.TradeModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.google.gson.Gson;
 
 import java.io.*;
@@ -36,7 +36,7 @@ public class TradeListManager
                     {
                         Collections.addAll(Trades.offers, json);
 
-                        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+                        ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                               "LOADED FILE: " + file.getName());
                     }
 

@@ -1,11 +1,11 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class PlayerUtils
+public class PlayerUtil
 {
     public static int getCoordinateRoundedX(Player player)
     {

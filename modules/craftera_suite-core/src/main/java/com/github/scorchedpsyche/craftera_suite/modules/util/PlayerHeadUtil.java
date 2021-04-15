@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import org.bukkit.Bukkit;
@@ -8,14 +8,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class PlayerHeadUtils
+public class PlayerHeadUtil
 {
     /**
      * Creates a temporary inventory to place the Player Heads in so that the textures are preloaded by the server.
      */
     public static void preloadPlayerHeads()
     {
-        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                 "Asynchronous Player Head preload STARTED");
 
         int nbrOfHeadsLoaded = 0;
@@ -35,7 +35,7 @@ public class PlayerHeadUtils
             currentSlot++;
         }
 
-        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+        ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                 "Asynchronous Player Head preload ENDED with " + nbrOfHeadsLoaded + " heads loaded");
         inv = null;
     }

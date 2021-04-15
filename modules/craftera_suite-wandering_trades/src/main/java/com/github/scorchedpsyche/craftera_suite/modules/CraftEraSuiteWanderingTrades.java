@@ -6,7 +6,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.WanderingTrader
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.task.PreloadPlayerHeadsTask;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -39,7 +39,7 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
             // Attempts to create plugin root folder
-            File pluginRootFolder = FolderUtils.getOrCreatePluginSubfolder(this.getName());
+            File pluginRootFolder = FolderUtil.getOrCreatePluginSubfolder(this.getName());
 
             // Check if plugin root folder exists
             if( pluginRootFolder != null )

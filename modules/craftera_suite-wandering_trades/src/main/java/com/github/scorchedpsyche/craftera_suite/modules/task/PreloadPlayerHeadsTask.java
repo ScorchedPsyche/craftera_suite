@@ -1,10 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.task;
 
-import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.RunnableModel;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.PlayerHeadUtils;
-import org.bukkit.scheduler.BukkitRunnable;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerHeadUtil;
 
 public class PreloadPlayerHeadsTask extends RunnableModel {
     public PreloadPlayerHeadsTask(String prefix, String name) {
@@ -14,7 +11,7 @@ public class PreloadPlayerHeadsTask extends RunnableModel {
     @Override
     public void run() {
         super.setAsRunning();
-        PlayerHeadUtils.preloadPlayerHeads();
+        PlayerHeadUtil.preloadPlayerHeads();
         super.cancel();
 //        super.cancelWithOptionalLogMessage();
 //        cancelWithPrefixedLogMessage();

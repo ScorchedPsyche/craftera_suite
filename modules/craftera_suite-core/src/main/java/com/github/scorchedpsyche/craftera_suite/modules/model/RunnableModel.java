@@ -2,13 +2,9 @@ package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import org.bukkit.Bukkit;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.NotNull;
 
 public class RunnableModel extends BukkitRunnable {
     public RunnableModel(String prefix, String name) {
@@ -44,7 +40,7 @@ public class RunnableModel extends BukkitRunnable {
             isRunning = true;
             if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )
             {
-                ConsoleUtils.logMessage(this.startMessage);
+                ConsoleUtil.logMessage(this.startMessage);
             }
         }
     }
@@ -82,7 +78,7 @@ public class RunnableModel extends BukkitRunnable {
     {
         if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )
         {
-            ConsoleUtils.logMessage(this.cancelMessage);
+            ConsoleUtil.logMessage(this.cancelMessage);
         }
         super.cancel();
 //        if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )

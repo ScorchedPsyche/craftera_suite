@@ -1,11 +1,10 @@
-package com.github.scorchedpsyche.craftera_suite.modules.utils;
+package com.github.scorchedpsyche.craftera_suite.modules.util;
 
-import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.StringUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-public class ConsoleUtils {
+public class ConsoleUtil {
     private static final String defaultPrefix = "CraftEra Suite";
     /**
      * Logs an error (red colored) to the console with the source plugin's prefix.
@@ -49,6 +48,6 @@ public class ConsoleUtils {
 
     private static String validCustomPrefixOrDefault(String pluginPrefixName)
     {
-        return ( StringUtils.isNullOrEmpty(pluginPrefixName) ) ? defaultPrefix : pluginPrefixName;
+        return ( StringUtil.isNullOrEmpty(pluginPrefixName) ) ? defaultPrefix : pluginPrefixName;
     }
 }

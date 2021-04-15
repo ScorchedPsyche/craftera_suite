@@ -9,9 +9,8 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomComm
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.ConsoleUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.CollectionUtils;
-import com.github.scorchedpsyche.craftera_suite.modules.utils.natives.FolderUtils;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -55,12 +54,12 @@ public final class CraftEraSuiteCore extends JavaPlugin {
 
         try
         {
-            File cesRootFolder = FolderUtils.getOrCreateCesRootFolder();
+            File cesRootFolder = FolderUtil.getOrCreateCesRootFolder();
 
             // Check if plugin root folder exists
             if( cesRootFolder != null )
             {
-                FolderUtils.setup();
+                FolderUtil.setup();
                 resourcesManager = new ResourcesManager();
 
                 resourcesManager.copyResourcesToServer(this, cesRootFolder, new ArrayList<String>(){{
@@ -97,7 +96,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 }
 
                 // REPEATING TASK: display subtitle
-                if( !CollectionUtils.isNullOrEmpty(Bukkit.getOnlinePlayers()) )
+                if( !CollectionUtil.isNullOrEmpty(Bukkit.getOnlinePlayers()) )
                 {
                     startTitleAndSubtitleSendToPlayersTaskIfNotRunning();
                 }

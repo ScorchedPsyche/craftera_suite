@@ -1,8 +1,7 @@
 name: craftera_suite-achievements
 version: ${project.version}
 depend: [craftera_suite-core]
-#softdepend: [ craftera_suite-seasons ]
-loadbefore:  [ craftera_suite-seasons ]
+softdepend: [ craftera_suite-seasons ]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteAchievements
 api-version: 1.16
 prefix: CraftEra Suite - Achievements
