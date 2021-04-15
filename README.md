@@ -6,14 +6,16 @@ All plugins are being developed to use as little resources from the server as po
   
 ```diff
 - NOTICE: this suite is in early stages of development; 
-- NOTICE: usage in production at this moment is NOT recommended!
+- NOTICE: usage in production at this moment is NOT recommended! 
+
+Once most features have been implemented I'll be running through the code to do a refactor for production usage.
 ```
 
 **Status reference:**
 
-- ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`
-- ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Implemented`  
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Production ready`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Implemented`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Production ready`
 
 ## Modules (current/planned)  
 Modules with a check-list are the ones that are either being worked on or that have some ideas planned. The ones without a check-list haven't yet been planned.  
