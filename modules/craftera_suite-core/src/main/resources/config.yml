@@ -5,7 +5,7 @@ auto_restart_on_low_memory: false
 # IF YOU NEED SUPPORT FROM DEVELOPER, ENABLE THIS SO THAT THE LOG CAN BE POPULATED WITH DEBUGGING MESSAGES!
 log_task_debug_messages_to_console: true
 
-# "sqlite" or "mysql"
+# "sqlite", "mysql" or "sqlite_main_and_mysql_as_redundancy"
 storage_type: sqlite
 
 # Uncomment the lines below if MySQL is chosen for "storage_type" (above)

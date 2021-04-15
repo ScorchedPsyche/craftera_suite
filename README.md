@@ -23,7 +23,7 @@ Plugin names are a work-in-progress and might change in the future.
 ### Achievements 
 Achievements such as server-first and custom ones. 
 
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Vanilla player personal achievement accounting (0/80 advancements done);`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla player personal achievement accounting (0/80 advancements done);`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Vanilla server-first achievement accounting;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasons module support: achievements resets on new Season and old ones are archived.`
   
@@ -59,10 +59,11 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Database Interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `SQLite integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `MySQL integration;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Achievements;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Use SQLite as main and MySQL as redundancy;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Achievements;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Core;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: HUD;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Plugin Integration: Seasons;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Spectator Mode;`  
  
 ### Discord Integration  

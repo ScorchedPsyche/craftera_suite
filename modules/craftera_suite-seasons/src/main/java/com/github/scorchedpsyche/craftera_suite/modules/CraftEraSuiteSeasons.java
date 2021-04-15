@@ -8,6 +8,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 public final class CraftEraSuiteSeasons extends JavaPlugin
 {
@@ -55,6 +56,7 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
         super.onDisable();
     }
 
+    @Nullable
     public static SeasonModel getCurrentSeason()
     {
         return season;
