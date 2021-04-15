@@ -165,12 +165,7 @@ public class CustomTabCompleter implements TabCompleter {
     private HashMap<String, CommandModel> getSpectatorModeCommands()
     {
         HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
-//
-//        spectatorSubcommands.put("create", new CommandModel());
-//        spectatorSubcommands.put("current", new CommandModel());
-//        spectatorSubcommands.put("end", new CommandModel());
-//        spectatorSubcommands.put("manage", new CommandModel());
-//        spectatorSubcommands.put("start", new CommandModel());
+
         HashMap<String, CommandModel> spectator = new HashMap<>();
         spectator.put("spectator", null);
         spectator.put("spec", null);

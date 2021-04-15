@@ -7,6 +7,12 @@ import org.bukkit.event.Listener;
 
 public class SeasonsCommandListener implements Listener
 {
+    public SeasonsCommandListener(SeasonManager seasonManager) {
+        this.seasonManager = seasonManager;
+    }
+
+    SeasonManager seasonManager;
+
     @EventHandler
     public void onSeasonsCommandEvent(SeasonsCommandEvent event)
     {
@@ -44,8 +50,7 @@ public class SeasonsCommandListener implements Listener
         } else
         {
             // Code shouldn't have gotten here as the CustomCommandExecutor sends at least "toggle". Log the error
-            ConsoleUtil.logError("onHudCommandEvent received null or empty args. Report this to the " +
-                                          "developer");
+            ConsoleUtil.logError("onSeasonsCommandEvent received null or empty args. Report this to the developer");
         }
     }
 }
