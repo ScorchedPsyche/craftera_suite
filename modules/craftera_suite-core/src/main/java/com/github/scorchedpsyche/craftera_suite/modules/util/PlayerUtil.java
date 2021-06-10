@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class PlayerUtil
 {
@@ -33,9 +34,12 @@ public class PlayerUtil
      * @param pluginPrefix The plugin prefix to the message
      * @param message Message to be sent
      */
-    public static void sendMessageWithPluginPrefix(Player player, String pluginPrefix, String message)
+    public static void sendMessageWithPluginPrefix(@Nullable Player player, String pluginPrefix, String message)
     {
-        player.sendMessage(ChatColor.GOLD + "[" + pluginPrefix + "] " + ChatColor.RESET + message);
+        if( player != null )
+        {
+            player.sendMessage(ChatColor.GOLD + "[" + pluginPrefix + "] " + ChatColor.RESET + message);
+        }
     }
 
     public static double getDistanceToLocation(Player player, Location location )

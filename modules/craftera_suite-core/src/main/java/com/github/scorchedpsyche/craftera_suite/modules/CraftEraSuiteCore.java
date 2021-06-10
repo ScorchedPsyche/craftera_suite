@@ -11,6 +11,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseMa
 import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.ChatMessageType;
@@ -23,7 +24,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
@@ -251,7 +254,15 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
     }
 
-    public static boolean userHasPermission(User user, String permission) {
+    @NotNull
+    public static boolean userHasPermission(User user, @Nullable String permission) {
+        // If string is null or empty then no permission is required and any user has the permission
+        if( StringUtil.isNullOrEmpty(permission) )
+        {
+            return true;
+        }
+
+        // If string is not null then check for permission on Luck Perms
         return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
 }

@@ -64,4 +64,5 @@ public class CommandModel
     {
         return subCommands != null;
     }
+    public String getPermission(){ return permission; }
 }
