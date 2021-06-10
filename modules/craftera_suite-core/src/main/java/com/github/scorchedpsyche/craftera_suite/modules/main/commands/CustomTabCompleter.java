@@ -96,7 +96,8 @@ public class CustomTabCompleter implements TabCompleter {
                 // More than 1 arg. Check if current command tree contains the arg with subcommands
                 if(     commands.containsKey(args.get(0)) &&
                         commands.get(args.get(0)) != null &&
-                        commands.get(args.get(0)).hasSubcommands() )
+                        commands.get(args.get(0)).hasSubcommands() &&
+                        CraftEraSuiteCore.userHasPermission( user, commands.get(args.get(0)).getPermission() ) )
                 {
                     // Has subcommands
                     HashMap<String, CommandModel> subCommands = commands.get(args.get(0)).subCommands;
