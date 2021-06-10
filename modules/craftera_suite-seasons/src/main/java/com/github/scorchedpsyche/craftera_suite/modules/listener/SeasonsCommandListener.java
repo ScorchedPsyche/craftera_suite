@@ -2,7 +2,12 @@ package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.DateUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.GameUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
+import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -24,23 +29,32 @@ public class SeasonsCommandListener implements Listener
         {
             switch (args[0].toLowerCase())
             {
-                case "create": // /ces seasons config
-                    ConsoleUtil.logSuccess("ces seasons create");
+                case "create": // /ces seasons create
+                    seasonManager.createSeason(
+                            seasonManager.getNextAvailableSeasonNumber(),
+                            "Untitled Season",
+                            "",
+                            SuitePluginManager.Seasons.Status.Inactive,
+                            true,
+                            DateUtil.Time.getUnixNow(),
+                            0,
+                            GameUtil.Version.getCurrent(),
+                            "-");
                     break;
 
-                case "current": // /ces seasons config
+                case "current": // /ces seasons current
                     ConsoleUtil.logSuccess("ces seasons current");
                     break;
 
-                case "end": // /ces seasons config
+                case "end": // /ces seasons end
                     ConsoleUtil.logSuccess("ces seasons end");
                     break;
 
-                case "manage": // /ces seasons config
+                case "manage": // /ces seasons manage
                     ConsoleUtil.logSuccess("ces seasons manage");
                     break;
 
-                case "start": // /ces seasons toggle
+                case "start": // /ces seasons start
                     ConsoleUtil.logSuccess("ces seasons start");
                     break;
 
@@ -53,6 +67,17 @@ public class SeasonsCommandListener implements Listener
             // Code shouldn't have gotten here as the CustomCommandExecutor sends at least "toggle". Log the error
             ConsoleUtil.logError("onSeasonsCommandEvent received null or empty args. Report this to the developer");
         }
+    }
+
+    private String getUsageMessage()
+    {
+        return "All arguments are optional and the command will create the next available season number. Command usage:\n\n" +
+
+                "/ces seasons create 1 \"Season Title\" \"Season Name\"\n\n" +
+
+                "Argument 1 = season number\n" +
+                "Argument 2 = season title" +
+                "Argument 3 = season subtitle";
     }
 }
 

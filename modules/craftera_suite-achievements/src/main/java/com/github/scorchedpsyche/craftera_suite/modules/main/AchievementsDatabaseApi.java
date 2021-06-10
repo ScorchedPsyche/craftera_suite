@@ -55,8 +55,7 @@ public class AchievementsDatabaseApi
     {
         String sql = "SELECT * FROM " + DatabaseTables.Achievements.achievements_TABLENAME + " WHERE "
                 + DatabaseTables.Achievements.Table.player_uuid + " = '" + achievement.playerUUid + "' AND \n"
-                + DatabaseTables.Achievements.Table.achievement + " = '" + achievement.achievement + "' AND \n"
-                + DatabaseTables.Achievements.Table.date + " = " + achievement.date + "\n";
+                + DatabaseTables.Achievements.Table.achievement + " = '" + achievement.achievement + "'\n";
 
         if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
         {

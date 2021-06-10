@@ -82,7 +82,7 @@ public class SuitePluginManager {
 
         public static enum Status
         {
-            Unused,
+            Inactive,
             Active,
             Finished,
             Archived

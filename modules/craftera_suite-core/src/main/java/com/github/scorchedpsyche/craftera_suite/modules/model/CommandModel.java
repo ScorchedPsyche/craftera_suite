@@ -8,14 +8,20 @@ public class CommandModel
     {
     }
 
-    public CommandModel(String commandName)
+//    public CommandModel(String commandName)
+//    {
+//        addCommand(commandName);
+//    }
+
+    public CommandModel(String permission)
     {
-        addCommand(commandName);
+        this.permission = permission;
     }
 
 //    public ICommandEvent commandEvent;
     public HashMap<String, CommandModel> subCommands;
     private String lastKey;
+    private String permission;
 
     public CommandModel addCommand(String commandName)
     {

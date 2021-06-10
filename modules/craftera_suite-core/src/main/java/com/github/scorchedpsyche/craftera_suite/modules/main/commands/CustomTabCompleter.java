@@ -1,5 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
+import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
@@ -14,16 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CustomTabCompleter implements TabCompleter {
-    private final HashMap<String, CommandModel> commands;
+    public static HashMap<String, CommandModel> commands;
 
     public CustomTabCompleter() {
         super();
 
         commands = new HashMap<>();
-
-        commands.putAll(getHudCommands());
-        commands.putAll(getSeasonsCommands());
-        commands.putAll(getSpectatorModeCommands());
     }
 
     private List<String> getSubcommands(HashMap<String, CommandModel> commands, List<String> args)
@@ -37,7 +34,7 @@ public class CustomTabCompleter implements TabCompleter {
             if( args.size() == 1 )
             {
                 // 1 arg. Return partial filtered list by word
-                return filterListByPartialWord(new ArrayList<>(commands.keySet()), args.get(0));
+                return filterListByPartialWordAndPermission(new ArrayList<>(commands.keySet()), args.get(0));
             } else {
                 // More than 1 arg. Check if current command tree contains the arg with subcommands
                 if(     commands.containsKey(args.get(0)) &&
@@ -68,12 +65,16 @@ public class CustomTabCompleter implements TabCompleter {
             // Check for CES command
             if ( command.getName().equalsIgnoreCase("ces") ) {
                 // Root CES command. Return options
+
+                // Check if more than 1 argument
                 if( args.length > 0  )
                 {
+                    // At subcommand: /ces subcommand
                     List<String> arguments = new ArrayList<String>(Arrays.asList(args));
 
                     return getSubcommands(commands, arguments);
                 } else {
+                    // At root command: /ces
                     return new ArrayList<String>(commands.keySet());
                 }
             } 
@@ -88,7 +89,7 @@ public class CustomTabCompleter implements TabCompleter {
      * @param searchString The word to search for
      * @return Returns an empty list if no items that start with the provided word were found.
      */
-    private List<String> filterListByPartialWord(List<String> listToBeFiltered, String searchString)
+    private List<String> filterListByPartialWordAndPermission(List<String> listToBeFiltered, String searchString)
     {
         List<String> filteredList = new ArrayList<>();
 
@@ -96,6 +97,10 @@ public class CustomTabCompleter implements TabCompleter {
         {
             if( str.startsWith(searchString) )
             {
+//                if( )
+//                {
+//
+//                }
                 filteredList.add(str);
             }
         }
@@ -103,74 +108,74 @@ public class CustomTabCompleter implements TabCompleter {
         return filteredList;
     }
 
-    private HashMap<String, CommandModel> getHudCommands()
-    {
-        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
+//    private HashMap<String, CommandModel> getHudCommands()
+//    {
+//        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
+//
+//        hudSubcommands.put("config", new CommandModel()
+//                .addCommand("display_mode")
+//                .addSubcommand("compact")
+//                .addSubcommand("extended")
+//                .addCommand("colorize")
+//                .addSubcommand("coordinates")
+//                .addSubcommand("nether_portal_coordinates")
+//                .addSubcommand("player_orientation")
+//                .addSubcommand("server_tps")
+//                .addSubcommand("tool_durability")
+//                .addSubcommand("world_time"));
+//
+//        hudSubcommands.put("toggle", new CommandModel()
+//                .addCommand("coordinates")
+//                .addCommand("nether_portal_coordinates")
+//                .addCommand("player_orientation"));
+//
+//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+//        {
+//            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
+//        }
+//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
+//        {
+//            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
+//        }
+//
+//        hudSubcommands.get("toggle")
+//                      .addCommand("server_time")
+//                      .addCommand("server_tps")
+//                      .addCommand("tool_durability")
+//                      .addCommand("world_time");
+//
+//        HashMap<String, CommandModel> hud = new HashMap<>();
+//        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
+//        hudSubcommands = null;
+//
+//        return hud;
+//    }
 
-        hudSubcommands.put("config", new CommandModel()
-                .addCommand("display_mode")
-                .addSubcommand("compact")
-                .addSubcommand("extended")
-                .addCommand("colorize")
-                .addSubcommand("coordinates")
-                .addSubcommand("nether_portal_coordinates")
-                .addSubcommand("player_orientation")
-                .addSubcommand("server_tps")
-                .addSubcommand("tool_durability")
-                .addSubcommand("world_time"));
+//    private HashMap<String, CommandModel> getSeasonsCommands()
+//    {
+//        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
+//
+//        seasonsSubcommands.put("create", new CommandModel());
+//        seasonsSubcommands.put("current", new CommandModel());
+//        seasonsSubcommands.put("end", new CommandModel());
+//        seasonsSubcommands.put("manage", new CommandModel());
+//        seasonsSubcommands.put("start", new CommandModel());
+//        HashMap<String, CommandModel> seasons = new HashMap<>();
+//        seasons.put("seasons", new CommandModel("craftera_suite.seasons").addSubcommands(seasonsSubcommands));
+//        seasonsSubcommands = null;
+//
+//        return seasons;
+//    }
 
-        hudSubcommands.put("toggle", new CommandModel()
-                .addCommand("coordinates")
-                .addCommand("nether_portal_coordinates")
-                .addCommand("player_orientation"));
-
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
-        }
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
-        }
-
-        hudSubcommands.get("toggle")
-                      .addCommand("server_time")
-                      .addCommand("server_tps")
-                      .addCommand("tool_durability")
-                      .addCommand("world_time");
-
-        HashMap<String, CommandModel> hud = new HashMap<>();
-        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
-        hudSubcommands = null;
-
-        return hud;
-    }
-
-    private HashMap<String, CommandModel> getSeasonsCommands()
-    {
-        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
-
-        seasonsSubcommands.put("create", new CommandModel());
-        seasonsSubcommands.put("current", new CommandModel());
-        seasonsSubcommands.put("end", new CommandModel());
-        seasonsSubcommands.put("manage", new CommandModel());
-        seasonsSubcommands.put("start", new CommandModel());
-        HashMap<String, CommandModel> seasons = new HashMap<>();
-        seasons.put("seasons", new CommandModel().addSubcommands(seasonsSubcommands));
-        seasonsSubcommands = null;
-
-        return seasons;
-    }
-
-    private HashMap<String, CommandModel> getSpectatorModeCommands()
-    {
-        HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
-
-        HashMap<String, CommandModel> spectator = new HashMap<>();
-        spectator.put("spectator", null);
-        spectator.put("spec", null);
-        spectatorSubcommands = null;
-
-        return spectator;
-    }
+//    private HashMap<String, CommandModel> getSpectatorModeCommands()
+//    {
+//        HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
+//
+//        HashMap<String, CommandModel> spectator = new HashMap<>();
+//        spectator.put("spectator", null);
+//        spectator.put("spec", null);
+//        spectatorSubcommands = null;
+//
+//        return spectator;
+//    }
 }

@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main;
 
-import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.model.SeasonModel;
@@ -26,7 +25,7 @@ public class SeasonsDatabaseApi
                             + "	" + DatabaseTables.Seasons.Table.number + " NUMERIC DEFAULT 1 UNIQUE NOT NULL,\n"
                             + "	" + DatabaseTables.Seasons.Table.title + " TEXT,\n"
                             + "	" + DatabaseTables.Seasons.Table.subtitle + " TEXT,\n"
-                            + "	" + DatabaseTables.Seasons.Table.status + " INTEGER DEFAULT " + SuitePluginManager.Seasons.Status.Unused.ordinal() + ",\n"
+                            + "	" + DatabaseTables.Seasons.Table.status + " INTEGER DEFAULT " + SuitePluginManager.Seasons.Status.Inactive.ordinal() + ",\n"
                             + "	" + DatabaseTables.Seasons.Table.account + " NUMERIC DEFAULT 1,\n"
                             + "	" + DatabaseTables.Seasons.Table.date_start + " INTEGER DEFAULT 0,\n"
                             + "	" + DatabaseTables.Seasons.Table.date_end + " INTEGER DEFAULT 0,\n"
@@ -93,6 +92,31 @@ public class SeasonsDatabaseApi
             if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 return new SeasonModel().loadDataFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
+                    "SQLite query failed for 'fetchCurrentSeason': " + sql);
+            ConsoleUtil.logError( e.getMessage() );
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public Integer fetchNextAvailableSeasonNumber()
+    {
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME + " ORDER BY "
+                + DatabaseTables.Seasons.Table.number + " DESC ";
+
+        try (Connection conn = DriverManager.getConnection(
+                DatabaseManager.database.getDatabaseUrl());
+             Statement stmt = conn.createStatement())
+        {
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
+            {
+                return new SeasonModel().loadDataFromResultSet(rs).getNumber() + 1;
             }
         } catch (SQLException e) {
             ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,

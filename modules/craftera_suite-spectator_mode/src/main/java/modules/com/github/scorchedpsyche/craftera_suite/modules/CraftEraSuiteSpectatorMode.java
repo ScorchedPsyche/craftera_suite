@@ -1,7 +1,9 @@
 package modules.com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import modules.com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinSpectatorListener;
@@ -20,6 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     public static ResourcesManager resourcesManager = new ResourcesManager();
@@ -79,11 +82,13 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
                             startRepeatingTaskIfNotRunning();
                         }
 
+                        // Add plugin commands
+                        addPluginCommands();
+
+                        // Listeners
                         getServer().getPluginManager().registerEvents(new SpectatorModeCommandListener(spectatorModeManager), this);
                         getServer().getPluginManager().registerEvents(new PlayerJoinSpectatorListener(spectatorModeManager), this);
                         getServer().getPluginManager().registerEvents(new PlayerQuitSpectatorListener(spectatorModeManager), this);
-
-
                     } else {
                         // Failed to create database tables! Display error and disable plugin
                         ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
@@ -139,5 +144,17 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
         {
             processPlayersInSpectatorTask.cancel();
         }
+    }
+
+    private void addPluginCommands()
+    {
+        HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
+
+        HashMap<String, CommandModel> spectator = new HashMap<>();
+        spectator.put("spectator", null);
+        spectator.put("spec", null);
+        spectatorSubcommands = null;
+
+        CraftEraSuiteCore.customTabCompleter.commands.putAll(spectator);
     }
 }

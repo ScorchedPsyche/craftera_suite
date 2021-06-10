@@ -4,6 +4,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerAdvanceme
 import com.github.scorchedpsyche.craftera_suite.modules.main.AchievementsDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
+import net.minecraft.server.v1_16_R3.Advancement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;

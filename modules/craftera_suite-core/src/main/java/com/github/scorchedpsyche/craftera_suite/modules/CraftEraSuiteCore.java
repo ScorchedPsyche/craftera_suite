@@ -11,6 +11,8 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseMa
 import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -19,6 +21,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -39,6 +42,13 @@ public final class CraftEraSuiteCore extends JavaPlugin {
 
     private Integer checkMemoryUsageTaskId;
     public static TitleAndSubtitleSendToPlayerTask titleAndSubtitleSendToPlayerTask;
+
+    // Commands
+    public static CustomCommandExecutor customCommandExecutor = new CustomCommandExecutor();
+    public static CustomTabCompleter customTabCompleter = new CustomTabCompleter();
+
+    // Dependencies
+    public static LuckPerms luckPerms;
 
     // Plugin startup logic
     @Override
@@ -84,8 +94,8 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 }
 
                 // Register "ces" command
-                this.getCommand("ces").setExecutor(new CustomCommandExecutor());
-                this.getCommand("ces").setTabCompleter(new CustomTabCompleter());
+                this.getCommand("ces").setExecutor(customCommandExecutor);
+                this.getCommand("ces").setTabCompleter(customTabCompleter);
 
                 // REPEATING TASK: check server memory usage
                 if( config.getBoolean("auto_restart_on_low_memory") )
@@ -104,6 +114,13 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 // Listeners
                 getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
                 getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+                // Load dependencies
+                RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
+                if (provider != null) {
+                    luckPerms = provider.getProvider();
+                }
             }
         } catch (Exception e)
         {
@@ -129,6 +146,9 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         restartSeconds = null;
         checkMemoryUsageTaskId = null;
         titleAndSubtitleSendToPlayerTask = null;
+
+        // Dependencies
+        luckPerms = null;
 
         super.onDisable();
     }
@@ -229,5 +249,9 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     private void restartServer()
     {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+    }
+
+    public static boolean userHasPermission(User user, String permission) {
+        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
 }
