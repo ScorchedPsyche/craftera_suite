@@ -3,6 +3,8 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import org.bukkit.Bukkit;
 
 public class SuitePluginManager {
+    private static final String permission_prefix = "craftera_suite";
+
     public static class Achievements
     {
         public static class Name
@@ -90,6 +92,10 @@ public class SuitePluginManager {
 //            public static final String active = "active";
 //            public static final String finished = "finished";
 //            public static final String archived = "archived";
+        }
+
+        public static class Permissions {
+            public static final String seasons = permission_prefix + ".seasons";
         }
     }
 
