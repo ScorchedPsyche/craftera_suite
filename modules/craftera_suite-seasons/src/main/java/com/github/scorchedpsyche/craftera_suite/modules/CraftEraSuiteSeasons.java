@@ -1,6 +1,5 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
-import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinSeasonsListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.SeasonsCommandListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
@@ -78,13 +77,39 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
 
     private void addPluginCommands()
     {
-        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
+        HashMap<String, CommandModel> statusSubcommands = new HashMap<>();
+        statusSubcommands.put("activate", new CommandModel());
+        statusSubcommands.put("deactivate", new CommandModel());
+        statusSubcommands.put("start", new CommandModel());
+        statusSubcommands.put("end", new CommandModel());
+        statusSubcommands.put("archive", new CommandModel());
 
-        seasonsSubcommands.put("create", new CommandModel());
+        HashMap<String, CommandModel> accountSubcommands = new HashMap<>();
+        accountSubcommands.put("enable", new CommandModel());
+        accountSubcommands.put("disable", new CommandModel());
+
+        HashMap<String, CommandModel> editSubcommands = new HashMap<>();
+        editSubcommands.put("number", new CommandModel());
+        editSubcommands.put("title", new CommandModel());
+        editSubcommands.put("subtitle", new CommandModel());
+        editSubcommands.put("status", new CommandModel().addSubcommands(statusSubcommands));
+        editSubcommands.put("account", new CommandModel().addSubcommands(accountSubcommands));
+//        editSubcommands.put("date_start", new CommandModel());
+//        editSubcommands.put("date_end", new CommandModel());
+//        editSubcommands.put("version_start", new CommandModel());
+//        editSubcommands.put("version_end", new CommandModel());
+
+        HashMap<String, CommandModel> selectedSubcommands = new HashMap<>();
+        selectedSubcommands.put("delete", new CommandModel());
+        selectedSubcommands.put("display", new CommandModel());
+        selectedSubcommands.put("edit", new CommandModel().addSubcommands(editSubcommands));
+
+        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
+        seasonsSubcommands.put("create_new_and_select_for_editing", new CommandModel());
         seasonsSubcommands.put("current", new CommandModel());
-        seasonsSubcommands.put("end", new CommandModel());
-        seasonsSubcommands.put("manage", new CommandModel());
-        seasonsSubcommands.put("start", new CommandModel());
+        seasonsSubcommands.put("list", new CommandModel());
+        seasonsSubcommands.put("select", new CommandModel());
+        seasonsSubcommands.put("selected", new CommandModel().addSubcommands(selectedSubcommands));
         HashMap<String, CommandModel> seasons = new HashMap<>();
         seasons.put("seasons", new CommandModel(SuitePluginManager.Seasons.Permissions.seasons).addSubcommands(seasonsSubcommands));
         seasonsSubcommands = null;

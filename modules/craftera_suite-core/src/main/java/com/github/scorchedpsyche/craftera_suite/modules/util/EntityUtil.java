@@ -1,10 +1,10 @@
 package com.github.scorchedpsyche.craftera_suite.modules.util;
 
-import net.minecraft.server.v1_16_R3.DataWatcher;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
+import net.minecraft.network.protocol.game.PacketPlayOutEntityMetadata;
+import net.minecraft.network.syncher.DataWatcher;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -31,7 +31,7 @@ public class EntityUtil {
             if( targetEntity.getWorld().getUID() == onlinePlayer.getWorld().getUID() &&
                     isPlayerBetweenViewDistanceOfEntity(targetEntity, onlinePlayer) )
             {
-                ((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(packet);
+                ((CraftPlayer) onlinePlayer).getHandle().b.sendPacket(packet);
             }
         }
     }

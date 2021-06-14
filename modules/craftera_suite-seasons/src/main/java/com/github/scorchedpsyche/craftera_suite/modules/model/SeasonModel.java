@@ -57,32 +57,38 @@ public class SeasonModel {
     public String getTitle() {
         return title;
     }
+    public void setTitle(String title) { this.title = title; }
 
     public String getSubtitle() {
         return subtitle;
     }
+    public void setSubtitle(String subtitle) { this.subtitle = subtitle; }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public Integer getStatus() { return status; }
+    public void setStatus(Integer status) { this.status = status; }
 
     public Integer getAccount() {
         return account;
     }
+    public void setAccount(int account){ this.account = account; }
 
     public long getDate_start() {
         return date_start;
     }
+    public void setDate_start(long date_start){ this.date_start = date_start; }
 
     public long getDate_end() {
         return date_end;
     }
+    public void setDate_end(long date_end){ this.date_end = date_end; }
 
     public String getMinecraft_version_start() {
         return minecraft_version_start;
     }
+    public void setMinecraft_version_start(String minecraft_version_start){ this.minecraft_version_start = minecraft_version_start; }
 
     public String getMinecraft_version_end() {
         return minecraft_version_end;
     }
+    public void setMinecraft_version_end(String minecraft_version_end){ this.minecraft_version_end = minecraft_version_end; }
 }

@@ -46,7 +46,7 @@ public class CustomCommandExecutor implements CommandExecutor {
                             if ( argsFiltered == null )
                             {
                                 argsFiltered = new String[1];
-                                argsFiltered[0] = "current";
+                                argsFiltered[0] = "help";
                             }
 
                             Bukkit.getPluginManager().callEvent(new SeasonsCommandEvent((Player) sender, argsFiltered));

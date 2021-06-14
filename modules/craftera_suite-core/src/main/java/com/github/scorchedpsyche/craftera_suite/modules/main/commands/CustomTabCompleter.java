@@ -7,13 +7,11 @@ import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import net.luckperms.api.model.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import javax.management.remote.rmi._RMIConnection_Stub;
 import java.util.*;
 
 public class CustomTabCompleter implements TabCompleter {

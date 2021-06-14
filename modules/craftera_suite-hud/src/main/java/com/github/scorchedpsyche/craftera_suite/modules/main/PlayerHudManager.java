@@ -4,7 +4,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPl
 import com.github.scorchedpsyche.craftera_suite.modules.util.ItemStackUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.StringUtilsHud;
-import net.minecraft.server.v1_16_R3.MinecraftServer;
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;

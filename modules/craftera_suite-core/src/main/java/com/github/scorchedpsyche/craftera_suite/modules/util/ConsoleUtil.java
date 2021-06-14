@@ -24,7 +24,8 @@ public class ConsoleUtil {
     public static void logError(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                ChatColor.RED + "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] ERROR: " + message);
+                ChatColor.RED + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
+                        "] ERROR: " + message + ChatColor.RESET + "\n");
     }
 
     /**
@@ -44,7 +45,8 @@ public class ConsoleUtil {
     public static void logWarning(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                ChatColor.YELLOW + "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] WARNING: " + message);
+                ChatColor.YELLOW + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
+                        "] WARNING: " + message + ChatColor.RESET + "\n");
     }
 
     /**
@@ -64,7 +66,8 @@ public class ConsoleUtil {
     public static void logSuccess(String pluginPrefixName, String message)
     {
         Bukkit.getConsoleSender().sendMessage(
-                ChatColor.GREEN + "[" + validCustomPrefixOrDefault(pluginPrefixName) + "] SUCCESS: " + message);
+                ChatColor.GREEN + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
+                        "] SUCCESS: " + message + ChatColor.RESET + "\n");
     }
 
     /**
