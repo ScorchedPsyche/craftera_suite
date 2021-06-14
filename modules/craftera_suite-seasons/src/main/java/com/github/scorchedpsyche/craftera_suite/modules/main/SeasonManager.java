@@ -19,6 +19,7 @@ public class SeasonManager {
     @Nullable
     public SeasonModel current;
     public SeasonModel selected;
+    public boolean selected_is_marked_for_deletion = false;
     private SeasonsDatabaseApi seasonsDatabaseApi;
 
     @Nullable
@@ -114,6 +115,14 @@ public class SeasonManager {
         return seasonsDatabaseApi.fetchNextAvailableSeasonNumber();
     }
 
+    public boolean deleteSeason(int id)
+    {
+        String sql = "DELETE FROM " + DatabaseTables.Seasons.seasons_TABLENAME
+                + " WHERE id=" + id;
+
+        return DatabaseManager.database.executeSql(sql);
+    }
+
     public boolean updateSeason(SeasonModel season)
     {
         String sql = "UPDATE " + DatabaseTables.Seasons.seasons_TABLENAME + " SET "
@@ -128,7 +137,19 @@ public class SeasonManager {
                 + DatabaseTables.Seasons.Table.minecraft_version_end + " = '" + season.getMinecraft_version_end()
                 + "' WHERE id=" + season.getId();
 
-        return DatabaseManager.database.executeSql(sql);
+        if( DatabaseManager.database.executeSql(sql) )
+        {
+            // Check if selected is the same season as current
+            if( selected.getId() == current.getId() )
+            {
+                // Synchronize current season's values
+                current = selected;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     @Nullable
@@ -159,7 +180,7 @@ public class SeasonManager {
     public List<SeasonModel> fetchListingByPage(int page_number)
     {
         String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME +
-                " LIMIT " + (page_number * 5) + ", " + ((page_number + 1) * 5) ;
+                " LIMIT 9 OFFSET " + (page_number * 9) ;
 
         try (Connection conn = DriverManager.getConnection(
                 DatabaseManager.database.getDatabaseUrl());
