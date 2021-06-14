@@ -1,7 +1,7 @@
 name: craftera_suite-entities-baby
 version: ${project.version}
 main: com.github.scorchedpsyche.craftera_suite.entities.baby.CraftEraSuiteBabyEntities
-api-version: 1.16
+api-version: 1.17
 prefix: CraftEra Suite - Baby Entities
 depend: [craftera_suite-core]
 authors: [ScorchedPsyche]

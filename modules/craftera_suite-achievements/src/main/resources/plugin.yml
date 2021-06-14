@@ -3,7 +3,7 @@ version: ${project.version}
 depend: [craftera_suite-core]
 softdepend: [ craftera_suite-seasons ]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteAchievements
-api-version: 1.16
+api-version: 1.17
 prefix: CraftEra Suite - Achievements
 authors: [ScorchedPsyche]
 description: Achievements per-player, server-first and custom ones.

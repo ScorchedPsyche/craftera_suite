@@ -1,0 +1,10 @@
+name: craftera_suite-afk
+version: ${project.version}
+depend: [ craftera_suite-core ]
+softdepend: [ craftera_suite-seasons ]
+main: com.github.scorchedpsyche.craftera_suite.modules.craftera_suite_afk.CraftEraSuiteAFK
+api-version: 1.17
+prefix: CraftEra Suite - AFK
+authors: [ ScorchedPsyche ]
+description: Enables AFK detection and play data telemetry on the server.
+website: https://github.com/ScorchedPsyche

@@ -2,7 +2,7 @@ name: craftera_suite-wandering_trades
 version: ${project.version}
 depend: [craftera_suite-core]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades
-api-version: 1.16
+api-version: 1.17
 prefix: CraftEra Suite - Wandering Trades
 authors: [ScorchedPsyche]
 description: Customizes trades for Wandering Trader.
