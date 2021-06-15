@@ -20,6 +20,21 @@ public class SuitePluginManager {
         }
     }
 
+    public static class AFK
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - AFK";
+            public static final String full = "CraftEra Suite - AFK";
+            public static final String pomXml = "craftera_suite-afk";
+        }
+
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+    }
+
     public static class BabyEntities
     {
         public static class Name

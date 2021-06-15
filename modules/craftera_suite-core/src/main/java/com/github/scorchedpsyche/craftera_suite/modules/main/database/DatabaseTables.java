@@ -4,7 +4,6 @@ import org.bukkit.GameMode;
 
 public class DatabaseTables
 {
-//    private static final String achievementsPrefix = "achievements_";
     private static final String corePrefix = "core_";
     private static final String hudPrefix = "hud_";
     private static final String seasonsPrefix = "seasons_";
@@ -18,6 +17,19 @@ public class DatabaseTables
             public static final String player_uuid = "player_uuid";
             public static final String achievement = "achievement";
             public static final String date = "date";
+            public static final String season = "season";
+        }
+    }
+
+    public static class AFK {
+        public static final String afk_TABLENAME = "afk";
+
+        public static class Table
+        {
+            public static final String player_uuid = "player_uuid";
+            public static final String afk_time_start = "afk_time_start";
+            public static final String afk_time_end = "afk_time_end";
+            public static final String afk_time_total = "afk_time_total";
             public static final String season = "season";
         }
     }
