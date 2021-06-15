@@ -94,10 +94,6 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
         editSubcommands.put("subtitle", new CommandModel());
         editSubcommands.put("status", new CommandModel().addSubcommands(statusSubcommands));
         editSubcommands.put("account", new CommandModel().addSubcommands(accountSubcommands));
-//        editSubcommands.put("date_start", new CommandModel());
-//        editSubcommands.put("date_end", new CommandModel());
-//        editSubcommands.put("version_start", new CommandModel());
-//        editSubcommands.put("version_end", new CommandModel());
 
         HashMap<String, CommandModel> selectedSubcommands = new HashMap<>();
         selectedSubcommands.put("delete", new CommandModel());

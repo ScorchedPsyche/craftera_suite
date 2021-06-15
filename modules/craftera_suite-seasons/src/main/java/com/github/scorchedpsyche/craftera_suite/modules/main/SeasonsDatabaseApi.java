@@ -51,8 +51,8 @@ public class SeasonsDatabaseApi
                         + "'No Subtitle', "
                         + "'" + SuitePluginManager.Seasons.Status.Active.ordinal() + "', "
                         + true + ", "
-                        + DateUtil.Time.getUnixNow() + ", "
-                        + "'" + GameUtil.Version.getCurrent() + "')";
+                        + 0 + ", "
+                        + 0 + ")";
 
                 if ( DatabaseManager.database.executeSql(sql) )
                 {
@@ -81,7 +81,10 @@ public class SeasonsDatabaseApi
     public SeasonModel fetchCurrentSeason()
     {
         String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME + " WHERE "
-                + DatabaseTables.Seasons.Table.status + " = " + SuitePluginManager.Seasons.Status.Active.ordinal();
+                + DatabaseTables.Seasons.Table.status + " = " + SuitePluginManager.Seasons.Status.Started.ordinal()
+                + " OR "
+                + DatabaseTables.Seasons.Table.status + " = " + SuitePluginManager.Seasons.Status.Active.ordinal()
+                + " LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(
                 DatabaseManager.database.getDatabaseUrl());

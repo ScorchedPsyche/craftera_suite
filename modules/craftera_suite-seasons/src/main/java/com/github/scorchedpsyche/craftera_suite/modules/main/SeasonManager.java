@@ -140,7 +140,7 @@ public class SeasonManager {
         if( DatabaseManager.database.executeSql(sql) )
         {
             // Check if selected is the same season as current
-            if( selected.getId() == current.getId() )
+            if( selected != null && current != null && selected.getId().equals(current.getId()))
             {
                 // Synchronize current season's values
                 current = selected;

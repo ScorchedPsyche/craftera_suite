@@ -61,7 +61,7 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
             Bukkit.getScheduler().cancelTask(updatePlayersAFKState);
             updatePlayersAFKState = null;
         }
-        afkManager.updatePlayersAFKState();
+        afkManager.disable();
 
         afkManager = null;
         afkDatabaseApi = null;

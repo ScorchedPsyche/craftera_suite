@@ -78,6 +78,7 @@ public class AFKManager {
         {
             // Is AFK. Update AFK timer before removal
             playerAFKModel.updateAFKTimer();
+            playerAFKModel.markAsNotAFK();
         }
         players.remove(player.getUniqueId());
     }
@@ -121,6 +122,16 @@ public class AFKManager {
                     updatePlayerAFKTimer( Bukkit.getPlayer(playerAFKModel.getPlayer().getUniqueId()) );
                 }
             }
+        }
+    }
+
+    public void disable() {
+        updatePlayersAFKState();
+
+        // Iterate through all players
+        for (Map.Entry<UUID, PlayerAFKModel> entry : players.entrySet())
+        {
+            playerLogout( Bukkit.getPlayer(entry.getKey()) );
         }
     }
 }

@@ -99,11 +99,11 @@ public class SuitePluginManager {
 
         public static enum Status
         {
-            Active,
-            Archived,
             Inactive,
+            Active,
             Started,
-            Finished
+            Finished,
+            Archived
 //            public static final String open = "open";
 //            public static final String active = "active";
 //            public static final String finished = "finished";

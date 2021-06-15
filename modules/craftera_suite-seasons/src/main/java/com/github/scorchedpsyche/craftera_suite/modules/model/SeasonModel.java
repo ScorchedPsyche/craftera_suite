@@ -66,6 +66,26 @@ public class SeasonModel {
     public void setSubtitle(String subtitle) { this.subtitle = subtitle; }
 
     public Integer getStatus() { return status; }
+    public String getStatusAsString()
+    {
+        switch(status)
+        {
+            case 1:
+                return SuitePluginManager.Seasons.Status.Active.toString();
+
+            case 2:
+                return SuitePluginManager.Seasons.Status.Started.toString();
+
+            case 3:
+                return SuitePluginManager.Seasons.Status.Finished.toString();
+
+            case 4:
+                return SuitePluginManager.Seasons.Status.Archived.toString();
+
+            default:
+                return SuitePluginManager.Seasons.Status.Inactive.toString();
+        }
+    }
     public void setStatus(Integer status) { this.status = status; }
 
     public Integer getAccount() {

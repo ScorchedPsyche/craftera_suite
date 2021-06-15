@@ -7,6 +7,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseMa
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -63,7 +64,7 @@ public class AFKDatabaseApi
                 + DatabaseTables.AFK.Table.afk_time_end + ",\n"
                 + DatabaseTables.AFK.Table.afk_time_total;
 
-        if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-seasons") && CraftEraSuiteSeasons.seasonManager.current != null )
         {
             sql += ",\n"
                     + DatabaseTables.Achievements.Table.season + "\n";
@@ -75,7 +76,7 @@ public class AFKDatabaseApi
                 + playerAFKModel.afk_time_end + ",\n"
                 + playerAFKModel.afk_time_total;
 
-        if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-seasons") && CraftEraSuiteSeasons.seasonManager.current != null )
         {
             sql += ",\n"
                     + CraftEraSuiteSeasons.seasonManager.current.getId() + "\n";

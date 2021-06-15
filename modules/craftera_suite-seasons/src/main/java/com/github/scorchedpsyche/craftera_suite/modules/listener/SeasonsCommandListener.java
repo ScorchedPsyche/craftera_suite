@@ -65,7 +65,7 @@ public class SeasonsCommandListener implements Listener
                         strBuilder.append("Use \"");
                         strBuilder.append(ChatColor.GOLD);
                         strBuilder.append(ChatColor.BOLD);
-                        strBuilder.append(MessageUtil.formattedCommand("/ces seasons edit_selected ..."));
+                        strBuilder.append(MessageUtil.formattedCommand("/ces seasons selected edit ..."));
                         strBuilder.append(ChatColor.RESET);
                         strBuilder.append("\" to edit it's properties.");
 
@@ -315,28 +315,39 @@ public class SeasonsCommandListener implements Listener
                                                             PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
                                                                     "No season is currently selected for editing.");
                                                         } else {
-                                                            // Check if season is inactive (can't activate if not)
-                                                            if (seasonManager.selected.getStatus() == SuitePluginManager.Seasons.Status.Inactive.ordinal())
+                                                            // Check if there isn't already an active/current season
+                                                            if ( seasonManager.current == null)
                                                             {
-                                                                // Season is finished. Update it
-                                                                seasonManager.selected.setStatus(SuitePluginManager.Seasons.Status.Active.ordinal());
-
-                                                                if (seasonManager.updateSeason(seasonManager.selected))
+                                                                // No current season. Check if season is inactive (can't activate if not)
+                                                                if (seasonManager.selected.getStatus() == SuitePluginManager.Seasons.Status.Inactive.ordinal())
                                                                 {
-                                                                    PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
-                                                                            ChatColor.GREEN + "Season " + seasonManager.selected.getNumber()
-                                                                                    + " is now ACTIVE! It can now collect data (if it's configured to) and can now be started.");
+                                                                    // Season is inactive. Update it and set it to current
+                                                                    seasonManager.selected.setStatus(SuitePluginManager.Seasons.Status.Active.ordinal());
+                                                                    seasonManager.current = seasonManager.selected;
+
+                                                                    if (seasonManager.updateSeason(seasonManager.selected))
+                                                                    {
+                                                                        PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+                                                                                ChatColor.GREEN + "Season " + seasonManager.selected.getNumber()
+                                                                                        + " is now ACTIVE! It can now collect data (if it's configured to) and can now be started.");
+                                                                    } else {
+                                                                        // Update failed
+                                                                        PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+                                                                                ChatColor.RED + "Failed to update season's status. Contact server admin!");
+                                                                    }
                                                                 } else {
-                                                                    // Update failed
+                                                                    // Season not active
                                                                     PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
-                                                                            ChatColor.RED + "Failed to update season's status. Contact server admin!");
+                                                                            ChatColor.RED + "Cannot activate a season that's not in "
+                                                                                    + ChatColor.YELLOW + SuitePluginManager.Seasons.Status.Inactive.toString()
+                                                                                    + ChatColor.RESET + " state!");
                                                                 }
                                                             } else {
-                                                                // Season not active
+                                                                // There already is an active/started season
                                                                 PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
-                                                                        ChatColor.RED + "Cannot activate a season that's not in "
-                                                                                + ChatColor.YELLOW + SuitePluginManager.Seasons.Status.Inactive.toString()
-                                                                                + ChatColor.RESET + " state!");
+                                                                    ChatColor.RED + "There's already an active season: \n" + ChatColor.RESET
+                                                                    + seasonManager.current.getNumber() + " - "+ seasonManager.current.getTitle() + " (" + seasonManager.current.getSubtitle() + ")\n"
+                                                                    + "Status: " + ChatColor.GOLD + seasonManager.current.getStatusAsString());
                                                             }
                                                         }
                                                         break;
@@ -421,6 +432,7 @@ public class SeasonsCommandListener implements Listener
                                                                 if (seasonManager.updateSeason(seasonManager.selected)) {
                                                                     PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
                                                                             ChatColor.GREEN + "Season " + seasonManager.selected.getNumber() + " ENDED!");
+                                                                    seasonManager.current = null;
                                                                 } else {
                                                                     // Update failed
                                                                     PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
@@ -560,18 +572,23 @@ public class SeasonsCommandListener implements Listener
             strBuilder.append(" (" + season.getSubtitle() + ")");
         }
 
+        // Status
+        strBuilder.append("\nStatus: " + ChatColor.YELLOW);
+        strBuilder.append(season.getStatusAsString());
+        strBuilder.append(ChatColor.RESET);
+
         // Recording stats
         if (season.getAccount() == 1) {
-            strBuilder.append(ChatColor.GREEN + "\n Recording stats! (playtime, achievements, etc");
+            strBuilder.append(ChatColor.GREEN + "\nRecording stats! (playtime, achievements, etc");
         } else {
-            strBuilder.append(ChatColor.RED + "\n NOT recording stats. (playtime, achievements, etc");
+            strBuilder.append(ChatColor.RED + "\nNOT recording stats. (playtime, achievements, etc");
         }
 
         // Date & Version stats
         if (season.getDate_start() == 0) {
-            strBuilder.append(ChatColor.YELLOW + "\n Not yet started");
+            strBuilder.append(ChatColor.YELLOW + "\nNot yet started");
         } else {
-            strBuilder.append("Started on " + ChatColor.YELLOW
+            strBuilder.append("\nStarted on " + ChatColor.YELLOW
                     + DateUtil.Time.unixToDate(seasonManager.selected.getDate_start()));
         }
 
