@@ -1,13 +1,8 @@
 package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 public class AchievementModel {
-    public AchievementModel(String playerUUid, String achievement, long date) {
-        this.playerUUid = playerUUid;
-        this.achievement = achievement;
-        this.date = date;
-    }
-
-    public String playerUUid;
-    public String achievement;
-    public long date;
+    public String path;
+    public String title;
+    public String description;
+    public boolean can_be_server_or_season_first;
 }

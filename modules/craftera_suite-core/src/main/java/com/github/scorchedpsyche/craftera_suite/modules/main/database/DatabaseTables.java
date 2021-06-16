@@ -16,6 +16,7 @@ public class DatabaseTables
         {
             public static final String player_uuid = "player_uuid";
             public static final String achievement = "achievement";
+            public static final String server_or_season_first = "server_or_season_first";
             public static final String date = "date";
             public static final String season = "season";
         }

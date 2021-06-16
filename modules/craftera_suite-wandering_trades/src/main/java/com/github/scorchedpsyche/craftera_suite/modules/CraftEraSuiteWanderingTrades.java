@@ -6,6 +6,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.WanderingTrader
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.task.PreloadPlayerHeadsTask;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -81,7 +82,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                     this.onDisable();
                 }
             } else {
-                this.onDisable();
+                ConsoleUtil.logError(SuitePluginManager.Achievements.Name.full,
+                        "Failed to create plugin's root folder. Disabling!");
             }
         } else {
             // Core dependency missing! Display error and disable plugin
