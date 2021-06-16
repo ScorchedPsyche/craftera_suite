@@ -25,10 +25,16 @@ Plugin names are a work-in-progress and might change in the future.
 ### Achievements 
 Achievements such as server-first and custom ones. 
 
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla player personal achievement accounting (0/80 advancements done);`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Vanilla server-first achievement accounting;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasons module support: achievements resets on new Season and old ones are archived.`
-  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla player personal achievement accounting (91/91 advancements done);`  
+![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla server-first achievement accounting;`  
+![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Seasons module support: achievements resets on new Season and old ones are archived.`
+
+### AFK
+Enables AFK detection and AFK data telemetry on the server.
+
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Mark player as AFK on TAB;`  
+![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Seasons module support: AFK telemetry based on season.`
+
 ### Baby Entities 
 Prevents entities from becoming their adult variant.  
   
@@ -104,7 +110,7 @@ Enables Season support for the CraftEra Suite. Useful when you reset your server
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Starter season on DB creation;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Season commands.`
+![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Season commands.`
  
 ### Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
