@@ -10,10 +10,10 @@
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
-    <artifactId>craftera_suite-achievements</artifactId>
-    <name>craftera_suite-achievements</name>
+    <artifactId>craftera_suite-statistics</artifactId>
+    <name>craftera_suite-statistics</name>
     <version>0.0.1</version>
-    <description>Player personal and server-first achievement management system.</description>
+    <description>Records gameplay telemetry.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <dependencies>

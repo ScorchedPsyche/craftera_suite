@@ -1,0 +1,10 @@
+name: craftera_suite-statistics
+version: ${project.version}
+depend: [ craftera_suite-core ]
+softdepend: [ craftera_suite-seasons ]
+main: craftera_suite.craftera_suite_statistics.CrafteraSuiteStatistics
+api-version: 1.17
+prefix: CraftEra Suite - Statistics
+authors: [ ScorchedPsyche ]
+description: Records gameplay telemetry.
+website: https://github.com/ScorchedPsyche
