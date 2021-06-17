@@ -122,29 +122,33 @@ public class PlayerHudManager
             rotation += 360.0;
         }
 
-        if( rotation > 22.5 && rotation <= 67.5 )
+        if( rotation < 22.5 )
+        {
+            orientation.append("N");
+        } else if ( rotation < 67.5 )
         {
             orientation.append("NE");
-        } else if ( rotation > 67.5 && rotation <= 112.5 )
+        } else if ( rotation < 112.55 )
         {
             orientation.append("E");
-        } else if ( rotation > 112.5 && rotation <= 157.5 )
+        } else if ( rotation < 157.5 )
         {
             orientation.append("SE");
-        } else if ( rotation > 157.5 && rotation <= 202.5 )
+        } else if ( rotation < 202.5 )
         {
             orientation.append("S");
-        } else if ( rotation > 202.5 && rotation <= 247.5 )
+        } else if ( rotation < 247.5 )
         {
             orientation.append("SW");
-        } else if ( rotation > 247.5 && rotation <= 292.5 )
+        } else if ( rotation < 292.5 )
         {
             orientation.append("W");
-        } else if ( rotation > 292.5 && rotation <= 337.5 )
+        } else if ( rotation < 337.5 )
         {
             orientation.append("NW");
-        } else {
-            orientation.append("NE");
+        } else
+        {
+            orientation.append("N");
         }
 
         if( preferences.colorizePlayerOrientation() )
