@@ -122,7 +122,12 @@ Spectator mode with range limit configurable by admin or with automatic view ran
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Recent movement prevention check: to avoid abuse if falling from deadly height;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Waypoint ability: visual marker the player can make while in spectator mode. Useful for the player to have a heading of where they were looking at.`
-  
+
+### Statistics
+Gather gameplay telemetry.
+
+**Features:**  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Login/logout telemetry.`  
 ### Streaming Support  
 Enables interactivity between your member's audience and their streaming audience.  
   
