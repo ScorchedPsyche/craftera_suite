@@ -126,12 +126,19 @@ public class AFKManager {
     }
 
     public void disable() {
-        updatePlayersAFKState();
-
         // Iterate through all players
         for (Map.Entry<UUID, PlayerAFKModel> entry : players.entrySet())
         {
-            playerLogout( Bukkit.getPlayer(entry.getKey()) );
+            Player player = Bukkit.getPlayer(entry.getValue().getPlayer().getUniqueId());
+
+            // Check if player fetch was successful
+            if (player != null) {
+                // Increase timer
+                playerLogout( player );
+            } else {
+                ConsoleUtil.logError(SuitePluginManager.Statistics.Name.full,
+                        "Failed to disable AFK Manager. Report to developer!");
+            }
         }
     }
 }

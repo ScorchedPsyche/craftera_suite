@@ -21,11 +21,11 @@ public class SpectatorDatabaseAPI
     public boolean setupAndVerifySqlTable()
     {
         // Check if table exists
-        if( !DatabaseManager.database.tableExists( DatabaseTables.SpectatorMode.player_data_TABLENAME ) )
+        if( !DatabaseManager.database.tableExists( DatabaseTables.SpectatorMode.table_name) )
         {
             // Doesn't exists. Create it
             if ( DatabaseManager.database.executeSql(
-                    "CREATE TABLE " + DatabaseTables.SpectatorMode.player_data_TABLENAME + "(\n"
+                    "CREATE TABLE " + DatabaseTables.SpectatorMode.table_name + "(\n"
                             + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                             + "	" + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid + " TEXT UNIQUE NOT NULL,\n"
                             + "	" + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " NUMERIC DEFAULT 0,\n"
@@ -39,13 +39,13 @@ public class SpectatorDatabaseAPI
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.SpectatorMode.Name.full,
-                        "Table successfully created: " + DatabaseTables.SpectatorMode.player_data_TABLENAME);
+                        "Table successfully created: " + DatabaseTables.SpectatorMode.table_name);
                 return true;
             }
 
             // If we got here table creation failed
             ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
-                    "Failed to create table: " + DatabaseTables.SpectatorMode.player_data_TABLENAME);
+                    "Failed to create table: " + DatabaseTables.SpectatorMode.table_name);
 
             return false;
         }
@@ -80,7 +80,7 @@ public class SpectatorDatabaseAPI
 
     public SpectatorPlayerDataModel enableSpectatorModeForPlayer(Player player)
     {
-        String sql = "INSERT INTO " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
+        String sql = "INSERT INTO " + DatabaseTables.SpectatorMode.table_name +
                 " ("
                 + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid + ", "
                 + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + ", "
@@ -110,7 +110,7 @@ public class SpectatorDatabaseAPI
 
         if( DatabaseManager.database.executeSql(sql) )
         {
-            sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
+            sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                     " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid +
                     " = '" + player.getUniqueId() + "'";
 
@@ -142,12 +142,12 @@ public class SpectatorDatabaseAPI
 
     public SpectatorPlayerDataModel disableSpectatorModeForPlayer(Player player)
     {
-        String sql = "UPDATE " + DatabaseTables.SpectatorMode.player_data_TABLENAME + " SET "
+        String sql = "UPDATE " + DatabaseTables.SpectatorMode.table_name + " SET "
                 + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " = 0 WHERE player_uuid='" + player.getUniqueId().toString() + "'";
 
         DatabaseManager.database.executeSql(sql);
 
-        sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
+        sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                 " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid +
                 " = '" + player.getUniqueId() + "'";
 
@@ -172,7 +172,7 @@ public class SpectatorDatabaseAPI
     @Nullable
     public List<SpectatorPlayerDataModel> fetchAllPlayersWithSpectatorModeEnabled()
     {
-        String sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
+        String sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                 " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " = 1";
 
         try (Connection conn = DriverManager.getConnection(
@@ -203,7 +203,7 @@ public class SpectatorDatabaseAPI
 
     public SpectatorPlayerDataModel fetchPlayer(String uuid)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.player_data_TABLENAME +
+        String sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                 " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid + " = '" + uuid + "'";
 
         try (Connection conn = DriverManager.getConnection(

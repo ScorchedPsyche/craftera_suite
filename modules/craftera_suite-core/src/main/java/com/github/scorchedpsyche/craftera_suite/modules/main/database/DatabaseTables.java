@@ -10,7 +10,7 @@ public class DatabaseTables
     private static final String spectatorModePrefix = "spectator_mode_";
 
     public static class Achievements {
-        public static final String achievements_TABLENAME = "achievements";
+        public static final String table_name = "achievements";
 
         public static class Table
         {
@@ -23,7 +23,7 @@ public class DatabaseTables
     }
 
     public static class AFK {
-        public static final String afk_TABLENAME = "afk";
+        public static final String table_name = "afk";
 
         public static class Table
         {
@@ -76,9 +76,7 @@ public class DatabaseTables
     }
 
     public static class Seasons {
-        public static final String seasons_TABLENAME = "seasons";
-        public static final String list_TABLENAME = seasonsPrefix + "list";
-        public static final String status_TABLENAME = seasonsPrefix + "status";
+        public static final String table_name = "seasons";
 
         public static class Table
         {
@@ -111,7 +109,7 @@ public class DatabaseTables
     }
 
     public static class SpectatorMode {
-        public static final String player_data_TABLENAME = spectatorModePrefix + "player_data";
+        public static final String table_name = spectatorModePrefix + "player_data";
 
         public static class PlayerDataTable
         {
@@ -123,6 +121,19 @@ public class DatabaseTables
             public static final String z = "z";
             public static final String world = "world";
             public static final String environment = "environment";
+        }
+    }
+
+    public static class Statistics {
+        public static final String table_name = "statistics";
+
+        public static class Table
+        {
+            public static final String player_uuid = "player_uuid";
+            public static final String date_login = "date_login";
+            public static final String date_logout = "date_logout";
+            public static final String time_spent_online = "time_spent_online";
+            public static final String season = "season";
         }
     }
 }

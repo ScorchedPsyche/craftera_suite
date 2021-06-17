@@ -97,17 +97,13 @@ public class SuitePluginManager {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
 
-        public static enum Status
+        public enum Status
         {
             Inactive,
             Active,
             Started,
             Finished,
             Archived
-//            public static final String open = "open";
-//            public static final String active = "active";
-//            public static final String finished = "finished";
-//            public static final String archived = "archived";
         }
 
         public static class Permissions {
@@ -134,6 +130,20 @@ public class SuitePluginManager {
             {
                 public static final long period = 5L;
             }
+        }
+    }
+
+    public static class Statistics
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Statistics";
+            public static final String full = "CraftEra Suite - Statistics";
+            public static final String pomXml = "craftera_suite-statistics";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
     }
 

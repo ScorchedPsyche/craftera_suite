@@ -26,7 +26,7 @@ public class SeasonManager {
     public SeasonModel createSeason(int number, String title, String subtitle, int status,
                              boolean account, long date_start, long date_end, String version_start, String version_end)
     {
-        String sql = "INSERT INTO " + DatabaseTables.Seasons.seasons_TABLENAME + " ("
+        String sql = "INSERT INTO " + DatabaseTables.Seasons.table_name + " ("
                 + DatabaseTables.Seasons.Table.number + ", "
                 + DatabaseTables.Seasons.Table.title + ", "
                 + DatabaseTables.Seasons.Table.subtitle + ", "
@@ -49,7 +49,7 @@ public class SeasonManager {
 
         if ( DatabaseManager.database.executeSql(sql) )
         {
-            sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME +
+            sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                     " ORDER BY id DESC LIMIT 1";
 
             try (Connection conn = DriverManager.getConnection(
@@ -82,7 +82,7 @@ public class SeasonManager {
     @Nullable
     public SeasonModel fetchActiveSeason()
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME +
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                 " WHERE status = " + SuitePluginManager.Seasons.Status.Active.ordinal() + " LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(
@@ -117,7 +117,7 @@ public class SeasonManager {
 
     public boolean deleteSeason(int id)
     {
-        String sql = "DELETE FROM " + DatabaseTables.Seasons.seasons_TABLENAME
+        String sql = "DELETE FROM " + DatabaseTables.Seasons.table_name
                 + " WHERE id=" + id;
 
         return DatabaseManager.database.executeSql(sql);
@@ -125,7 +125,7 @@ public class SeasonManager {
 
     public boolean updateSeason(SeasonModel season)
     {
-        String sql = "UPDATE " + DatabaseTables.Seasons.seasons_TABLENAME + " SET "
+        String sql = "UPDATE " + DatabaseTables.Seasons.table_name + " SET "
                 + DatabaseTables.Seasons.Table.number + " = " + season.getNumber() + ", "
                 + DatabaseTables.Seasons.Table.title + " = '" + season.getTitle() + "', "
                 + DatabaseTables.Seasons.Table.subtitle + " = '" + season.getSubtitle() + "', "
@@ -155,7 +155,7 @@ public class SeasonManager {
     @Nullable
     public SeasonModel fetchSeason(int season_number)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME +
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                 " WHERE number = " + season_number + " LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(
@@ -179,7 +179,7 @@ public class SeasonManager {
     @Nullable
     public List<SeasonModel> fetchListingByPage(int page_number)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME +
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                 " LIMIT 9 OFFSET " + (page_number * 9) ;
 
         try (Connection conn = DriverManager.getConnection(

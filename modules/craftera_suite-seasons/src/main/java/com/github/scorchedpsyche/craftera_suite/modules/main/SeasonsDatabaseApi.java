@@ -5,8 +5,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTa
 import com.github.scorchedpsyche.craftera_suite.modules.model.SeasonModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
-import com.github.scorchedpsyche.craftera_suite.modules.util.DateUtil;
-import com.github.scorchedpsyche.craftera_suite.modules.util.GameUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
@@ -16,11 +14,11 @@ public class SeasonsDatabaseApi
     public boolean setupAndVerifySqlTable()
     {
         // Check if Seasons table exists
-        if( !DatabaseManager.database.tableExists( DatabaseTables.Seasons.seasons_TABLENAME ) )
+        if( !DatabaseManager.database.tableExists( DatabaseTables.Seasons.table_name) )
         {
             // Doesn't exists. Create it
             if ( DatabaseManager.database.executeSql(
-                    "CREATE TABLE " + DatabaseTables.Seasons.seasons_TABLENAME + "(\n"
+                    "CREATE TABLE " + DatabaseTables.Seasons.table_name + "(\n"
                             + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                             + "	" + DatabaseTables.Seasons.Table.number + " NUMERIC DEFAULT 1 UNIQUE NOT NULL,\n"
                             + "	" + DatabaseTables.Seasons.Table.title + " TEXT,\n"
@@ -35,9 +33,9 @@ public class SeasonsDatabaseApi
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Seasons.Name.full,
-                                        "Table successfully created: " + DatabaseTables.Seasons.seasons_TABLENAME);
+                                        "Table successfully created: " + DatabaseTables.Seasons.table_name);
 
-                String sql = "INSERT INTO " + DatabaseTables.Seasons.seasons_TABLENAME + " ("
+                String sql = "INSERT INTO " + DatabaseTables.Seasons.table_name + " ("
                         + DatabaseTables.Seasons.Table.number + ", "
                         + DatabaseTables.Seasons.Table.title + ", "
                         + DatabaseTables.Seasons.Table.subtitle + ", "
@@ -68,7 +66,7 @@ public class SeasonsDatabaseApi
 
             // If we got here table creation failed
             ConsoleUtil.logError( SuitePluginManager.Seasons.Name.full,
-                                   "Failed to create table: " + DatabaseTables.Seasons.seasons_TABLENAME);
+                                   "Failed to create table: " + DatabaseTables.Seasons.table_name);
 
             return false;
         }
@@ -80,7 +78,7 @@ public class SeasonsDatabaseApi
     @Nullable
     public SeasonModel fetchCurrentSeason()
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME + " WHERE "
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name + " WHERE "
                 + DatabaseTables.Seasons.Table.status + " = " + SuitePluginManager.Seasons.Status.Started.ordinal()
                 + " OR "
                 + DatabaseTables.Seasons.Table.status + " = " + SuitePluginManager.Seasons.Status.Active.ordinal()
@@ -108,7 +106,7 @@ public class SeasonsDatabaseApi
     @Nullable
     public Integer fetchNextAvailableSeasonNumber()
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Seasons.seasons_TABLENAME + " ORDER BY "
+        String sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name + " ORDER BY "
                 + DatabaseTables.Seasons.Table.number + " DESC ";
 
         try (Connection conn = DriverManager.getConnection(

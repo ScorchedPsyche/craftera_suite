@@ -18,8 +18,6 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
         // Check if Core dependency was loaded
         if( SuitePluginManager.Core.isEnabled() )
         {
@@ -29,9 +27,11 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
             if( afkDatabaseApi.setupAndVerifySqlTable() )
             {
                 afkManager = new AFKManager(afkDatabaseApi);
+
                 // Add online players to AFK manager
                 for (Player player  : Bukkit.getOnlinePlayers() )
                 {
+                    // Start their AFK timer (when plugin is reloaded a new entry is added)
                     afkManager.startOrResetAFKTimerForPlayer(player);
                 }
 

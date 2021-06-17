@@ -20,10 +20,10 @@ public class AchievementsDatabaseApi
     public boolean setupAndVerifySqlTable()
     {
         // Check if Achievements table exists
-        if( !DatabaseManager.database.tableExists( DatabaseTables.Achievements.achievements_TABLENAME ) )
+        if( !DatabaseManager.database.tableExists( DatabaseTables.Achievements.table_name) )
         {
             String sql = "CREATE TABLE "
-                    + DatabaseTables.Achievements.achievements_TABLENAME + "(\n"
+                    + DatabaseTables.Achievements.table_name + "(\n"
                     + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                     + "	" + DatabaseTables.Achievements.Table.player_uuid + " TEXT NOT NULL,\n"
                     + "	" + DatabaseTables.Achievements.Table.achievement + " TEXT NOT NULL,\n"
@@ -43,13 +43,13 @@ public class AchievementsDatabaseApi
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
-                                        "Table successfully created: " + DatabaseTables.Achievements.achievements_TABLENAME);
+                                        "Table successfully created: " + DatabaseTables.Achievements.table_name);
                 return true;
             }
 
             // If we got here table creation failed
             ConsoleUtil.logError( SuitePluginManager.Achievements.Name.full,
-                                   "Failed to create table: " + DatabaseTables.Achievements.achievements_TABLENAME);
+                                   "Failed to create table: " + DatabaseTables.Achievements.table_name);
 
             return false;
         }
@@ -60,7 +60,7 @@ public class AchievementsDatabaseApi
 
     public void addAchievementForPlayerIfNotExists(UUID playerUUID, AchievementModel achievement)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Achievements.achievements_TABLENAME + " WHERE "
+        String sql = "SELECT * FROM " + DatabaseTables.Achievements.table_name + " WHERE "
             + DatabaseTables.Achievements.Table.player_uuid + " = '" + playerUUID + "' AND \n"
             + DatabaseTables.Achievements.Table.achievement + " = '" + achievement.path + "'\n";
 
@@ -80,7 +80,7 @@ public class AchievementsDatabaseApi
             if( DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 // Not added. Must add it
-                sql = "INSERT INTO " + DatabaseTables.Achievements.achievements_TABLENAME + " (\n"
+                sql = "INSERT INTO " + DatabaseTables.Achievements.table_name + " (\n"
                         + DatabaseTables.Achievements.Table.player_uuid + ",\n"
                         + DatabaseTables.Achievements.Table.achievement + ",\n"
                         + DatabaseTables.Achievements.Table.server_or_season_first + ",\n"
@@ -161,7 +161,7 @@ public class AchievementsDatabaseApi
     public boolean canAchievementBeServerOrSeasonFirst(String achievementPath)
     {
         // Check if the achievement is server/season first
-        String sql = "SELECT * FROM " + DatabaseTables.Achievements.achievements_TABLENAME + " WHERE "
+        String sql = "SELECT * FROM " + DatabaseTables.Achievements.table_name + " WHERE "
                 + DatabaseTables.Achievements.Table.achievement + " = '" + achievementPath + "'\n";
 
         if( SuitePluginManager.Seasons.isEnabled() && CraftEraSuiteSeasons.seasonManager.current != null )

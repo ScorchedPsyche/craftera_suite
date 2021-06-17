@@ -1,30 +1,30 @@
-package com.github.scorchedpsyche.craftera_suite.modules.craftera_suite_afk.main;
+package craftera_suite.craftera_suite_statistics.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteSeasons;
-import com.github.scorchedpsyche.craftera_suite.modules.craftera_suite_afk.model.PlayerAFKModel;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
+import craftera_suite.craftera_suite_statistics.model.PlayerLoginModel;
 import org.bukkit.Bukkit;
 
 import java.sql.*;
 
-public class AFKDatabaseApi
+public class StatisticsDatabaseApi
 {
     public boolean setupAndVerifySqlTable()
     {
-        // Check if AFK table exists
-        if( !DatabaseManager.database.tableExists( DatabaseTables.AFK.table_name) )
+        // Check if Statistics table exists
+        if( !DatabaseManager.database.tableExists( DatabaseTables.Statistics.table_name) )
         {
             String sql = "CREATE TABLE "
-                    + DatabaseTables.AFK.table_name + "(\n"
+                    + DatabaseTables.Statistics.table_name + "(\n"
                     + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                    + "	" + DatabaseTables.AFK.Table.player_uuid + " TEXT NOT NULL,\n"
-                    + "	" + DatabaseTables.AFK.Table.afk_time_start + " INTEGER NOT NULL,\n"
-                    + "	" + DatabaseTables.AFK.Table.afk_time_end + " INTEGER,\n"
-                    + "	" + DatabaseTables.AFK.Table.afk_time_total + " INTEGER";
+                    + "	" + DatabaseTables.Statistics.Table.player_uuid + " TEXT NOT NULL,\n"
+                    + "	" + DatabaseTables.Statistics.Table.date_login + " INTEGER NOT NULL,\n"
+                    + "	" + DatabaseTables.Statistics.Table.date_logout + " INTEGER,\n"
+                    + "	" + DatabaseTables.Statistics.Table.time_spent_online + " INTEGER";
 
             if( SuitePluginManager.Seasons.isEnabled() )
             {
@@ -39,13 +39,13 @@ public class AFKDatabaseApi
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
-                                        "Table successfully created: " + DatabaseTables.AFK.table_name);
+                                        "Table successfully created: " + DatabaseTables.Statistics.table_name);
                 return true;
             }
 
             // If we got here table creation failed
             ConsoleUtil.logError( SuitePluginManager.Achievements.Name.full,
-                                   "Failed to create table: " + DatabaseTables.AFK.table_name);
+                                   "Failed to create table: " + DatabaseTables.Statistics.table_name);
 
             return false;
         }
@@ -54,14 +54,14 @@ public class AFKDatabaseApi
         return true;
     }
 
-    public void addAFKForPlayerIfNotExists(PlayerAFKModel playerAFKModel)
+    public void addLoginForPlayerIfNotExists(PlayerLoginModel playerLoginModel)
     {
         // Not added. Must add it
-        String sql = "INSERT INTO " + DatabaseTables.AFK.table_name + " (\n"
-                + DatabaseTables.AFK.Table.player_uuid + ",\n"
-                + DatabaseTables.AFK.Table.afk_time_start + ",\n"
-                + DatabaseTables.AFK.Table.afk_time_end + ",\n"
-                + DatabaseTables.AFK.Table.afk_time_total;
+        String sql = "INSERT INTO " + DatabaseTables.Statistics.table_name + " (\n"
+                + DatabaseTables.Statistics.Table.player_uuid + ",\n"
+                + DatabaseTables.Statistics.Table.date_login + ",\n"
+                + DatabaseTables.Statistics.Table.date_logout + ",\n"
+                + DatabaseTables.Statistics.Table.time_spent_online;
 
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-seasons") && CraftEraSuiteSeasons.seasonManager.current != null )
         {
@@ -70,10 +70,10 @@ public class AFKDatabaseApi
         }
 
         sql += ") VALUES (\n"
-                + "'" + playerAFKModel.getPlayer().getUniqueId().toString() + "',\n"
-                + playerAFKModel.afk_time_start + ",\n"
-                + playerAFKModel.afk_time_end + ",\n"
-                + playerAFKModel.afk_time_total;
+                + "'" + playerLoginModel.getPlayer().getUniqueId().toString() + "',\n"
+                + playerLoginModel.login_time_start + ",\n"
+                + playerLoginModel.login_time_end + ",\n"
+                + playerLoginModel.login_time_total;
 
         if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-seasons") && CraftEraSuiteSeasons.seasonManager.current != null )
         {
@@ -96,7 +96,7 @@ public class AFKDatabaseApi
             {
                 rs.next();
 
-                playerAFKModel.id_from_DB = rs.getInt(1);
+                playerLoginModel.id_from_DB = rs.getInt(1);
             }
         } catch (SQLException e) {
             ConsoleUtil.logError(
@@ -105,12 +105,12 @@ public class AFKDatabaseApi
         }
     }
 
-    public boolean updateAFKTimerForPlayer(PlayerAFKModel player)
+    public boolean updateLoginTimerForPlayer(PlayerLoginModel playerLoginModel)
     {
-        String sql = "UPDATE " + DatabaseTables.AFK.table_name + " SET "
-                + DatabaseTables.AFK.Table.afk_time_end + " = " + player.afk_time_end + ", "
-                + DatabaseTables.AFK.Table.afk_time_total + " = " + player.afk_time_total +
-                " WHERE id = " + player.id_from_DB;
+        String sql = "UPDATE " + DatabaseTables.Statistics.table_name + " SET "
+                + DatabaseTables.Statistics.Table.date_logout + " = " + playerLoginModel.login_time_end + ", "
+                + DatabaseTables.Statistics.Table.time_spent_online + " = " + playerLoginModel.login_time_total +
+                " WHERE id = " + playerLoginModel.id_from_DB;
 
         return DatabaseManager.database.executeSql(sql);
     }
