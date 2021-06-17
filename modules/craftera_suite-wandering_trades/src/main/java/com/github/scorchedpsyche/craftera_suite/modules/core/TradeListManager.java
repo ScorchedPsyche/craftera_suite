@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
-import com.github.scorchedpsyche.craftera_suite.modules.model.TradeModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.TradeListModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.google.gson.Gson;
 
@@ -17,7 +17,7 @@ public class TradeListManager
         loadTradeLists(tradeListsFolder);
     }
 
-    public TradeModel Trades = new TradeModel();
+    public TradeListModel Trades = new TradeListModel();
 
     private void loadTradeLists(String tradeListsFolder)
     {

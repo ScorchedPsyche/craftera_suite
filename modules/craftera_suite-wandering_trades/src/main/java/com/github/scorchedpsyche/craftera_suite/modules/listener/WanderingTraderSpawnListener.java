@@ -12,8 +12,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class WanderingTraderSpawnListener implements Listener
 {
-    private static BukkitTask setMerchantTradesAsyncTask;
-    private static Integer setMerchantTradesSyncTask;
+//    private static BukkitTask setMerchantTradesAsyncTask;
+//    private static Integer setMerchantTradesSyncTask;
 
     @EventHandler
     public void onWanderingTraderSpawned(EntitySpawnEvent event)
@@ -26,30 +26,32 @@ public class WanderingTraderSpawnListener implements Listener
                 MerchantManager.removeDefaultTrades((WanderingTrader) event.getEntity());
             }
 
-            // Set trade asynchronously
-            setMerchantTradesSyncTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
-                    CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
-                        setMerchantTradesAsyncTask = Bukkit.getScheduler().runTaskAsynchronously(
-                                CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
-                                    CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
-                                            (WanderingTrader) event.getEntity() );
-                        });
-            }, 1L);
+            CraftEraSuiteWanderingTrades.merchantManager.setTradesAsync((WanderingTrader) event.getEntity());
+
+//            // Set trade asynchronously
+//            setMerchantTradesSyncTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
+//                    CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+//                        setMerchantTradesAsyncTask = Bukkit.getScheduler().runTaskAsynchronously(
+//                                CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+//                                    CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
+//                                            (WanderingTrader) event.getEntity() );
+//                        });
+//            }, 1L);
         }
     }
 
-    public static void onDisable()
-    {
-        if( setMerchantTradesAsyncTask != null )
-        {
-            setMerchantTradesAsyncTask.cancel();
-            setMerchantTradesAsyncTask = null;
-        }
-
-        if( setMerchantTradesSyncTask != null )
-        {
-            Bukkit.getScheduler().cancelTask(setMerchantTradesSyncTask);
-            setMerchantTradesSyncTask = null;
-        }
-    }
+//    public static void onDisable()
+//    {
+//        if( setMerchantTradesAsyncTask != null )
+//        {
+//            setMerchantTradesAsyncTask.cancel();
+//            setMerchantTradesAsyncTask = null;
+//        }
+//
+//        if( setMerchantTradesSyncTask != null )
+//        {
+//            Bukkit.getScheduler().cancelTask(setMerchantTradesSyncTask);
+//            setMerchantTradesSyncTask = null;
+//        }
+//    }
 }

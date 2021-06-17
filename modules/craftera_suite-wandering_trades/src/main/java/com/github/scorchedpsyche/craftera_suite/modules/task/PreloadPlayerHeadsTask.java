@@ -13,14 +13,5 @@ public class PreloadPlayerHeadsTask extends RunnableModel {
         super.setAsRunning();
         PlayerHeadUtil.preloadPlayerHeads();
         super.cancel();
-//        super.cancelWithOptionalLogMessage();
-//        cancelWithPrefixedLogMessage();
     }
-
-//    public void cancelWithPrefixedLogMessage()
-//    {
-//        ConsoleUtils.logMessage(SuitePluginManager.WanderingTrades.Name.full,
-//                "TASK: PreloadPlayerHeads cancelled");
-//        super.cancel();
-//    }
 }

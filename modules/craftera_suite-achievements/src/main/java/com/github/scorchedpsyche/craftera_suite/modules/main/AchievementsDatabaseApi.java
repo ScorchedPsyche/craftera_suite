@@ -143,7 +143,7 @@ public class AchievementsDatabaseApi
                         // Send message
                         ServerUtil.broadcastWithPluginPrefix(SuitePluginManager.Achievements.Name.compact, textComponent );
                         ServerUtil.playSoundForAllPlayers(Sound.ENTITY_FIREWORK_ROCKET_BLAST);
-                        ParticleUtil.spawnParticleAtEntity(player, Particle.FIREWORKS_SPARK, 20);
+                        ParticleUtil.spawnParticleAtEntity(player, Particle.FIREWORKS_SPARK, 10);
                     }
                 } else {
                     // Failed to add achievement

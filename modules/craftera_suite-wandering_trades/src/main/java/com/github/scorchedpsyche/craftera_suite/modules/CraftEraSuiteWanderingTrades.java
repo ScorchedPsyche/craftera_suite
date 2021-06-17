@@ -3,6 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules;
 import com.github.scorchedpsyche.craftera_suite.modules.core.MerchantManager;
 import com.github.scorchedpsyche.craftera_suite.modules.core.TradeListManager;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.WanderingTraderSpawnListener;
+import com.github.scorchedpsyche.craftera_suite.modules.listener.WhitelistCommandWanderingTraderListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.task.PreloadPlayerHeadsTask;
@@ -50,8 +51,8 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                     add("trade_lists/heads_decoration.json");
                     add("trade_lists/heads_players.json");
                     add("trade_lists/items.json");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration  Heads – Vanilla.csv");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration  Heads – Vanilla.json");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Vanilla.csv");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Vanilla.json");
                     add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Food.csv");
                     add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Food.json");
                     add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Non-Vanilla.csv");
@@ -71,6 +72,12 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
 
                     merchantManager = new MerchantManager();
 
+                    // Listeners
+                    if (CraftEraSuiteWanderingTrades.config.getBoolean("whitelist.enable_synchronization")) // TO DO
+                    {
+                        getServer().getPluginManager().registerEvents(new WhitelistCommandWanderingTraderListener(merchantManager), this);
+
+                    }
                     getServer().getPluginManager().registerEvents(new WanderingTraderSpawnListener(), this);
 
                     // Cache heads so that trades aren't locked until head is loaded when trader is spawned
@@ -96,10 +103,11 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
     @Override
     public void onDisable()
     {
-        WanderingTraderSpawnListener.onDisable();
+//        WanderingTraderSpawnListener.onDisable();
         resourcesManager = null;
         config = null;
         whitelistedPlayerHeads = null;
+        merchantManager.disable();
         merchantManager = null;
         tradeListManager = null;
         preloadPlayerHeadsTask = null;

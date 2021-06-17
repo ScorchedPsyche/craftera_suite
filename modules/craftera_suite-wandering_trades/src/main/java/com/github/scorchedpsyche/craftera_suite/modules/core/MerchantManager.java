@@ -3,6 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.core;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteWanderingTrades;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.TradeEntryModel;
+import com.github.scorchedpsyche.craftera_suite.modules.task.PreloadPlayerHeadsTask;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerHeadUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
@@ -11,10 +12,14 @@ import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.WanderingTrader;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -24,7 +29,7 @@ public class MerchantManager
     private final List<MerchantRecipe> decorationHeads = new ArrayList<>();
     private final List<MerchantRecipe> items = new ArrayList<>();
     private final List<MerchantRecipe> playerHeads = new ArrayList<>();
-    private final List<MerchantRecipe> playerHeadsWhitelisted = new ArrayList<>();
+    private List<MerchantRecipe> playerHeadsWhitelisted = new ArrayList<>();
 
     private List<MerchantRecipe> trades = new ArrayList<>();
 
@@ -32,6 +37,7 @@ public class MerchantManager
     {
         setup();
     }
+//    private boolean are_whitelisted_player_heads_synchronized = false;
 
     /***
      * Setup for the Merchant Manager class which preloads user files and creates static lists from them.
@@ -70,9 +76,11 @@ public class MerchantManager
         ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
                                 "Loaded decoration heads trades");
 
+//        synchronizeWhitelistedPlayersIfNeeded();
         // WHITELISTED Player's Heads synchronization
         if (CraftEraSuiteWanderingTrades.config.getBoolean("whitelist.enable_synchronization")) // TO DO
         {
+//            are_whitelisted_player_heads_synchronized = CraftEraSuiteWanderingTrades.config.getBoolean("whitelist.enable_synchronization");
             // Check if whitelist is empty
             if (Bukkit.hasWhitelist() && Bukkit.getWhitelistedPlayers().size() > 0)
             {
@@ -96,6 +104,115 @@ public class MerchantManager
             }
         }
     }
+
+//    public void playerMightHaveBeenAddedToWhitelist(String playerName)
+//    {
+//        playerHeadsWhitelisted = new ArrayList<>();
+//
+//        // Not added
+//        for (OfflinePlayer offlinePlayer : Bukkit.getWhitelistedPlayers())
+//        {
+//            ConsoleUtil.logWarning("added merchant trade for " + playerName);
+//            loadWhitelistedPlayerHeadRecipe(offlinePlayer);
+//        }
+////        boolean recipe_already_exists = false;
+////
+////        // Try to find the player's head trade recipe on the list
+////        for( MerchantRecipe recipe : playerHeadsWhitelisted )
+////        {
+////            ConsoleUtil.logWarning("checking " + recipe.getResult().getItemMeta().getDisplayName());
+////            ConsoleUtil.logWarning("checking " + recipe.getResult().getItemMeta().getLocalizedName());
+////            if( recipe.getResult().hasItemMeta()
+////                    && recipe.getResult().getItemMeta().hasDisplayName()
+////                    && recipe.getResult().getItemMeta().getDisplayName().equals(playerName) )
+////            {
+////                recipe_already_exists = true;
+////                ConsoleUtil.logWarning("found merchant trade for " + playerName);
+////                break;
+////            }
+////        }
+////
+////        // Check if player's head trade is already added to the list
+////        if( !recipe_already_exists )
+////        {
+////        }
+//    }
+//
+//    public void playerRemovedFromWhitelist(String playerName)
+//    {
+//        for( MerchantRecipe recipe : playerHeadsWhitelisted )
+//        {
+//            if( recipe.getResult().hasItemMeta()
+//                && recipe.getResult().getItemMeta().hasDisplayName()
+//                && recipe.getResult().getItemMeta().getDisplayName().equals(playerName) )
+//            {
+//                playerHeadsWhitelisted.remove(recipe);
+//                ConsoleUtil.logWarning("removed merchant trade for " + playerName);
+//            }
+//        }
+//    }
+
+    public void reloadWhitelist()
+    {
+        playerHeadsWhitelisted = new ArrayList<>();
+
+        // Not added
+        for (OfflinePlayer offlinePlayer : Bukkit.getWhitelistedPlayers())
+        {
+            loadWhitelistedPlayerHeadRecipe(offlinePlayer);
+        }
+
+        CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.run();
+
+//         = new PreloadPlayerHeadsTask(
+//            SuitePluginManager.WanderingTrades.Name.full, "preloadPlayerHeadsTask");
+    }
+
+//    public void synchronizeWhitelistedPlayersIfNeeded()
+//    {
+//        // WHITELISTED Player's Heads synchronization
+//        if (CraftEraSuiteWanderingTrades.config.getBoolean("whitelist.enable_synchronization")) // TO DO
+//        {
+//            // Check if whitelist is empty
+//            if (Bukkit.hasWhitelist() && Bukkit.getWhitelistedPlayers().size() > 0)
+//            {
+//                // Check if config.yml
+//                if ( isConfigYmlMissingWhitelistConfig() )
+//                {
+//                    // Not empty
+//                    playerHeadsWhitelisted = new ArrayList<>();
+//                    for (OfflinePlayer offlinePlayer : Bukkit.getWhitelistedPlayers())
+//                    {
+//                        ConsoleUtil.logWarning(offlinePlayer.getName());
+//                        loadWhitelistedPlayerHeadRecipe(offlinePlayer);
+//                    }
+//                    ConsoleUtil.logMessage(SuitePluginManager.WanderingTrades.Name.full,
+//                            "Loaded whitelisted player heads trades");
+//                }
+//            } else
+//            {
+//                // Empty whitelist
+//                ConsoleUtil.logError(SuitePluginManager.WanderingTrades.Name.full,
+//                        "Whitelist synchronization is ON (check config.yml) but the whitelist is " +
+//                                "empty or doesn't exists");
+//            }
+//        }
+//
+//        if(!CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.isRunning())
+//        {
+//            if( CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.isCancelled() )
+//            {
+//                CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.run();
+//            } else {
+//                CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.runTaskAsynchronously(
+//                        CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class)
+//                );
+//            }
+//        }
+//        CraftEraSuiteWanderingTrades.preloadPlayerHeadsTask.runTaskAsynchronously(
+//                CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class)
+//        );
+//    }
 
     /***
      * Loads item recipe from the files.
@@ -192,26 +309,6 @@ public class MerchantManager
         decorationHead.setItemMeta(decorationHeadMeta);
 
         return decorationHead;
-    }
-
-    private void loadPlayerHeadRecipe(TradeEntryModel trade)
-    {
-        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta meta = (SkullMeta) playerHead.getItemMeta();
-        assert meta != null;
-        meta.setOwningPlayer( Bukkit.getPlayerExact(trade.getOwnerId()) );
-        playerHead.setItemMeta(meta);
-
-        MerchantRecipe recipe = new MerchantRecipe(
-                playerHead,
-                1
-        );
-
-        recipe.addIngredient(new ItemStack(
-                Material.DIAMOND,
-                1));
-
-        playerHeads.add(recipe);
     }
 
     /***
@@ -416,6 +513,30 @@ public class MerchantManager
                                                     ) );
         }
     }
+
+//    public void playerAddedToWhitelist(String playerName)
+//    {
+//        loadWhitelistedPlayerHeadRecipe(playerName);
+//        ConsoleUtil.logWarning("add " + playerName);
+//    }
+//
+//    public void playerRemovedFromWhitelist(String playerName)
+//    {
+//        ConsoleUtil.logWarning("remove " + playerName);
+//        for( MerchantRecipe recipe : playerHeadsWhitelisted )
+//        {
+//            if(recipe.getResult().hasItemMeta() && recipe.getResult().getItemMeta().hasDisplayName())
+//            {
+//                String headName = recipe.getResult().getItemMeta().getDisplayName();
+//                ConsoleUtil.logWarning("[" + playerName + "] == [" + headName +"]");
+//                if(playerName.equals(headName))
+//                {
+//                    ConsoleUtil.logSuccess(playerName);
+////                    playerHeadsWhitelisted.remove()
+//                }
+//            }
+//        }
+//    }
 
     /***
      * Removes Wandering Trader default trades.
@@ -657,6 +778,36 @@ public class MerchantManager
             {
                 trades.add( decorationHeads.get(i) );
             }
+        }
+    }
+
+    private BukkitTask setMerchantTradesAsyncTask;
+    private Integer setMerchantTradesSyncTask;
+    public void setTradesAsync(WanderingTrader merchant)
+    {
+        // Set trade asynchronously
+        setMerchantTradesSyncTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
+                CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+                    setMerchantTradesAsyncTask = Bukkit.getScheduler().runTaskAsynchronously(
+                            CraftEraSuiteWanderingTrades.getPlugin(CraftEraSuiteWanderingTrades.class), () -> {
+                                CraftEraSuiteWanderingTrades.merchantManager.setMerchantTrades(
+                                        merchant );
+                            });
+                }, 1L);
+    }
+
+    public void disable()
+    {
+        if( setMerchantTradesAsyncTask != null )
+        {
+            setMerchantTradesAsyncTask.cancel();
+            setMerchantTradesAsyncTask = null;
+        }
+
+        if( setMerchantTradesSyncTask != null )
+        {
+            Bukkit.getScheduler().cancelTask(setMerchantTradesSyncTask);
+            setMerchantTradesSyncTask = null;
         }
     }
 }

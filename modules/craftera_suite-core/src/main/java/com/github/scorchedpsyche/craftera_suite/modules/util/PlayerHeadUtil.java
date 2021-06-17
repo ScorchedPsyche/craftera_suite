@@ -53,6 +53,7 @@ public class PlayerHeadUtil
         SkullMeta meta = (SkullMeta) playerHead.getItemMeta();
         assert meta != null;
         meta.setOwningPlayer( player );
+        meta.setDisplayName( player.getName() );
 
         playerHead.setItemMeta( meta );
 
