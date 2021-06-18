@@ -1,12 +1,15 @@
 package com.github.scorchedpsyche.craftera_suite.modules.listener;
 
+import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.SeasonModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.*;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,8 +39,8 @@ public class SeasonsCommandListener implements Listener
                     // Attempt to create new season
                     season = seasonManager.createSeason(
                             seasonManager.getNextAvailableSeasonNumber(),
-                            "Untitled Season",
-                            "",
+                            "No Title",
+                            "I Hate Subtitles!",
                             SuitePluginManager.Seasons.Status.Inactive.ordinal(),
                             true,
                             0,
@@ -80,11 +83,57 @@ public class SeasonsCommandListener implements Listener
                     break;
 
                 case "current": // /ces seasons current
+                    // Check if there's a current season
                     if (seasonManager.current == null) {
+                        // No current season
                         PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
                                 "No active season was found.");
                     } else {
                         displaySeasonInfo(event.getPlayer(), seasonManager.current);
+
+//                        // There's a current season. Check args
+//                        if (args.length > 1)
+//                        {
+//                            // Must check if season is on ACTIVE state
+//                            if( seasonManager.current.getStatus() == SuitePluginManager.Seasons.Status.Active.ordinal() )
+//                            {
+//                                switch(args[1])
+//                                {
+//                                    case "prepareForStartWithCountdownAndDisablePlayerCapacityToCompleteAchievements":
+//                                        seasonManager.current.setAccount(0);
+//                                        seasonManager.updateSeason(seasonManager.current);
+//                                        break;
+//
+//                                    case "startWithCountdownAndEnableAchievementsAfterCountdownEnds":
+//                                        seasonManager.current.setAccount(1);
+//                                        seasonManager.current.setStatus(SuitePluginManager.Seasons.Status.Started.ordinal());
+//                                        seasonManager.current.setDate_start(DateUtil.Time.getUnixNow());
+//                                        seasonManager.current.setMinecraft_version_start(GameUtil.Version.getCurrent());
+//
+//                                        if (seasonManager.updateSeason(seasonManager.selected))
+//                                        {
+//                                            PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+//                                                    ChatColor.GREEN + "Season " + seasonManager.selected.getNumber() + " STARTED!");
+//                                        } else {
+//                                            // Update failed
+//                                            PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+//                                                    ChatColor.RED + "Failed to update season's status. Contact server admin!");
+//                                        }
+//                                        break;
+//
+//                                    default:
+//                                        // TODO: display current help
+//                                        break;
+//                                }
+//                            } else {
+//                                // Season not in ACTIVE state. Cannot proceed
+//                                PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+//                                        ChatColor.RED +"Season must be in ACTIVE state to use this command.");
+//                            }
+//                        } else {
+//                            // No args. Display current season info
+//                            displaySeasonInfo(event.getPlayer(), seasonManager.current);
+//                        }
                     }
                     break;
 
@@ -399,8 +448,51 @@ public class SeasonsCommandListener implements Listener
 
                                                                 if (seasonManager.updateSeason(seasonManager.selected))
                                                                 {
-                                                                    PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
-                                                                            ChatColor.GREEN + "Season " + seasonManager.selected.getNumber() + " STARTED!");
+                                                                    StringBuilder title = new StringBuilder();
+                                                                    title.append(ChatColor.RED);
+                                                                    title.append("S");
+                                                                    title.append(seasonManager.selected.getNumber());
+                                                                    title.append(ChatColor.RESET);
+                                                                    if( !StringUtil.isNullOrEmpty(seasonManager.selected.getTitle()) )
+                                                                    {
+                                                                        title.append(ChatColor.YELLOW);
+                                                                        title.append(seasonManager.selected.getTitle());
+                                                                    }
+
+                                                                    StringBuilder subtitle = new StringBuilder();
+                                                                    subtitle.append(ChatColor.AQUA);
+                                                                    subtitle.append(seasonManager.selected.getSubtitle());
+
+                                                                    for(Player player : Bukkit.getOnlinePlayers())
+                                                                    {
+                                                                        player.sendTitle( title.toString(), subtitle.toString(), 10, 200, 20);
+                                                                        player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1, 0);
+                                                                    }
+                                                                    StringBuilder broadcast = new StringBuilder();
+                                                                    broadcast.append(ChatColor.RED);
+                                                                    broadcast.append("S");
+                                                                    broadcast.append(seasonManager.selected.getNumber());
+                                                                    broadcast.append(ChatColor.RESET);
+                                                                    if( !StringUtil.isNullOrEmpty(seasonManager.selected.getTitle()) )
+                                                                    {
+                                                                        broadcast.append(" ");
+                                                                        broadcast.append(ChatColor.YELLOW);
+                                                                        broadcast.append(seasonManager.selected.getTitle());
+                                                                        broadcast.append(ChatColor.RESET);
+                                                                    }
+                                                                    if( !StringUtil.isNullOrEmpty(seasonManager.selected.getSubtitle()) )
+                                                                    {
+                                                                        broadcast.append(" ");
+                                                                        broadcast.append(ChatColor.AQUA);
+                                                                        broadcast.append(seasonManager.selected.getSubtitle());
+                                                                        broadcast.append(ChatColor.RESET);
+                                                                    }
+
+                                                                    broadcast.append(" has started. GL & HF!");
+
+                                                                    ServerUtil.broadcast(broadcast.toString());
+//                                                                    PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
+//                                                                            ChatColor.GREEN + "Season " + seasonManager.selected.getNumber() + " STARTED!");
                                                                 } else {
                                                                     // Update failed
                                                                     PlayerUtil.sendMessageWithPluginPrefix(event.getPlayer(), SuitePluginManager.Seasons.Name.compact,
@@ -564,32 +656,42 @@ public class SeasonsCommandListener implements Listener
 
         // Title
         if (!StringUtil.isNullOrEmpty(season.getTitle())) {
-            strBuilder.append(": " + season.getTitle());
+            strBuilder.append(": ");
+            strBuilder.append(season.getTitle());
         }
 
         // Subtitle
         if (!StringUtil.isNullOrEmpty(season.getSubtitle())) {
-            strBuilder.append(" (" + season.getSubtitle() + ")");
+            strBuilder.append(" (");
+            strBuilder.append(season.getSubtitle());
+            strBuilder.append(")");
         }
 
         // Status
-        strBuilder.append("\nStatus: " + ChatColor.YELLOW);
+        strBuilder.append("\nStatus: ");
+        strBuilder.append(ChatColor.YELLOW);
         strBuilder.append(season.getStatusAsString());
         strBuilder.append(ChatColor.RESET);
 
         // Recording stats
         if (season.getAccount() == 1) {
-            strBuilder.append(ChatColor.GREEN + "\nRecording stats! (playtime, achievements, etc");
+            strBuilder.append(ChatColor.GREEN);
+            strBuilder.append( "\nRecording stats!");
         } else {
-            strBuilder.append(ChatColor.RED + "\nNOT recording stats. (playtime, achievements, etc");
+            strBuilder.append(ChatColor.RED);
+            strBuilder.append("\nNOT recording stats!");
         }
+        strBuilder.append(ChatColor.RESET);
+        strBuilder.append(" (playtime, achievements, etc)");
 
         // Date & Version stats
         if (season.getDate_start() == 0) {
-            strBuilder.append(ChatColor.YELLOW + "\nNot yet started");
+            strBuilder.append(ChatColor.YELLOW);
+            strBuilder.append("\nNot yet started");
         } else {
-            strBuilder.append("\nStarted on " + ChatColor.YELLOW
-                    + DateUtil.Time.unixToDate(seasonManager.selected.getDate_start()));
+            strBuilder.append("\nStarted on ");
+            strBuilder.append(ChatColor.YELLOW);
+            strBuilder.append(DateUtil.Time.unixToDate(season.getDate_start()));
         }
 
         PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Seasons.Name.compact,

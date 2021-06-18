@@ -204,4 +204,9 @@ public class SeasonManager {
 
         return null;
     }
+
+//    public void prepareForStartWithCountdown(SeasonModel current)
+//    {
+//
+//    }
 }

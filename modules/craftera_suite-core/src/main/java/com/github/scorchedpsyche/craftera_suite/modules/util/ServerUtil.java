@@ -8,6 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Text;
 
 import java.util.UUID;
 
@@ -18,6 +19,9 @@ public class ServerUtil {
     public static void broadcastWithPluginPrefix(@NotNull String prefix, TextComponent message) {
         message.setText(ChatColor.GOLD + "[" + prefix + "] " + ChatColor.RESET + message.getText());
         Bukkit.getServer().spigot().broadcast(message);
+    }
+    public static void broadcast(String message) {
+        Bukkit.getServer().spigot().broadcast(TextComponent.fromLegacyText(message));
     }
 
 

@@ -8,16 +8,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class RunnableModel extends BukkitRunnable {
     public RunnableModel(String prefix, String name) {
-        this.setStartAndCancelMessages(prefix, name);
-//        this.name = name;
-//        this.prefix = prefix;
+        this.name = name;
+        this.prefix = prefix;
+        this.setStartAndCancelMessages(name);
     }
 
-//    private String prefix = SuitePluginManager.Core.Name.full;
-//    private String name = "UNNAMED";
+    private String prefix = SuitePluginManager.Name.full;
+    private String name = "UNNAMED";
 
-    protected String startMessage = "[" + SuitePluginManager.Core.Name.full + "] Task " + ChatColor.DARK_GREEN + "UNNAMED" + ChatColor.RESET + " started";
-    protected String cancelMessage = "[" + SuitePluginManager.Core.Name.full + "] Task " + ChatColor.DARK_RED + "UNNAMED" + ChatColor.RESET + " cancelled";
+    protected String startMessage = "Task " + ChatColor.DARK_GREEN + "UNNAMED" + ChatColor.RESET + " started";
+    protected String cancelMessage = "Task " + ChatColor.DARK_RED + "UNNAMED" + ChatColor.RESET + " cancelled";
     private boolean isRunning = false;
 
     @Override
@@ -40,7 +40,7 @@ public class RunnableModel extends BukkitRunnable {
             isRunning = true;
             if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )
             {
-                ConsoleUtil.logMessage(this.startMessage);
+                ConsoleUtil.logMessage(this.prefix, this.startMessage);
             }
         }
     }
@@ -55,13 +55,18 @@ public class RunnableModel extends BukkitRunnable {
         {
             cancelWithOptionalLogMessage();
             isRunning = false;
+        } else {
+            if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )
+            {
+                ConsoleUtil.logMessage(this.cancelMessage);
+            }
         }
     }
 
-    private void setStartAndCancelMessages(String prefix, String name)
+    private void setStartAndCancelMessages(String name)
     {
-        this.startMessage = "[" + prefix + "] Task " + ChatColor.DARK_GREEN + name + ChatColor.RESET + " started";
-        this.cancelMessage = "[" + prefix + "] Task " + ChatColor.DARK_RED + name + ChatColor.RESET + " cancelled";
+        this.startMessage = "Task " + ChatColor.DARK_GREEN + name + ChatColor.RESET + " started";
+        this.cancelMessage = "Task " + ChatColor.DARK_RED + name + ChatColor.RESET + " cancelled";
     }
 
 //    @NotNull
@@ -78,7 +83,7 @@ public class RunnableModel extends BukkitRunnable {
     {
         if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )
         {
-            ConsoleUtil.logMessage(this.cancelMessage);
+            ConsoleUtil.logMessage(this.prefix, this.cancelMessage);
         }
         super.cancel();
 //        if ( CraftEraSuiteCore.config.getBoolean("log_task_debug_messages_to_console", true) )

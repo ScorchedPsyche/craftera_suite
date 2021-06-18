@@ -52,11 +52,11 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                     add("trade_lists/heads_players.json");
                     add("trade_lists/items.json");
                     add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Vanilla.csv");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Vanilla.json");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Food.csv");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Food.json");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Non-Vanilla.csv");
-                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads – Non-Vanilla.json");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Vanilla.json");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Food.csv");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Food.json");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Non-Vanilla.csv");
+                    add("trade_lists_exporting/CES - Wandering Trades - Decoration Heads - Non-Vanilla.json");
                     add("trade_lists_exporting/export_list.py");
                     add("config.yml");
                 }});

@@ -4,6 +4,12 @@ import org.bukkit.Bukkit;
 
 public class SuitePluginManager {
     private static final String permission_prefix = "craftera_suite";
+    public static class Name
+    {
+        public static final String compact = "CES";
+        public static final String full = "CraftEra Suite";
+        public static final String pomXml = "craftera_suite";
+    }
 
     public static class Achievements
     {

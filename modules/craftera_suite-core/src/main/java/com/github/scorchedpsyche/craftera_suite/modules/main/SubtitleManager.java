@@ -4,8 +4,6 @@ import java.util.LinkedList;
 
 public class SubtitleManager {
     private StringBuilder subtitleMessage = new StringBuilder();
-//    private boolean displayContinuously = false;
-//    public LinkedList<String> displayOnce = new LinkedList<>();
 
     public boolean isEmpty()
     {
