@@ -165,9 +165,12 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         {
             PlayerManager playerManager = playerManagerList.get(player.getUniqueId().toString());
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText( playerManager.subtitle.getText() ) );
-            playerManager.subtitle.reset();
+            if( !StringUtil.isNullOrEmpty(playerManager.subtitle.getText()) )
+            {
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                        TextComponent.fromLegacyText( playerManager.subtitle.getText() ) );
+                playerManager.subtitle.reset();
+            }
         }
     }
 
