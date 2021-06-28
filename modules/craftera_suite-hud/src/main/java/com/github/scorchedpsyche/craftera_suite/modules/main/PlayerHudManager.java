@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class PlayerHudManager
 {
@@ -45,7 +46,7 @@ public class PlayerHudManager
         if( preferences.showWorldTime() )
         {
             hudText.append( " " );
-            hudText.append( formatWorldTime( preferences ) );
+            hudText.append( formatWorldTime( player, preferences ) );
         }
 
         if( preferences.showServerTPS() )
@@ -326,26 +327,26 @@ public class PlayerHudManager
         return durabilityStrBuilder;
     }
 
-    private StringBuilder formatWorldTime(HudPlayerPreferencesModel preferences)
+    private StringBuilder formatWorldTime(Player player, HudPlayerPreferencesModel preferences)
     {
-        World overworld = Bukkit.getWorld("world");
+        World world = player.getWorld();
 
-        StringBuilder worldTimeStrBuilder = new StringBuilder( Long.toString(overworld.getTime()) );
+        StringBuilder worldTimeStrBuilder = new StringBuilder( Long.toString(world.getTime()) );
 
         if( preferences.colorizeWorldTime() )
         {
-            if ( overworld.getTime() >= 2000 && overworld.getTime() <= 9000 )
+            if ( world.getTime() >= 2000 && world.getTime() <= 9000 )
             {
                 // Villager work hours
                 worldTimeStrBuilder.insert( 0, ChatColor.GREEN );
-            } else if( overworld.hasStorm() )
+            } else if( world.hasStorm() )
             {
                 // Weather not clear
-                if ( overworld.getTime() >= 12969 && overworld.getTime() <= 23031 )
+                if ( world.getTime() >= 12969 && world.getTime() <= 23031 )
                 {
                     // Monsters are spawning
                     worldTimeStrBuilder.insert( 0, ChatColor.RED );
-                } else if ( overworld.getTime() >= 12010 && overworld.getTime() < 12969 )
+                } else if ( world.getTime() >= 12010 && world.getTime() < 12969 )
                 {
                     // Beds can be used
                     worldTimeStrBuilder.insert( 0, ChatColor.YELLOW );
@@ -353,11 +354,11 @@ public class PlayerHudManager
             } else
             {
                 // Weather clear
-                if ( overworld.getTime() >= 13188 && overworld.getTime() <= 22812 )
+                if ( world.getTime() >= 13188 && world.getTime() <= 22812 )
                 {
                     // Monsters are spawning
                     worldTimeStrBuilder.insert( 0, ChatColor.RED );
-                } else if ( overworld.getTime() >= 12542 && overworld.getTime() < 13188 )
+                } else if ( world.getTime() >= 12542 && world.getTime() < 13188 )
                 {
                     // Beds can be used
                     worldTimeStrBuilder.insert( 0, ChatColor.YELLOW );

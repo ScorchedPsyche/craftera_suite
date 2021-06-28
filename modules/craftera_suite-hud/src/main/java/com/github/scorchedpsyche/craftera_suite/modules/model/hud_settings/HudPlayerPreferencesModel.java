@@ -46,6 +46,7 @@ public class HudPlayerPreferencesModel
         return null;
     }
 
+    public String getPlayerUUID() { return player_uuid; }
     public boolean isHudEnabled() { return enabled; }
     public boolean isDisplayModeExtended() { return display_mode; }
     public boolean colorizeCoordinates() { return colorize_coordinates; }
