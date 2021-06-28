@@ -76,6 +76,20 @@ public class SuitePluginManager {
         }
     }
 
+    public static class Events
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Events";
+            public static final String full = "CraftEra Suite - Events";
+            public static final String pomXml = "craftera_suite-events";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+    }
+
     public static class Hud
     {
         public static class Name
