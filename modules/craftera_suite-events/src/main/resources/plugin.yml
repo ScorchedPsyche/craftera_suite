@@ -1,0 +1,10 @@
+name: craftera_suite-events
+version: ${project.version}
+depend: [ craftera_suite-core ]
+softdepend: [ craftera_suite-seasons ]
+main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteEvents
+api-version: 1.17
+prefix: CraftEra Suite - Events
+authors: [ ScorchedPsyche ]
+description: Events for your server such as raids, mini-games, etc.
+website: https://github.com/ScorchedPsyche

@@ -21,6 +21,7 @@
         <module>craftera_suite-afk</module>
         <module>craftera_suite-baby_entities</module>
         <module>craftera_suite-core</module>
+        <module>craftera_suite-events</module>
         <module>craftera_suite-hud</module>
         <module>craftera_suite-seasons</module>
         <module>craftera_suite-spectator_mode</module>
