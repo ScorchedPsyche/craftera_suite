@@ -155,23 +155,11 @@ public class SpectatorModeManager {
                             player.getLocation().getYaw(),
                             player.getLocation().getPitch()));
 
-            switch(playerData.getGameMode())
-            {
-                case "SURVIVAL":
-                    player.setGameMode(GameMode.SURVIVAL);
-                    break;
-
-                case "ADVENTURE":
-                    player.setGameMode(GameMode.ADVENTURE);
-                    break;
-
-                case "CREATIVE":
-                    player.setGameMode(GameMode.CREATIVE);
-                    break;
-
-                default: // SPECTATOR
-                    player.setGameMode(GameMode.SPECTATOR);
-                    break;
+            switch (playerData.getGameMode()) {
+                case "SURVIVAL" -> player.setGameMode(GameMode.SURVIVAL);
+                case "ADVENTURE" -> player.setGameMode(GameMode.ADVENTURE);
+                case "CREATIVE" -> player.setGameMode(GameMode.CREATIVE);
+                default -> player.setGameMode(GameMode.SPECTATOR);
             }
             removeArmorStand(player);
             PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.SpectatorMode.Name.compact,
@@ -223,9 +211,9 @@ public class SpectatorModeManager {
         // Gather all Armor Stands at player's original executing location
         Collection<Entity> armorStandsOnPlayerLocation = player.getWorld().getNearbyEntities(
                 player.getLocation(),
-                0.5,
-                1,
-                0.5,
+                2,
+                2,
+                2,
                 (entity) -> entity.getType() == EntityType.ARMOR_STAND);
 
         // Check if found any – could be admin on Spectator or someone deleted it with commands
