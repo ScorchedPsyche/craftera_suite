@@ -10,10 +10,10 @@
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
-    <artifactId>craftera_suite-events</artifactId>
-    <name>craftera_suite-events</name>
+    <artifactId>craftera_suite-rewards</artifactId>
+    <name>craftera_suite-rewards</name>
     <version>0.0.1</version>
-    <description>Events for your server such as raids, mini-games, holidays, etc.</description>
+    <description>Reward players in your server such as players heads, items, points, etc. Integrated with CES Seasons and CES Events.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <dependencies>
@@ -38,12 +38,6 @@
         <dependency>
             <groupId>com.github.scorchedpsyche.craftera_suite.modules</groupId>
             <artifactId>craftera_suite-seasons</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.scorchedpsyche.craftera_suite.modules</groupId>
-            <artifactId>craftera_suite-rewards</artifactId>
             <version>0.0.1</version>
             <scope>compile</scope>
         </dependency>
