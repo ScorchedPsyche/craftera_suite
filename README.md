@@ -5,7 +5,7 @@ Plugin suite which aims to enhance Minecraft's gameplay experience while maintai
 All plugins are being developed to use as little resources from the server as possible and Asynchronous code will be used everywhere possible.  
   
 ```diff
-- NOTICE: this suite is still in development development; 
+- NOTICE: this suite is still in development; 
 - NOTICE: usage in production at this moment is NOT recommended! The reason is that there could be some quirks on the way things run and knowledge of them might be required to avoid issues.
 
 Once most features have been implemented I'll be running through the code to do a refactor for production usage.
