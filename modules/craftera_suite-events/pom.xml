@@ -13,7 +13,7 @@
     <artifactId>craftera_suite-events</artifactId>
     <name>craftera_suite-events</name>
     <version>0.0.1</version>
-    <description>Events for your server such as raids, mini-games, holidays, etc.</description>
+    <description>Events for your server such as raids, mini-games, holidays, random organic or recurring, etc.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <dependencies>

@@ -6,6 +6,6 @@ main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteRewards
 api-version: 1.17
 prefix: CraftEra Suite - Rewards
 authors: [ ScorchedPsyche ]
-description: Events for your server such as raids, mini-games, etc.
+description: Account for player contribution/participation to the server so that rewards can be given.
 website: https://github.com/ScorchedPsyche
 

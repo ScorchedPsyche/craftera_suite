@@ -13,7 +13,7 @@
     <artifactId>craftera_suite-rewards</artifactId>
     <name>craftera_suite-rewards</name>
     <version>0.0.1</version>
-    <description>Reward players in your server such as players heads, items, points, etc. Integrated with CES Seasons and CES Events.</description>
+    <description>Account for player contribution/participation to the server so that rewards can be given.</description>
     <url>https://github.com/ScorchedPsyche/craftera_suite</url>
 
     <dependencies>

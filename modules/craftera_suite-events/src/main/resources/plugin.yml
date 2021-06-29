@@ -6,5 +6,5 @@ main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteEvents
 api-version: 1.17
 prefix: CraftEra Suite - Events
 authors: [ ScorchedPsyche ]
-description: Events for your server such as raids, mini-games, etc.
+description: Events for your server such as raids, mini-games, holidays, random organic or recurring, etc.
 website: https://github.com/ScorchedPsyche

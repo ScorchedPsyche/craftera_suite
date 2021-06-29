@@ -78,7 +78,11 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
   
 ### Events  
-Add random organic or recurring events ("missions") to increase Vanilla gameplay options.  
+Events for your server such as raids, mini-games, holidays, random organic or recurring, etc. ("missions") to increase Vanilla gameplay options. 
+ 
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Types;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log transpired events;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal events;`
   
 ### HUD  
 Player customizable in-game HUD integrated with all other plugins from this suite.  
@@ -101,14 +105,19 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Spectator plugin integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Commerce plugin integration.`
   
-### Player Contribution  
-Account for player contribution to the server so that rewards can be given.  
+### Rewards 
+Account for player contribution/participation to the server so that rewards can be given.  
+
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per achievement;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per event;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per participation (playtime and/or in season);`
     
 ### Seasons  
 Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled. 
   
 **Features:**  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`  
+![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Starter season on DB creation;`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Season commands.`
  
