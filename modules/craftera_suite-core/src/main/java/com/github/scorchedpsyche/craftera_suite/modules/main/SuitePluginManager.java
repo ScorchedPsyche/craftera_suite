@@ -104,6 +104,20 @@ public class SuitePluginManager {
         }
     }
 
+    public static class Rewards
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Rewards";
+            public static final String full = "CraftEra Suite - Rewards";
+            public static final String pomXml = "craftera_suite-rewards";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+    }
+
     public static class Seasons
     {
         public static class Name
