@@ -1,6 +1,7 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.events.EventsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
@@ -28,6 +29,17 @@ public class CustomCommandExecutor implements CommandExecutor {
 
                 switch( args[0] )
                 {
+                    case "events":
+                        if ( argsFiltered == null )
+                        {
+                            argsFiltered = new String[1];
+                            argsFiltered[0] = "";
+                        }
+
+                        Bukkit.getPluginManager().callEvent(new EventsCommandEvent((Player) sender, argsFiltered));
+
+                        return true;
+
                     case "hud":
                         if ( argsFiltered == null )
                         {

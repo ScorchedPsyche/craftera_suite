@@ -50,28 +50,6 @@ public class CustomTabCompleter implements TabCompleter {
                                 "Failed to get user's permission from Luck Perms. Let your server admin know!!!");
                     }
                 }
-//                else {
-//                    // At root command: /ces
-//                    List<String> filteredList = new ArrayList<>();
-//                    User user = CraftEraSuiteCore.luckPerms.getUserManager().getUser(((Player) sender).getUniqueId());
-//
-//                    // Check if LP's user is valid
-//                    if( user != null )
-//                    {
-//                        // Valid LP user. Loop through commands
-//                        for (Map.Entry<String, CommandModel> currentCommand : commands.entrySet())
-//                        {
-//                            // Check if user has permission to use the command
-//                            if( user.getCachedData().getPermissionData().checkPermission(currentCommand.getValue().getPermission()).asBoolean() )
-//                            {
-//                                // Has permission. Add to filtered list
-//                                filteredList.add(currentCommand.getKey());
-//                            }
-//                        }
-//                    }
-//
-//                    return filteredList;
-//                }
             }
         }
 
@@ -151,90 +129,5 @@ public class CustomTabCompleter implements TabCompleter {
         }
 
         return filteredList;
-
-//        List<String> listToBeFiltered = new ArrayList<>(commands.keySet());
-//
-//        for(String str : listToBeFiltered)
-//        {
-//            if( str.startsWith(searchString) )
-//            {
-////                if( )
-////                {
-////
-////                }
-//                filteredList.add(str);
-//            }
-//        }
     }
-
-//    private HashMap<String, CommandModel> getHudCommands()
-//    {
-//        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
-//
-//        hudSubcommands.put("config", new CommandModel()
-//                .addCommand("display_mode")
-//                .addSubcommand("compact")
-//                .addSubcommand("extended")
-//                .addCommand("colorize")
-//                .addSubcommand("coordinates")
-//                .addSubcommand("nether_portal_coordinates")
-//                .addSubcommand("player_orientation")
-//                .addSubcommand("server_tps")
-//                .addSubcommand("tool_durability")
-//                .addSubcommand("world_time"));
-//
-//        hudSubcommands.put("toggle", new CommandModel()
-//                .addCommand("coordinates")
-//                .addCommand("nether_portal_coordinates")
-//                .addCommand("player_orientation"));
-//
-//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-//        {
-//            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
-//        }
-//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-//        {
-//            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
-//        }
-//
-//        hudSubcommands.get("toggle")
-//                      .addCommand("server_time")
-//                      .addCommand("server_tps")
-//                      .addCommand("tool_durability")
-//                      .addCommand("world_time");
-//
-//        HashMap<String, CommandModel> hud = new HashMap<>();
-//        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
-//        hudSubcommands = null;
-//
-//        return hud;
-//    }
-
-//    private HashMap<String, CommandModel> getSeasonsCommands()
-//    {
-//        HashMap<String, CommandModel> seasonsSubcommands = new HashMap<>();
-//
-//        seasonsSubcommands.put("create", new CommandModel());
-//        seasonsSubcommands.put("current", new CommandModel());
-//        seasonsSubcommands.put("end", new CommandModel());
-//        seasonsSubcommands.put("manage", new CommandModel());
-//        seasonsSubcommands.put("start", new CommandModel());
-//        HashMap<String, CommandModel> seasons = new HashMap<>();
-//        seasons.put("seasons", new CommandModel("craftera_suite.seasons").addSubcommands(seasonsSubcommands));
-//        seasonsSubcommands = null;
-//
-//        return seasons;
-//    }
-
-//    private HashMap<String, CommandModel> getSpectatorModeCommands()
-//    {
-//        HashMap<String, CommandModel> spectatorSubcommands = new HashMap<>();
-//
-//        HashMap<String, CommandModel> spectator = new HashMap<>();
-//        spectator.put("spectator", null);
-//        spectator.put("spec", null);
-//        spectatorSubcommands = null;
-//
-//        return spectator;
-//    }
 }

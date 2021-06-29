@@ -106,6 +106,7 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
         seasonsSubcommands.put("list", new CommandModel());
         seasonsSubcommands.put("select", new CommandModel());
         seasonsSubcommands.put("selected", new CommandModel().addSubcommands(selectedSubcommands));
+
         HashMap<String, CommandModel> seasons = new HashMap<>();
         seasons.put("seasons", new CommandModel(SuitePluginManager.Seasons.Permissions.seasons).addSubcommands(seasonsSubcommands));
         seasonsSubcommands = null;

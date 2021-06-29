@@ -43,7 +43,7 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
     @Override
     public void onEnable() {
         // Check if Core dependency was loaded
-        if( SuitePluginManager.Core.isEnabled() )
+        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-core") )
         {
             // Attempts to create plugin root folder
             File pluginRootFolder = FolderUtil.getOrCreatePluginSubfolder(this.getName());
@@ -102,7 +102,6 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
                 }
             } else {
                 // Failed to create plugin's root folder
-                pluginRootFolder = null;
                 this.onDisable();
             }
         } else {
@@ -153,7 +152,6 @@ public final class CraftEraSuiteSpectatorMode extends JavaPlugin {
         HashMap<String, CommandModel> spectator = new HashMap<>();
         spectator.put("spectator", null);
         spectator.put("spec", null);
-        spectatorSubcommands = null;
 
         CraftEraSuiteCore.customTabCompleter.commands.putAll(spectator);
     }

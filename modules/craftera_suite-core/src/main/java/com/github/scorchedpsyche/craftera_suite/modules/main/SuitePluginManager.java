@@ -88,6 +88,16 @@ public class SuitePluginManager {
         {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
+
+        public enum Type
+        {
+            Raid__EnderDragon,
+            Raid__EnderDragon_Chaotic
+        }
+
+        public static class Permissions {
+            public static final String events = permission_prefix + ".events";
+        }
     }
 
     public static class Hud
@@ -115,6 +125,23 @@ public class SuitePluginManager {
         public static boolean isEnabled ()
         {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
+        }
+
+        public enum Type
+        {
+            Points,
+            Effect, // Buff/debuff
+            Entity,
+            Experience,
+            Item
+        }
+
+        public enum Source
+        {
+            Achievement,
+            Event,
+            PlayTime,
+            Season
         }
     }
 

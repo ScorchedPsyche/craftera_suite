@@ -5,7 +5,9 @@ import org.bukkit.GameMode;
 public class DatabaseTables
 {
     private static final String corePrefix = "core_";
+    private static final String eventsPrefix = "events_";
     private static final String hudPrefix = "hud_";
+    private static final String rewardsPrefix = "rewards_";
     private static final String seasonsPrefix = "seasons_";
     private static final String spectatorModePrefix = "spectator_mode_";
 
@@ -44,7 +46,27 @@ public class DatabaseTables
         }
     }
 
-    public static class Hud {
+    public static class Events {
+        public static final String transpiredTableName = eventsPrefix + "transpired";
+        public static final String participantsTableName = eventsPrefix + "participants";
+
+        public static class Transpired
+        {
+            public static final String type = "event_type";
+            public static final String date_started = "date_started";
+            public static final String date_finished = "date_finished";
+            public static final String season = "season";
+        }
+
+        public static class Participants
+        {
+            public static final String event_id = "event_id";
+            public static final String player_uuid = "player_uuid";
+        }
+    }
+
+    public static class Hud
+    {
         public static final String player_preferences_TABLENAME = hudPrefix + "player_preferences";
 
         public static class PlayerPreferencesTable
@@ -75,11 +97,26 @@ public class DatabaseTables
         }
     }
 
-    public static class Seasons {
-        public static final String table_name = "seasons";
+    public static class Rewards {
+        public static final String table_name = rewardsPrefix + "events";
 
-        public static class Table
+        public static class Reward
         {
+            public static final String type = "type";
+            public static final String source = "source";
+            public static final String modifier = "modifier";
+            public static final String date_awarded = "date_awarded";
+            public static final String claimed = "claimed";
+            public static final String season = "season";
+            public static final String persist_through_seasons = "season";
+        }
+    }
+
+    public static class Seasons
+    {
+        public static final String table_name = seasonsPrefix;
+
+        public static class Table {
             public static final String number = "number";
             public static final String title = "title";
             public static final String subtitle = "subtitle";
@@ -89,26 +126,11 @@ public class DatabaseTables
             public static final String date_end = "date_end";
             public static final String minecraft_version_start = "minecraft_version_start";
             public static final String minecraft_version_end = "minecraft_version_end";
-
-//            public static class List
-//            {
-//            }
-//
-//            public static class Status
-//            {
-//                public static final String description = "description";
-//            }
         }
-
-//        public enum Status {
-//            Open,
-//            Active,
-//            Finished,
-//            Archived
-//        }
     }
 
-    public static class SpectatorMode {
+    public static class SpectatorMode
+    {
         public static final String table_name = spectatorModePrefix + "player_data";
 
         public static class PlayerDataTable
@@ -124,7 +146,8 @@ public class DatabaseTables
         }
     }
 
-    public static class Statistics {
+    public static class Statistics
+    {
         public static final String table_name = "statistics";
 
         public static class Table
