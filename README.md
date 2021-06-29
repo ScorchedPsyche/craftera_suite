@@ -12,8 +12,6 @@ All plugins are being developed to use as little resources from the server as po
 Once most features have been implemented I'll be running through the code to do a refactor for production usage.
 ```
 
-![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
-
 **Status reference:**
 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`  
@@ -86,6 +84,7 @@ Events for your server such as raids, mini-games, holidays, random organic or re
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Types;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log transpired events;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log participants;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal events;`
   
 ### HUD  
@@ -179,3 +178,8 @@ Then, if missing from the POM's, add (change *version* accordingly):
     	<version>1.16.5</version>  
     	<scope>provided</scope>  
     </dependency>
+
+# Support & Suggestions
+You're welcome to join our Discord and get in touch with us to discuss code or suggest features:
+
+![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
