@@ -11,6 +11,8 @@ All plugins are being developed to use as little resources from the server as po
 Once most features have been implemented I'll be running through the code to do a refactor for production usage.
 ```
 
+![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
+
 **Status reference:**
 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`  
