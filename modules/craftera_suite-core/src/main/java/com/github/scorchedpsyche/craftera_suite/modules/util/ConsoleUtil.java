@@ -8,6 +8,27 @@ public class ConsoleUtil {
     private static final String defaultPrefix = "CraftEra Suite";
 
     /**
+     * Logs a debug message (aqua colored) to the console with default prefix (CraftEra Suite).
+     * @param message Message to the written to the console
+     */
+    public static void debugMessage(String message)
+    {
+        debugMessage(defaultPrefix, message);
+    }
+
+    /**
+     * Logs a debug message (aqua colored) to the console with a plugin's prefix.
+     * @param pluginPrefixName The prefix for the plugin
+     * @param message Message to the written to the console
+     */
+    public static void debugMessage(String pluginPrefixName, String message)
+    {
+        Bukkit.getConsoleSender().sendMessage(
+                ChatColor.AQUA + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
+                        "] ERROR: " + message + ChatColor.RESET + "\n");
+    }
+
+    /**
      * Logs an error (red colored) to the console with default prefix (CraftEra Suite).
      * @param message Message to the written to the console
      */

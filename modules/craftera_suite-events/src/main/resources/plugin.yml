@@ -1,7 +1,7 @@
 name: craftera_suite-events
 version: ${project.version}
 depend: [ craftera_suite-core ]
-softdepend: [ craftera_suite-seasons ]
+softdepend: [ craftera_suite-seasons, craftera_suite-rewards ]
 main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteEvents
 api-version: 1.17
 prefix: CraftEra Suite - Events
