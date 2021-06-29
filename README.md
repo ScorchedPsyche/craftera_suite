@@ -82,7 +82,8 @@ Connects the suite with Discord so that you can create more interactivity betwee
   
 ### Events  
 Events for your server such as raids, mini-games, holidays, random organic or recurring, etc. ("missions") to increase Vanilla gameplay options. 
- 
+
+**Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Types;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log transpired events;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal events;`
@@ -111,6 +112,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 ### Rewards 
 Account for player contribution/participation to the server so that rewards can be given.  
 
+**Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per achievement;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per event;`  
