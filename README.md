@@ -12,31 +12,36 @@ All plugins are being developed to use as little resources from the server as po
 Once most features have been implemented I'll be running through the code to do a refactor for production usage.
 ```
 
+## Support & Suggestions
+You're welcome to join our Discord and get in touch with us to discuss code or suggest features:
+
+![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
+
+# Modules (current/planned)  
+Modules with a check-list are the ones that are either being worked on or that have some ideas planned. The ones without a check-list haven't yet been planned.  
+  
+Plugin names are a work-in-progress and might change in the future.
+
 **Status reference:**
 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Implemented`  
 ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Production ready`
-
-## Modules (current/planned)  
-Modules with a check-list are the ones that are either being worked on or that have some ideas planned. The ones without a check-list haven't yet been planned.  
   
-Plugin names are a work-in-progress and might change in the future.  
-  
-### Achievements 
+## Achievements 
 Achievements such as server-first and custom ones. 
 
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla player personal achievement accounting (91/91 advancements done);`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Vanilla server-first achievement accounting;`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Seasons module support: achievements resets on new Season and old ones are archived.`
 
-### AFK
+## AFK
 Enables AFK detection and AFK data telemetry on the server.
 
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Mark player as AFK on TAB;`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Seasons module support: AFK telemetry based on season.`
 
-### Baby Entities 
+## Baby Entities
 Prevents entities from becoming their adult variant.  
   
 **Features:**  
@@ -49,7 +54,7 @@ Prevents entities from becoming their adult variant.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: Scute drop on Turtle's growth;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.`
   
-### Core 
+## Core 
 Main library dependency needed for other plugins of this pack.  
   
 **Features:**   
@@ -58,10 +63,10 @@ Main library dependency needed for other plugins of this pack.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player's title and subtitle manager.`
   
-### Commerce
+## Commerce
 Plugin that's mainly a helper for Commercial Districts for your server. Also synchronizes with a database so that you can attach your own tools to a web server or similar.
   
-### Database Synchronization  
+## Database Synchronization  
 Plugin which acts as an interface to synchronize the suite data with a database. This data can be used for your website so that you can have website integration and synchronization with your server.  
 
 **Features:**  
@@ -75,10 +80,10 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Spectator Mode;`  
  
-### Discord Integration  
+## Discord Integration  
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
   
-### Events  
+## Events  
 Events for your server such as raids, mini-games, holidays, random organic or recurring, etc. ("missions") to increase Vanilla gameplay options. 
 
 **Features:**  
@@ -87,7 +92,7 @@ Events for your server such as raids, mini-games, holidays, random organic or re
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log participants;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal events;`
   
-### HUD  
+## HUD  
 Player customizable in-game HUD integrated with all other plugins from this suite.  
   
 **Features:**  
@@ -108,7 +113,7 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Spectator plugin integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Commerce plugin integration.`
   
-### Rewards 
+## Rewards 
 Account for player contribution/participation to the server so that rewards can be given.  
 
 **Features:**  
@@ -117,7 +122,7 @@ Account for player contribution/participation to the server so that rewards can 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per event;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per participation (playtime and/or in season);`
     
-### Seasons  
+## Seasons  
 Enables Season support for the CraftEra Suite. Useful when you reset your server often and play season-styled. 
   
 **Features:**  
@@ -125,7 +130,7 @@ Enables Season support for the CraftEra Suite. Useful when you reset your server
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Starter season on DB creation;`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Season commands.`
  
-### Spectator Mode  
+## Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
   
 **Features:**  
@@ -136,15 +141,15 @@ Spectator mode with range limit configurable by admin or with automatic view ran
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Recent damage prevention check: to avoid abuse if player is about to die if damaged recently;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Waypoint ability: visual marker the player can make while in spectator mode. Useful for the player to have a heading of where they were looking at.`
 
-### Statistics
+## Statistics
 Gather gameplay telemetry.
 
 **Features:**  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Login/logout telemetry.`  
-### Streaming Support  
+## Streaming Support  
 Enables interactivity between your member's audience and their streaming audience.  
   
-### Wandering Trades  
+## Wandering Trades  
 Customizable Wandering Trader trades with both decoration and player heads support.  
   
 **Features:**  
@@ -159,13 +164,13 @@ Customizable Wandering Trader trades with both decoration and player heads suppo
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Conversion script from .csv to .json files: useful for managing trade lists in Google Docs, for example.` 
   
   
-### WorldGen  
+## WorldGen  
 100% new World Generation with much more interesting landscape and structures.  
   
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Litematica structure support: loads litematica files and uses them on WorldGen.`
 
-### To compile the project
+## To compile the project
 You must run BuildTools on your local machine to get the Spigot server *.jar* which has to be installed to your local Maven repository with the following command (change "**-Dfile**" and *version* accordingly):
 
     mvn -e install:install-file -Dfile='lib\spigot-1.16.5.jar' -DgroupId='org.spigotmc' -DartifactId=spigot -Dversion='1.16.5' -Dpackaging=jar -DgeneratePom=true
@@ -178,8 +183,3 @@ Then, if missing from the POM's, add (change *version* accordingly):
     	<version>1.16.5</version>  
     	<scope>provided</scope>  
     </dependency>
-
-# Support & Suggestions
-You're welcome to join our Discord and get in touch with us to discuss code or suggest features:
-
-![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
