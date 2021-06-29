@@ -9,20 +9,36 @@ All plugins are being developed to use as little resources from the server as po
 - NOTICE: The reason is that there could be some quirks on the way things run and...
 - NOTICE: ...knowledge of them might be required to avoid issues.
 
+- NOTICE: Plugin names are a work-in-progress and might change in the future.
+  
 Once most features have been implemented I'll be running through the code to do a refactor for production usage.
 ```
 
-## Support & Suggestions
+### To compile the project
+You must run BuildTools on your local machine to get the Spigot server *.jar* which has to be installed to your local Maven repository with the following command (change "**-Dfile**" and *version* accordingly):
+
+    mvn -e install:install-file -Dfile='lib\spigot-1.16.5.jar' -DgroupId='org.spigotmc' -DartifactId=spigot -Dversion='1.16.5' -Dpackaging=jar -DgeneratePom=true
+
+Then, if missing from the POM's, ***add/change version*** accordingly:
+
+    <dependency>  
+    	<groupId>org.spigotmc</groupId>  
+    	<artifactId>spigot</artifactId>  
+    	<version>1.16.5</version>  
+    	<scope>provided</scope>  
+    </dependency>
+
+### Support & Suggestions
 You're welcome to join our Discord and get in touch with us to discuss code or suggest features:
 
 ![Discord Banner 2](https://discordapp.com/api/guilds/522412807904428033/widget.png?style=banner2)
 
 # Modules (current/planned)  
 Modules with a check-list are the ones that are either being worked on or that have some ideas planned. The ones without a check-list haven't yet been planned.  
-  
-Plugin names are a work-in-progress and might change in the future.
 
-**Status reference:**
+```diff
++ Status reference:
+```
 
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Not yet implemented`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Implemented`  
@@ -169,17 +185,3 @@ Customizable Wandering Trader trades with both decoration and player heads suppo
   
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Litematica structure support: loads litematica files and uses them on WorldGen.`
-
-## To compile the project
-You must run BuildTools on your local machine to get the Spigot server *.jar* which has to be installed to your local Maven repository with the following command (change "**-Dfile**" and *version* accordingly):
-
-    mvn -e install:install-file -Dfile='lib\spigot-1.16.5.jar' -DgroupId='org.spigotmc' -DartifactId=spigot -Dversion='1.16.5' -Dpackaging=jar -DgeneratePom=true
-
-Then, if missing from the POM's, add (change *version* accordingly):
-
-    <dependency>  
-    	<groupId>org.spigotmc</groupId>  
-    	<artifactId>spigot</artifactId>  
-    	<version>1.16.5</version>  
-    	<scope>provided</scope>  
-    </dependency>
