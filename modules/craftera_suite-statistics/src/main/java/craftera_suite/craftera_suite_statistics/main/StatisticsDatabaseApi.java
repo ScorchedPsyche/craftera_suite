@@ -35,7 +35,7 @@ public class StatisticsDatabaseApi
             sql += "\n);";
 
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(sql) )
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
@@ -112,6 +112,6 @@ public class StatisticsDatabaseApi
                 + DatabaseTables.Statistics.Table.time_spent_online + " = " + playerLoginModel.login_time_total +
                 " WHERE id = " + playerLoginModel.id_from_DB;
 
-        return DatabaseManager.database.executeSql(sql);
+        return DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql);
     }
 }

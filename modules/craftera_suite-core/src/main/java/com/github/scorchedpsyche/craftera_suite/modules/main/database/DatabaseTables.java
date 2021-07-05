@@ -91,9 +91,9 @@ public class DatabaseTables
             public static final String plugin_commerce = "plugin_commerce";
             public static final String plugin_spectator = "plugin_spectator";
             public static final String server_time = "server_time";
-            public static final String server_tps = "server_tps";
             public static final String tool_durability = "tool_durability";
             public static final String world_time = "world_time";
+            public static final String config_world_time = "config_world_time";
 
             public static class DisplayMode {
                 public static final boolean compact = false;

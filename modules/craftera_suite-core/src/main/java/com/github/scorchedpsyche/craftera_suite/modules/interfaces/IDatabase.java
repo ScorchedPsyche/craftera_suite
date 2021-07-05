@@ -5,7 +5,7 @@ import java.sql.Connection;
 public interface IDatabase
 {
     void createOrRetrieveDatabase();
-    boolean executeSql(String sqlStatement);
+    boolean executeSqlAndDisplayErrorIfNeeded(String sqlStatement);
     boolean tableExists(String tableName);
     String getDatabaseUrl();
 }

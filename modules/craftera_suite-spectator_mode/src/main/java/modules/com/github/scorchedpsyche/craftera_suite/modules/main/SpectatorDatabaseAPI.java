@@ -24,7 +24,7 @@ public class SpectatorDatabaseAPI
         if( !DatabaseManager.database.tableExists( DatabaseTables.SpectatorMode.table_name) )
         {
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(
                     "CREATE TABLE " + DatabaseTables.SpectatorMode.table_name + "(\n"
                             + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                             + "	" + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid + " TEXT UNIQUE NOT NULL,\n"
@@ -108,7 +108,7 @@ public class SpectatorDatabaseAPI
                 + DatabaseTables.SpectatorMode.PlayerDataTable.world + " = '" + Objects.requireNonNull(player.getLocation().getWorld()).getUID().toString() + "', "
                 + DatabaseTables.SpectatorMode.PlayerDataTable.environment + " = '" + player.getLocation().getWorld().getEnvironment().toString() + "'";
 
-        if( DatabaseManager.database.executeSql(sql) )
+        if( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
         {
             sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                     " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid +
@@ -145,7 +145,7 @@ public class SpectatorDatabaseAPI
         String sql = "UPDATE " + DatabaseTables.SpectatorMode.table_name + " SET "
                 + DatabaseTables.SpectatorMode.PlayerDataTable.enabled + " = 0 WHERE player_uuid='" + player.getUniqueId().toString() + "'";
 
-        DatabaseManager.database.executeSql(sql);
+        DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql);
 
         sql = "SELECT * FROM " + DatabaseTables.SpectatorMode.table_name +
                 " WHERE " + DatabaseTables.SpectatorMode.PlayerDataTable.player_uuid +

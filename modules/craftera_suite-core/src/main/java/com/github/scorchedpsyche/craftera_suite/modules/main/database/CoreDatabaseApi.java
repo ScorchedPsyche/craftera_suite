@@ -4,7 +4,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.MessageModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
-import com.github.scorchedpsyche.craftera_suite.modules.util.DateUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class CoreDatabaseApi
                     + "	" + DatabaseTables.Core.MessagesTable.message_cached + " TEXT\n);";
 
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(sql) )
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Core.Name.full,
@@ -91,7 +90,7 @@ public class CoreDatabaseApi
                 + " SET " + DatabaseTables.Core.MessagesTable.pending + " = 0"
                 + " WHERE id = " + messageId;
 
-        if ( !DatabaseManager.database.executeSql(sql) )
+        if ( !DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
         {
             // Error updating entry
             ConsoleUtil.logError( SuitePluginManager.Core.Name.full,
@@ -117,7 +116,7 @@ public class CoreDatabaseApi
                     + message.getMessage() + "', '"
                     + message.getMessage_cached() + "') \n";
 
-        if ( DatabaseManager.database.executeSql(sql) )
+        if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
         {
             sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                     " ORDER BY id DESC LIMIT 1";

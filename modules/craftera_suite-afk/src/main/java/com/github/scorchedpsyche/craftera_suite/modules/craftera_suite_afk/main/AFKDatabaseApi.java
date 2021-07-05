@@ -35,7 +35,7 @@ public class AFKDatabaseApi
             sql += "\n);";
 
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(sql) )
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
@@ -112,6 +112,6 @@ public class AFKDatabaseApi
                 + DatabaseTables.AFK.Table.afk_time_total + " = " + player.afk_time_total +
                 " WHERE id = " + player.id_from_DB;
 
-        return DatabaseManager.database.executeSql(sql);
+        return DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql);
     }
 }

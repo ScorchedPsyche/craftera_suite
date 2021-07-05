@@ -17,7 +17,7 @@ public class SeasonsDatabaseApi
         if( !DatabaseManager.database.tableExists( DatabaseTables.Seasons.table_name) )
         {
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(
                     "CREATE TABLE " + DatabaseTables.Seasons.table_name + "(\n"
                             + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                             + "	" + DatabaseTables.Seasons.Table.number + " NUMERIC DEFAULT 1 UNIQUE NOT NULL,\n"
@@ -52,7 +52,7 @@ public class SeasonsDatabaseApi
                         + 0 + ", "
                         + 0 + ")";
 
-                if ( DatabaseManager.database.executeSql(sql) )
+                if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
                 {
                     ConsoleUtil.logMessage( SuitePluginManager.Seasons.Name.full,
                             "Created Season 1! Change the title and subtitle as desired.");

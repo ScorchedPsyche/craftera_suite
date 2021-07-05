@@ -39,7 +39,7 @@ public class AchievementsDatabaseApi
             sql += "\n);";
 
             // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(sql) )
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
             {
                 // Successfully created table
                 ConsoleUtil.logMessage(SuitePluginManager.Achievements.Name.full,
@@ -107,7 +107,7 @@ public class AchievementsDatabaseApi
                 sql += ");";
 
                 // Try to add the achievement for the player
-                if ( DatabaseManager.database.executeSql(sql) )
+                if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
                 {
                     // Achievement added successfully. Check if it's server first
                     Player player = ServerUtil.getPlayerByUUID(playerUUID);

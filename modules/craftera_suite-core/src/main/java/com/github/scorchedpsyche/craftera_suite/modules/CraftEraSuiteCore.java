@@ -12,6 +12,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabC
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.CoreDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
 import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
@@ -21,6 +22,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -46,12 +48,17 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     public static ServerManager serverManager;
     private CoreDatabaseApi coreDatabaseApi;
 
+    // Player List Header
+    private final StringFormattedModel baseHeaderStringFormattedModel = new StringFormattedModel();
+    private String baseHeaderStr;
+
     private Integer warnPlayersOfServerRestartTask;
     private Integer restartServerTask;
     private Integer restartMinutes = 1;
     private Integer restartSeconds = 0;
 
     private Integer checkMemoryUsageTaskId;
+    private Integer updatePlayerListHeaderTaskId;
     public static TitleAndSubtitleSendToPlayerTask titleAndSubtitleSendToPlayerTask;
 
     // Commands
@@ -103,9 +110,10 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 // Setup and verify DB tables
                 if( coreDatabaseApi.setupAndVerifySqlTable() )
                 {
-                    // Initialize and configure ServerManager
+                    // Initialize and configure
                     serverManager = new ServerManager(coreDatabaseApi)
                             .loadAndVerifyServerMessages();
+                    baseHeaderStr = baseHeaderStringFormattedModel.add(Bukkit.getServer().getMotd()).nl().nl().toString();
 
                     // Add online players to Player Manager List
                     for( Player player : Bukkit.getOnlinePlayers() )
@@ -123,6 +131,10 @@ public final class CraftEraSuiteCore extends JavaPlugin {
 
                     // Add plugin commands
                     addPluginCommands();
+
+                    // REPEATING TASK: update Player List Header
+                    updatePlayerListHeaderTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                            this, this::updatePLayerListHeader, 0L, 20);
 
                     // REPEATING TASK: check server memory usage
                     if( config.getBoolean("auto_restart_on_low_memory") )
@@ -167,6 +179,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
     public void onDisable()
     {
         if( checkMemoryUsageTaskId != null ){ Bukkit.getScheduler().cancelTask(checkMemoryUsageTaskId); }
+        if( updatePlayerListHeaderTaskId != null ){ Bukkit.getScheduler().cancelTask(updatePlayerListHeaderTaskId); }
         if( warnPlayersOfServerRestartTask != null ){ Bukkit.getScheduler().cancelTask(warnPlayersOfServerRestartTask); }
         if( restartServerTask != null ){ Bukkit.getScheduler().cancelTask(restartServerTask); }
         cancelTitleAndSubtitleSendToPlayersTaskIfRunning();
@@ -178,6 +191,7 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         restartMinutes = null;
         restartSeconds = null;
         checkMemoryUsageTaskId = null;
+        updatePlayerListHeaderTaskId = null;
         titleAndSubtitleSendToPlayerTask = null;
 
         // Dependencies
@@ -201,6 +215,33 @@ public final class CraftEraSuiteCore extends JavaPlugin {
         events.put("core", new CommandModel(SuitePluginManager.Core.Permissions.core).addSubcommands(coreSubcommands));
 
         CustomTabCompleter.commands.putAll(events);
+    }
+
+    public void updatePLayerListHeader()
+    {
+        StringFormattedModel headerStr = new StringFormattedModel().add(baseHeaderStr).gray("TPS: ");
+        int tpsLast1m = (int) MinecraftServer.getServer().recentTps[0];
+        String tpsStr = String.valueOf(tpsLast1m); // last 1m
+        int msptLast1m = (int) (1000 / MinecraftServer.getServer().recentTps[0]);
+        String msptStr = String.valueOf(msptLast1m); // last 1m
+
+        if( tpsLast1m == 20  ) // Very good
+        {
+            headerStr.green(tpsStr).gray(" MSPT: ").green(msptStr);
+        } else if( tpsLast1m >= 19  ) { // Good
+            headerStr.darkGreen(tpsStr).gray(" MSPT: ").darkGreen(msptStr);
+        } else if( tpsLast1m >= 18  ) { // Acceptable
+            headerStr.yellow(tpsStr).gray(" MSPT: ").yellow(msptStr);
+        } else if( tpsLast1m >= 17  ) { // Bad
+            headerStr.gold(tpsStr).gray(" MSPT: ").gold(msptStr);
+        } else { // Terrible
+            headerStr.red(tpsStr).gray(" MSPT: ").red(msptStr);
+        }
+
+        for( Player player : Bukkit.getOnlinePlayers() )
+        {
+            player.setPlayerListHeader(headerStr.nl().toString());
+        }
     }
 
     private String mb (long s) {

@@ -26,6 +26,21 @@ public class StringFormattedModel
         return this;
     }
 
+    public StringFormattedModel darkGreen(String str)
+    {
+        stringBuilder.append(ChatColor.DARK_GREEN);
+        add(str);
+
+        return this;
+    }
+    public StringFormattedModel darkGreenR(String str)
+    {
+        stringBuilder.append(ChatColor.DARK_GREEN);
+        addAndReset(str);
+
+        return this;
+    }
+
     public StringFormattedModel gold(String str)
     {
         stringBuilder.append(ChatColor.GOLD);
@@ -36,6 +51,21 @@ public class StringFormattedModel
     public StringFormattedModel goldR(String str)
     {
         stringBuilder.append(ChatColor.GOLD);
+        addAndReset(str);
+
+        return this;
+    }
+
+    public StringFormattedModel gray(String str)
+    {
+        stringBuilder.append(ChatColor.GRAY);
+        add(str);
+
+        return this;
+    }
+    public StringFormattedModel grayR(String str)
+    {
+        stringBuilder.append(ChatColor.GRAY);
         addAndReset(str);
 
         return this;
@@ -71,7 +101,6 @@ public class StringFormattedModel
         return this;
     }
 
-
     public StringFormattedModel white(String str)
     {
         stringBuilder.append(ChatColor.WHITE);
@@ -86,7 +115,6 @@ public class StringFormattedModel
 
         return this;
     }
-
 
     public StringFormattedModel yellow(String str)
     {
@@ -118,7 +146,7 @@ public class StringFormattedModel
         return this;
     }
 
-    public StringFormattedModel reset(String str)
+    public StringFormattedModel reset()
     {
         stringBuilder.append(ChatColor.RESET);
 
@@ -127,7 +155,7 @@ public class StringFormattedModel
 
     public StringFormattedModel nl()
     {
-        stringBuilder.append("\n").append(ChatColor.RESET);
+        stringBuilder.append("\n");
 
         return this;
     }

@@ -38,16 +38,15 @@ public class SQLiteDatabase implements IDatabase
     }
 
     @Override
-    public boolean executeSql(String sqlStatement)
+    public boolean executeSqlAndDisplayErrorIfNeeded(String sqlStatement)
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl); Statement stmt = conn.createStatement()) {
             stmt.execute(sqlStatement);
             conn.close();
             return true;
         } catch (SQLException e) {
-            ConsoleUtil.logError(
-                    "SQLite sql execution failed: " + sqlStatement);
-            ConsoleUtil.logError( e.getMessage() );
+            ConsoleUtil.logErrorSQL( sqlStatement, e.getMessage() );
+//            ConsoleUtil.logError( e.getMessage() );
         }
 
         return false;

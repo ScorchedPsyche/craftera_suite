@@ -47,7 +47,7 @@ public class SeasonManager {
                 + "'" + version_start + "', "
                 + "'" + version_end + "')";
 
-        if ( DatabaseManager.database.executeSql(sql) )
+        if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
         {
             sql = "SELECT * FROM " + DatabaseTables.Seasons.table_name +
                     " ORDER BY id DESC LIMIT 1";
@@ -120,7 +120,7 @@ public class SeasonManager {
         String sql = "DELETE FROM " + DatabaseTables.Seasons.table_name
                 + " WHERE id=" + id;
 
-        return DatabaseManager.database.executeSql(sql);
+        return DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql);
     }
 
     public boolean updateSeason(SeasonModel season)
@@ -137,7 +137,7 @@ public class SeasonManager {
                 + DatabaseTables.Seasons.Table.minecraft_version_end + " = '" + season.getMinecraft_version_end()
                 + "' WHERE id=" + season.getId();
 
-        if( DatabaseManager.database.executeSql(sql) )
+        if( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sql) )
         {
             // Check if selected is the same season as current
             if( selected != null && current != null && selected.getId().equals(current.getId()))

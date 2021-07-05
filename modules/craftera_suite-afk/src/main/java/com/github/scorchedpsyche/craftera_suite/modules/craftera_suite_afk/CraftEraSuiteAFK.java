@@ -37,7 +37,7 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
 
                 // Set up repeating task to update AFK state for players
                 updatePlayersAFKState = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                        this, () -> afkManager.updatePlayersAFKState(), 0L, 5 * 20);
+                        this, () -> afkManager.updatePlayersAFKState(), 0L, 5 * 60 * 20);
 
                 // Listeners
                 getServer().getPluginManager().registerEvents(new PlayerJoinAFKListener(afkManager), this);

@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -13,6 +14,8 @@ public final class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
+        e.getPlayer().setPlayerListHeader(Bukkit.getServer().getMotd());
+
         CraftEraSuiteCore.playerManagerList.put(e.getPlayer().getUniqueId().toString(), new PlayerManager(e.getPlayer()));
         CraftEraSuiteCore.startTitleAndSubtitleSendToPlayersTaskIfNotRunning();
 

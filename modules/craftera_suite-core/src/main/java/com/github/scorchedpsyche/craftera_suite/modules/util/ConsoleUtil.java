@@ -1,5 +1,6 @@
 package com.github.scorchedpsyche.craftera_suite.modules.util;
 
+import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +26,7 @@ public class ConsoleUtil {
     {
         Bukkit.getConsoleSender().sendMessage(
                 ChatColor.AQUA + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
-                        "] DEBUG: " + message + ChatColor.RESET + "\n");
+                        "] DEBUG: " + message + "\n" + ChatColor.RESET);
     }
 
     /**
@@ -44,9 +45,38 @@ public class ConsoleUtil {
      */
     public static void logError(String pluginPrefixName, String message)
     {
-        Bukkit.getConsoleSender().sendMessage(
-                ChatColor.RED + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
-                        "] ERROR: " + message + ChatColor.RESET + "\n");
+        StringFormattedModel errorStr = new StringFormattedModel()
+            .red("\n[").add(validCustomPrefixOrDefault(pluginPrefixName)).add("] ERROR: " ).nl().nl()
+            .add(message).reset().nl();
+        Bukkit.getConsoleSender().sendMessage(errorStr.toString());
+//        Bukkit.getConsoleSender().sendMessage(
+//                ChatColor.RED + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
+//                        "] ERROR: " + message + "\n" + ChatColor.RESET);
+    }
+
+    /**
+     * Logs an SQL query error (red colored) to the console with a plugin's prefix.
+     * @param sql SQL statement that triggered the exception
+     * @param sqlMessage The debug error returned from the driver
+     */
+    public static void logErrorSQL(String sql, String sqlMessage)
+    {
+        StringFormattedModel errorStr = new StringFormattedModel()
+            .red("\n[").add(defaultPrefix).add("] ERROR executing SQL: " ).nl().nl().add(sql).nl().nl().add(sqlMessage);
+        Bukkit.getConsoleSender().sendMessage(errorStr.toString());
+    }
+
+    /**
+     * Logs an SQL query error (red colored) to the console with a plugin's prefix.
+     * @param sql SQL statement that triggered the exception
+     * @param sqlMessage The debug error returned from the driver
+     */
+    public static void logErrorSQLWithPluginPrefix(String pluginPrefixName, String method, String sql, String sqlMessage)
+    {
+        StringFormattedModel errorStr = new StringFormattedModel()
+            .red("\n[").add(validCustomPrefixOrDefault(pluginPrefixName)).add("] ERROR executing SQL for method")
+            .add(method).add(": " ).nl().nl().add(sql).nl().nl().add(sqlMessage);
+        Bukkit.getConsoleSender().sendMessage(errorStr.toString());
     }
 
     /**
@@ -67,7 +97,7 @@ public class ConsoleUtil {
     {
         Bukkit.getConsoleSender().sendMessage(
                 ChatColor.YELLOW + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
-                        "] WARNING: " + message + ChatColor.RESET + "\n");
+                        "] WARNING: " + message + "\n" + ChatColor.RESET);
     }
 
     /**
@@ -88,7 +118,7 @@ public class ConsoleUtil {
     {
         Bukkit.getConsoleSender().sendMessage(
                 ChatColor.GREEN + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
-                        "] SUCCESS: " + message + ChatColor.RESET + "\n");
+                        "] SUCCESS: " + message + "\n" + ChatColor.RESET);
     }
 
     /**
