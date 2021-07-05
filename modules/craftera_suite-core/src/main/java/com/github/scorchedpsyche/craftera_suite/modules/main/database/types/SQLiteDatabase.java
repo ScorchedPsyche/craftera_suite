@@ -22,21 +22,19 @@ public class SQLiteDatabase implements IDatabase
     }
 
     @Override
-    public Connection createOrRetrieveDatabase()
+    public void createOrRetrieveDatabase()
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl)) {
             if (conn != null) {
                 ConsoleUtil.logMessage(
                         "Connection to SQLite has been established at: " + databaseUrl);
-                return conn;
+                conn.close();
             }
         } catch (SQLException e) {
             ConsoleUtil.logError(
                     "SQLite database connection failed. Check folder write permissions at: " + databaseUrl);
             ConsoleUtil.logError( e.getMessage() );
         }
-
-        return null;
     }
 
     @Override
@@ -44,6 +42,7 @@ public class SQLiteDatabase implements IDatabase
     {
         try (Connection conn = DriverManager.getConnection(databaseUrl); Statement stmt = conn.createStatement()) {
             stmt.execute(sqlStatement);
+            conn.close();
             return true;
         } catch (SQLException e) {
             ConsoleUtil.logError(
@@ -61,6 +60,7 @@ public class SQLiteDatabase implements IDatabase
             ResultSet rs = stmt.executeQuery(
                             "SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "';");
 
+            conn.close();
             return rs.next();
         } catch (SQLException e) {
             ConsoleUtil.logError(

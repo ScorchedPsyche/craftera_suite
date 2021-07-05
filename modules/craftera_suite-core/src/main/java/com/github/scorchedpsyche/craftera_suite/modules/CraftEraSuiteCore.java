@@ -1,14 +1,19 @@
 package com.github.scorchedpsyche.craftera_suite.modules;
 
+import com.github.scorchedpsyche.craftera_suite.modules.listener.CoreCommandListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinListener;
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.PlayerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.ResourcesManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.ServerManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomCommandExecutor;
 import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
+import com.github.scorchedpsyche.craftera_suite.modules.main.database.CoreDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
+import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.task.TitleAndSubtitleSendToPlayerTask;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.FolderUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
@@ -31,12 +36,15 @@ import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public final class CraftEraSuiteCore extends JavaPlugin {
     public ResourcesManager resourcesManager;
     public DatabaseManager databaseManager;
     public static FileConfiguration config;
-    public static HashMap<String, PlayerManager> playerManagerList = new HashMap<String, PlayerManager>();
+    public static HashMap<String, PlayerManager> playerManagerList = new HashMap<>();
+    public static ServerManager serverManager;
+    private CoreDatabaseApi coreDatabaseApi;
 
     private Integer warnPlayersOfServerRestartTask;
     private Integer restartServerTask;
@@ -90,39 +98,61 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                     databaseManager = new DatabaseManager(DatabaseManager.DatabaseType.SQLite);
                 }
 
-                // Add online players to Player Manager List
-                for( Player player : Bukkit.getOnlinePlayers() )
+                coreDatabaseApi = new CoreDatabaseApi();
+
+                // Setup and verify DB tables
+                if( coreDatabaseApi.setupAndVerifySqlTable() )
                 {
-                    playerManagerList.put(player.getUniqueId().toString(), new PlayerManager());
-                }
+                    // Initialize and configure ServerManager
+                    serverManager = new ServerManager(coreDatabaseApi)
+                            .loadAndVerifyServerMessages();
 
-                // Register "ces" command
-                this.getCommand("ces").setExecutor(customCommandExecutor);
-                this.getCommand("ces").setTabCompleter(customTabCompleter);
+                    // Add online players to Player Manager List
+                    for( Player player : Bukkit.getOnlinePlayers() )
+                    {
+                        playerManagerList.put(player.getUniqueId().toString(), new PlayerManager(player));
+                    }
 
-                // REPEATING TASK: check server memory usage
-                if( config.getBoolean("auto_restart_on_low_memory") )
-                {
-                    checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                            this, () -> checkMemoryUsage(), 0L, 100);
+                    // Register "ces" command
+                    try {
+                        Objects.requireNonNull(this.getCommand("ces")).setExecutor(customCommandExecutor);
+                        Objects.requireNonNull(this.getCommand("ces")).setTabCompleter(customTabCompleter);
+                    } catch(NullPointerException e){
+                        ConsoleUtil.logError(e.getMessage());
+                    }
 
-                }
+                    // Add plugin commands
+                    addPluginCommands();
 
-                // REPEATING TASK: display subtitle
-                if( !CollectionUtil.isNullOrEmpty(Bukkit.getOnlinePlayers()) )
-                {
-                    startTitleAndSubtitleSendToPlayersTaskIfNotRunning();
-                }
+                    // REPEATING TASK: check server memory usage
+                    if( config.getBoolean("auto_restart_on_low_memory") )
+                    {
+                        checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                                this, this::checkMemoryUsage, 0L, 100);
 
-                // Listeners
-                getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-                getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+                    }
 
-                // Load dependencies
-                RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+                    // REPEATING TASK: display subtitle
+                    if( !CollectionUtil.isNullOrEmpty(Bukkit.getOnlinePlayers()) )
+                    {
+                        startTitleAndSubtitleSendToPlayersTaskIfNotRunning();
+                    }
 
-                if (provider != null) {
-                    luckPerms = provider.getProvider();
+                    // Listeners
+                    getServer().getPluginManager().registerEvents(new CoreCommandListener(serverManager), this);
+                    getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+                    getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
+
+                    // Load dependencies
+                    RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
+                    if (provider != null) {
+                        luckPerms = provider.getProvider();
+                    }
+                } else {
+                    // Failed to create database tables! Display error and disable plugin
+                    ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
+                    Bukkit.getPluginManager().disablePlugin(this);
                 }
             }
         } catch (Exception e)
@@ -155,6 +185,24 @@ public final class CraftEraSuiteCore extends JavaPlugin {
 
         super.onDisable();
     }
+
+    private void addPluginCommands()
+    {
+        HashMap<String, CommandModel> messagesSubcommands = new HashMap<>();
+        messagesSubcommands.put("new", new CommandModel());
+
+        HashMap<String, CommandModel> serverSubcommands = new HashMap<>();
+        serverSubcommands.put("messages", new CommandModel().addSubcommands(messagesSubcommands));
+
+        HashMap<String, CommandModel> coreSubcommands = new HashMap<>();
+        coreSubcommands.put("server", new CommandModel().addSubcommands(serverSubcommands));
+
+        HashMap<String, CommandModel> events = new HashMap<>();
+        events.put("core", new CommandModel(SuitePluginManager.Core.Permissions.core).addSubcommands(coreSubcommands));
+
+        CustomTabCompleter.commands.putAll(events);
+    }
+
     private String mb (long s) {
         return String.format("%d (%.2f M)", s, (double)s / (1024 * 1024));
     }
@@ -170,6 +218,18 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
                         TextComponent.fromLegacyText( playerManager.subtitle.getText() ) );
                 playerManager.subtitle.reset();
+            }
+
+            if( playerManager.titleSubtitleManager.titleSubtitleModel != null )
+            {
+                player.sendTitle(
+                        playerManager.titleSubtitleManager.titleSubtitleModel.title.toString(),
+                        playerManager.titleSubtitleManager.titleSubtitleModel.subtitle.toString(),
+                        playerManager.titleSubtitleManager.titleSubtitleModel.getFadeIn(),
+                        playerManager.titleSubtitleManager.titleSubtitleModel.getStay(),
+                        playerManager.titleSubtitleManager.titleSubtitleModel.getFadeOut()
+                );
+                playerManager.titleSubtitleManager.titleSubtitleModel = null;
             }
         }
     }
@@ -215,9 +275,9 @@ public final class CraftEraSuiteCore extends JavaPlugin {
                 player.playSound(player.getLocation(), Sound.EVENT_RAID_HORN, 1, 1);
             }
             checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                    this, () -> warnPlayersOfServerRestart(), 0L, 20);
+                    this, this::warnPlayersOfServerRestart, 0L, 20);
             checkMemoryUsageTaskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
-                    this, () -> restartServer(), 1200);
+                    this, this::restartServer, 1200);
         }
     }
 

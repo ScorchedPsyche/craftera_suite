@@ -38,15 +38,20 @@ public class DatabaseTables
     }
 
     public static class Core {
-        public static final String settingsTableName = corePrefix + "settings";
+        public static final String playerMessagesTableName = corePrefix + "messages";
 
-        public static class SettingsTable
+        public static class MessagesTable
         {
-
+            public static final String type = "type";
+            public static final String pending = "pending";
+            public static final String player_uuid = "player_uuid";
+            public static final String date_end = "date_end";
+            public static final String message = "message";
+            public static final String message_cached = "message_cached";
         }
     }
 
-    public static class Events {
+    public static class Games {
         public static final String transpiredTableName = eventsPrefix + "transpired";
         public static final String participantsTableName = eventsPrefix + "participants";
 
@@ -114,7 +119,7 @@ public class DatabaseTables
 
     public static class Seasons
     {
-        public static final String table_name = seasonsPrefix;
+        public static final String table_name = "seasons";
 
         public static class Table {
             public static final String number = "number";

@@ -86,11 +86,12 @@ public class StatisticsManager {
             // Check if player fetch was successful
             if (player != null) {
                 // Increase timer
-                playerLogout( player );
+                updatePlayerLoginTimer(player);
             } else {
                 ConsoleUtil.logError(SuitePluginManager.Statistics.Name.full,
                         "Failed to disable Statistics Manager. Report to developer!");
             }
         }
+        players.clear();
     }
 }

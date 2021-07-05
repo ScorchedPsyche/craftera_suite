@@ -25,7 +25,7 @@ public class ConsoleUtil {
     {
         Bukkit.getConsoleSender().sendMessage(
                 ChatColor.AQUA + "\n[" + validCustomPrefixOrDefault(pluginPrefixName) +
-                        "] ERROR: " + message + ChatColor.RESET + "\n");
+                        "] DEBUG: " + message + ChatColor.RESET + "\n");
     }
 
     /**

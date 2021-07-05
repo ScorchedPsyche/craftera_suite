@@ -21,6 +21,10 @@ public class AFKManager {
         this.afkDatabaseApi = afkDatabaseApi;
     }
 
+    /**
+     * Starts or restarts the AFK timer for the target player.
+     * @param player The player to restart the AFK timer for
+     */
     public void startOrResetAFKTimerForPlayer(Player player)
     {
         // Check if player is already on the list
@@ -32,55 +36,6 @@ public class AFKManager {
             // Not on the list. Add them and start the timer
             players.put( player.getUniqueId(), new PlayerAFKModel(player).timerStartOrRestart() );
         }
-    }
-
-    public void playerWentAFK(Player player)
-    {
-        afkDatabaseApi.addAFKForPlayerIfNotExists( players.get(player.getUniqueId()).markAsAFK(timeItTakesToGoAFK).updateAFKTimer() );
-    }
-
-
-    /**
-     * Updates player final and total AFK timer.
-     * @param player Player who's timer will be updated
-     */
-    public void updatePlayerAFKTimer(Player player)
-    {
-        PlayerAFKModel playerAFKModel = players.get(player.getUniqueId()).updateAFKTimer();
-
-        if ( !afkDatabaseApi.updateAFKTimerForPlayer(playerAFKModel) )
-        {
-            ConsoleUtil.logError(SuitePluginManager.AFK.Name.full,
-                    "Unable to update player AFK timer. Report to developer!");
-        }
-    }
-
-    /**
-     * Updates player final and total AFK timer and restarts their timer.
-     * @param player Player who's timer will be updated
-     */
-    public void playerLeftAFK(Player player)
-    {
-        updatePlayerAFKTimer(player);
-        startOrResetAFKTimerForPlayer(player);
-    }
-
-    /**
-     * Processes player in case of a logout or server shutdown.
-     * @param player Player that will be processed
-     */
-    public void playerLogout(Player player)
-    {
-        PlayerAFKModel playerAFKModel = players.get(player.getUniqueId());
-
-        // Check if player is AFK
-        if( playerAFKModel.isAFK() )
-        {
-            // Is AFK. Update AFK timer before removal
-            playerAFKModel.updateAFKTimer();
-            playerAFKModel.markAsNotAFK();
-        }
-        players.remove(player.getUniqueId());
     }
 
     public void updatePlayersAFKState()
@@ -125,6 +80,54 @@ public class AFKManager {
         }
     }
 
+    /**
+     * Updates player final and total AFK timer.
+     * @param player Player who's timer will be updated
+     */
+    public void updatePlayerAFKTimer(Player player)
+    {
+        PlayerAFKModel playerAFKModel = players.get(player.getUniqueId()).updateAFKTimer();
+
+        if ( !afkDatabaseApi.updateAFKTimerForPlayer(playerAFKModel) )
+        {
+            ConsoleUtil.logError(SuitePluginManager.AFK.Name.full,
+                    "Unable to update player AFK timer. Report to developer!");
+        }
+    }
+
+    public void playerWentAFK(Player player)
+    {
+        afkDatabaseApi.addAFKForPlayerIfNotExists( players.get(player.getUniqueId()).markAsAFK(timeItTakesToGoAFK).updateAFKTimer() );
+    }
+
+    /**
+     * Updates player final and total AFK timer and restarts their timer.
+     * @param player Player who's timer will be updated
+     */
+    public void playerLeftAFK(Player player)
+    {
+        updatePlayerAFKTimer(player);
+        startOrResetAFKTimerForPlayer(player);
+    }
+
+    /**
+     * Processes player in case of a logout or server shutdown.
+     * @param player Player that will be processed
+     */
+    public void playerLogout(Player player)
+    {
+        PlayerAFKModel playerAFKModel = players.get(player.getUniqueId());
+
+        // Check if player is AFK
+        if( playerAFKModel.isAFK() )
+        {
+            // Is AFK. Update AFK timer before removal
+            playerAFKModel.updateAFKTimer();
+            playerAFKModel.markAsNotAFK();
+        }
+        players.remove(player.getUniqueId());
+    }
+
     public void disable() {
         // Iterate through all players
         for (Map.Entry<UUID, PlayerAFKModel> entry : players.entrySet())
@@ -133,12 +136,18 @@ public class AFKManager {
 
             // Check if player fetch was successful
             if (player != null) {
-                // Increase timer
-                playerLogout( player );
+                // Check if player is AFK
+                if( entry.getValue().isAFK() )
+                {
+                    // Is AFK. Update AFK timer before removal
+                    entry.getValue().updateAFKTimer();
+                    entry.getValue().markAsNotAFK();
+                }
             } else {
                 ConsoleUtil.logError(SuitePluginManager.Statistics.Name.full,
                         "Failed to disable AFK Manager. Report to developer!");
             }
         }
+        players.clear();
     }
 }

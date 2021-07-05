@@ -7,11 +7,13 @@ import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import net.luckperms.api.model.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.io.Console;
 import java.util.*;
 
 public class CustomTabCompleter implements TabCompleter {
@@ -69,14 +71,32 @@ public class CustomTabCompleter implements TabCompleter {
                 // 1 arg. Return partial filtered list by word
                 return filterListByPartialWordAndPermission(user, commands, args.get(0));
             } else {
+                if(     commands.containsKey(args.get(0)) &&
+                        commands.get(args.get(0)) != null &&
+                        commands.get(args.get(0)).hasSubcommands() )
+                {
+                }
+
                 // More than 1 arg. Check if current command tree contains the arg with subcommands
                 if(     commands.containsKey(args.get(0)) &&
                         commands.get(args.get(0)) != null &&
                         commands.get(args.get(0)).hasSubcommands() &&
                         CraftEraSuiteCore.userHasPermission( user, commands.get(args.get(0)).getPermission() ) )
                 {
-                    // Has subcommands
-                    HashMap<String, CommandModel> subCommands = commands.get(args.get(0)).subCommands;
+                    // Has subcommands or must show player names as subcommands
+                    HashMap<String, CommandModel> subCommands;
+                    if( commands.get(args.get(0)).arePlayersSubcommands() )
+                    {
+                        // Player as subcommands
+                        subCommands = new HashMap<>();
+                        for( Player player : Bukkit.getOnlinePlayers() )
+                        {
+                            subCommands.put(player.getDisplayName(), new CommandModel());
+                        }
+                    } else {
+                        // Just subcommands
+                        subCommands = commands.get(args.get(0)).subCommands;
+                    }
 
                     // Remove parent argument and check child subcommands
                     args.remove(0);

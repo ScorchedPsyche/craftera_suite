@@ -69,20 +69,32 @@ public class SuitePluginManager {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
 
+        public static class Messages {
+            public enum Type
+            {
+                ServerMessageToAllPlayers,
+                MessageForSpecificPlayer
+            }
+        }
+
         public static class Task {
             public static class TitleAndSubtitleSendToPlayer {
                 public static final long period = 5L;
             }
         }
+
+        public static class Permissions {
+            public static final String core = permission_prefix + ".core";
+        }
     }
 
-    public static class Events
+    public static class Games
     {
         public static class Name
         {
-            public static final String compact = "CES - Events";
-            public static final String full = "CraftEra Suite - Events";
-            public static final String pomXml = "craftera_suite-events";
+            public static final String compact = "CES - Games";
+            public static final String full = "CraftEra Suite - Games";
+            public static final String pomXml = "craftera_suite-games";
         }
         public static boolean isEnabled ()
         {
@@ -95,8 +107,24 @@ public class SuitePluginManager {
             Raid__EnderDragon_Chaotic
         }
 
+        public enum Stage
+        {
+            Preparing,
+            Subscribing,
+            Running,
+            Paused,
+            Finished,
+            Archived
+        }
+
         public static class Permissions {
-            public static final String events = permission_prefix + ".events";
+            public static final String games = permission_prefix + ".games";
+            public static final String prepare = games + ".prepare";
+            public static final String cancel = games + ".cancel";
+            public static final String open_subscriptions = games + ".open_subscriptions";
+            public static final String announce = games + ".announce";
+            public static final String join = games + ".join";
+            public static final String start = games + ".start";
         }
     }
 

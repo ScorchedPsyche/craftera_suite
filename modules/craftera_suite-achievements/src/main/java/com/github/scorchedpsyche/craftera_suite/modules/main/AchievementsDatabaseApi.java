@@ -152,7 +152,7 @@ public class AchievementsDatabaseApi
                 }
             }
         } catch (SQLException e) {
-            ConsoleUtil.logError( SuitePluginManager.SpectatorMode.Name.full,
+            ConsoleUtil.logError( SuitePluginManager.Achievements.Name.full,
                     "SQLite query failed for 'fetchCurrentSeason': " + sql);
             ConsoleUtil.logError( e.getMessage() );
         }

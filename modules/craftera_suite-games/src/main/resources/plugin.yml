@@ -1,0 +1,9 @@
+name: craftera_suite-games
+version: ${project.version}
+depend: [ craftera_suite-core ]
+main: com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteGames
+api-version: 1.17
+prefix: CraftEra Suite - Games
+authors: [ ScorchedPsyche ]
+description: Mini-games for your server.
+website: https://github.com/ScorchedPsyche

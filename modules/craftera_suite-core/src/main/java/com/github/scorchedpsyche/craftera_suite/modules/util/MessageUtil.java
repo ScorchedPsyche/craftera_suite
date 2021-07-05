@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 
 public class MessageUtil
 {
+    // TODO: Refactor this
     public static String formattedCommand(String command)
     {
         return "" + ChatColor.YELLOW + ChatColor.BOLD + command + ChatColor.RESET;
@@ -21,6 +22,7 @@ public class MessageUtil
 
     public static String newLine()
     {
+        // TODO: Remove this function
         return "\n" + ChatColor.RESET;
     }
 }

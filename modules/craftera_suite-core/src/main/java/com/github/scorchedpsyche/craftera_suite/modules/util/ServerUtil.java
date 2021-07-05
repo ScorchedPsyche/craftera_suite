@@ -20,6 +20,10 @@ public class ServerUtil {
         message.setText(ChatColor.GOLD + "[" + prefix + "] " + ChatColor.RESET + message.getText());
         Bukkit.getServer().spigot().broadcast(message);
     }
+    public static void broadcastWithPluginPrefix(@NotNull String prefix, String message) {
+        Bukkit.getServer().spigot().broadcast(
+                TextComponent.fromLegacyText(ChatColor.GOLD + "[" + prefix + "] " + ChatColor.RESET +message));
+    }
     public static void broadcast(String message) {
         Bukkit.getServer().spigot().broadcast(TextComponent.fromLegacyText(message));
     }

@@ -10,4 +10,8 @@ public class StringUtil
     {
         return stringBuilder == null || stringBuilder.equals("");
     }
+    public static String removeEncasingDoubleQuotes(String str)
+    {
+        return str.replaceAll("^\"|\"$", "");
+    }
 }

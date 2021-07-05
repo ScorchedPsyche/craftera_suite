@@ -1,11 +1,13 @@
 package com.github.scorchedpsyche.craftera_suite.modules.main.commands;
 
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
-import com.github.scorchedpsyche.craftera_suite.modules.events.modules.events.EventsCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.core.CoreCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.games.GamesCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import net.luckperms.api.model.user.User;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class CustomCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        User user;
 
         // Check if sender is player
         if (sender instanceof Player) {
@@ -29,14 +32,31 @@ public class CustomCommandExecutor implements CommandExecutor {
 
                 switch( args[0] )
                 {
-                    case "events":
-                        if ( argsFiltered == null )
+                    case "core":
+                        if( PlayerUtil.hasPermission(((Player)sender), SuitePluginManager.Core.Permissions.core) )
                         {
-                            argsFiltered = new String[1];
-                            argsFiltered[0] = "";
+                            if ( argsFiltered == null )
+                            {
+                                argsFiltered = new String[1];
+                                argsFiltered[0] = "";
+                            }
+
+                            Bukkit.getPluginManager().callEvent(new CoreCommandEvent((Player) sender, argsFiltered));
                         }
 
-                        Bukkit.getPluginManager().callEvent(new EventsCommandEvent((Player) sender, argsFiltered));
+                        return true;
+
+                    case "games":
+                        if( PlayerUtil.hasPermission(((Player)sender), SuitePluginManager.Games.Permissions.games) )
+                        {
+                            if ( argsFiltered == null )
+                            {
+                                argsFiltered = new String[1];
+                                argsFiltered[0] = "";
+                            }
+
+                            Bukkit.getPluginManager().callEvent(new GamesCommandEvent((Player) sender, argsFiltered));
+                        }
 
                         return true;
 
@@ -52,8 +72,7 @@ public class CustomCommandExecutor implements CommandExecutor {
                         return true;
 
                     case "seasons":
-                        User user = CraftEraSuiteCore.luckPerms.getUserManager().getUser(((Player) sender).getUniqueId());
-                        if(user != null && user.getCachedData().getPermissionData().checkPermission(SuitePluginManager.Seasons.Permissions.seasons).asBoolean())
+                        if( PlayerUtil.hasPermission(((Player)sender), SuitePluginManager.Seasons.Permissions.seasons) )
                         {
                             if ( argsFiltered == null )
                             {
@@ -62,9 +81,6 @@ public class CustomCommandExecutor implements CommandExecutor {
                             }
 
                             Bukkit.getPluginManager().callEvent(new SeasonsCommandEvent((Player) sender, argsFiltered));
-                        } else {
-                            PlayerUtil.sendMessageWithPluginPrefix(((Player) sender).getPlayer(),SuitePluginManager.Seasons.Name.compact,
-                                    ChatColor.RED + "Unauthorized.");
                         }
 
                         return true;

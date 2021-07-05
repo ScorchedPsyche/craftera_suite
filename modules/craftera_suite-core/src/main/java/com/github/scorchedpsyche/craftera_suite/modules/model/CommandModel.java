@@ -8,20 +8,26 @@ public class CommandModel
     {
     }
 
-//    public CommandModel(String commandName)
-//    {
-//        addCommand(commandName);
-//    }
-
     public CommandModel(String permission)
     {
         this.permission = permission;
     }
 
-//    public ICommandEvent commandEvent;
+    public CommandModel(boolean playersAsSubcommands)
+    {
+        this.playersAsSubcommands = playersAsSubcommands;
+    }
+
+    public CommandModel(String permission, boolean playersAsSubcommands)
+    {
+        this.permission = permission;
+        this.playersAsSubcommands = playersAsSubcommands;
+    }
+
     public HashMap<String, CommandModel> subCommands;
     private String lastKey;
     private String permission;
+    private boolean playersAsSubcommands = false;
 
     public CommandModel addCommand(String commandName)
     {
@@ -62,7 +68,16 @@ public class CommandModel
 
     public boolean hasSubcommands()
     {
+        if( playersAsSubcommands )
+        {
+            return true;
+        }
+
         return subCommands != null;
     }
     public String getPermission(){ return permission; }
+
+    public boolean arePlayersSubcommands() {
+        return playersAsSubcommands;
+    }
 }
