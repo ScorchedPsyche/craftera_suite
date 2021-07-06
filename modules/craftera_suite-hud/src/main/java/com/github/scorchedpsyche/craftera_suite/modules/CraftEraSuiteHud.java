@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerJoinHudLi
 import com.github.scorchedpsyche.craftera_suite.modules.listener.PlayerQuitHudListener;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudDatabaseAPI;
 import com.github.scorchedpsyche.craftera_suite.modules.main.HudManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
 import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
@@ -17,7 +18,7 @@ public final class CraftEraSuiteHud extends JavaPlugin
 {
     public static HudManager hudManager;
     private HudDatabaseAPI hudDatabaseAPI;
-    private Integer showHudForPlayersTask;
+//    private Integer showHudForPlayersTask;
 
     @Override
     public void onEnable()
@@ -33,7 +34,8 @@ public final class CraftEraSuiteHud extends JavaPlugin
                 hudManager = new HudManager( hudDatabaseAPI );
 
                 // Set up repeating task to update HUD for players
-                showHudForPlayersTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+//                showHudForPlayersTask =
+                Bukkit.getScheduler().scheduleSyncRepeatingTask(
                         this, () -> hudManager.showHudForPlayers(), 0L, 5);
 
                 // Add plugin commands
@@ -58,63 +60,114 @@ public final class CraftEraSuiteHud extends JavaPlugin
     @Override
     public void onDisable()
     {
-        // Cancel repeating task
-        if( showHudForPlayersTask != null )
-        {
-            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
-        }
+        // Cancel all tasks
+        Bukkit.getScheduler().cancelTasks(this);
+//        if( showHudForPlayersTask != null )
+//        {
+//            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
+//        }
 
         hudDatabaseAPI = null;
         hudManager = null;
-        if ( showHudForPlayersTask != null )
-        {
-            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
-            showHudForPlayersTask = null;
-        }
+//        if ( showHudForPlayersTask != null )
+//        {
+//            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
+//            showHudForPlayersTask = null;
+//        }
 
         super.onDisable();
     }
 
     private void addPluginCommands()
     {
-        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
+//        HashMap<String, CommandModel> hudConfigFormatWorldTimeSubcommands = new HashMap<>();
+//        hudConfigFormatWorldTimeSubcommands.put("as24Hour", new CommandModel());
+//        hudConfigFormatWorldTimeSubcommands.put("asTicks", new CommandModel());
+//
+////        HashMap<String, CommandModel> hudConfigFormatSubcommands = new HashMap<>();
+////        hudConfigFormatSubcommands.put("world_time", new CommandModel().addSubcommands(hudConfigFormatWorldTimeSubcommands));
+////
+////        HashMap<String, CommandModel> hudConfigSubcommands = new HashMap<>();
+////        hudConfigSubcommands.put("format", new CommandModel().addSubcommands(hudConfigFormatSubcommands));
+//
+////        CommandModel hudCommands = new CommandModel().
+////            add("hud")
+////                .add("config")
+////                    .add("display_mode");
+//
+//        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
+//
+//        hudSubcommands
+//            .put("config", new CommandModel()
+//                .addCommand("display_mode")
+//                    .addSubcommand("compact")
+//                    .addSubcommand("extended")
+//                .addCommand("colorize")
+//                    .addSubcommand("coordinates")
+//                    .addSubcommand("nether_portal_coordinates")
+//                    .addSubcommand("player_orientation")
+//                    .addSubcommand("tool_durability")
+//                    .addSubcommand("world_time")
+//                .addCommand("format")
+////                    .addSubcommandWithSubcommands("world_time", hudConfigFormatWorldTimeSubcommands)
+//            );
+//
+//        hudSubcommands
+//            .put("toggle", new CommandModel()
+//                .addCommand("coordinates")
+//                .addCommand("nether_portal_coordinates")
+//                .addCommand("player_orientation"));
+//
+//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
+//        {
+//            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
+//        }
+//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
+//        {
+//            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
+//        }
+//
+//        hudSubcommands.get("toggle")
+//                .addCommand("server_time")
+//                .addCommand("tool_durability")
+//                .addCommand("world_time");
+//
+//        HashMap<String, CommandModel> hud = new HashMap<>();
+//        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
+//        hudSubcommands = null;
 
-        hudSubcommands.put("config", new CommandModel()
-                .addCommand("display_mode")
-                .addSubcommand("compact")
-                .addSubcommand("extended")
-                .addCommand("colorize")
-                .addSubcommand("coordinates")
-                .addSubcommand("nether_portal_coordinates")
-                .addSubcommand("player_orientation")
-                .addSubcommand("server_tps")
-                .addSubcommand("tool_durability")
-                .addSubcommand("world_time"));
+//        hudConfigFormatWorldTimeSubcommands.put("as24Hour", new CommandModel());
+//        hudConfigFormatWorldTimeSubcommands.put("asTicks", new CommandModel());
 
-        hudSubcommands.put("toggle", new CommandModel()
-                .addCommand("coordinates")
-                .addCommand("nether_portal_coordinates")
-                .addCommand("player_orientation"));
-
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
-        }
-        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-        {
-            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
-        }
-
-        hudSubcommands.get("toggle")
-                .addCommand("server_time")
-                .addCommand("server_tps")
-                .addCommand("tool_durability")
-                .addCommand("world_time");
-
-        HashMap<String, CommandModel> hud = new HashMap<>();
-        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
-        hudSubcommands = null;
-
-        CraftEraSuiteCore.customTabCompleter.commands.putAll(hud);
+        CustomTabCompleter.commands.putAll(
+            new CommandModel()
+            .sibling("hud")
+                .child("config")
+                    .child("display_mode")
+                        .child("compact")
+                        .sibling("extended")
+                        .back()
+                    .sibling("colorize")
+                        .child("coordinates")
+                        .sibling("nether_portal_coordinates")
+                        .sibling("player_orientation")
+                        .sibling("tool_durability")
+                        .sibling("world_time")
+                        .back()
+                    .sibling("format")
+                        .child("world_time")
+                            .child("as24Hour")
+                            .sibling("asTicks")
+                            .back()
+                        .back()
+                    .back()
+                .sibling("toggle")
+                    .child("coordinates")
+                    .sibling("nether_portal_coordinates")
+                    .sibling("player_orientation")
+                    .sibling("server_time")
+                    .sibling("tool_durability")
+                    .sibling("world_time")
+            .subCommands);
     }
 }

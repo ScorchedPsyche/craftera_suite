@@ -11,24 +11,71 @@ import java.sql.*;
 
 public class HudDatabaseAPI
 {
+    public boolean setupAndVerifySqlTable()
+    {
+        // Check if table exists
+        if( !DatabaseManager.database.tableExists( DatabaseTables.Hud.player_preferences_TABLENAME ) )
+        {
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder
+                .append("CREATE TABLE ").append(DatabaseTables.Hud.player_preferences_TABLENAME).append("(\n")
+                .append(" id integer PRIMARY KEY AUTOINCREMENT,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(" TEXT UNIQUE NOT NULL,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.enabled).append(" NUMERIC DEFAULT 0,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.display_mode).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.config_world_time).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.coordinates).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.player_orientation).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce).append(" NUMERIC DEFAULT 0,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator).append(" NUMERIC DEFAULT 0,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.server_time).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.tool_durability).append(" NUMERIC DEFAULT 1,\n ")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.world_time).append(" NUMERIC DEFAULT 1\n")
+                .append(");");
+
+            if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded( sqlBuilder.toString() ) )
+            {
+                // Successfully created table
+                ConsoleUtil.logMessage(SuitePluginManager.Hud.Name.full,
+                        "Table successfully created: " + DatabaseTables.Hud.player_preferences_TABLENAME);
+                return true;
+            }
+
+            // If we got here table creation failed
+            return false;
+        }
+
+        // If we got here table exists
+        return true;
+    }
+
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
-        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
-                " WHERE player_uuid='" + playerUUID + "' LIMIT 1";
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT * FROM ").append(DatabaseTables.Hud.player_preferences_TABLENAME)
+            .append(" WHERE player_uuid='").append(playerUUID).append("' LIMIT 1");
+//        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
+//                " WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(
                 DatabaseManager.database.getDatabaseUrl());
              Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(sqlBuilder.toString());
 
             if( !DatabaseUtil.isResultSetNullOrEmpty(rs) )
             {
                 return new HudPlayerPreferencesModel().loadPreferencesFromResultSet(rs);
             }
         } catch (SQLException e) {
-            ConsoleUtil.logError(
-                    "SQLite query failed: " + sql);
-            ConsoleUtil.logError( e.getMessage() );
+            ConsoleUtil.logErrorSQLWithPluginPrefix(SuitePluginManager.Hud.Name.full, "getPlayerPreferences",
+                sqlBuilder.toString(), e.getMessage());
         }
 
         return null;
@@ -38,16 +85,19 @@ public class HudDatabaseAPI
     {
         if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
         {
-            String sql = "INSERT INTO " + table +
-                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
-                        "VALUES('" + playerUUID + "', 1) \n" +
-                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
-                        "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("INSERT INTO ").append(table).append(" (")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(", ").append(column).append(") \n")
+                .append("VALUES('").append(playerUUID).append("', 1) \n")
+                .append("ON CONFLICT(").append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(") DO \n")
+                .append("UPDATE SET ").append(column).append(" = CASE WHEN ").append(column).append(" = 1 THEN 0 ELSE 1 END");
+//            String sql = "INSERT INTO " + table +
+//                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
+//                        "VALUES('" + playerUUID + "', 1) \n" +
+//                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
+//                        "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
 
-            DatabaseManager.database.executeSql(sql);
-        } else {
-            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
-                    "Failed to update table on function 'toggleBooleanForPlayer'. Report this to the developer.");
+            DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sqlBuilder.toString());
         }
     }
 
@@ -55,63 +105,19 @@ public class HudDatabaseAPI
     {
         if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
         {
-            String sql = "INSERT INTO " + table +
-                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
-                    "VALUES('" + playerUUID + "', " + value +") \n" +
-                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
-                    "UPDATE SET " + column + " = " + value;
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("INSERT INTO ").append(table).append(" (")
+                .append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(", ").append(column).append(") \n")
+                .append("VALUES('").append(playerUUID).append("', ").append(value).append(") \n")
+                .append("ON CONFLICT(").append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(") DO \n")
+                .append("UPDATE SET ").append(column).append(" = ").append(value);
+//            String sql = "INSERT INTO " + table +
+//                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
+//                    "VALUES('" + playerUUID + "', " + value +") \n" +
+//                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
+//                    "UPDATE SET " + column + " = " + value;
 
-            DatabaseManager.database.executeSql(sql);
-        } else {
-            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
-                    "Failed to update table on function 'setBooleanForPlayer'. Report this to the developer.");
+            DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sqlBuilder.toString());
         }
-    }
-
-    public boolean setupAndVerifySqlTable()
-    {
-        // Check if table exists
-        if( !DatabaseManager.database.tableExists( DatabaseTables.Hud.player_preferences_TABLENAME ) )
-        {
-            // Doesn't exists. Create it
-            if ( DatabaseManager.database.executeSql(
-                    "CREATE TABLE " + DatabaseTables.Hud.player_preferences_TABLENAME + "(\n"
-                            + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + " TEXT UNIQUE NOT NULL,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.enabled + " NUMERIC DEFAULT 0,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.display_mode + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates + " NUMERIC DEFAULT " +
-                            "1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.coordinates + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.player_orientation + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce + " NUMERIC DEFAULT 0,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator + " NUMERIC DEFAULT 0,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.server_time + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.server_tps + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.tool_durability + " NUMERIC DEFAULT 1,\n"
-                            + "	" + DatabaseTables.Hud.PlayerPreferencesTable.world_time + " NUMERIC DEFAULT 1\n"
-                            + ");") )
-            {
-                // Successfully created table
-                ConsoleUtil.logMessage(SuitePluginManager.Hud.Name.full,
-                                        "Table successfully created: " + DatabaseTables.Hud.player_preferences_TABLENAME);
-                return true;
-            }
-
-            // If we got here table creation failed
-            ConsoleUtil.logError( SuitePluginManager.Hud.Name.full,
-                                   "Failed to create table: " + DatabaseTables.Hud.player_preferences_TABLENAME);
-
-            return false;
-        }
-
-        // If we got here table exists
-        return true;
     }
 }

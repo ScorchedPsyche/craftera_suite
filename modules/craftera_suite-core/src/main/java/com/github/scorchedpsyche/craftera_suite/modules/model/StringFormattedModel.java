@@ -145,6 +145,43 @@ public class StringFormattedModel
 
         return this;
     }
+    public StringFormattedModel add(StringBuilder strBuilder)
+    {
+        stringBuilder.append(strBuilder);
+
+        return this;
+    }
+    public StringFormattedModel add(StringFormattedModel strFormatted)
+    {
+        stringBuilder.append(strFormatted.stringBuilder);
+
+        return this;
+    }
+    public StringFormattedModel add(int i)
+    {
+        stringBuilder.append(i);
+
+        return this;
+    }
+
+    public StringFormattedModel insert(int i, String str)
+    {
+        stringBuilder.insert(i, str);
+
+        return this;
+    }
+    public StringFormattedModel insert(int i, ChatColor chatColor)
+    {
+        stringBuilder.insert(i, chatColor);
+
+        return this;
+    }
+    public StringFormattedModel insert(int i, int value)
+    {
+        stringBuilder.insert(i, value);
+
+        return this;
+    }
 
     public StringFormattedModel reset()
     {
@@ -167,6 +204,10 @@ public class StringFormattedModel
         return this;
     }
 
+    public boolean isNullOrEmpty()
+    {
+        return stringBuilder == null || stringBuilder.isEmpty();
+    }
     public String toString()
     {
         return stringBuilder.toString();

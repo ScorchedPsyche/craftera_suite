@@ -58,11 +58,11 @@ public class HudCommandListener implements Listener
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation);
                                             break;
 
-                                        case "server_tps":
-                                            hudManager.togglePreferenceForPlayer(
-                                                    event.getPlayer(),
-                                                    DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps);
-                                            break;
+//                                        case "server_tps":
+//                                            hudManager.togglePreferenceForPlayer(
+//                                                    event.getPlayer(),
+//                                                    DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps);
+//                                            break;
 
                                         case "tool_durability":
                                             hudManager.togglePreferenceForPlayer(
@@ -130,68 +130,41 @@ public class HudCommandListener implements Listener
                 case "toggle": // /ces hud toggle
                     if( args.length > 1 && !StringUtil.isNullOrEmpty(args[1]) )
                     {
-                        switch( args[1] )
-                        {
-                            case "coordinates":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.coordinates);
-                                break;
-
-                            case "nether_portal_coordinates":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates);
-                                break;
-
-                            case "player_orientation":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.player_orientation);
-                                break;
-
-                            case "plugin_commerce":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce);
-                                break;
-
-                            case "plugin_spectator":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator);
-                                break;
-
-                            case "server_time":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.server_time);
-                                break;
-
-                            case "server_tps":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.server_tps);
-                                break;
-
-                            case "tool_durability":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.tool_durability);
-                                break;
-
-                            case "world_time":
-                                hudManager.togglePreferenceForPlayer(
-                                        event.getPlayer(),
-                                        DatabaseTables.Hud.PlayerPreferencesTable.world_time);
-                                break;
-
-                            default: // /ces hud toggle HELP
-                                PlayerUtil.sendMessageWithPluginPrefix(
-                                        event.getPlayer(),
-                                        SuitePluginManager.Hud.Name.compact,
-                                        hudToggleCommandHelpMessage() );
-                                break;
+                        //                            case "server_tps":
+                        //                                hudManager.togglePreferenceForPlayer(
+                        //                                        event.getPlayer(),
+                        //                                        DatabaseTables.Hud.PlayerPreferencesTable.server_tps);
+                        //                                break;
+                        switch (args[1]) {
+                            case "coordinates" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.coordinates);
+                            case "nether_portal_coordinates" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates);
+                            case "player_orientation" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.player_orientation);
+                            case "plugin_commerce" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce);
+                            case "plugin_spectator" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator);
+                            case "server_time" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.server_time);
+                            case "tool_durability" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.tool_durability);
+                            case "world_time" -> hudManager.togglePreferenceForPlayer(
+                                    event.getPlayer(),
+                                    DatabaseTables.Hud.PlayerPreferencesTable.world_time);
+// /ces hud toggle HELP
+                            default -> PlayerUtil.sendMessageWithPluginPrefix(
+                                    event.getPlayer(),
+                                    SuitePluginManager.Hud.Name.compact,
+                                    hudToggleCommandHelpMessage());
                         }
                     } else {
                         hudManager.toggleHudForPlayer( event.getPlayer() );

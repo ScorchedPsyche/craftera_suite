@@ -3,6 +3,8 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteCore;
 import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
+import com.github.scorchedpsyche.craftera_suite.modules.model.GlobalHudInfoModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
 import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
@@ -30,23 +32,21 @@ public class HudManager {
             }
         });
 
-//        Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class),
-//            () -> Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-//                for ( Player player : Bukkit.getOnlinePlayers() )
-//                {
-//                    enableHudForPlayer(player);
-//                }
-//        }));
+        // Global HUD info
+        globalHudInfoModel = new GlobalHudInfoModel();
     }
 
     private final HashMap<Player, HudPlayerPreferencesModel> onlinePlayersWithHudEnabled;
     private HudDatabaseAPI hudDatabaseAPI;
     private final PlayerHudManager playerHudManager;
 
+    // Global HUD display info
+    private GlobalHudInfoModel globalHudInfoModel;
+
     /**
      * Toggles a specific HUD preference for the player.
-     * @param player
-     * @param preference
+     * @param player The player to toggle the preference for
+     * @param preference The preference's string
      */
     public void togglePreferenceForPlayer(Player player, String preference)
     {
@@ -97,9 +97,8 @@ public class HudManager {
             PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
                                                     "is now " + ChatColor.RED + "OFF");
 
-            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                onlinePlayersWithHudEnabled.remove(player);
-            });
+            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), ()
+                -> onlinePlayersWithHudEnabled.remove(player));
 
 //            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
 //                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
@@ -111,9 +110,8 @@ public class HudManager {
             PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
                                                     "is now " + ChatColor.GREEN + "ON");
 
-            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-                enableHudForPlayer(player);
-            });
+            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), ()
+                -> enableHudForPlayer(player));
 //            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
 //                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
 //                    enableHudForPlayer(player);
@@ -147,15 +145,26 @@ public class HudManager {
     {
         if( !CollectionUtil.isNullOrEmpty(onlinePlayersWithHudEnabled) )
         {
-            for (Map.Entry<Player, HudPlayerPreferencesModel> entry : onlinePlayersWithHudEnabled.entrySet()) {
-                StringBuilder hudText = playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue());
+            globalHudInfoModel.updateGlobalHudInfo();
 
-                if( StringUtil.isStringBuilderNullOrEmpty(hudText) )
+            for (Map.Entry<Player, HudPlayerPreferencesModel> entry : onlinePlayersWithHudEnabled.entrySet()) {
+                StringFormattedModel hudText =
+                    playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue(), globalHudInfoModel);
+
+                if( hudText.isNullOrEmpty() )
                 {
-                    hudText.append("HUD empty! Use ").append(ChatColor.YELLOW).append(ChatColor.BOLD).append("/ces hud")
-                            .append(ChatColor.RESET).append(" to hide the HUD or ").append(ChatColor.YELLOW)
-                            .append(ChatColor.BOLD).append("/ces hud help");
+                    hudText.add("HUD empty! Use ").bold().yellowR("/ces hud").add(" to hide the HUD or ").bold()
+                        .yellowR("/ces hud help");
                 }
+
+//                StringBuilder hudText = playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue(), globalHudInfoModel);
+//
+//                if( StringUtil.isStringBuilderNullOrEmpty(hudText) )
+//                {
+//                    hudText.append("HUD empty! Use ").append(ChatColor.YELLOW).append(ChatColor.BOLD).append("/ces hud")
+//                            .append(ChatColor.RESET).append(" to hide the HUD or ").append(ChatColor.YELLOW)
+//                            .append(ChatColor.BOLD).append("/ces hud help");
+//                }
 
                 PlayerManager playerManager = CraftEraSuiteCore.playerManagerList.get(entry.getKey().getUniqueId().toString());
 
@@ -164,7 +173,7 @@ public class HudManager {
                     playerManager.subtitle.addToStart(" ");
                 }
 
-                playerManager.subtitle.addToStart( hudText );
+                playerManager.subtitle.addToStart( hudText.toString() );
 //                entry.getKey().spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText.toString() ) );
             }
         }
@@ -175,11 +184,6 @@ public class HudManager {
         HudPlayerPreferencesModel hudPlayerPreferences =
                 hudDatabaseAPI.getPlayerPreferences(player.getUniqueId().toString());
 
-        if( hudPlayerPreferences != null && hudPlayerPreferences.isHudEnabled() && !hudPlayerPreferences.isDisplayModeExtended() )
-        {
-            return true;
-        }
-
-        return false;
+        return hudPlayerPreferences != null && hudPlayerPreferences.isHudEnabled() && !hudPlayerPreferences.isDisplayModeExtended();
     }
 }
