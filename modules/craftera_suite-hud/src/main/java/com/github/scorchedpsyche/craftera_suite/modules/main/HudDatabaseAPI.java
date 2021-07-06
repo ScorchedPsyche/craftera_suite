@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
-import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.DatabaseUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
@@ -11,6 +11,10 @@ import java.sql.*;
 
 public class HudDatabaseAPI
 {
+    /**
+     * Sets up and verify SQL tables.
+     * @return True if successful
+     */
     public boolean setupAndVerifySqlTable()
     {
         // Check if table exists
@@ -55,13 +59,16 @@ public class HudDatabaseAPI
         return true;
     }
 
+    /**
+     * Gets all player preferences.
+     * @param playerUUID The player's UUID to get the preferences for
+     * @return The preferences if successful, null otherwise
+     */
     public HudPlayerPreferencesModel getPlayerPreferences(String playerUUID)
     {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT * FROM ").append(DatabaseTables.Hud.player_preferences_TABLENAME)
             .append(" WHERE player_uuid='").append(playerUUID).append("' LIMIT 1");
-//        String sql = "SELECT * FROM " + DatabaseTables.Hud.player_preferences_TABLENAME +
-//                " WHERE player_uuid='" + playerUUID + "' LIMIT 1";
 
         try (Connection conn = DriverManager.getConnection(
                 DatabaseManager.database.getDatabaseUrl());
@@ -80,6 +87,12 @@ public class HudDatabaseAPI
         return null;
     }
 
+    /**
+     * Toggles the preference for the player. In other words, inverts it's value.
+     * @param table The table where the preference is located at
+     * @param playerUUID The player's UUID to toggle the preference for
+     * @param column The column in the table where the preference inversion should happen
+     */
     public void toggleBooleanForPlayer(String table, String playerUUID, String column)
     {
         if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
@@ -90,16 +103,18 @@ public class HudDatabaseAPI
                 .append("VALUES('").append(playerUUID).append("', 1) \n")
                 .append("ON CONFLICT(").append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(") DO \n")
                 .append("UPDATE SET ").append(column).append(" = CASE WHEN ").append(column).append(" = 1 THEN 0 ELSE 1 END");
-//            String sql = "INSERT INTO " + table +
-//                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
-//                        "VALUES('" + playerUUID + "', 1) \n" +
-//                        "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
-//                        "UPDATE SET " + column + " = CASE WHEN " + column + " = 1 THEN 0 ELSE 1 END";
 
             DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sqlBuilder.toString());
         }
     }
 
+    /**
+     * Sets a specific value for the player's preference.
+     * @param table The table where the preference is located at
+     * @param playerUUID The player's UUID to toggle the preference for
+     * @param column The column in the table where the preference should be set
+     * @param value The specific value to set for the preference
+     */
     public void setBooleanForPlayer(String table, String playerUUID, String column, boolean value)
     {
         if( !StringUtil.isNullOrEmpty(table) && column != null && !StringUtil.isNullOrEmpty(column) )
@@ -110,11 +125,6 @@ public class HudDatabaseAPI
                 .append("VALUES('").append(playerUUID).append("', ").append(value).append(") \n")
                 .append("ON CONFLICT(").append(DatabaseTables.Hud.PlayerPreferencesTable.player_uuid).append(") DO \n")
                 .append("UPDATE SET ").append(column).append(" = ").append(value);
-//            String sql = "INSERT INTO " + table +
-//                    " (" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ", " + column + ") \n" +
-//                    "VALUES('" + playerUUID + "', " + value +") \n" +
-//                    "ON CONFLICT(" + DatabaseTables.Hud.PlayerPreferencesTable.player_uuid + ") DO \n" +
-//                    "UPDATE SET " + column + " = " + value;
 
             DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(sqlBuilder.toString());
         }

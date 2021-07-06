@@ -2,7 +2,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.main;
 
 import com.github.scorchedpsyche.craftera_suite.modules.model.GlobalHudInfoModel;
 import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
-import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ItemStackUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.StringUtilsHud;
@@ -13,38 +13,51 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerHudManager
 {
+    /**
+     * Formats the action bar's String based on the player's HUD preferences.
+     * @param player The player to get the HUD text for
+     * @param preferences The player's preferences
+     * @param globalHudInfoModel The global info shared by all players such as World Time and Server Time
+     * @return The formatted string for the player's Action Bar
+     */
     public StringFormattedModel getPlayerHudText(
         Player player, HudPlayerPreferencesModel preferences, GlobalHudInfoModel globalHudInfoModel )
     {
         StringFormattedModel hudText = new StringFormattedModel();
 
+        // Coordinates
         if( preferences.showCoordinates() )
         {
             hudText.add( formatPlayerCoordinates(player, preferences) );
         }
 
+        // Orientation (N, S, E, W, etc)
         if( preferences.showOrientation() )
         {
             hudText.add( " " );
             hudText.add( formatPlayerOrientation(player, preferences) );
         }
 
+        // Nether Portal Coordinates in the opposing dimension
         if( preferences.showNetherPortalCoordinates() )
         {
             hudText.add( formatNetherPortalCoordinates(player, PlayerUtil.getEnvironment(player), preferences) );
         }
 
+        // Main/Off Hand tool durability
         if( preferences.showToolDurability() )
         {
             hudText.add( formatToolDurability( preferences, "Main", player.getInventory().getItemInMainHand() ));
             hudText.add( formatToolDurability( preferences, "Off", player.getInventory().getItemInOffHand() ));
         }
 
+        // World Time for the world the player is currently in
         if( preferences.showWorldTime() )
         {
             hudText.add( " " );
-            if( preferences.formatWorldTime() ) // 24h
+            if( preferences.formatWorldTime() )
             {
+                // 24 hour format
                 if( preferences.colorizeWorldTime() )
                 {
                     hudText.add( globalHudInfoModel.getWorldTimeIn24hColorized( player.getWorld().getUID() ) );
@@ -52,6 +65,7 @@ public class PlayerHudManager
                     hudText.add( globalHudInfoModel.getWorldTimeIn24h( player.getWorld().getUID() ) );
                 }
             } else {
+                // Tick format
                 if( preferences.colorizeWorldTime() )
                 {
                     hudText.add( globalHudInfoModel.getWorldTimeInTicksColorized( player.getWorld().getUID() ) );
@@ -61,79 +75,22 @@ public class PlayerHudManager
             }
         }
 
+        // Server real-world time
         if( preferences.showServerTime() )
         {
             hudText.add( " " );
             hudText.add( globalHudInfoModel.getServerTime() );
         }
 
-//        StringBuilder hudText = new StringBuilder();
-//
-//        if( preferences.showCoordinates() )
-//        {
-//            hudText.append( formatPlayerCoordinates(player, preferences) );
-//        }
-//
-//        if( preferences.showOrientation() )
-//        {
-//            hudText.append( " " );
-//            hudText.append( formatPlayerOrientation(player, preferences) );
-//        }
-//
-//        if( preferences.showNetherPortalCoordinates() )
-//        {
-//            hudText.append( formatNetherPortalCoordinates(player, PlayerUtil.getEnvironment(player), preferences) );
-//        }
-//
-//        if( preferences.showToolDurability() )
-//        {
-//            hudText.append( formatToolDurability( preferences, "Main", player.getInventory().getItemInMainHand() ));
-//            hudText.append( formatToolDurability( preferences, "Off", player.getInventory().getItemInOffHand() ));
-//        }
-//
-//        if( preferences.showWorldTime() )
-//        {
-//            hudText.append( " " );
-//            if( preferences.colorizeWorldTime() )
-//            {
-//                hudText.append( globalHudInfoModel.getWorldTimeColorized( player.getWorld().getUID() ) );
-//            } else {
-//                hudText.append( globalHudInfoModel.getWorldTime( player.getWorld().getUID() ) );
-//            }
-//        }
-//
-//        if( preferences.showServerTime() )
-//        {
-//            hudText.append( " " );
-//            hudText.append( globalHudInfoModel.getServerTime() );
-//        }
-
-
-
-
-
-
-
-//        if( preferences.showServerTPS() )
-//        {
-//            hudText.append( " " );
-//            hudText.append( formatServerTps( preferences ) );
-//        }
-
-
-//        if( Bukkit.getServer().getPluginManager().isPluginEnabled(SuitePluginManager.SpectatorMode.Name.pomXml) &&
-//                CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.containsKey(player.getUniqueId().toString()))
-//        {
-//            hudText.append( " " );
-//            hudText.append( formatSpectatorRange(
-//                    CraftEraSuiteSpectatorMode.spectatorModeManager.distanceFromSource.get(player.getUniqueId().toString()),
-//                    CraftEraSuiteSpectatorMode.spectatorModeManager.getRangeLimit(),
-//                    preferences));
-//        }
-
         return hudText;
     }
 
+    /**
+     * Formatting of the player's World coordinates based on their preference.
+     * @param player The player to format the World coordinates for
+     * @param preferences The player's HUD preferences
+     * @return A string with the formatted World time
+     */
     private StringFormattedModel formatPlayerCoordinates(Player player, HudPlayerPreferencesModel preferences)
     {
         StringFormattedModel playerCoordinatesStr = new StringFormattedModel();
@@ -174,15 +131,23 @@ public class PlayerHudManager
         return playerCoordinatesStr;
     }
 
+    /**
+     * Formatting of the player's Orientation (N, S, E, W, etc) based on their preference.
+     * @param player The player to format the Orientation for
+     * @param preferences The player's HUD preferences
+     * @return A string with the formatted player orientation
+     */
     private StringFormattedModel formatPlayerOrientation(Player player, HudPlayerPreferencesModel preferences)
     {
         StringFormattedModel orientation = new StringFormattedModel();
 
+        // Gets player's YAW and normalize it to 360 degrees
         double rotation = (player.getLocation().getYaw() - 180) % 360;
         if (rotation < 0) {
             rotation += 360.0;
         }
 
+        // Find the orientation based on the player's normalized YAW
         if( rotation < 22.5 )
         {
             orientation.add("N");
@@ -212,6 +177,7 @@ public class PlayerHudManager
             orientation.add("N");
         }
 
+        // Colorizes it if needed
         if( preferences.colorizePlayerOrientation() )
         {
             orientation.reset();
@@ -221,16 +187,25 @@ public class PlayerHudManager
         return orientation;
     }
 
+    /**
+     * Formatting of the player's Nether Portal Coordinates on the opposing dimension based on their preference.
+     * @param player The player to format the Nether Portal Coordinates for
+     * @param preferences The player's HUD preferences
+     * @return A string with the formatted Nether Portal Coordinates
+     */
     private StringFormattedModel formatNetherPortalCoordinates(
             Player player, World.Environment environment, HudPlayerPreferencesModel preferences)
     {
         StringFormattedModel strBuilder = new StringFormattedModel();
 
+        // Check if World is not The End
         if( !environment.equals(World.Environment.THE_END) )
         {
+            // Not The End. Get player current coordinates
             int portalX = PlayerUtil.getCoordinateRoundedX(player);
             int portalZ = PlayerUtil.getCoordinateRoundedZ(player);
 
+            // Check if it's Nether or Overworld and adjust the value to the opposing dimension
             if( environment.equals(World.Environment.NETHER) )
             {
                 portalX *= 8;
@@ -240,6 +215,7 @@ public class PlayerHudManager
                 portalZ /= 8;
             }
 
+            // Check if it's Extended display mode
             if( preferences.isDisplayModeExtended() )
             {
                 // Extended
@@ -278,70 +254,31 @@ public class PlayerHudManager
         return strBuilder;
     }
 
-//    private String formatServerTime()
-//    {
-//        Date d1 = new Date();
-//        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-//        return df.format(d1);
-//    }
-
-//    private StringBuilder formatServerTps(HudPlayerPreferencesModel preferences)
-//    {
-//        StringBuilder tpsStrBuilder = new StringBuilder();
-//
-//        short tps = (short) MinecraftServer.getServer().recentTps[0] ;
-//        if( tps > 20 )
-//        {
-//            tps = 20;
-//        }
-//
-//        tpsStrBuilder.append( tps );
-//
-//        if(preferences.colorizeServerTps() )
-//        {
-//            if( tps >= 20 )
-//            {
-//                tps = 20;
-//                tpsStrBuilder.insert( 0,ChatColor.GREEN );
-//            } else if ( tps < 20 && tps >= 15 ){
-//                tpsStrBuilder.insert( 0,ChatColor.YELLOW );
-//            } else {
-//                tpsStrBuilder.insert( 0,ChatColor.RED );
-//            }
-//
-//            tpsStrBuilder.append( ChatColor.RESET );
-//        }
-//
-//        if( preferences.isDisplayModeExtended() )
-//        {
-//            // Extended
-//            if( preferences.colorizeServerTps() )
-//            {
-//                tpsStrBuilder.insert( 0, ChatColor.RESET );
-//                tpsStrBuilder.insert( 0, "TPS: ");
-//                tpsStrBuilder.insert( 0, ChatColor.GOLD );
-//            } else {
-//                tpsStrBuilder.insert( 0, "TPS: ");
-//            }
-//        }
-//
-//
-//        return tpsStrBuilder;
-//    }
-
+    /**
+     * Formatting of the player's Main/Off hand tool durability based on their preference.
+     * @param preferences The player's HUD preferences
+     * @param slotText The text that should be displayed before the durability. E.g.: Main 100/200
+     * @param item The item we should parse the durability for
+     * @return A string with the formatted tool durability for the desired item/slot
+     */
     private StringBuilder formatToolDurability(HudPlayerPreferencesModel preferences, String slotText, ItemStack item)
     {
         StringBuilder durabilityStrBuilder = new StringBuilder();
+
+        // Gets the remaining durability for the item
         Integer itemRemainingDurability = ItemStackUtil.getItemRemainingDurability(item);
 
+        // Check if the player is holding an item with a valid durability
         if( itemRemainingDurability != null )
         {
+            // Check if we should colorize the tool durability text
             if ( preferences.colorizeToolDurability() )
             {
                 durabilityStrBuilder.append( ChatColor.RESET );
                 float percentageDurabilityRemaining =
                         (float) itemRemainingDurability / (float) item.getType().getMaxDurability();
 
+                // Append the color based on the percentage remaining for the tool durability
                 if( percentageDurabilityRemaining == 1 )
                 {
                     durabilityStrBuilder.append( ChatColor.GREEN );
@@ -366,6 +303,7 @@ public class PlayerHudManager
                 durabilityStrBuilder.append( itemRemainingDurability );
             }
 
+            // Append the max durability
             durabilityStrBuilder.append("/");
             durabilityStrBuilder.append( item.getType().getMaxDurability() );
 
@@ -386,101 +324,4 @@ public class PlayerHudManager
 
         return durabilityStrBuilder;
     }
-
-//    private StringBuilder formatWorldTime(Player player, HudPlayerPreferencesModel preferences)
-//    {
-//        World world = player.getWorld();
-//        long seconds = world.getTime() / 20L;
-////        int hours = (int) Math.floor(world.getTime() / 1000.0);
-////        int minute = (int) Math.floor(seconds / 60.0);
-//        int hours = (int) Math.floor(world.getTime()/1000.0) + 6;
-//        int minutes = (int) Math.floor((world.getTime() % 1000.0) / 1000 * 60);
-//
-//        if( hours >= 24 )
-//        {
-//            hours = hours - 24;
-//        }
-//
-//        String time = String.format("%02d", hours) + ":" + String.format("%02d", minutes);
-//
-////        LocalTime timeOfDay = LocalTime.ofSecondOfDay( world.getTime() / 20L );
-////        timeOfDay.format(new DateTimeFormatter("HH:mm")).toString();
-////        String time = timeOfDay.toString();
-//
-//
-////        StringBuilder worldTimeStrBuilder = new StringBuilder( Long.toString(world.getTime()) );
-//        StringBuilder worldTimeStrBuilder = new StringBuilder( time );
-//
-//        if( preferences.colorizeWorldTime() )
-//        {
-//            if ( world.getTime() >= 2000 && world.getTime() <= 9000 )
-//            {
-//                // Villager work hours
-//                worldTimeStrBuilder.insert( 0, ChatColor.GREEN );
-//            } else if( world.hasStorm() )
-//            {
-//                // Weather not clear
-//                if ( world.getTime() >= 12969 && world.getTime() <= 23031 )
-//                {
-//                    // Monsters are spawning
-//                    worldTimeStrBuilder.insert( 0, ChatColor.RED );
-//                } else if ( world.getTime() >= 12010 && world.getTime() < 12969 )
-//                {
-//                    // Beds can be used
-//                    worldTimeStrBuilder.insert( 0, ChatColor.YELLOW );
-//                }
-//            } else
-//            {
-//                // Weather clear
-//                if ( world.getTime() >= 13188 && world.getTime() <= 22812 )
-//                {
-//                    // Monsters are spawning
-//                    worldTimeStrBuilder.insert( 0, ChatColor.RED );
-//                } else if ( world.getTime() >= 12542 && world.getTime() < 13188 )
-//                {
-//                    // Beds can be used
-//                    worldTimeStrBuilder.insert( 0, ChatColor.YELLOW );
-//                }
-//            }
-//            worldTimeStrBuilder.append(ChatColor.RESET );
-//        }
-//
-//        return worldTimeStrBuilder;
-//    }
-
-//    private StringBuilder formatSpectatorRange(Double distance, int range, HudPlayerPreferencesModel preferences)
-//    {
-//        StringBuilder specRangeBuilder = new StringBuilder();
-//
-//        if( distance != null )
-//        {
-//            if( distance < range * 0.2 )
-//            {
-//                specRangeBuilder.append( ChatColor.GREEN );
-//            } else if ( distance >= range * (0.2) && distance < range * (0.4) ) {
-//                specRangeBuilder.append( ChatColor.DARK_GREEN );
-//            } else if ( distance >= range * (0.4) && distance < range * (0.6) ) {
-//                specRangeBuilder.append( ChatColor.YELLOW );
-//            } else if ( distance >= range * (0.6) && distance < range * (0.8) ) {
-//                specRangeBuilder.append( ChatColor.GOLD );
-//            } else { // 0.8
-//                specRangeBuilder.append( ChatColor.RED );
-//            }
-//
-//            specRangeBuilder.append( String.format("%.1f",distance) );
-//            specRangeBuilder.append( ChatColor.RESET );
-//
-//            specRangeBuilder.append( "/" );
-//            specRangeBuilder.append( range );
-//
-//            if( preferences.isDisplayModeExtended() )
-//            {
-//                // EXTENDED
-//
-//                specRangeBuilder.insert( 0, "Spec: " );
-//                specRangeBuilder.insert( 0, ChatColor.GOLD );
-//            }
-//        }
-//        return specRangeBuilder;
-//    }
 }

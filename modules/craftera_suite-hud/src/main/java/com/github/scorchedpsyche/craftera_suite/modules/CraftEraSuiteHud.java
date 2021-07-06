@@ -12,14 +12,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-
 public final class CraftEraSuiteHud extends JavaPlugin
 {
     public static HudManager hudManager;
     private HudDatabaseAPI hudDatabaseAPI;
-//    private Integer showHudForPlayersTask;
 
+    /**
+     * Plugin's startup code
+     */
     @Override
     public void onEnable()
     {
@@ -57,88 +57,26 @@ public final class CraftEraSuiteHud extends JavaPlugin
         }
     }
 
+    /**
+     * Plugin's cleanup code
+     */
     @Override
     public void onDisable()
     {
         // Cancel all tasks
         Bukkit.getScheduler().cancelTasks(this);
-//        if( showHudForPlayersTask != null )
-//        {
-//            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
-//        }
 
         hudDatabaseAPI = null;
         hudManager = null;
-//        if ( showHudForPlayersTask != null )
-//        {
-//            Bukkit.getScheduler().cancelTask(showHudForPlayersTask);
-//            showHudForPlayersTask = null;
-//        }
 
         super.onDisable();
     }
 
+    /**
+     * Adds plugin's commands to CORE's TabCompleter
+     */
     private void addPluginCommands()
     {
-//        HashMap<String, CommandModel> hudConfigFormatWorldTimeSubcommands = new HashMap<>();
-//        hudConfigFormatWorldTimeSubcommands.put("as24Hour", new CommandModel());
-//        hudConfigFormatWorldTimeSubcommands.put("asTicks", new CommandModel());
-//
-////        HashMap<String, CommandModel> hudConfigFormatSubcommands = new HashMap<>();
-////        hudConfigFormatSubcommands.put("world_time", new CommandModel().addSubcommands(hudConfigFormatWorldTimeSubcommands));
-////
-////        HashMap<String, CommandModel> hudConfigSubcommands = new HashMap<>();
-////        hudConfigSubcommands.put("format", new CommandModel().addSubcommands(hudConfigFormatSubcommands));
-//
-////        CommandModel hudCommands = new CommandModel().
-////            add("hud")
-////                .add("config")
-////                    .add("display_mode");
-//
-//        HashMap<String, CommandModel> hudSubcommands = new HashMap<>();
-//
-//        hudSubcommands
-//            .put("config", new CommandModel()
-//                .addCommand("display_mode")
-//                    .addSubcommand("compact")
-//                    .addSubcommand("extended")
-//                .addCommand("colorize")
-//                    .addSubcommand("coordinates")
-//                    .addSubcommand("nether_portal_coordinates")
-//                    .addSubcommand("player_orientation")
-//                    .addSubcommand("tool_durability")
-//                    .addSubcommand("world_time")
-//                .addCommand("format")
-////                    .addSubcommandWithSubcommands("world_time", hudConfigFormatWorldTimeSubcommands)
-//            );
-//
-//        hudSubcommands
-//            .put("toggle", new CommandModel()
-//                .addCommand("coordinates")
-//                .addCommand("nether_portal_coordinates")
-//                .addCommand("player_orientation"));
-//
-//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-commerce") )
-//        {
-//            hudSubcommands.get("toggle").addCommand( "plugin_commerce");
-//        }
-//        if( Bukkit.getPluginManager().isPluginEnabled("craftera_suite-spectator") )
-//        {
-//            hudSubcommands.get("toggle").addCommand( "plugin_spectator");
-//        }
-//
-//        hudSubcommands.get("toggle")
-//                .addCommand("server_time")
-//                .addCommand("tool_durability")
-//                .addCommand("world_time");
-//
-//        HashMap<String, CommandModel> hud = new HashMap<>();
-//        hud.put("hud", new CommandModel().addSubcommands(hudSubcommands));
-//        hudSubcommands = null;
-
-//        hudConfigFormatWorldTimeSubcommands.put("as24Hour", new CommandModel());
-//        hudConfigFormatWorldTimeSubcommands.put("asTicks", new CommandModel());
-
         CustomTabCompleter.commands.putAll(
             new CommandModel()
             .sibling("hud")

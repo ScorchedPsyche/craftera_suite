@@ -5,10 +5,9 @@ import com.github.scorchedpsyche.craftera_suite.modules.CraftEraSuiteHud;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
 import com.github.scorchedpsyche.craftera_suite.modules.model.GlobalHudInfoModel;
 import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
-import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPlayerPreferencesModel;
+import com.github.scorchedpsyche.craftera_suite.modules.model.HudPlayerPreferencesModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.natives.CollectionUtil;
-import com.github.scorchedpsyche.craftera_suite.modules.util.natives.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,6 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HudManager {
+    /**
+     * Initializes the HUD Manager which controls how to handle players' HUDs.
+     * @param hudDatabaseAPI A reference to the HUD Database API
+     */
     public HudManager(HudDatabaseAPI hudDatabaseAPI)
     {
         this.hudDatabaseAPI = hudDatabaseAPI;
@@ -32,7 +35,7 @@ public class HudManager {
             }
         });
 
-        // Global HUD info
+        // Initialize global HUD info shared by all players
         globalHudInfoModel = new GlobalHudInfoModel();
     }
 
@@ -50,6 +53,7 @@ public class HudManager {
      */
     public void togglePreferenceForPlayer(Player player, String preference)
     {
+        // Change the preference on the Database
         hudDatabaseAPI.toggleBooleanForPlayer(
                 DatabaseTables.Hud.player_preferences_TABLENAME,
                 player.getUniqueId().toString(),
@@ -58,6 +62,7 @@ public class HudManager {
         PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
                                                 "Toggled " + ChatColor.AQUA + preference);
 
+        // Change the preference on the list of players with HUD enabled
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
             onlinePlayersWithHudEnabled.get(player).togglePreference(preference);
@@ -67,14 +72,22 @@ public class HudManager {
         }
     }
 
+    /**
+     * Sets a specific HUD preference for the player.
+     * @param player The player to set the preference for
+     * @param preference The preference's string
+     * @param value The value to be set for the preference
+     */
     public void setPreferenceForPlayer(Player player, String preference, boolean value)
     {
+        // Change the preference on the Database
         hudDatabaseAPI.setBooleanForPlayer(
                 DatabaseTables.Hud.player_preferences_TABLENAME,
                 player.getUniqueId().toString(),
                 preference,
                 value);
 
+        // Change the preference on the list of players with HUD enabled
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
             onlinePlayersWithHudEnabled.get(player).setPreference(preference, value);
@@ -88,6 +101,10 @@ public class HudManager {
         }
     }
 
+    /**
+     * Shows/hide the HUD for a specific player.
+     * @param player The player's UUID to show/hide the HUD for
+     */
     public void toggleHudForPlayer(Player player)
     {
         // Check if the executing player has the HUD enabled
@@ -99,12 +116,6 @@ public class HudManager {
 
             Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), ()
                 -> onlinePlayersWithHudEnabled.remove(player));
-
-//            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-//                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-//                    onlinePlayersWithHudEnabled.remove(player);
-//                });
-//            });
         } else {
             // Has the HUD disabled. Enable it!
             PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
@@ -112,11 +123,6 @@ public class HudManager {
 
             Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), ()
                 -> enableHudForPlayer(player));
-//            Bukkit.getScheduler().runTaskAsynchronously(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-//                Bukkit.getScheduler().runTask(CraftEraSuiteHud.getPlugin(CraftEraSuiteHud.class), () -> {
-//                    enableHudForPlayer(player);
-//                });
-//            });
         }
 
         hudDatabaseAPI.toggleBooleanForPlayer(
@@ -125,11 +131,19 @@ public class HudManager {
                 DatabaseTables.Hud.PlayerPreferencesTable.enabled);
     }
 
+    /**
+     * Hides the HUD for a specific player.
+     * @param player The player's UUID to hide the HUD for
+     */
     public void disableHudForPlayer(Player player)
     {
         onlinePlayersWithHudEnabled.remove(player);
     }
 
+    /**
+     * Shows the HUD for a specific player.
+     * @param player The player's UUID to show the HUD for
+     */
     public void enableHudForPlayer(Player player)
     {
         HudPlayerPreferencesModel hudPlayerPreferences =
@@ -141,6 +155,10 @@ public class HudManager {
         }
     }
 
+    /**
+     * Checks which players the plugin should show the HUD for. Also updates the global info shared by all players
+     * such as World Time or Server Time.
+     */
     public void showHudForPlayers()
     {
         if( !CollectionUtil.isNullOrEmpty(onlinePlayersWithHudEnabled) )
@@ -157,15 +175,6 @@ public class HudManager {
                         .yellowR("/ces hud help");
                 }
 
-//                StringBuilder hudText = playerHudManager.getPlayerHudText(entry.getKey(), entry.getValue(), globalHudInfoModel);
-//
-//                if( StringUtil.isStringBuilderNullOrEmpty(hudText) )
-//                {
-//                    hudText.append("HUD empty! Use ").append(ChatColor.YELLOW).append(ChatColor.BOLD).append("/ces hud")
-//                            .append(ChatColor.RESET).append(" to hide the HUD or ").append(ChatColor.YELLOW)
-//                            .append(ChatColor.BOLD).append("/ces hud help");
-//                }
-
                 PlayerManager playerManager = CraftEraSuiteCore.playerManagerList.get(entry.getKey().getUniqueId().toString());
 
                 if( !playerManager.subtitle.isEmpty() )
@@ -174,11 +183,15 @@ public class HudManager {
                 }
 
                 playerManager.subtitle.addToStart( hudText.toString() );
-//                entry.getKey().spigot().sendMessage( ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText( hudText.toString() ) );
             }
         }
     }
 
+    /**
+     * Checks if the HUD is enabled for a specific player and if they have it on Compact Display Mode.
+     * @param player The player to check for
+     * @return True if player has the HUD enabled and if it's on Compact Display Mode.
+     */
     public boolean isHudEnabledAndDisplayModeCompact(Player player)
     {
         HudPlayerPreferencesModel hudPlayerPreferences =

@@ -2,6 +2,9 @@ package com.github.scorchedpsyche.craftera_suite.modules.util;
 
 import org.bukkit.ChatColor;
 
+/**
+ * Utility class to reduce code's bloatware.
+ */
 public class StringUtilsHud
 {
     public static final String playerCoordinatesExtended = "XYZ: ";

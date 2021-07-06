@@ -36,131 +36,125 @@ public class HudCommandListener implements Listener
                     {
                         switch( args[1] )
                         {
-                            case "colorize":
+                            case "colorize": // /ces hud config colorize
                                 if( args.length > 2  )
                                 {
                                     switch( args[2] )
                                     {
-                                        case "coordinates":
+                                        case "coordinates": // /ces hud config colorize coordinates
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_coordinates);
                                             break;
 
-                                        case "nether_portal_coordinates":
+                                        case "nether_portal_coordinates": // /ces hud config colorize nether_portal_coordinates
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_nether_portal_coordinates);
                                             break;
 
-                                        case "player_orientation":
+                                        case "player_orientation": // /ces hud config colorize player_orientation
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation);
                                             break;
 
-//                                        case "server_tps":
-//                                            hudManager.togglePreferenceForPlayer(
-//                                                    event.getPlayer(),
-//                                                    DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps);
-//                                            break;
-
-                                        case "tool_durability":
+                                        case "tool_durability": // /ces hud config colorize tool_durability
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability);
                                             break;
 
-                                        case "world_time":
+                                        case "world_time": // /ces hud config colorize world_time
                                             hudManager.togglePreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time);
                                             break;
 
-                                        default:
+                                        default: // /ces hud config colorize
                                             sendHelpMessageToPlayer(event.getPlayer(), hudConfigColorizeCommandHelpMessage());
                                             break;
                                     }
-                                } else {
+                                } else { // /ces hud config colorize
                                     sendHelpMessageToPlayer(event.getPlayer(), hudConfigColorizeCommandHelpMessage());
                                 }
                                 break;
 
-                            case "display_mode":
+                            case "display_mode": // /ces hud config display_mode
                                 if( args.length > 2  )
                                 {
                                     switch( args[2] )
                                     {
-                                        case "compact":
+                                        case "compact": // /ces hud config display_mode compact
                                             hudManager.setPreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.display_mode,
                                                     DatabaseTables.Hud.PlayerPreferencesTable.DisplayMode.compact);
                                             break;
 
-                                        case "extended":
+                                        case "extended": // /ces hud config display_mode extended
                                             hudManager.setPreferenceForPlayer(
                                                     event.getPlayer(),
                                                     DatabaseTables.Hud.PlayerPreferencesTable.display_mode,
                                                     DatabaseTables.Hud.PlayerPreferencesTable.DisplayMode.extended);
                                             break;
 
-                                        default:
+                                        default: // /ces hud config display_mode
                                             sendHelpMessageToPlayer(event.getPlayer(), hudConfigDisplayModeCommandHelpMessage());
                                             break;
                                     }
-                                } else {
+                                } else { // /ces hud config display_mode
                                     sendHelpMessageToPlayer(event.getPlayer(), hudConfigDisplayModeCommandHelpMessage());
                                 }
                                 break;
 
-                            case "format":
+                            case "format": // /ces hud config format
                                 if( args.length > 2  )
                                 {
                                     switch( args[2] )
                                     {
-                                        case "world_time":
+                                        case "world_time": // /ces hud config format world_time
                                             if( args.length > 3  )
                                             {
                                                 switch( args[3] )
                                                 {
-                                                    case "as24Hour":
+                                                    case "as24Hour": // /ces hud config format world_time as24Hour
                                                         hudManager.setPreferenceForPlayer(
                                                             event.getPlayer(),
                                                             DatabaseTables.Hud.PlayerPreferencesTable.format_world_time,
                                                             DatabaseTables.Hud.PlayerPreferencesTable.Format.WorldTime.as24h);
                                                         break;
 
-                                                    case "asTicks":
+                                                    case "asTicks": // /ces hud config format world_time asTicks
                                                         hudManager.setPreferenceForPlayer(
                                                             event.getPlayer(),
                                                             DatabaseTables.Hud.PlayerPreferencesTable.format_world_time,
                                                             DatabaseTables.Hud.PlayerPreferencesTable.Format.WorldTime.asTicks);
                                                         break;
 
-                                                    default:
+                                                    default: // /ces hud config format world_time
                                                         sendHelpMessageToPlayer(event.getPlayer(), hudConfigFormatWorldTimeCommandHelpMessage());
                                                         break;
                                                 }
-                                            } else {
+                                            } else { // /ces hud config format world_time
                                                 sendHelpMessageToPlayer(event.getPlayer(), hudConfigFormatWorldTimeCommandHelpMessage());
                                             }
                                             break;
 
-                                        default:
+                                        default: // /ces hud config format
                                             sendHelpMessageToPlayer(event.getPlayer(), hudConfigFormatCommandHelpMessage());
                                             break;
                                     }
-                                } else {
+                                } else { // /ces hud config format
                                     sendHelpMessageToPlayer(event.getPlayer(), hudConfigFormatCommandHelpMessage());
                                 }
                                 break;
 
-                            default:
+                            default: // /ces hud config
                                 sendHelpMessageToPlayer(event.getPlayer(), hudConfigCommandHelpMessage());
                                 break;
                         }
-                    } else {
+                    } else { // /ces hud config
                         sendHelpMessageToPlayer(event.getPlayer(), hudConfigCommandHelpMessage());
                     }
                     break;
@@ -168,46 +162,41 @@ public class HudCommandListener implements Listener
                 case "toggle": // /ces hud toggle
                     if( args.length > 1 && !StringUtil.isNullOrEmpty(args[1]) )
                     {
-                        //                            case "server_tps":
-                        //                                hudManager.togglePreferenceForPlayer(
-                        //                                        event.getPlayer(),
-                        //                                        DatabaseTables.Hud.PlayerPreferencesTable.server_tps);
-                        //                                break;
                         switch (args[1]) {
-                            case "coordinates" -> hudManager.togglePreferenceForPlayer(
+                            case "coordinates" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle coordinates
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.coordinates);
-                            case "nether_portal_coordinates" -> hudManager.togglePreferenceForPlayer(
+                            case "nether_portal_coordinates" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle nether_portal_coordinates
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates);
-                            case "player_orientation" -> hudManager.togglePreferenceForPlayer(
+                            case "player_orientation" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle player_orientation
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.player_orientation);
-                            case "plugin_commerce" -> hudManager.togglePreferenceForPlayer(
+                            case "plugin_commerce" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle plugin_commerce
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.plugin_commerce);
-                            case "plugin_spectator" -> hudManager.togglePreferenceForPlayer(
+                            case "plugin_spectator" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle plugin_spectator
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.plugin_spectator);
-                            case "server_time" -> hudManager.togglePreferenceForPlayer(
+                            case "server_time" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle server_time
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.server_time);
-                            case "tool_durability" -> hudManager.togglePreferenceForPlayer(
+                            case "tool_durability" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle tool_durability
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.tool_durability);
-                            case "world_time" -> hudManager.togglePreferenceForPlayer(
+                            case "world_time" -> hudManager.togglePreferenceForPlayer( // /ces hud toggle world_time
                                     event.getPlayer(),
                                     DatabaseTables.Hud.PlayerPreferencesTable.world_time);
-// /ces hud toggle HELP
-                            default -> sendHelpMessageToPlayer(event.getPlayer(), hudToggleCommandHelpMessage());
+
+                            default -> sendHelpMessageToPlayer(event.getPlayer(), hudToggleCommandHelpMessage()); // /ces hud toggle
                         }
                     } else {
-                        hudManager.toggleHudForPlayer( event.getPlayer() );
+                        hudManager.toggleHudForPlayer( event.getPlayer() ); // /ces hud toggle
                     }
                     break;
 
                 default: // /ces hud HELP
-                    sendHelpMessageToPlayer(event.getPlayer(), hudHelpMessage());
+                    sendHelpMessageToPlayer(event.getPlayer(), hudHelpMessage()); // /ces hud HELP
                     break;
             }
         } else {
@@ -217,7 +206,7 @@ public class HudCommandListener implements Listener
     }
 
     /**
-     * Sends a plugin prefixed help message to the player
+     * Sends a plugin prefixed help message to the player.
      * @param player The player to send the help message to
      * @param helpMessage The string for the help message
      */
@@ -247,24 +236,6 @@ public class HudCommandListener implements Listener
                 "/ces hud toggle ...",
                 "show/hide specific parts of the HUD.")
             .toString();
-
-
-
-//        return  "Commands usage and description:" +
-//                MessageUtil.newLine() +
-//                MessageUtil.newLine() +
-//                MessageUtil.formattedCommandWithDescription(
-//                    "/ces hud",
-//                    "enables/disables the HUD;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                    "/ces hud help",
-//                    "this help page.") +
-//                MessageUtil.newLine() +
-//                MessageUtil.newLine() +
-//                hudConfigCommandHelpMessage()+
-//                MessageUtil.newLine() +
-//                MessageUtil.newLine() +
-//                hudToggleCommandHelpMessage();
     }
 
     /**
@@ -285,40 +256,6 @@ public class HudCommandListener implements Listener
                 "... format ...",
                 "choose formatting for specific parts of the hud.")
             .toString();
-
-
-//        return  "\nSubcommands for " + MessageUtil.formattedCommand("/ces hud config ...") + ":" +
-//                MessageUtil.newLine() +
-//                MessageUtil.newLine() +
-//
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize coordinates",
-//                        "enables color for coordinates;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize nether_portal_coordinates",
-//                        "enables color for Nether Portal coordinates;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize player_orientation",
-//                        "enables color for player orientation;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize server_tps",
-//                        "20 = green, 19-15 = yellow and below 15 = red;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize tool_durability",
-//                        "below 50 = yellow and below 25 = red;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... colorize world_time",
-//                        "green = villager work hours, yellow = bed can be used and red = light level " +
-//                                "allows monster spawning;") +
-//                MessageUtil.newLine() +
-//                MessageUtil.newLine() +
-//
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... display_mode compact",
-//                        "shows as little text as possible;\n") +
-//                MessageUtil.formattedCommandWithDescription(
-//                        "... display_mode extended",
-//                        "shows a lot of text.");
     }
 
     /**

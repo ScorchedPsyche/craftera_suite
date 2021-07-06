@@ -1,4 +1,4 @@
-package com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings;
+package com.github.scorchedpsyche.craftera_suite.modules.model;
 
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.database.DatabaseTables;
@@ -7,8 +7,16 @@ import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Model for ease of use and management of player HUD preferences.
+ */
 public class HudPlayerPreferencesModel
 {
+    /**
+     * Attempts to loads the preferences from a ResultSet.
+     * @param rs The ResultSet to load the preferences from
+     * @return The preferences if successful. Null otherwise
+     */
     public HudPlayerPreferencesModel loadPreferencesFromResultSet(ResultSet rs)
     {
         try {
@@ -51,7 +59,6 @@ public class HudPlayerPreferencesModel
     public boolean colorizeCoordinates() { return colorize_coordinates; }
     public boolean colorizeNetherPortalCoordinates() { return colorize_nether_portal_coordinates; }
     public boolean colorizePlayerOrientation() { return colorize_player_orientation; }
-//    public boolean colorizeServerTps() { return colorize_server_tps; }
     public boolean colorizeToolDurability() { return colorize_tool_durability; }
     public boolean colorizeWorldTime() { return colorize_world_time; }
     public boolean formatWorldTime() { return format_world_time; }
@@ -70,6 +77,10 @@ public class HudPlayerPreferencesModel
         }
     }
 
+    /**
+     * Inverts the value for a player's specific HUD preference.
+     * @param preference The preference to invert the value for
+     */
     public void togglePreference(String preference)
     {
         switch (preference) {
