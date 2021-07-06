@@ -72,7 +72,8 @@ Prevents entities from becoming their adult variant.
   
 ## Core 
 Main library dependency needed for other plugins of this pack.  
-  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Add MOTD and MSPT to TABLIST;`
+
 **Features:**   
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Console interface;`  
@@ -97,10 +98,10 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Spectator Mode;`  
  
 ## Discord Integration  
-Connects the suite with Discord so that you can create more interactivity between your server and Discord.  
-  
-## Events  
-Events for your server such as raids, mini-games, holidays, random organic or recurring, etc. ("missions") to increase Vanilla gameplay options. 
+Connects the suite with Discord so that you can create more interactivity between your server and Discord.
+
+## Events
+Events for your server random organic or recurring, etc. ("missions") to increase Vanilla gameplay options.
 
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Types;`  
@@ -108,27 +109,42 @@ Events for your server such as raids, mini-games, holidays, random organic or re
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Log participants;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Seasonal events;`
   
+## Games  
+Mini-games for your server such as raids, mini-games, etc.
+
+**Features:**  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `[Raid] Ender Dragon: dragon HP = nbr of participants * 1.2;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `[Raid] Ender Dragon Chaotic: spawns all mobs from the game during the raid;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `[Server-Wide] Endless Night: night for X time (E.g.: 7 days) with settable difficulty for monsters;`
+  
 ## HUD  
 Player customizable in-game HUD integrated with all other plugins from this suite.  
   
 **Features:**  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Toggle on/off;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Per player configuration;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Per player display mode: compact or expanded;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player login auto-load of preferences;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Coordinates;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Nether Portal coordinates;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Tool durability colorization: below 100 health it's colored yellow and bellow 50 red;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player orientation (N/S/E/W/etc);`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Server time;`   
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `World time;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `World time colorization: colors work hours, monster spawning and bed usage;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Server TPS (Tick Per Second);`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Server TPS colorization: green when 20, yellow 19-15 and red below 15;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Spectator plugin integration;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Toggle on/off;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Per player configuration;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Per player display mode: compact or expanded;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Player login auto-load of preferences;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Coordinates;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Nether Portal coordinates;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Tool durability support: displays main/off hand durability so that the player doesn't have to open inventory;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Tool durability colorization: below 100 health it's colored yellow and bellow 50 red;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Player orientation (N/S/E/W/etc);`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Server time;`   
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `World time;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `World time colorization: colors work hours, monster spawning and bed usage;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Server TPS colorization: green when 20, yellow 19-15 and red below 15;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Spectator plugin integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Commerce plugin integration.`
-  
+
+## Multiplayer Sleep
+Allows for one player to skip the night. Supports per-world sleep.
+
+**Features:**  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per-world support;`  
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Clickable message to wake another player;`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `HUD support.`
+
 ## Rewards 
 Account for player contribution/participation to the server so that rewards can be given.  
 
