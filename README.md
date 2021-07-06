@@ -142,7 +142,7 @@ Allows for one player to skip the night. Supports per-world sleep.
 
 **Features:**  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per-world support;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Clickable message to wake another player;`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Clickable message to wake another player;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `HUD support.`
 
 ## Rewards 
