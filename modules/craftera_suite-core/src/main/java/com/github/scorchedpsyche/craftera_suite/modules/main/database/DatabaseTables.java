@@ -85,6 +85,7 @@ public class DatabaseTables
             public static final String colorize_server_tps = "colorize_server_tps";
             public static final String colorize_tool_durability = "colorize_tool_durability";
             public static final String colorize_world_time = "colorize_world_time";
+            public static final String format_world_time = "format_world_time";
             public static final String coordinates = "coordinates";
             public static final String nether_portal_coordinates = "nether_portal_coordinates";
             public static final String player_orientation = "player_orientation";
@@ -93,11 +94,17 @@ public class DatabaseTables
             public static final String server_time = "server_time";
             public static final String tool_durability = "tool_durability";
             public static final String world_time = "world_time";
-            public static final String config_world_time = "config_world_time";
 
             public static class DisplayMode {
                 public static final boolean compact = false;
                 public static final boolean extended = true;
+            }
+
+            public static class Format {
+                public static class WorldTime {
+                    public static final boolean asTicks = false;
+                    public static final boolean as24h = true;
+                }
             }
         }
     }

@@ -20,9 +20,9 @@ public class HudPlayerPreferencesModel
                 colorize_coordinates = rs.getBoolean(5);
                 colorize_nether_portal_coordinates = rs.getBoolean(6);
                 colorize_player_orientation = rs.getBoolean(7);
-                colorize_server_tps = rs.getBoolean(8);
-                colorize_tool_durability = rs.getBoolean(9);
-                colorize_world_time = rs.getBoolean(10);
+                colorize_tool_durability = rs.getBoolean(8);
+                colorize_world_time = rs.getBoolean(9);
+                format_world_time = rs.getBoolean(10);
                 coordinates = rs.getBoolean(11);
                 nether_portal_coordinates = rs.getBoolean(12);
                 player_orientation = rs.getBoolean(13);
@@ -54,6 +54,7 @@ public class HudPlayerPreferencesModel
 //    public boolean colorizeServerTps() { return colorize_server_tps; }
     public boolean colorizeToolDurability() { return colorize_tool_durability; }
     public boolean colorizeWorldTime() { return colorize_world_time; }
+    public boolean formatWorldTime() { return format_world_time; }
     public boolean showCoordinates() { return coordinates; }
     public boolean showNetherPortalCoordinates() { return nether_portal_coordinates; }
     public boolean showOrientation() { return player_orientation; }
@@ -63,6 +64,8 @@ public class HudPlayerPreferencesModel
     public void setPreference(String preference, boolean value)
     {
         switch (preference) {
+            case "format_world_time" -> format_world_time = value;
+
             default -> display_mode = value; // DatabaseTables.Hud.PlayerPreferencesTable.display_mode
         }
     }
@@ -76,12 +79,12 @@ public class HudPlayerPreferencesModel
                     -> colorize_nether_portal_coordinates = !colorize_nether_portal_coordinates;
             case DatabaseTables.Hud.PlayerPreferencesTable.colorize_player_orientation
                     -> colorize_player_orientation = !colorize_player_orientation;
-            case DatabaseTables.Hud.PlayerPreferencesTable.colorize_server_tps
-                    -> colorize_server_tps = !colorize_server_tps;
             case DatabaseTables.Hud.PlayerPreferencesTable.colorize_tool_durability
                     -> colorize_tool_durability = !colorize_tool_durability;
             case DatabaseTables.Hud.PlayerPreferencesTable.colorize_world_time
                     -> colorize_world_time = !colorize_world_time;
+            case DatabaseTables.Hud.PlayerPreferencesTable.format_world_time
+                    -> format_world_time = !format_world_time;
             case DatabaseTables.Hud.PlayerPreferencesTable.coordinates
                     -> coordinates = !coordinates;
             case DatabaseTables.Hud.PlayerPreferencesTable.nether_portal_coordinates
@@ -108,9 +111,9 @@ public class HudPlayerPreferencesModel
     private Boolean colorize_coordinates;
     private Boolean colorize_nether_portal_coordinates;
     private Boolean colorize_player_orientation;
-    private Boolean colorize_server_tps;
     private Boolean colorize_tool_durability;
     private Boolean colorize_world_time;
+    private Boolean format_world_time;
     private Boolean coordinates;
     private Boolean nether_portal_coordinates;
     private Boolean player_orientation;

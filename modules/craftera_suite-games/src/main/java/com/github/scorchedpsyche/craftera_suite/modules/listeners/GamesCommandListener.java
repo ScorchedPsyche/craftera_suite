@@ -6,7 +6,6 @@ import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.MessageUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
-import com.github.scorchedpsyche.craftera_suite.modules.util.natives.IntegerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -49,11 +48,11 @@ public class GamesCommandListener implements Listener
                                 break;
 
                             default:
-                                sendHelpMessageToPlayer(event.getPlayer(), eventsPrepareCommandHelpMessage());
+                                sendHelpMessageToPlayer(event.getPlayer(), gamesPrepareCommandHelpMessage());
                                 break;
                         }
                     } else {
-                        sendHelpMessageToPlayer(event.getPlayer(), eventsPrepareCommandHelpMessage());
+                        sendHelpMessageToPlayer(event.getPlayer(), gamesPrepareCommandHelpMessage());
                     }
                     break;
 
@@ -106,7 +105,7 @@ public class GamesCommandListener implements Listener
                     break;
 
                 default:
-                    sendHelpMessageToPlayer(event.getPlayer(), eventsCommandHelpMessage());
+                    sendHelpMessageToPlayer(event.getPlayer(), ganessCommandHelpMessage());
                     break;
             }
         } else
@@ -116,6 +115,11 @@ public class GamesCommandListener implements Listener
         }
     }
 
+    /**
+     * Sends a plugin prefixed help message to the player
+     * @param player The player to send the help message to
+     * @param helpMessage The string for the help message
+     */
     private void sendHelpMessageToPlayer(Player player, String helpMessage)
     {
         PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Games.Name.compact, helpMessage);
@@ -125,7 +129,7 @@ public class GamesCommandListener implements Listener
      * '/ces games' command full help page.
      * @return Formatted string with full help instructions
      */
-    private String eventsCommandHelpMessage()
+    private String ganessCommandHelpMessage()
     {
         return  "\nSubcommands for " + MessageUtil.formattedCommand("/ces games ...") + ":" +
                 MessageUtil.newLine() + MessageUtil.newLine() +
@@ -139,7 +143,7 @@ public class GamesCommandListener implements Listener
      * '/ces games prepare' command full help page.
      * @return Formatted string with full help instructions
      */
-    private String eventsPrepareCommandHelpMessage()
+    private String gamesPrepareCommandHelpMessage()
     {
         return  "\nSubcommands for " + MessageUtil.formattedCommand("/ces games prepare...") + ":" +
                 MessageUtil.newLine() + MessageUtil.newLine() +

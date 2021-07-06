@@ -75,13 +75,13 @@ public class HudManager {
                 preference,
                 value);
 
-        PlayerUtil.sendMessageWithPluginPrefix( player, SuitePluginManager.Hud.Name.compact,
-                "Set preference " + ChatColor.AQUA + preference + ChatColor.RESET + " with " +
-                        ChatColor.AQUA + value);
-
         if( onlinePlayersWithHudEnabled.containsKey(player) )
         {
             onlinePlayersWithHudEnabled.get(player).setPreference(preference, value);
+
+            PlayerUtil.sendMessageWithPluginPrefix( player, SuitePluginManager.Hud.Name.compact,
+                    "Set preference " + ChatColor.AQUA + preference + ChatColor.RESET + " with " +
+                            ChatColor.AQUA + value);
         } else {
             PlayerUtil.sendMessageWithPluginPrefix(player, SuitePluginManager.Hud.Name.compact,
                                                     "Your HUD is not enabled, use '/ces hud' to display it");

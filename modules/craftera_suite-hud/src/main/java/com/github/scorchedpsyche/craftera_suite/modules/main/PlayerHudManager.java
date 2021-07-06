@@ -6,19 +6,10 @@ import com.github.scorchedpsyche.craftera_suite.modules.model.hud_settings.HudPl
 import com.github.scorchedpsyche.craftera_suite.modules.util.ItemStackUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.StringUtilsHud;
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class PlayerHudManager
 {
@@ -52,11 +43,21 @@ public class PlayerHudManager
         if( preferences.showWorldTime() )
         {
             hudText.add( " " );
-            if( preferences.colorizeWorldTime() )
+            if( preferences.formatWorldTime() ) // 24h
             {
-                hudText.add( globalHudInfoModel.getWorldTimeColorized( player.getWorld().getUID() ) );
+                if( preferences.colorizeWorldTime() )
+                {
+                    hudText.add( globalHudInfoModel.getWorldTimeIn24hColorized( player.getWorld().getUID() ) );
+                } else {
+                    hudText.add( globalHudInfoModel.getWorldTimeIn24h( player.getWorld().getUID() ) );
+                }
             } else {
-                hudText.add( globalHudInfoModel.getWorldTime( player.getWorld().getUID() ) );
+                if( preferences.colorizeWorldTime() )
+                {
+                    hudText.add( globalHudInfoModel.getWorldTimeInTicksColorized( player.getWorld().getUID() ) );
+                } else {
+                    hudText.add( globalHudInfoModel.getWorldTimeInTicks( player.getWorld().getUID() ) );
+                }
             }
         }
 

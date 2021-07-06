@@ -116,6 +116,12 @@ public class StringFormattedModel
         return this;
     }
 
+    public StringFormattedModel yellow()
+    {
+        stringBuilder.append(ChatColor.YELLOW);
+
+        return this;
+    }
     public StringFormattedModel yellow(String str)
     {
         stringBuilder.append(ChatColor.YELLOW);
@@ -145,6 +151,12 @@ public class StringFormattedModel
 
         return this;
     }
+    public StringFormattedModel add(int i)
+    {
+        stringBuilder.append(i);
+
+        return this;
+    }
     public StringFormattedModel add(StringBuilder strBuilder)
     {
         stringBuilder.append(strBuilder);
@@ -157,9 +169,9 @@ public class StringFormattedModel
 
         return this;
     }
-    public StringFormattedModel add(int i)
+    public StringFormattedModel add(ChatColor color)
     {
-        stringBuilder.append(i);
+        stringBuilder.append(color);
 
         return this;
     }
@@ -203,13 +215,51 @@ public class StringFormattedModel
 
         return this;
     }
+    public StringFormattedModel italic()
+    {
+        stringBuilder.append(ChatColor.ITALIC);
+
+        return this;
+    }
 
     public boolean isNullOrEmpty()
     {
         return stringBuilder == null || stringBuilder.isEmpty();
     }
+
     public String toString()
     {
         return stringBuilder.toString();
+    }
+
+    public StringFormattedModel formattedCommand(String command)
+    {
+        yellow();
+        bold();
+        add(command);
+        reset();
+//        return "" + ChatColor.YELLOW + ChatColor.BOLD + command + ChatColor.RESET;
+
+        return this;
+    }
+
+    public StringFormattedModel formattedCommandDescription(String description)
+    {
+        italic();
+        stringBuilder.append(description);
+        reset();
+//        return "" + ChatColor.ITALIC + description + ChatColor.RESET;
+
+        return this;
+    }
+
+    public StringFormattedModel formattedCommandWithDescription(String command, String description)
+    {
+        formattedCommand(command);
+        stringBuilder.append(": ");
+        formattedCommandDescription(description);
+//        return formattedCommand(command) + ": " + formattedCommandDescription(description);
+
+        return this;
     }
 }
