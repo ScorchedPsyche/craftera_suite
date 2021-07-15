@@ -1,9 +1,0 @@
-name: craftera_suite-multiplayer_sleep
-version: ${project.version}
-depend: [ craftera_suite-core ]
-main: com.github.scorchedpsyche.craftera_suite.modules.multiplayer_sleep.CraftEraSuiteMultiplayerSleep
-api-version: 1.17
-prefix: CraftEra Suite - Multiplayer Sleep
-authors: [ ScorchedPsyche ]
-description: Enables one player to skip the night. Supports multi-worlds servers.
-website: https://github.com/ScorchedPsyche

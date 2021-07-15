@@ -5,6 +5,7 @@ import com.github.scorchedpsyche.craftera_suite.modules.events.modules.core.Core
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.games.GamesCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.hud.HudCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.seasons.SeasonsCommandEvent;
+import com.github.scorchedpsyche.craftera_suite.modules.events.modules.sleep.SleepCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.events.modules.spectator_mode.SpectatorModeCommandEvent;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
@@ -82,6 +83,17 @@ public class CustomCommandExecutor implements CommandExecutor {
 
                             Bukkit.getPluginManager().callEvent(new SeasonsCommandEvent((Player) sender, argsFiltered));
                         }
+
+                        return true;
+
+                    case "sleep":
+                        if ( argsFiltered == null )
+                        {
+                            argsFiltered = new String[1];
+                            argsFiltered[0] = "";
+                        }
+
+                        Bukkit.getPluginManager().callEvent(new SleepCommandEvent((Player) sender, argsFiltered));
 
                         return true;
 

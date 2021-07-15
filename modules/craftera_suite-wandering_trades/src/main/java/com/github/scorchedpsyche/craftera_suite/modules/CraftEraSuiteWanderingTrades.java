@@ -84,7 +84,6 @@ public final class CraftEraSuiteWanderingTrades extends JavaPlugin
                     preloadPlayerHeadsTask.runTaskAsynchronously(this);
                 } catch (IOException | InvalidConfigurationException e)
                 {
-                    pluginRootFolder = null;
                     e.printStackTrace();
                     this.onDisable();
                 }

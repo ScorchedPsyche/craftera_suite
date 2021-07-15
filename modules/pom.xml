@@ -23,7 +23,7 @@
         <module>craftera_suite-core</module>
         <module>craftera_suite-games</module>
         <module>craftera_suite-hud</module>
-        <module>craftera_suite-multiplayer_sleep</module>
+        <module>craftera_suite-sleep</module>
         <module>craftera_suite-rewards</module>
         <module>craftera_suite-seasons</module>
         <module>craftera_suite-spectator_mode</module>

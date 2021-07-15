@@ -85,6 +85,13 @@ public class StringFormattedModel
 
         return this;
     }
+    public StringFormattedModel greenR(int i)
+    {
+        stringBuilder.append(ChatColor.GREEN);
+        addAndReset(i);
+
+        return this;
+    }
 
     public StringFormattedModel red(String str)
     {
@@ -140,6 +147,13 @@ public class StringFormattedModel
     private StringFormattedModel addAndReset(String str)
     {
         add(str);
+        stringBuilder.append(ChatColor.RESET);
+
+        return this;
+    }
+    private StringFormattedModel addAndReset(int i)
+    {
+        add(i);
         stringBuilder.append(ChatColor.RESET);
 
         return this;

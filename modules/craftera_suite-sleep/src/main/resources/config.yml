@@ -1,0 +1,11 @@
+# Value that represents a percentage from 0% to 100% that the weather will be cleared after
+# players sleep.
+#   100 = Vanilla, where the weather is always cleared
+#   0 = Weather will not be changed
+chance_to_clear_weather_after_players_sleep: 100
+
+# ONLY VALID IF CHANCE TO CLEAR WEATHER > 0
+# Whether players can sleep during the day to skip weather. Either "true" or "false"
+#   true = players WILL be able to sleep during the day to skip weather
+#   false = players WON'T be able to sleep during the day to skip weather
+can_player_skip_weather_by_sleeping_during_the_day: true

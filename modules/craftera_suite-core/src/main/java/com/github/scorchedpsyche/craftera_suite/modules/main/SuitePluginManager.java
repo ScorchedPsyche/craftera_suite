@@ -142,6 +142,7 @@ public class SuitePluginManager {
         }
     }
 
+
     public static class Rewards
     {
         public static class Name
@@ -197,6 +198,20 @@ public class SuitePluginManager {
 
         public static class Permissions {
             public static final String seasons = permission_prefix + ".seasons";
+        }
+    }
+
+    public static class Sleep
+    {
+        public static class Name
+        {
+            public static final String compact = "CES - Sleep";
+            public static final String full = "CraftEra Suite - Sleep";
+            public static final String pomXml = "craftera_suite-sleep";
+        }
+        public static boolean isEnabled ()
+        {
+            return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
     }
 
