@@ -137,14 +137,6 @@ Player customizable in-game HUD integrated with all other plugins from this suit
 ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Spectator plugin integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Commerce plugin integration.`
 
-## Multiplayer Sleep
-Allows for one player to skip the night. Supports per-world sleep.
-
-**Features:**  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Per-world support;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Clickable message to wake another player;`  
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `HUD support.`
-
 ## Rewards 
 Account for player contribution/participation to the server so that rewards can be given.  
 
@@ -161,6 +153,14 @@ Enables Season support for the CraftEra Suite. Useful when you reset your server
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Database integration: once enabled mold database tables to support seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Starter season on DB creation;`  
 ![#f03c15](https://via.placeholder.com/15/1589F0/000000?text=+) `Season commands.`
+
+## Sleep
+Allows for one player to sleep through the night – using a night reservation system which prevents other players from sleeping – or to skip weather. Supports per-world sleep.
+
+**Features:**  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Per-world support;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Command "/ces sleep" to reserve the night;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Quit game, change world or try to sleep removes night reservation for that player.`
  
 ## Spectator Mode  
 Spectator mode with range limit configurable by admin or with automatic view range limit mode.  
