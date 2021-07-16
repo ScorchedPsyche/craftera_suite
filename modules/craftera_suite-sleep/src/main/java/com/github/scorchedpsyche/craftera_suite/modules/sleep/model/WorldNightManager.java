@@ -3,6 +3,7 @@ package com.github.scorchedpsyche.craftera_suite.modules.sleep.model;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
 import com.github.scorchedpsyche.craftera_suite.modules.model.StringFormattedModel;
 import com.github.scorchedpsyche.craftera_suite.modules.sleep.CraftEraSuiteSleep;
+import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import com.github.scorchedpsyche.craftera_suite.modules.util.PlayerUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -15,13 +16,13 @@ public class WorldNightManager {
     public WorldNightManager(@NotNull World world) {
         this.world = world;
         this.reservations = new ArrayList<>();
-        this.playersWhoSlept = new ArrayList<>();
+        this.playersInBed = new ArrayList<>();
     }
 
     @NotNull
     private final World world;
     private List<Player> reservations;
-    private List<Player> playersWhoSlept;
+    private List<Player> playersInBed;
     private boolean skippingTheNight = false;
 
     @NotNull
@@ -71,7 +72,7 @@ public class WorldNightManager {
     public void resetReservations()
     {
         reservations.clear();
-        playersWhoSlept.clear();
+//        playersWhoSlept.clear();
     }
 
     /**
@@ -137,16 +138,16 @@ public class WorldNightManager {
         return new StringFormattedModel();
     }
 
-    public StringFormattedModel getStringOfPlayersWhoSlept()
+    public StringFormattedModel getStringOfPlayersInBed()
     {
-        if( !playersWhoSlept.isEmpty() )
+        if( !playersInBed.isEmpty() )
         {
             StringFormattedModel listOfPlayers = new StringFormattedModel();
 
-            for(int i = 0; i < playersWhoSlept.size(); i++)
+            for(int i = 0; i < playersInBed.size(); i++)
             {
-                listOfPlayers.aquaR(playersWhoSlept.get(i).getDisplayName());
-                if( i != playersWhoSlept.size() - 1)
+                listOfPlayers.aquaR(playersInBed.get(i).getDisplayName());
+                if( i != playersInBed.size() - 1)
                 {
                     listOfPlayers.add(", ");
                 } else {
@@ -160,17 +161,22 @@ public class WorldNightManager {
         return new StringFormattedModel();
     }
 
-    public void addPlayerWhoSlept(Player player)
+    public void addPlayerInBed(Player player)
     {
-        if( !playersWhoSlept.contains(player) )
+        if( !playersInBed.contains(player) )
         {
-            playersWhoSlept.add(player);
+            playersInBed.add(player);
         }
     }
 
-    public void removePlayerWhoSlept(Player player)
+    public void removePlayerInBed(Player player)
     {
-        playersWhoSlept.remove(player);
+        playersInBed.remove(player);
+    }
+
+    public boolean isThereAtLeastOnePlayerInBed()
+    {
+        return !this.playersInBed.isEmpty();
     }
 
     private void sendMessageToPlayer(Player player, String message)

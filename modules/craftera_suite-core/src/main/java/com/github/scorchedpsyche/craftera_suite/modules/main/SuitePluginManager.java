@@ -156,7 +156,7 @@ public class SuitePluginManager {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
 
-        public enum Type
+        public enum RewardType
         {
             Points,
             Effect, // Buff/debuff
@@ -169,6 +169,7 @@ public class SuitePluginManager {
         {
             Achievement,
             Event,
+            Game,
             PlayTime,
             Season
         }

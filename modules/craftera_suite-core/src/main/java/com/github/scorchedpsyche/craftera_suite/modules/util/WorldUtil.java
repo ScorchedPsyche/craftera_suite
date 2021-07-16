@@ -10,38 +10,72 @@ public class WorldUtil {
     public class DayNightCycle
     {
         public static final long SUNRISE = 23992;
-        public static final long BEDS_CAN_BE_USED_START = 12541;
-        public static final long BEDS_CAN_BE_USED_END = 23459;
         public static final long VILLAGER_WORK_START = 2000;
         public static final long VILLAGER_WORK_END = 9000;
 
         public class WEATHER_CLEAR
         {
+            public static final long BEDS_CAN_BE_USED_START = 12542;
+            public static final long BEDS_CAN_BE_USED_END = 23460;
             public static final long MONSTERS_SPAWN_START = 13187;
             public static final long MONSTERS_SPAWN_END = 23031;
         }
 
         public class WEATHER_RAIN
         {
+            public static final long BEDS_CAN_BE_USED_START = 12010;
+            public static final long BEDS_CAN_BE_USED_END = 23992;
             public static final long MONSTERS_SPAWN_START = 12969;
             public static final long MONSTERS_SPAWN_END = 13187;
         }
     }
 
-    public static boolean timeSkipIfNotSunrise(World world)
+    public static boolean isWorldAtBedsCanBeUsedEndTime(World world)
+    {
+        if( world.isClearWeather() )
+        {
+            return world.getTime() == DayNightCycle.WEATHER_CLEAR.BEDS_CAN_BE_USED_END;
+        }
+
+        return world.getTime() == DayNightCycle.WEATHER_RAIN.BEDS_CAN_BE_USED_END;
+
+//        long currentDay1TickAfterBedsCannotBeUsed;
+//        long nextDay1TickAfterBedsCannotBeUsed;
+//
+//        if( world.isClearWeather() )
+//        {
+//            currentDay1TickAfterBedsCannotBeUsed = 24000 * Math.floorDiv(world.getFullTime(), 24000);
+//            nextDay1TickAfterBedsCannotBeUsed =
+//                DayNightCycle.WEATHER_CLEAR.BEDS_CAN_BE_USED_END + currentDay1TickAfterBedsCannotBeUsed +1;
+//        } else {
+//            currentDay1TickAfterBedsCannotBeUsed = 24000 * Math.floorDiv(world.getFullTime(), 24000);
+//            nextDay1TickAfterBedsCannotBeUsed =
+//                DayNightCycle.WEATHER_RAIN.BEDS_CAN_BE_USED_END + currentDay1TickAfterBedsCannotBeUsed +1;
+//        }
+//
+//        return world.getFullTime() == nextDay1TickAfterBedsCannotBeUsed;
+    }
+
+    public static boolean skipNightUntilBedsCannotBeUsed(World world)
     {
         long currentDaySunrise = 24000 * Math.floorDiv(world.getFullTime(), 24000);
 //        long currentDayTime = world.getFullTime() - currentDaySunrise;
-        long nextDaySunrise = DayNightCycle.BEDS_CAN_BE_USED_END + currentDaySunrise;
+        long nextDaySunrise;
+        if( world.isClearWeather() )
+        {
+            nextDaySunrise = DayNightCycle.WEATHER_CLEAR.BEDS_CAN_BE_USED_END + currentDaySunrise;
+        } else {
+            nextDaySunrise = DayNightCycle.WEATHER_RAIN.BEDS_CAN_BE_USED_END + currentDaySunrise;
+        }
 //        ConsoleUtil.debugMessage("nextWorldFullTime: " + world.getFullTime() + 100);
 //        ConsoleUtil.debugMessage("currentDaySunrise: " + currentDaySunrise);
 //        ConsoleUtil.debugMessage("nextDaySunrise: " + nextDaySunrise);
 
 //        ConsoleUtil.debugMessage("attemptTimeSkipIntoTheNight");
         // Check if skip step won't go over the start of the day
-        if( world.getFullTime() < nextDaySunrise)
+        if( world.getFullTime() + 100 < nextDaySunrise)
         {
-//            ConsoleUtil.debugMessage("world.getTime() + 100");
+//            ConsoleUtil.debugMessage("world.getFullTime() + 100: " + (world.getFullTime() + 100));
             world.setFullTime( world.getFullTime() + 100 );
             return true;
         } else {
@@ -65,10 +99,16 @@ public class WorldUtil {
         return false;
     }
 
-    public static boolean isItNightTime(@NotNull World world)
+    public static boolean canBedsBeUsed(@NotNull World world)
     {
-        return world.getTime() >= DayNightCycle.BEDS_CAN_BE_USED_START
-                && world.getTime() <= DayNightCycle.BEDS_CAN_BE_USED_END;
+        if( world.isClearWeather() )
+        {
+            return world.getTime() >= DayNightCycle.WEATHER_CLEAR.BEDS_CAN_BE_USED_START
+                    && world.getTime() < DayNightCycle.WEATHER_CLEAR.BEDS_CAN_BE_USED_END;
+        }
+
+        return world.getTime() >= DayNightCycle.WEATHER_RAIN.BEDS_CAN_BE_USED_START
+                && world.getTime() < DayNightCycle.WEATHER_RAIN.BEDS_CAN_BE_USED_END;
     }
 
     public static boolean isThundering(@NotNull World world)

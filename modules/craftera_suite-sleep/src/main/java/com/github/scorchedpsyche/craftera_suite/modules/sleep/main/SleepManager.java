@@ -44,6 +44,9 @@ public class SleepManager {
             WorldNightManager worldNight = worlds.putIfAbsent(
                 event.getPlayer().getWorld(), new WorldNightManager(event.getPlayer().getWorld()));
 
+            // Add player to the playersInBed list
+            worldNight.addPlayerInBed(event.getPlayer());
+
             // Remove player reservation if they have one
             assert worldNight != null;
             this.removeNightReservationIfExistsAndWarnPlayers(event.getPlayer(), worldNight);
@@ -52,11 +55,11 @@ public class SleepManager {
             if( !worldNight.hasReservations() )
             {
                 // No reservations. Check if it's Night time
-                if( WorldUtil.isItNightTime(worldNight.getWorld()) )
+                if( WorldUtil.canBedsBeUsed(worldNight.getWorld()) )
                 {
                     // Night Time
                     this.initiateTimeSkipIfNotAlreadyStarted(worldNight);
-                    worldNight.addPlayerWhoSlept( event.getPlayer() );
+//                    worldNight.addPlayerWhoSlept( event.getPlayer() );
                 } else {
                     // Day Time. Since the sleep attempt is Vanilla valid, then it must be thundering.
                     // Check if the plugin allows sleep during thunderstorm
@@ -65,7 +68,7 @@ public class SleepManager {
                     {
                         // It's OK to sleep to skip thunderstorms
                         this.initiateTimeSkipIfNotAlreadyStarted(worldNight);
-                        worldNight.addPlayerWhoSlept( event.getPlayer() );
+//                        worldNight.addPlayerWhoSlept( event.getPlayer() );
                     } else {
                         // Cannot skip thunderstorms because of server configuration
                         event.setCancelled(true);
@@ -103,33 +106,80 @@ public class SleepManager {
 
     private void doNightSkip(@NotNull WorldNightManager worldNight)
     {
-        // Check if any players in world are asleep
-        if( WorldUtil.isThereAtLeastOnePlayerSleepingInWorld(worldNight.getWorld()) )
+        // Check if night was being skipped
+        if( worldNight.isSkippingTheNight() )
         {
-            // At least one player asleep. Attempt to skip the night
-            if( WorldUtil.timeSkipIfNotSunrise(worldNight.getWorld()) )
+            // Check if any players in world are asleep
+            if( worldNight.isThereAtLeastOnePlayerInBed() )
             {
-                // Not yet daylight. Schedule another night skip
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
-                        CraftEraSuiteSleep.getPlugin(CraftEraSuiteSleep.class), new Runnable(){
-                            @Override
-                            public void run(){
-                                doNightSkip(worldNight);
-                            }
-                        }, 1L);
-            } else {
-                // Already day. Do weather clear and clear night reservations
-                WorldUtil.attemptToClearWeatherDependingOnChance(
-                        worldNight.getWorld(),
-                        CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep_through_the_night", 100));
-                worldNight.setSkippingTheNight(false);
-                sendMessageToAllPlayersInWorld(worldNight.getWorld(), new StringFormattedModel()
-                        .add("Sleepy ones:").nl()
-                        .add(worldNight.getStringOfPlayersWhoSlept()));
-                worldNight.resetReservations();
-                WorldUtil.wakeAllPlayers(worldNight.getWorld());
+                // At least one player asleep. Attempt to skip the night
+                if( WorldUtil.skipNightUntilBedsCannotBeUsed(worldNight.getWorld()) )
+                {
+                    // Not yet daylight. Schedule another night skip
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
+                            CraftEraSuiteSleep.getPlugin(CraftEraSuiteSleep.class), new Runnable(){
+                                @Override
+                                public void run(){
+                                    doNightSkip(worldNight);
+                                    attemptToEndNightSkip(worldNight);
+                                }
+                            }, 1L);
+                }
             }
-        } else {
+        }
+
+
+//        // Check if any players in world are asleep
+//        if( WorldUtil.isThereAtLeastOnePlayerSleepingInWorld(worldNight.getWorld()) )
+//        {
+//            ConsoleUtil.debugMessage("0");
+//            // At least one player asleep. Attempt to skip the night
+//            if( WorldUtil.attemptTimeSkipIfNotSunrise(worldNight.getWorld()) )
+//            {
+//                ConsoleUtil.debugMessage("1");
+//                // Not yet daylight. Schedule another night skip
+//                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
+//                        CraftEraSuiteSleep.getPlugin(CraftEraSuiteSleep.class), new Runnable(){
+//                            @Override
+//                            public void run(){
+//                                doNightSkip(worldNight);
+//                            }
+//                        }, 1L);
+//            }
+//        } else {
+//            // Already day. Check if night was being skipped
+//            if( worldNight.isSkippingTheNight() )
+//            {
+//                // Night was being skipped. Reset everything and let other players know who skipped the night
+//                ConsoleUtil.debugMessage("2");
+//                WorldUtil.attemptToClearWeatherDependingOnChance(
+//                        worldNight.getWorld(),
+//                        CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep_through_the_night", 100));
+//                worldNight.setSkippingTheNight(false);
+//                sendMessageToAllPlayersInWorld(worldNight.getWorld(), new StringFormattedModel()
+//                        .add("Sleepy ones:").nl()
+//                        .add(worldNight.getStringOfPlayersWhoSlept()));
+//                worldNight.resetReservations();
+//                WorldUtil.wakeAllPlayers(worldNight.getWorld());
+//            }
+//        }
+    }
+
+    private void attemptToEndNightSkip(@NotNull WorldNightManager worldNight)
+    {
+        // There are no asleep players. Check if the world is at beds can be used end time
+        if( WorldUtil.isWorldAtBedsCanBeUsedEndTime(worldNight.getWorld()) )
+        {
+            // World is one tick after beds can be used ALONG with night was being skipped.
+            // This means we should reset everything and let other players know who skipped the night
+            WorldUtil.attemptToClearWeatherDependingOnChance(
+                    worldNight.getWorld(),
+                    CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep_through_the_night", 100));
+            sendMessageToAllPlayersInWorld(worldNight.getWorld(), new StringFormattedModel()
+                    .add("Sleepy ones:").nl()
+                    .add(worldNight.getStringOfPlayersInBed()));
+            worldNight.resetReservations();
+            WorldUtil.wakeAllPlayers(worldNight.getWorld());
             worldNight.setSkippingTheNight(false);
         }
     }
@@ -195,7 +245,7 @@ public class SleepManager {
         WorldNightManager worldNight = worlds.putIfAbsent( player.getWorld(), new WorldNightManager(player.getWorld()));
 
         assert worldNight != null;
-        worldNight.removePlayerWhoSlept(player);
+        worldNight.removePlayerInBed(player);
     }
 
     public void playerLeftTheGame(Player player)
@@ -204,7 +254,7 @@ public class SleepManager {
         WorldNightManager worldNight = worlds.putIfAbsent( player.getWorld(), new WorldNightManager(player.getWorld()));
 
         assert worldNight != null;
-        worldNight.removePlayerWhoSlept(player);
+        worldNight.removePlayerInBed(player);
         this.removeNightReservationIfExistsAndWarnPlayers(player, worldNight);
     }
 
