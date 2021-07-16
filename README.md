@@ -61,14 +61,14 @@ Enables AFK detection and AFK data telemetry on the server.
 Prevents entities from becoming their adult variant.  
   
 **Features:**  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Passive mob support;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Aggressive mob support (for those that have an infant variant);`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Custom Name Tag support: tool to transform entities into baby/adult;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Infinite Name Tag: prevent name tag from being expended;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Undo feature: convert back to their original state;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: usage on natural babies to accelerate growth;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: Scute drop on Turtle's growth;`  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.`
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Passive mob support;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Aggressive mob support (for those that have an infant variant);`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Custom Name Tag support: tool to transform entities into baby/adult;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Infinite Name Tag: prevent name tag from being expended;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Undo feature: convert back to their original state;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Prevent exploit: usage on natural babies to accelerate growth;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Prevent exploit: Scute drop on Turtle's growth;`  
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `Prevent exploit: extra experience for converting aggressive mobs to their baby variant before killing.`
   
 ## Core 
 Main library dependency needed for other plugins of this pack.  
