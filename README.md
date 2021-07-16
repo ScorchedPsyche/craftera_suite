@@ -72,9 +72,9 @@ Prevents entities from becoming their adult variant.
   
 ## Core 
 Main library dependency needed for other plugins of this pack.  
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Add MOTD and MSPT to TABLIST;`
 
 **Features:**   
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Add MOTD and MSPT to TABLIST;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Auto-restart if memory usage high (disabled by default): useful if server is experiencing memory leaks;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Console interface;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Player command interface;`  
@@ -92,10 +92,12 @@ Plugin which acts as an interface to synchronize the suite data with a database.
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `MySQL integration;`  
 ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `Use SQLite as main and MySQL as redundancy;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Achievements;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: AFK;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Core;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: HUD;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Seasons;`  
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Spectator Mode;`  
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Plugin Integration: Statistics;`
  
 ## Discord Integration  
 Connects the suite with Discord so that you can create more interactivity between your server and Discord.
