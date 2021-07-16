@@ -51,7 +51,7 @@ public class PlayerAFKModel {
 
     public boolean hasBeenAFKFor(long duration)
     {
-        return (DateUtil.Time.getUnixNow() - afk_time_start) > duration - 1 ;
+        return (DateUtil.Time.getUnixNow() - afk_time_start) > duration * 60 - 1 ;
     }
 
     public boolean isAFK()

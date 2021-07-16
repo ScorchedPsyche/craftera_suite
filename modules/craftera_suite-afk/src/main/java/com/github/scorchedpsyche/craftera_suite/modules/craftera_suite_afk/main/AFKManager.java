@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class AFKManager {
     private AFKDatabaseApi afkDatabaseApi;
-    private final long timeItTakesToGoAFK = 5; // seconds
+    private final long timeItTakesToGoAFK = 5; // minutes
     private HashMap<UUID, PlayerAFKModel> players = new HashMap<>();
 
     public AFKManager(AFKDatabaseApi afkDatabaseApi)
@@ -38,6 +38,9 @@ public class AFKManager {
         }
     }
 
+    /**
+     * Check and updates player's AFK state.
+     */
     public void updatePlayersAFKState()
     {
         // Iterate through all players
@@ -55,7 +58,7 @@ public class AFKManager {
                 {
                     // Is AFK. Then player left AFK
                     playerAFKModel.markAsNotAFK();
-                    playerLeftAFK(Bukkit.getPlayer(playerAFKModel.getPlayer().getUniqueId()));
+                    this.playerLeftAFK(Bukkit.getPlayer(playerAFKModel.getPlayer().getUniqueId()));
                 }
 
                 // Restart AFK timer
@@ -70,11 +73,11 @@ public class AFKManager {
                     if( playerAFKModel.hasBeenAFKFor(this.timeItTakesToGoAFK) )
                     {
                         // AFK for too long. Mark them as AFK
-                        playerWentAFK( Bukkit.getPlayer(playerAFKModel.getPlayer().getUniqueId()) );
+                        this.playerWentAFK( playerAFKModel.getPlayer() );
                     }
                 } else {
                     // Player is AFK already. Increase timer
-                    updatePlayerAFKTimer( Bukkit.getPlayer(playerAFKModel.getPlayer().getUniqueId()) );
+                    this.updatePlayerAFKTimer( playerAFKModel.getPlayer() );
                 }
             }
         }
@@ -128,6 +131,9 @@ public class AFKManager {
         players.remove(player.getUniqueId());
     }
 
+    /**
+     * Function to run on plugin disable.
+     */
     public void disable() {
         // Iterate through all players
         for (Map.Entry<UUID, PlayerAFKModel> entry : players.entrySet())

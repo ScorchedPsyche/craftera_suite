@@ -14,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class CraftEraSuiteAFK extends JavaPlugin {
     AFKManager afkManager;
     AFKDatabaseApi afkDatabaseApi;
-    private Integer updatePlayersAFKState;
 
     @Override
     public void onEnable() {
@@ -36,8 +35,8 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
                 }
 
                 // Set up repeating task to update AFK state for players
-                updatePlayersAFKState = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-                        this, () -> afkManager.updatePlayersAFKState(), 0L, 5 * 60 * 20);
+                Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                        this, () -> afkManager.updatePlayersAFKState(), 0L, 20); // 5 * 60 *
 
                 // Listeners
                 getServer().getPluginManager().registerEvents(new PlayerJoinAFKListener(afkManager), this);
@@ -56,11 +55,7 @@ public final class CraftEraSuiteAFK extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if ( updatePlayersAFKState != null )
-        {
-            Bukkit.getScheduler().cancelTask(updatePlayersAFKState);
-            updatePlayersAFKState = null;
-        }
+        Bukkit.getScheduler().cancelTasks(this);
         afkManager.disable();
 
         afkManager = null;
