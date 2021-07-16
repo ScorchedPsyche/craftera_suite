@@ -120,11 +120,4 @@ public class EntityUtil
         // Check if entity is Age Locked and removes/adds lock accordingly
         breedableEntity.setAgeLock(!breedableEntity.getAgeLock());
     }
-
-    public Vector randomBoundedXYZ()
-    {
-        return new Vector(
-                // TODO: Refactor code
-        );
-    }
 }

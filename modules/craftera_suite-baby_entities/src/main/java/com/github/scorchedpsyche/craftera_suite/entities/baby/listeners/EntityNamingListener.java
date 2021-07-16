@@ -13,7 +13,6 @@ public class EntityNamingListener implements Listener {
 
     /**
      * Listens to player right-click interaction and checks if the target entity is renamed to "ces_adult/baby".
-     * TO DO
      * @param event Player interaction event.
      * **/
     @EventHandler
