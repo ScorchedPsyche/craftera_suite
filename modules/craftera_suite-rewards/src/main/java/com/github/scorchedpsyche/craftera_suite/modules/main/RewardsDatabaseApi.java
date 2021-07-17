@@ -20,7 +20,7 @@ public class RewardsDatabaseApi
             if ( DatabaseManager.database.executeSqlAndDisplayErrorIfNeeded(
                     "CREATE TABLE " + DatabaseTables.Rewards.table_name + "(\n"
                             + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                            + "	" + DatabaseTables.Rewards.Claim.active + " INTEGER DEFAULT 1 NOT NULL,\n"
+                            + "	" + DatabaseTables.Rewards.Claim.active + " INTEGER DEFAULT 0 NOT NULL,\n"
                             + "	" + DatabaseTables.Rewards.Claim.type + " INTEGER NOT NULL,\n"
                             + "	" + DatabaseTables.Rewards.Claim.source + " INTEGER NOT NULL,\n"
                             + "	" + DatabaseTables.Rewards.Claim.reward_type + " INTEGER NOT NULL,\n"

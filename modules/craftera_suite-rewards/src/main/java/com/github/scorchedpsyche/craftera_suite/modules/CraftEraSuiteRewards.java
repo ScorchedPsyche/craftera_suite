@@ -5,6 +5,8 @@ import com.github.scorchedpsyche.craftera_suite.modules.listener.SeasonsCommandL
 import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonManager;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SeasonsDatabaseApi;
 import com.github.scorchedpsyche.craftera_suite.modules.main.SuitePluginManager;
+import com.github.scorchedpsyche.craftera_suite.modules.main.commands.CustomTabCompleter;
+import com.github.scorchedpsyche.craftera_suite.modules.model.CommandModel;
 import com.github.scorchedpsyche.craftera_suite.modules.util.ConsoleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,7 +30,10 @@ public final class CraftEraSuiteRewards extends JavaPlugin {
                 // Setup and verify DB tables
                 if( seasonsDatabaseApi.setupAndVerifySqlTable() )
                 {
+                    // Add plugin commands
+                    addPluginCommands();
 
+                    // Listeners
                 } else {
                     // Failed to create database tables! Display error and disable plugin
                     ConsoleUtil.logError(this.getName(), "Failed to create database tables. Disabling!");
@@ -51,5 +56,20 @@ public final class CraftEraSuiteRewards extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    /**
+     * Adds plugin's commands to CORE's TabCompleter
+     */
+    private void addPluginCommands()
+    {
+        CustomTabCompleter.commands.putAll(
+            new CommandModel()
+            .sibling("rewards")
+                .child("create_new_and_select_for_editing")
+                .sibling("list")
+                .sibling("select")
+                .sibling("selected")
+            .subCommands);
     }
 }
