@@ -110,17 +110,20 @@ public class DatabaseTables
     }
 
     public static class Rewards {
-        public static final String table_name = rewardsPrefix + "events";
+//        public static final String claim_once_TABLENAME = rewardsPrefix + "claim_once";
+//        public static final String claim_repeatable_TABLENAME = rewardsPrefix + "claim_repeatable";
+public static final String table_name = "rewards";
 
-        public static class Reward
-        {
+        public static class Claim {
+            public static final String active = "active";
             public static final String type = "type";
             public static final String source = "source";
-            public static final String modifier = "modifier";
-            public static final String date_awarded = "date_awarded";
-            public static final String claimed = "claimed";
-            public static final String season = "season";
-            public static final String persist_through_seasons = "season";
+            public static final String reward_type = "reward_type";
+            public static final String reward_nbt = "reward_nbt";
+            public static final String date_start = "date_start";
+            public static final String date_end = "date_end";
+            public static final String condition = "condition";
+            public static final String condition_modifier = "condition_modifier";
         }
     }
 

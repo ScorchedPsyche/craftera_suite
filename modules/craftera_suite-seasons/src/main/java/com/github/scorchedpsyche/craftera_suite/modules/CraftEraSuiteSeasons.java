@@ -25,6 +25,7 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
         // Check if Core dependency was loaded
         if( SuitePluginManager.Core.isEnabled() )
         {
+            // Check if LuckPerms is loaded
             if( getServer().getPluginManager().getPlugin("LuckPerms") != null )
             {
                 // Attempt to setup the rest of the plugin
@@ -56,12 +57,14 @@ public final class CraftEraSuiteSeasons extends JavaPlugin
                 }
             } else {
                 // LuckPerms missing! Display error and disable plugin
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix() + "] ERROR: LuckPerms MISSING! Download the dependency and RELOAD/RESTART the server.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix()
+                    + "] ERROR: 'LuckPerms' MISSING! Download the dependency and RELOAD/RESTART the server.");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         } else {
             // Core dependency missing! Display error and disable plugin
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix() + "] ERROR: CraftEra Suite Core MISSING! Download the dependency and RELOAD/RESTART the server.");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[" + this.getDescription().getPrefix()
+                + "] ERROR: 'CraftEra Suite - Core' MISSING! Download the dependency and RELOAD/RESTART the server.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }

@@ -156,6 +156,21 @@ public class SuitePluginManager {
             return Bukkit.getPluginManager().isPluginEnabled(Name.pomXml);
         }
 
+        public enum Type
+        {
+            Once,
+            Repeatable
+        }
+
+        public enum Source
+        {
+            Achievement,
+            Event,
+            Game,
+            Time,
+            Season
+        }
+
         public enum RewardType
         {
             Points,
@@ -165,13 +180,12 @@ public class SuitePluginManager {
             Item
         }
 
-        public enum Source
+        public enum Condition
         {
-            Achievement,
-            Event,
-            Game,
-            PlayTime,
-            Season
+            ServerFirst,
+            Participation,
+            CompetitivePosition,
+            DifferentSeason,
         }
     }
 
