@@ -176,8 +176,7 @@ public class SleepManager {
                     worldNight.getWorld(),
                     CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep_through_the_night", 100));
             sendMessageToAllPlayersInWorld(worldNight.getWorld(), new StringFormattedModel()
-                    .add("Sleepy ones:").nl()
-                    .add(worldNight.getStringOfPlayersInBed()));
+                    .add("Sleepy ones: ").add(worldNight.getStringOfPlayersInBed()));
             worldNight.resetReservations();
             WorldUtil.wakeAllPlayers(worldNight.getWorld());
             worldNight.setSkippingTheNight(false);
