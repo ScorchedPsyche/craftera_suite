@@ -174,7 +174,7 @@ public class SleepManager {
             // This means we should reset everything and let other players know who skipped the night
             WorldUtil.attemptToClearWeatherDependingOnChance(
                     worldNight.getWorld(),
-                    CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep_through_the_night", 100));
+                    CraftEraSuiteSleep.config.getInt("chance_to_clear_weather_after_players_sleep", 100));
             sendMessageToAllPlayersInWorld(worldNight.getWorld(), new StringFormattedModel()
                     .add("Sleepy ones: ").add(worldNight.getStringOfPlayersInBed()));
             worldNight.resetReservations();

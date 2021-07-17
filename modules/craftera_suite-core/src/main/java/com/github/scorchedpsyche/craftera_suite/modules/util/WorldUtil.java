@@ -120,10 +120,10 @@ public class WorldUtil {
     {
         chance = MathUtil.limitBetween(chance, 0, 100);
 
-        // TODO: DEBUG
+//        ConsoleUtil.debugMessage("chance: " + chance);
         if ( chance == 100 )
         {
-//            ConsoleUtil.debugMessage("weather CLEARED");
+//            ConsoleUtil.debugMessage("weather CLEARED 1");
             world.setStorm(false);
             return true;
         } else if ( chance == 0 )
@@ -133,13 +133,13 @@ public class WorldUtil {
         } else {
             if( new Random().nextInt(101) <= chance )
             {
-//                ConsoleUtil.debugMessage("weather CLEARED");
+//                ConsoleUtil.debugMessage("weather CLEARED 2");
                 world.setStorm(false);
                 return true;
             }
         }
 
-//        ConsoleUtil.debugMessage("weather KEEP");
+//        ConsoleUtil.debugMessage("weather KEEP 2");
         return false;
     }
 
