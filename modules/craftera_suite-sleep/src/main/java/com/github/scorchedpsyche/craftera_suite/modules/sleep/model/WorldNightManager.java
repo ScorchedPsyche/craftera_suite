@@ -36,10 +36,12 @@ public class WorldNightManager {
     }
 
     public boolean isSkippingTheNight() {
+//        ConsoleUtil.debugMessage("setSkippingTheNight: " + skippingTheNight);
         return skippingTheNight;
     }
     public void setSkippingTheNight(boolean value)
     {
+//        ConsoleUtil.debugMessage("setSkippingTheNight: " + value);
         this.skippingTheNight = value;
     }
 
@@ -165,13 +167,22 @@ public class WorldNightManager {
     {
         if( !playersInBed.contains(player) )
         {
+//            ConsoleUtil.debugMessage("addPlayerInBed");
             playersInBed.add(player);
         }
     }
 
     public void removePlayerInBed(Player player)
     {
+//        ConsoleUtil.debugMessage("removePlayerInBed");
         playersInBed.remove(player);
+
+        // After player removal from bed check if there are still players in bed
+        if( playersInBed.isEmpty() )
+        {
+            // No players in bed. Then we must set skipping the night as false
+            this.skippingTheNight = false;
+        }
     }
 
     public boolean isThereAtLeastOnePlayerInBed()
